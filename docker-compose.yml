@@ -1,0 +1,29 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: deploy/docker/api.Dockerfile
+    environment:
+      DATABASE_URL: file:/app/apps/api/data/lunch.db
+      PHOTOS_DIR: /app/apps/api/data/photos
+      PORT: "4000"
+      CORS_ORIGIN: "http://localhost:8080"
+      MARKET_CRON_ENABLED: "true"
+    volumes:
+      - api-data:/app/apps/api/data
+    ports:
+      - "4000:4000"
+
+  web:
+    build:
+      context: .
+      dockerfile: deploy/docker/web.Dockerfile
+    environment:
+      API_UPSTREAM: http://api:4000
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+
+volumes:
+  api-data:

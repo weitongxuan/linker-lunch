@@ -1,0 +1,13 @@
+node_modules
+**/node_modules
+dist
+**/dist
+dist-test
+**/dist-test
+apps/api/data
+apps/api/prisma/dev.db
+apps/api/prisma/dev.db-journal
+*.log
+.git
+legacy
+index.html

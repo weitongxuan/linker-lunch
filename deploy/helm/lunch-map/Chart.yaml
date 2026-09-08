@@ -1,0 +1,6 @@
+apiVersion: v2
+name: lunch-map
+description: 蓬萊路午餐地圖 —— 前後端分離版(React + Vite 前端,Node/Express + Prisma/SQLite 後端)
+type: application
+version: 1.0.0
+appVersion: "1.0.0"

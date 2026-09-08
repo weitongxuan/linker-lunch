@@ -1,0 +1,202 @@
+// 午餐地圖 — Prisma schema (SQLite)
+//
+// placeType 沒有用 Prisma enum —— SQLite 沒有原生 enum 型別,寧可用 String
+// + 應用層驗證(見 @lunch-map/shared 的 PlaceType 型別),避免跟 provider 綁太緊。
+//
+// Drink 跟 Dessert 在原本的 app 裡欄位形狀完全一樣(都沒有 category/service/交通覆寫/peak),
+// 只差在 kind 用詞跟顯示分區不同,所以這裡合併成一張 AfterPlace 表,用 placeType 區分,
+// 對照原本 render 邏輯裡 AFTER = [{key:'desserts',...}, {key:'drinks',...}] 的分組方式。
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Shop {
+  id            String   @id
+  name          String
+  lat           Float
+  lng           Float
+  category      String
+  price         Int?
+  service       String // JSON string[]:"dine_in"/"takeout"/"delivery"
+  hours         String // JSON WeeklyHours
+  hoursUnknown  Boolean  @default(false)
+  addr          String?
+  phone         String?
+  note          String   @default("")
+  hoursSource   String?
+  hoursRaw      String?
+  googleRating  Float?
+  googleReviews Int?
+  walkMin       Int?
+  driveMin      Int?
+  ownParking    Boolean?
+  peakFrom      String?
+  peakTo        String?
+  peakNote      String?
+  closedNote    String?
+  needsReview   Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+/// drinks(飲料) 與 desserts(甜點),用 placeType 區分("drink" | "dessert")
+model AfterPlace {
+  id            String   @id
+  placeType     String
+  name          String
+  lat           Float
+  lng           Float
+  kind          String
+  price         Int?
+  hours         String // JSON WeeklyHours
+  hoursUnknown  Boolean  @default(false)
+  addr          String?
+  phone         String?
+  note          String   @default("")
+  hoursSource   String?
+  hoursRaw      String?
+  googleRating  Float?
+  googleReviews Int?
+  needsReview   Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([placeType])
+}
+
+model Parking {
+  id        String  @id
+  name      String
+  lat       Float
+  lng       Float
+  kind      String
+  rate      String  @default("")
+  searchMin Int
+  spaces    Int?
+}
+
+/// 單一 row(id 固定為 1)存全域設定
+model Config {
+  id           Int      @id @default(1)
+  officeLat    Float
+  officeLng    Float
+  officeName   String
+  departStart  String
+  departEnd    String
+  backBy       String
+  eatMinutes   Int
+  priceBands   String // JSON PriceBand[]
+  walkSpeed    Int
+  detour       Float
+  maxWalkMin   Int
+  driveSpeed   Int
+  parkSearch   Int
+  streetSearch Int
+  driveWorthIt Int
+  maxDriveMin  Int
+  updatedAt    DateTime @updatedAt
+}
+
+model Market {
+  id        Int      @id @default(autoincrement())
+  date      String
+  indexName String
+  close     Float
+  pct       Float
+  src       String
+  updatedAt DateTime @updatedAt
+}
+
+model Rating {
+  id         Int      @id @default(autoincrement())
+  placeId    String
+  placeType  String
+  personName String
+  score      Int
+  updatedAt  DateTime @updatedAt
+
+  @@unique([placeId, placeType, personName])
+}
+
+model Menu {
+  placeId   String
+  placeType String
+  text      String
+  updatedAt DateTime @updatedAt
+
+  @@id([placeId, placeType])
+}
+
+model Report {
+  id        Int      @id @default(autoincrement())
+  placeId   String
+  placeType String
+  who       String
+  type      String
+  text      String
+  date      String
+  done      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Photo {
+  id           String   @id @default(uuid())
+  placeId      String
+  placeType    String
+  filename     String
+  uploaderName String
+  sizeKb       Int
+  isShared     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+
+  @@index([placeId, placeType])
+}
+
+model Vote {
+  placeId    String
+  placeType  String
+  personName String
+  value      Int
+  updatedAt  DateTime @updatedAt
+
+  @@id([placeId, placeType, personName])
+}
+
+/// 「今天臨時公休」是客觀事實,全體共用,靠 date 自然每天失效
+model TempClosed {
+  placeId    String
+  placeType  String
+  date       String
+  reportedBy String?
+
+  @@id([placeId, placeType, date])
+}
+
+model EatenLog {
+  id         Int      @id @default(autoincrement())
+  placeId    String
+  placeType  String
+  personName String
+  date       String
+  createdAt  DateTime @default(now())
+
+  @@index([placeId, placeType, personName])
+}
+
+/// 留言板:公開留言,大家都看得到,依地點分組、依時間排序
+model Message {
+  id         Int      @id @default(autoincrement())
+  placeId    String
+  placeType  String
+  personName String
+  text       String
+  createdAt  DateTime @default(now())
+
+  @@index([placeId, placeType])
+}

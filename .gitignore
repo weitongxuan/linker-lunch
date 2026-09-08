@@ -1,0 +1,12 @@
+node_modules/
+dist/
+dist-test/
+*.log
+
+# backend runtime data
+apps/api/prisma/dev.db
+apps/api/prisma/dev.db-journal
+apps/api/data/
+.env
+.env.*
+!.env.example

@@ -1,0 +1,54 @@
+nameOverride: ""
+fullnameOverride: ""
+
+api:
+  image:
+    repository: lunch-map-api
+    tag: latest
+    pullPolicy: IfNotPresent
+  port: 4000
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  env:
+    # 留空的話後端 cors 中介層預設放行所有來源 —— 內部工具通常夠用,
+    # 有 ingress host 的話建議填成 https://<ingress host>
+    corsOrigin: ""
+    marketCronEnabled: "true"
+
+web:
+  image:
+    repository: lunch-map-web
+    tag: latest
+    pullPolicy: IfNotPresent
+  replicaCount: 2
+  port: 80
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+
+# SQLite 是單一寫入者:這顆 PVC 只給 api(replicas 固定 1,strategy=Recreate)用,
+# 同時放資料庫檔案跟上傳的照片。
+persistence:
+  enabled: true
+  size: 2Gi
+  storageClassName: ""
+  accessMode: ReadWriteOnce
+
+ingress:
+  enabled: false
+  className: ""
+  host: lunch-map.example.com
+  annotations: {}
+  tls: []
+  # tls:
+  #   - secretName: lunch-map-tls
+  #     hosts: [lunch-map.example.com]
