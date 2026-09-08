@@ -1,0 +1,64 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  REGISTRY: betoolman.com:32000
+  API_IMAGE: betoolman.com:32000/lunch-map-api
+  WEB_IMAGE: betoolman.com:32000/lunch-map-web
+  IMAGE_TAG: ${{ github.sha }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # betoolman.com:32000 是純 HTTP(無 TLS)的私有 registry,且允許匿名 push,
+      # Docker daemon 預設只信任 HTTPS registry,要先加進 insecure-registries 才能 push。
+      - name: Allow insecure registry
+        run: |
+          echo '{"insecure-registries":["${{ env.REGISTRY }}"]}' | sudo tee /etc/docker/daemon.json
+          sudo systemctl restart docker
+
+      - name: Build api image
+        run: docker build -f deploy/docker/api.Dockerfile -t "$API_IMAGE:$IMAGE_TAG" .
+
+      - name: Build web image
+        run: docker build -f deploy/docker/web.Dockerfile -t "$WEB_IMAGE:$IMAGE_TAG" .
+
+      - name: Push images
+        run: |
+          docker push "$API_IMAGE:$IMAGE_TAG"
+          docker push "$WEB_IMAGE:$IMAGE_TAG"
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+
+      - name: Write kubeconfig
+        run: |
+          echo "${{ secrets.KUBECONFIG }}" > "$RUNNER_TEMP/kubeconfig"
+        shell: bash
+
+      - name: Helm upgrade
+        env:
+          KUBECONFIG: ${{ runner.temp }}/kubeconfig
+        run: |
+          helm upgrade --install lunch-map deploy/helm/lunch-map \
+            -n linker-lunch --create-namespace \
+            --set api.image.repository="$API_IMAGE" \
+            --set api.image.tag="$IMAGE_TAG" \
+            --set web.image.repository="$WEB_IMAGE" \
+            --set web.image.tag="$IMAGE_TAG" \
+            --wait --timeout 5m

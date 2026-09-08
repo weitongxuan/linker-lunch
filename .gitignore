@@ -10,3 +10,6 @@ apps/api/data/
 .env
 .env.*
 !.env.example
+
+# local cluster credentials
+kubeconfig
