@@ -17,7 +17,7 @@ api:
   env:
     # 留空的話後端 cors 中介層預設放行所有來源 —— 內部工具通常夠用,
     # 有 ingress host 的話建議填成 https://<ingress host>
-    corsOrigin: ""
+    corsOrigin: "https://lunch-map.betoolman.com"
     marketCronEnabled: "true"
 
 web:
@@ -44,11 +44,11 @@ persistence:
   accessMode: ReadWriteOnce
 
 ingress:
-  enabled: false
-  className: ""
-  host: lunch-map.example.com
-  annotations: {}
-  tls: []
-  # tls:
-  #   - secretName: lunch-map-tls
-  #     hosts: [lunch-map.example.com]
+  enabled: true
+  className: public
+  host: lunch-map.betoolman.com
+  annotations:
+    cert-manager.io/cluster-issuer: issuer
+  tls:
+    - secretName: lunch-map-tls
+      hosts: [lunch-map.betoolman.com]
