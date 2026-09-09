@@ -112,11 +112,11 @@ export function MapPane({ config, parkings, rows, afterRows, selectedShopId, onS
     // 選定餐廳後只畫這一間,其餘餐廳隱藏。
     const shopsToShow = selectedRow ? [selectedRow] : rows;
     for (const r of shopsToShow) {
-      const color = cssVar(r.f.code === 'unknown' ? '--map-shop-noinfo' : '--map-shop');
+      const fillColor = cssVar(r.f.code === 'unknown' ? '--map-shop-noinfo' : '--map-shop');
       const marker = L.circleMarker([r.sh.lat, r.sh.lng], {
         radius: 8,
-        color,
-        fillColor: color,
+        color: '#000000',
+        fillColor,
         fillOpacity: 0.85,
         weight: 2,
         bubblingMouseEvents: false,
