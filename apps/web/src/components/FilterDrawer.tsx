@@ -162,7 +162,6 @@ export function FilterDrawer({ config, shops, ratings, onCopyList }: Props) {
         >
           <option value="travel">交通時間</option>
           <option value="score">大家的評分</option>
-          <option value="usable">午餐可用時間</option>
           <option value="votes">票數</option>
         </select>
         <button className="btn" onClick={() => dispatch({ type: 'TOGGLE_VOTE_MODE' })}>

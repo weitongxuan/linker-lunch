@@ -19,6 +19,7 @@
   --closed:#d1382b;--closedbg:#fdeceb;--closedbar:#e8574a;
   --park:#7c4fc4;  --parkbg:#f4eefb;  --drink:#0f8f86; --dessert:#d43574;
   --map-drink:#7ec8f2;
+  --map-shop:#e6362a; --map-shop-noinfo:#f3a79c;
   --warnbg:#fff8e3; --warnink:#93600a; --warnline:#f3dfa4;
   --star:#f0a324;  --stardim:#f0e6d1;
   --mask:rgba(23,20,16,.5); --toast:#17171a; --toastink:#fffdfa;
@@ -57,7 +58,7 @@ h1{font-family:"Noto Serif TC",serif;font-size:22px;margin:0;font-weight:700;
           padding:4px 9px;width:88px;font-size:12px}
 .me input:hover{border-color:var(--dim)}
 
-.tabs{display:flex;gap:2px;margin-top:16px;border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:2px}
 .tab{border:none;background:transparent;
      padding:9px 2px;font-size:13px;color:var(--dim);
      flex:1 1 0;min-width:0;position:relative;font-weight:600}
@@ -92,6 +93,10 @@ h1{font-family:"Noto Serif TC",serif;font-size:22px;margin:0;font-weight:700;
 .btn.pri{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
 .btn.pri:hover{filter:brightness(1.06);color:#fff}
 .btn.ghost{border-color:transparent;background:transparent;color:var(--dim);padding:4px 7px}
+.searchInput{border:1px solid var(--line);background:var(--soft);border-radius:11px;
+     padding:6px 13px;font-size:12.5px;color:var(--ink);width:160px}
+.searchInput::placeholder{color:var(--dim)}
+.searchInput:focus{outline:none;border-color:var(--accent)}
 .btn.ghost:hover{background:var(--tagbg);border-color:transparent;color:var(--ink2)}
 #fcount:empty{display:none}
 #fcount{display:inline-block;min-width:16px;margin-left:5px;padding:0 4px;border-radius:99px;
@@ -282,6 +287,8 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
 .dmeta{font-size:11.5px;color:var(--dim);grid-column:1}
 .dstars{grid-column:2;justify-self:end}
 .dstars b{font-size:13px}
+.dacts{grid-column:1/-1;display:flex;gap:5px;margin-top:4px}
+.dacts .btn{padding:4px 10px;font-size:11.5px}
 
 /* ---------------- 對話框 ---------------- */
 .mask{position:fixed;inset:0;background:var(--mask);display:none;place-items:center;

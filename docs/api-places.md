@@ -2,7 +2,7 @@
 
 適用範圍:餐廳(shops)、飲料店與甜點店(drinks / desserts)。
 
-- Base URL:本機開發預設 `http://localhost:4000`(見 `docker-compose.yml` 的 `api` service,`PORT=4000`)
+- Base URL: https://lunch-map.betoolman.com/
 - 所有請求 / 回應皆為 `application/json`
 - 沒有身份驗證機制 — 任何能連到這支 API 的人都可以新增/修改,請勿把服務暴露到不受信任的網路
 
@@ -15,12 +15,15 @@
 | 列出所有餐廳 | GET | `/api/shops` |
 | 新增餐廳 | POST | `/api/shops` |
 | 修改餐廳 | PUT | `/api/shops/:id` |
+| 刪除餐廳 | DELETE | `/api/shops/:id` |
 | 列出所有飲料店 | GET | `/api/drinks` |
 | 新增飲料店 | POST | `/api/drinks` |
 | 修改飲料店 | PUT | `/api/drinks/:id` |
+| 刪除飲料店 | DELETE | `/api/drinks/:id` |
 | 列出所有甜點店 | GET | `/api/desserts` |
 | 新增甜點店 | POST | `/api/desserts` |
 | 修改甜點店 | PUT | `/api/desserts/:id` |
+| 刪除甜點店 | DELETE | `/api/desserts/:id` |
 
 drinks / desserts 的欄位結構完全一樣(共用 `AfterPlace` 型別),只是分開的兩張表,用路徑區分。
 
@@ -105,6 +108,18 @@ curl -X PUT http://localhost:4000/api/shops/manual-4b1e5e9a-... \
 - 找不到該 `id` → `404 {"error":"找不到這間店"}`
 - 改完的店名或座標無效 → `400 {"error":"店名跟座標是必填的"}`(例如把 `name` 傳成空字串,或 `lat`/`lng` 傳成無法轉成數字的值)
 
+### 刪除:`DELETE /api/shops/:id`
+
+```bash
+curl -X DELETE http://localhost:4000/api/shops/manual-4b1e5e9a-...
+```
+
+成功回應(`200`):`{"ok":true}`
+
+錯誤:找不到該 `id` → `404 {"error":"找不到這間店"}`
+
+刪除是直接從資料庫移除,沒有回收機制,呼叫前務必跟使用者確認清楚要刪的是哪一筆。
+
 ## 飲料店 / 甜點店(drinks / desserts)
 
 ### 欄位
@@ -147,6 +162,14 @@ curl -X PUT http://localhost:4000/api/drinks/manual-xxxx \
 ```
 
 `/api/drinks/:id` 只能改到 `placeType = "drink"` 的資料,`/api/desserts/:id` 只能改 `"dessert"` 的;id 對到另一種類型會回 `404`。
+
+### 刪除:`DELETE /api/drinks/:id`(或 `/api/desserts/:id`)
+
+```bash
+curl -X DELETE http://localhost:4000/api/drinks/manual-xxxx
+```
+
+成功回應(`200`):`{"ok":true}`。跟修改一樣有 `placeType` 限制:`/api/drinks/:id` 只能刪 `"drink"`,`/api/desserts/:id` 只能刪 `"dessert"`,型別不符或 id 不存在都回 `404 {"error":"找不到這間店"}`。
 
 ## 營業時間格式(`WeeklyHours`)
 
@@ -200,4 +223,4 @@ type WeeklyHours = {
 2. **修改時只送有變動的欄位**,不要整包帶入(尤其別把讀到的 `id`、`needsReview` 等系統欄位原封不動送回去當作要更新的資料 — 端點本來就不處理這些欄位,多送也沒作用)。
 3. **一定要驗證 `lat`/`lng` 是數字**且落在合理範圍(附近沒有座標書寫錯誤,例如經緯度顛倒),送出前可以先用 `Number.isFinite()` 檢查。
 4. **錯誤處理**:留意 `400`(輸入格式錯誤)與 `404`(id 不存在或型別不符,例如把飲料店 id 拿去打 `/api/desserts/:id`),回覆使用者具體原因而不是整包重試。
-5. 若需要「刪除」店家,目前這兩支路由都**沒有** DELETE 端點,尚未支援,不要嘗試呼叫。
+5. **刪除前務必再次確認**:`DELETE` 沒有回收機制,執行前跟使用者複述店名 + id 確認,避免刪錯或把「修改」誤植成「刪除」。

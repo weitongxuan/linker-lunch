@@ -9,7 +9,6 @@ interface Props {
   allRows: Row[];
   visibleRows: Row[];
   config: Config;
-  windowStart: number;
   menus: Record<string, string>;
   drinks: AfterPlace[];
   day: DayKey;
@@ -17,13 +16,12 @@ interface Props {
   onSelectOnMap: (shopId: string) => void;
 }
 
-export function ShopList({ allRows, visibleRows, config, windowStart, menus, drinks, day, nowMinute, onSelectOnMap }: Props) {
+export function ShopList({ allRows, visibleRows, config, menus, drinks, day, nowMinute, onSelectOnMap }: Props) {
   const { state } = useFilters();
 
-  const okCount = allRows.filter((r) => r.f.code === 'ok').length;
-  const tightCount = allRows.filter((r) => r.f.code === 'tight').length;
+  const openCount = allRows.filter((r) => r.f.code === 'open').length;
   const unknownCount = allRows.filter((r) => r.f.code === 'unknown').length;
-  const notTodayCount = allRows.filter((r) => ['not_enough', 'not_lunch', 'closed', 'no_time'].includes(r.f.code)).length;
+  const notAvailableCount = allRows.filter((r) => r.f.code === 'later' || r.f.code === 'closed').length;
   const outOfRangeCount = allRows.filter((r) => r.f.code === 'out_of_range' || r.tier === 'far').length;
 
   const selectedRow = state.sel ? (visibleRows.find((r) => r.sh.id === state.sel) ?? null) : null;
@@ -42,9 +40,7 @@ export function ShopList({ allRows, visibleRows, config, windowStart, menus, dri
   return (
     <>
       <div className="sum" id="count">
-        <b>{okCount}</b> 家吃得到
-        <span className="dot">·</span>
-        <b>{tightCount}</b> 家得晚出門
+        <b>{openCount}</b> 家吃得到
         {unknownCount > 0 && (
           <>
             <span className="dot">·</span>
@@ -53,10 +49,10 @@ export function ShopList({ allRows, visibleRows, config, windowStart, menus, dri
             </span>
           </>
         )}
-        {notTodayCount > 0 && (
+        {notAvailableCount > 0 && (
           <>
             <span className="dot">·</span>
-            <b>{notTodayCount}</b> 家今天不行
+            <b>{notAvailableCount}</b> 家今天不行
           </>
         )}
         {outOfRangeCount > 0 && (
@@ -75,7 +71,6 @@ export function ShopList({ allRows, visibleRows, config, windowStart, menus, dri
             key={row.sh.id}
             row={row}
             config={config}
-            windowStart={windowStart}
             menuText={menus[row.sh.id] ?? ''}
             onSelectOnMap={onSelectOnMap}
             className={selectedRow && row.sh.id !== selectedRow.sh.id ? 'fadeout' : undefined}

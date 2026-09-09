@@ -84,8 +84,6 @@ export interface PriceBand {
 
 export interface Config {
   office: LatLng & { name: string };
-  depart: { start: string; end: string };
-  backBy: string;
   eatMinutes: number;
   priceBands: PriceBand[];
   walkSpeed: number;
@@ -106,31 +104,8 @@ export interface Market {
   src: string;
 }
 
-/** feasibility() 可能回傳的狀態碼,依「有多糟」排序(見 sort.ts 的 RANK) */
-export type FeasibilityCode =
-  | 'ok'
-  | 'tight'
-  | 'unknown'
-  | 'not_enough'
-  | 'not_lunch'
-  | 'closed'
-  | 'no_time'
-  | 'out_of_range';
-
-export interface Feasibility {
-  code: FeasibilityCode;
-  label: string;
-  why?: string;
-  travelMin?: number;
-  usable?: number;
-  seg?: { os: number; oe: number; len: number };
-  winS?: number;
-  winE?: number;
-  suggestDepart?: number;
-  latestDepart?: number;
-}
-
-export type OpenNowCode = 'open' | 'unknown' | 'later' | 'closed';
+/** shop 狀態碼,依「有多糟」排序(見 sort.ts 的 RANK) */
+export type OpenNowCode = 'open' | 'unknown' | 'later' | 'closed' | 'out_of_range';
 
 export interface OpenNowState {
   code: OpenNowCode;

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { currentMood, nowMin, openNowState, randomPick, toMin, todayKey } from '@lunch-map/shared';
+import { currentMood, nowMin, openNowState, randomPick } from '@lunch-map/shared';
 import { useLunchData } from './hooks/useLunchData.js';
 import { useComputedRows, useVisibleRows } from './hooks/useComputedRows.js';
 import { useFilters } from './state/FiltersContext.js';
@@ -19,6 +19,10 @@ export function App() {
   const data = useLunchData();
   const { state, dispatch } = useFilters();
   const [addShopOpen, setAddShopOpen] = useState(false);
+  const editingShop = state.editShopId ? (data.shops.find((s) => s.id === state.editShopId) ?? null) : null;
+  const editingDrink = state.editDrinkId ? (data.drinks.find((d) => d.id === state.editDrinkId) ?? null) : null;
+
+  const nowMinute = nowMin();
 
   const allRows = useComputedRows({
     config: data.config,
@@ -26,17 +30,10 @@ export function App() {
     parkings: data.parkings,
     ratings: data.shopRatings,
     votes: data.votes,
+    nowMinute,
   });
   const visibleRows = useVisibleRows(allRows);
 
-  const windowStart = useMemo(() => {
-    if (!data.config) return 0;
-    const isToday = state.day === todayKey();
-    if (state.useNow && isToday) return nowMin();
-    return toMin(data.config.depart.start);
-  }, [data.config, state.day, state.useNow]);
-
-  const nowMinute = nowMin();
   const afterRows = useMemo(() => {
     const desserts = data.desserts.map((d) => ({ d, lat: d.lat, lng: d.lng, openCode: openNowState(d, state.day, nowMinute).code, kind: 'dessert' as const }));
     const drinks = data.drinks.map((d) => ({ d, lat: d.lat, lng: d.lng, openCode: openNowState(d, state.day, nowMinute).code, kind: 'drink' as const }));
@@ -71,7 +68,7 @@ export function App() {
       const scoreTxt = r.sc.n ? `★${r.sc.avg.toFixed(1)} (${r.sc.n}人)` : '尚無評分';
       return `${i + 1}. ${r.sh.name} — ${travel} / ${r.sh.category.join('、')} / ${scoreTxt}`;
     });
-    const header = data.config ? `${state.day} · ${data.config.depart.start} 出門\n` : '';
+    const header = data.config ? `${state.day}\n` : '';
     const text = header + lines.join('\n') + '\n\n投票請回覆編號';
     navigator.clipboard?.writeText(text).then(
       () => toast('已複製候選清單'),
@@ -87,7 +84,6 @@ export function App() {
     <>
       <Header config={data.config} />
       <Toolbar
-        config={data.config}
         market={data.market}
         onRandomPick={handleRandomPick}
         onOpenAddShop={() => setAddShopOpen(true)}
@@ -101,7 +97,6 @@ export function App() {
             allRows={allRows}
             visibleRows={visibleRows}
             config={data.config}
-            windowStart={windowStart}
             menus={data.menus}
             drinks={data.drinks}
             day={state.day}
@@ -139,6 +134,26 @@ export function App() {
         />
       </main>
       {addShopOpen && <AddShopModal config={data.config} shops={data.shops} drinks={data.drinks} onClose={() => setAddShopOpen(false)} />}
+      {editingShop && (
+        <AddShopModal
+          key={editingShop.id}
+          config={data.config}
+          shops={data.shops}
+          drinks={data.drinks}
+          shop={editingShop}
+          onClose={() => dispatch({ type: 'SET_EDIT_SHOP', id: null })}
+        />
+      )}
+      {editingDrink && (
+        <AddShopModal
+          key={editingDrink.id}
+          config={data.config}
+          shops={data.shops}
+          drinks={data.drinks}
+          drink={editingDrink}
+          onClose={() => dispatch({ type: 'SET_EDIT_DRINK', id: null })}
+        />
+      )}
       <Toast />
     </>
   );

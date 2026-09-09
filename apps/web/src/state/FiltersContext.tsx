@@ -3,7 +3,7 @@ import { DEFAULT_FILTERS, TABS, todayKey } from '@lunch-map/shared';
 import type { DayKey, FilterState, Mood, Tier, Service } from '@lunch-map/shared';
 
 export type ViewMode = 'both' | 'list' | 'map';
-export type SortKey = 'travel' | 'score' | 'usable' | 'votes';
+export type SortKey = 'travel' | 'score' | 'votes';
 export type TravelMode = 'auto' | 'walk' | 'drive';
 
 export interface PickWeight {
@@ -14,7 +14,6 @@ export interface PickWeight {
 export interface UiState {
   day: DayKey;
   mode: TravelMode;
-  useNow: boolean;
   view: ViewMode;
   sort: SortKey;
   filters: FilterState;
@@ -25,10 +24,13 @@ export interface UiState {
   pickWeights: PickWeight[] | null;
   pickTotal: number;
   sel: string | null;
+  editShopId: string | null;
+  editDrinkId: string | null;
   openDetail: Set<string>;
   dismissed: Set<string>;
   secOpen: { desserts: boolean; drinks: boolean };
   filterDrawerOpen: boolean;
+  keyword: string;
 }
 
 function initialDay(): DayKey {
@@ -40,7 +42,6 @@ function initialState(): UiState {
   return {
     day: initialDay(),
     mode: 'auto',
-    useNow: false,
     view: 'both',
     sort: 'travel',
     filters: { ...DEFAULT_FILTERS, tier: new Set(), cat: new Set(), price: new Set(), service: new Set() },
@@ -51,17 +52,19 @@ function initialState(): UiState {
     pickWeights: null,
     pickTotal: 0,
     sel: null,
+    editShopId: null,
+    editDrinkId: null,
     openDetail: new Set(),
     dismissed: new Set(),
     secOpen: { desserts: true, drinks: true },
     filterDrawerOpen: false,
+    keyword: '',
   };
 }
 
 type Action =
   | { type: 'SET_DAY'; day: DayKey }
   | { type: 'SET_MODE'; mode: TravelMode }
-  | { type: 'SET_USE_NOW'; value: boolean }
   | { type: 'SET_VIEW'; view: ViewMode }
   | { type: 'SET_SORT'; sort: SortKey }
   | { type: 'TOGGLE_SET_FILTER'; key: 'tier' | 'cat' | 'price' | 'service'; value: string }
@@ -74,10 +77,13 @@ type Action =
   | { type: 'SET_PICK_EMPTY' }
   | { type: 'CLEAR_PICK' }
   | { type: 'SET_SEL'; id: string | null }
+  | { type: 'SET_EDIT_SHOP'; id: string | null }
+  | { type: 'SET_EDIT_DRINK'; id: string | null }
   | { type: 'TOGGLE_DETAIL'; id: string }
   | { type: 'DISMISS_BANNER'; id: string }
   | { type: 'TOGGLE_SEC_OPEN'; key: 'desserts' | 'drinks' }
-  | { type: 'TOGGLE_FILTER_DRAWER' };
+  | { type: 'TOGGLE_FILTER_DRAWER' }
+  | { type: 'SET_KEYWORD'; keyword: string };
 
 function toggleInSet<T>(set: Set<T>, value: T): Set<T> {
   const next = new Set(set);
@@ -92,8 +98,6 @@ function reducer(state: UiState, action: Action): UiState {
       return { ...state, day: action.day, pickShopId: null, pickWeights: null };
     case 'SET_MODE':
       return { ...state, mode: action.mode, pickShopId: null, pickWeights: null };
-    case 'SET_USE_NOW':
-      return { ...state, useNow: action.value, pickShopId: null, pickWeights: null };
     case 'SET_VIEW':
       return { ...state, view: action.view };
     case 'SET_SORT':
@@ -121,6 +125,10 @@ function reducer(state: UiState, action: Action): UiState {
       return { ...state, pickShopId: null, pickWeights: null, pickEmpty: false };
     case 'SET_SEL':
       return { ...state, sel: action.id };
+    case 'SET_EDIT_SHOP':
+      return { ...state, editShopId: action.id };
+    case 'SET_EDIT_DRINK':
+      return { ...state, editDrinkId: action.id };
     case 'TOGGLE_DETAIL':
       return { ...state, openDetail: toggleInSet(state.openDetail, action.id) };
     case 'DISMISS_BANNER':
@@ -129,6 +137,8 @@ function reducer(state: UiState, action: Action): UiState {
       return { ...state, secOpen: { ...state.secOpen, [action.key]: !state.secOpen[action.key] } };
     case 'TOGGLE_FILTER_DRAWER':
       return { ...state, filterDrawerOpen: !state.filterDrawerOpen };
+    case 'SET_KEYWORD':
+      return { ...state, keyword: action.keyword };
     default:
       return state;
   }

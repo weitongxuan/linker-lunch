@@ -1,7 +1,6 @@
 export * from './types.js';
 export * from './time.js';
 export * from './travel.js';
-export * from './feasibility.js';
 export * from './openNow.js';
 export * from './mood.js';
 export * from './sort.js';

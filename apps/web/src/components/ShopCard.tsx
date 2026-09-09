@@ -1,8 +1,7 @@
 import { Fragment, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { LABEL, ORDER, toMin } from '@lunch-map/shared';
+import { LABEL, ORDER } from '@lunch-map/shared';
 import type { Row } from '../hooks/useComputedRows.js';
-import { Timebar } from './Timebar.js';
 import { useFilters } from '../state/FiltersContext.js';
 import { useMe } from '../hooks/useMe.js';
 import * as places from '../api/places.js';
@@ -18,13 +17,11 @@ import type { Config } from '@lunch-map/shared';
 import type { Message, Photo } from '../api/types.js';
 
 const STCLS: Record<string, string> = {
-  ok: 'ok', tight: 'tight', unknown: 'unk', not_enough: 'tight',
-  not_lunch: 'no', closed: 'closed', no_time: 'no', out_of_range: 'no',
+  open: 'ok', later: 'no', unknown: 'unk', closed: 'closed', out_of_range: 'no',
 };
 
 const BAR_VAR: Record<string, string> = {
-  ok: '--okbar', tight: '--tightbar', unknown: '--nobar', not_enough: '--tightbar',
-  not_lunch: '--nobar', closed: '--closedbar', no_time: '--nobar', out_of_range: '--nobar',
+  open: '--okbar', later: '--nobar', unknown: '--nobar', closed: '--closedbar', out_of_range: '--nobar',
 };
 
 const SERVICE_LABEL: Record<string, string> = { dine_in: '內用', takeout: '外帶', delivery: '外送' };
@@ -39,13 +36,12 @@ function travelText(row: Row): string {
 interface Props {
   row: Row;
   config: Config;
-  windowStart: number;
   menuText: string;
   onSelectOnMap: (shopId: string) => void;
   className?: string;
 }
 
-export function ShopCard({ row, config, windowStart, menuText, onSelectOnMap, className }: Props) {
+export function ShopCard({ row, config, menuText, onSelectOnMap, className }: Props) {
   const { sh, f, sc } = row;
   const { state, dispatch } = useFilters();
   const [me] = useMe();
@@ -126,8 +122,7 @@ export function ShopCard({ row, config, windowStart, menuText, onSelectOnMap, cl
         </span>
       </div>
 
-      <Timebar config={config} day={state.day} windowStart={windowStart} row={row} />
-      <div className="why">{f.why || f.label}</div>
+      {f.note && <div className="why">{f.note}</div>}
 
       <div className="acts" onClick={(e) => e.stopPropagation()}>
         <span className="stars" title={`以「${me || '訪客'}」的身分評分`}>
@@ -143,6 +138,9 @@ export function ShopCard({ row, config, windowStart, menuText, onSelectOnMap, cl
         </span>
         <button className="btn" onClick={() => dispatch({ type: 'TOGGLE_DETAIL', id: sh.id })}>
           {isOpenDetail ? '收起' : '詳情／留言'}
+        </button>
+        <button className="btn ghost" onClick={() => dispatch({ type: 'SET_EDIT_SHOP', id: sh.id })}>
+          ✏️ 修改
         </button>
         <button
           className="btn ghost"

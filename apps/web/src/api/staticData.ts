@@ -1,5 +1,5 @@
 import type { AfterPlace, Config, Market, Parking, Shop } from '@lunch-map/shared';
-import { apiDelete, apiGet, apiPost } from './client.js';
+import { apiDelete, apiGet, apiPost, apiPut } from './client.js';
 import type { OsmImportSummary } from './types.js';
 
 export const getConfig = () => apiGet<Config>('/api/config');
@@ -13,5 +13,8 @@ export const refreshMarket = () => apiPost<Market>('/api/market/refresh');
 export const importOsmShops = () => apiPost<OsmImportSummary>('/api/shops/import/osm');
 export const importOsmParkings = () => apiPost<OsmImportSummary>('/api/parkings/import/osm');
 export const addShop = (shop: Omit<Shop, 'id' | 'needsReview'>) => apiPost<Shop>('/api/shops', shop);
+export const updateShop = (id: string, shop: Omit<Shop, 'id' | 'needsReview'>) => apiPut<Shop>(`/api/shops/${id}`, shop);
 export const deleteShop = (id: string) => apiDelete<{ ok: true }>(`/api/shops/${id}`);
 export const addDrink = (place: Omit<AfterPlace, 'id'>) => apiPost<AfterPlace>('/api/drinks', place);
+export const updateDrink = (id: string, place: Omit<AfterPlace, 'id'>) => apiPut<AfterPlace>(`/api/drinks/${id}`, place);
+export const deleteDrink = (id: string) => apiDelete<{ ok: true }>(`/api/drinks/${id}`);

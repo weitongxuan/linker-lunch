@@ -92,6 +92,16 @@ function afterPlaceRouter(placeType: 'drink' | 'dessert') {
     res.json(toAfterPlace(row));
   });
 
+  router.delete('/:id', async (req, res) => {
+    const existing = await prisma.afterPlace.findUnique({ where: { id: req.params.id } });
+    if (!existing || existing.placeType !== placeType) {
+      res.status(404).json({ error: '找不到這間店' });
+      return;
+    }
+    await prisma.afterPlace.delete({ where: { id: req.params.id } });
+    res.json({ ok: true });
+  });
+
   return router;
 }
 

@@ -6,11 +6,6 @@ import type { AfterPlace, Config, Parking } from '@lunch-map/shared';
 import type { Row } from '../hooks/useComputedRows.js';
 import { useFilters } from '../state/FiltersContext.js';
 
-const CMAP: Record<string, string> = {
-  ok: '--ok', tight: '--tight', unknown: '--nobar', not_enough: '--tight',
-  not_lunch: '--no', closed: '--closed', no_time: '--no', out_of_range: '--no',
-};
-
 /** 選定一間餐廳後,只保留離它最近的這麼多個停車場/飲料店。 */
 const NEAR_LIMIT = 5;
 const FOCUS_ZOOM = 17;
@@ -117,9 +112,9 @@ export function MapPane({ config, parkings, rows, afterRows, selectedShopId, onS
     // 選定餐廳後只畫這一間,其餘餐廳隱藏。
     const shopsToShow = selectedRow ? [selectedRow] : rows;
     for (const r of shopsToShow) {
-      const color = cssVar(CMAP[r.f.code] ?? '--no');
+      const color = cssVar(r.f.code === 'unknown' ? '--map-shop-noinfo' : '--map-shop');
       const marker = L.circleMarker([r.sh.lat, r.sh.lng], {
-        radius: 7,
+        radius: 8,
         color,
         fillColor: color,
         fillOpacity: 0.85,
@@ -127,9 +122,9 @@ export function MapPane({ config, parkings, rows, afterRows, selectedShopId, onS
         bubblingMouseEvents: false,
       });
       const scoreTxt = r.sc.n ? `★ ${r.sc.avg.toFixed(1)} (${r.sc.n} 人)` : '尚無評分';
-      marker.bindPopup(
-        `<b>${r.sh.name}</b><br>${r.f.label} · ${r.sh.category.join('、')}<br>${scoreTxt}<br><span style="color:var(--dim)">${r.f.why ?? ''}</span>`,
-      );
+      const info = `<b>${r.sh.name}</b><br>${r.f.label} · ${r.sh.category.join('、')}<br>${scoreTxt}<br><span style="color:var(--dim)">${r.f.note ?? ''}</span>`;
+      marker.bindTooltip(info, { direction: 'top', sticky: true, opacity: 0.95 });
+      marker.bindPopup(info);
       marker.on('click', () => onSelectShop(r.sh.id));
       marker.addTo(layer);
       markersRef.current[r.sh.id] = marker;
@@ -150,7 +145,7 @@ export function MapPane({ config, parkings, rows, afterRows, selectedShopId, onS
             ? cssVar('--tight')
             : cssVar('--no');
       const color = isDrink ? '#000000' : fillColor;
-      L.circleMarker([a.lat, a.lng], { radius: 5, color, fillColor, fillOpacity: 0.8, weight: isDrink ? 1.5 : 1, bubblingMouseEvents: false })
+      L.circleMarker([a.lat, a.lng], { radius: 7, color, fillColor, fillOpacity: 0.8, weight: isDrink ? 1.5 : 1, bubblingMouseEvents: false })
         .bindPopup(`<b>${a.d.name}</b><br>${a.d.kind}`)
         .addTo(layer);
     }
@@ -195,7 +190,7 @@ export function MapPane({ config, parkings, rows, afterRows, selectedShopId, onS
     const parkingsToShow = selectedRow ? nearestFirst(selectedRow.sh, parkings).slice(0, NEAR_LIMIT) : parkings;
     const parkColor = cssVar('--park');
     for (const p of parkingsToShow) {
-      L.circleMarker([p.lat, p.lng], { radius: 5, color: parkColor, fillColor: parkColor, fillOpacity: 0.5, weight: 1, bubblingMouseEvents: false })
+      L.circleMarker([p.lat, p.lng], { radius: 7, color: parkColor, fillColor: parkColor, fillOpacity: 0.5, weight: 1, bubblingMouseEvents: false })
         .bindPopup(`<b>${p.name}</b><br>${p.kind}${p.spaces ? ` · ${p.spaces} 位` : ''}`)
         .addTo(parkLayer);
     }

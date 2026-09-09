@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { openNowState, tierOf, travelOf } from '@lunch-map/shared';
 import type { AfterPlace, Config, DayKey, Parking } from '@lunch-map/shared';
 import { useMe } from '../hooks/useMe.js';
-import { useRateMutation } from '../hooks/useMutations.js';
+import { useDeleteDrinkMutation, useRateMutation } from '../hooks/useMutations.js';
 import { useFilters } from '../state/FiltersContext.js';
 
 interface RatingMap {
@@ -25,6 +25,8 @@ export function AfterSection({ sectionKey, title, items, config, parkings, day, 
   const [me] = useMe();
   const placeType = sectionKey === 'desserts' ? 'dessert' : 'drink';
   const rateMut = useRateMutation(placeType);
+  const deleteDrinkMut = useDeleteDrinkMutation();
+  const isDrinks = sectionKey === 'drinks';
 
   const rows = useMemo(() => {
     return items
@@ -82,6 +84,22 @@ export function AfterSection({ sectionKey, title, items, config, parkings, day, 
                 );
               })}
             </span>
+            {isDrinks && (
+              <span className="dacts">
+                <button className="btn ghost" onClick={() => dispatch({ type: 'SET_EDIT_DRINK', id: r.d.id })}>
+                  ✏️ 修改
+                </button>
+                <button
+                  className="btn ghost"
+                  disabled={deleteDrinkMut.isPending}
+                  onClick={() => {
+                    if (window.confirm(`確定要刪除「${r.d.name}」嗎?此動作無法復原。`)) deleteDrinkMut.mutate(r.d.id);
+                  }}
+                >
+                  🗑 刪除
+                </button>
+              </span>
+            )}
           </div>
         ))}
     </div>

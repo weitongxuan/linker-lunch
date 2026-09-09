@@ -1,7 +1,17 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { AfterPlace, PlaceType, Shop } from '@lunch-map/shared';
 import * as places from '../api/places.js';
-import { addDrink, addShop, deleteShop, importOsmParkings, importOsmShops, refreshMarket } from '../api/staticData.js';
+import {
+  addDrink,
+  addShop,
+  deleteDrink,
+  deleteShop,
+  importOsmParkings,
+  importOsmShops,
+  refreshMarket,
+  updateDrink,
+  updateShop,
+} from '../api/staticData.js';
 import { toast } from '../lib/toast.js';
 
 /** 星星評分:再點一次同樣的分數會取消評分(跟原本 rate() 的 toggle 行為一樣,由呼叫端判斷)。 */
@@ -77,6 +87,18 @@ export function useAddShopMutation() {
   });
 }
 
+export function useUpdateShopMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, shop }: { id: string; shop: Omit<Shop, 'id' | 'needsReview'> }) => updateShop(id, shop),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['shops'] });
+      toast('店家已更新');
+    },
+    onError: (err) => toast(`更新失敗:${err instanceof Error ? err.message : '未知錯誤'}`),
+  });
+}
+
 export function useDeleteShopMutation() {
   const qc = useQueryClient();
   return useMutation({
@@ -98,6 +120,30 @@ export function useAddDrinkMutation() {
       toast('店家已新增');
     },
     onError: (err) => toast(`新增失敗:${err instanceof Error ? err.message : '未知錯誤'}`),
+  });
+}
+
+export function useUpdateDrinkMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, place }: { id: string; place: Omit<AfterPlace, 'id'> }) => updateDrink(id, place),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['drinks'] });
+      toast('店家已更新');
+    },
+    onError: (err) => toast(`更新失敗:${err instanceof Error ? err.message : '未知錯誤'}`),
+  });
+}
+
+export function useDeleteDrinkMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => deleteDrink(id),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['drinks'] });
+      toast('店家已刪除');
+    },
+    onError: (err) => toast(`刪除失敗:${err instanceof Error ? err.message : '未知錯誤'}`),
   });
 }
 

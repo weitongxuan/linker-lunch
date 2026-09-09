@@ -1,18 +1,15 @@
-import type { Feasibility, FeasibilityCode, ScoreInfo, Service, Shop, Tier, Travel } from './types.js';
+import type { OpenNowCode, OpenNowState, ScoreInfo, Service, Shop, Tier, Travel } from './types.js';
 
-/** 狀態嚴重程度排序:ok 最好,out_of_range 最差,永遠是排序的第一優先鍵 */
-export const RANK: Record<FeasibilityCode, number> = {
-  ok: 0,
-  tight: 1,
+/** 狀態嚴重程度排序:open 最好,out_of_range 最差,永遠是排序的第一優先鍵 */
+export const RANK: Record<OpenNowCode, number> = {
+  open: 0,
+  later: 1,
   unknown: 2,
-  not_enough: 3,
-  not_lunch: 4,
-  closed: 5,
-  no_time: 6,
-  out_of_range: 7,
+  closed: 3,
+  out_of_range: 4,
 };
 
-export type SortKey = 'travel' | 'score' | 'usable' | 'votes';
+export type SortKey = 'travel' | 'score' | 'votes';
 
 export interface FilterState {
   tier: Set<Tier>;
@@ -47,7 +44,8 @@ export interface ComputedRow {
   t: Travel;
   tier: Tier;
   by: 'walk' | 'drive' | null;
-  f: Feasibility;
+  f: OpenNowState;
+  travelMin: number | null;
   sc: ScoreInfo;
   votes: number;
   feasible: boolean;
@@ -85,9 +83,8 @@ export function passFilter(r: ComputedRow, filters: FilterState): boolean {
 
 export function sortRows(rows: ComputedRow[], sortKey: SortKey): ComputedRow[] {
   const K: Record<SortKey, (r: ComputedRow) => number> = {
-    travel: (r) => (r.f.travelMin == null ? 99 : r.f.travelMin),
+    travel: (r) => (r.travelMin == null ? 99 : r.travelMin),
     score: (r) => -(r.sc.n ? r.sc.avg : 0),
-    usable: (r) => -(r.f.usable ?? 0),
     votes: (r) => -r.votes,
   };
   const key = K[sortKey];
@@ -95,7 +92,7 @@ export function sortRows(rows: ComputedRow[], sortKey: SortKey): ComputedRow[] {
     (a, b) =>
       RANK[a.f.code] - RANK[b.f.code] ||
       key(a) - key(b) ||
-      (a.f.travelMin == null ? 99 : a.f.travelMin) - (b.f.travelMin == null ? 99 : b.f.travelMin) ||
+      (a.travelMin == null ? 99 : a.travelMin) - (b.travelMin == null ? 99 : b.travelMin) ||
       a.sh.name.localeCompare(b.sh.name, 'zh-Hant'),
   );
 }

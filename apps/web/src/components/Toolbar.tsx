@@ -1,17 +1,27 @@
+import { useEffect, useState } from 'react';
 import { currentMood, MOOD_TABLE } from '@lunch-map/shared';
-import type { Config, Market } from '@lunch-map/shared';
+import type { Market } from '@lunch-map/shared';
 import { useFilters, type TravelMode } from '../state/FiltersContext.js';
 
 interface Props {
-  config: Config | undefined;
   market: Market | null;
   onRandomPick: () => void;
   onOpenAddShop: () => void;
 }
 
-export function Toolbar({ config, market, onRandomPick, onOpenAddShop }: Props) {
+const SEARCH_DEBOUNCE_MS = 500;
+
+export function Toolbar({ market, onRandomPick, onOpenAddShop }: Props) {
   const { state, dispatch } = useFilters();
   const f = state.filters;
+
+  const [keywordInput, setKeywordInput] = useState(state.keyword);
+
+  useEffect(() => {
+    const id = setTimeout(() => dispatch({ type: 'SET_KEYWORD', keyword: keywordInput }), SEARCH_DEBOUNCE_MS);
+    return () => clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only debounce on local input changes, not on external keyword resets
+  }, [keywordInput]);
 
   const activeFilterCount =
     f.tier.size +
@@ -31,13 +41,6 @@ export function Toolbar({ config, market, onRandomPick, onOpenAddShop }: Props) 
     ? `${market.index} ${market.pct >= 0 ? '+' : ''}${market.pct.toFixed(2)}% · ${mood ? MOOD_TABLE[mood].label : ''}`
     : '沒有行情資料';
 
-  const departLabel = config ? `${config.depart.start}–${config.depart.end}` : '出門';
-  const planText = !config
-    ? ''
-    : state.useNow
-      ? `現在出門,${config.backBy} 前要回來`
-      : `預計 ${config.depart.start} 出門,${config.backBy} 前回來`;
-
   return (
     <div className="bar1">
       <span className="seg">
@@ -51,16 +54,14 @@ export function Toolbar({ config, market, onRandomPick, onOpenAddShop }: Props) 
           </button>
         ))}
       </span>
-      <span className="seg">
-        <button className={!state.useNow ? 'on' : ''} onClick={() => dispatch({ type: 'SET_USE_NOW', value: false })}>
-          {departLabel}
-        </button>
-        <button className={state.useNow ? 'on' : ''} onClick={() => dispatch({ type: 'SET_USE_NOW', value: true })}>
-          現在出門
-        </button>
-      </span>
-      <span className="plan">{planText}</span>
       <span className="spacer" />
+      <input
+        className="searchInput"
+        type="text"
+        value={keywordInput}
+        placeholder="🔍 搜尋店家"
+        onChange={(e) => setKeywordInput(e.target.value)}
+      />
       <button className="btn" onClick={onOpenAddShop}>
         ➕ 新增店家
       </button>
