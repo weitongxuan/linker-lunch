@@ -15,7 +15,8 @@
   --ink:#17171a; --ink2:#55555c; --dim:#9c9a92;
   --tagbg:#f3f2ec; --noteBg:#faf6ee; --trackbg:#efede6; --openband:#ffdca8;
   --accent:#14663c; --accentbg:#e9f5ee; --accentline:#9fcfb4; --pickbg:#f3faf6;
-  --gold:#b8860b; --goldline:#e3c77a;
+  --gold:#c9a227; --goldline:#e3c77a;
+  --licence:#123c28; --licence-ink:#f6f2e4; --licence-dim:#a9bfae;
   --ok:#0f7d4e;    --okbg:#e8f8ee;   --okbar:#2fc37e;
   --tight:#b3790f; --tightbg:#fff5df; --tightbar:#f2ab3d;
   --no:#9c9a92;    --nobg:#f2f1ea;   --nobar:#cac7ba;
@@ -49,28 +50,35 @@ button{cursor:pointer}
 code{font:12px "IBM Plex Mono",ui-monospace,Consolas,monospace;
      background:var(--tagbg);padding:1px 5px;border-radius:4px}
 
-/* ---------------- 頂部 ---------------- */
-header{background:var(--card);border-bottom:1px solid var(--line);padding:18px 24px 0;flex:0 0 auto}
+/* ---------------- 頂部:做成一張「獵人執照卡」 ---------------- */
+header{background:var(--licence);border-bottom:2px solid var(--gold);
+       padding:14px 24px 0;flex:0 0 auto;position:relative}
+/* 卡片右上角的金色截角 */
+header::after{content:'';position:absolute;top:0;right:0;width:26px;height:26px;
+              background:linear-gradient(225deg,var(--gold) 0 50%,transparent 50%)}
 .hrow{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
 h1{font-family:"Noto Serif TC",serif;font-size:22px;margin:0;font-weight:700;
-   letter-spacing:-.01em;text-wrap:balance;
-   padding-bottom:4px;border-bottom:2px solid var(--goldline)}
-.where{font-size:11px;color:var(--dim);letter-spacing:.06em}
-.clock{font-size:11.5px;color:var(--dim);margin-left:auto}
-.me{font-size:11px;color:var(--dim);display:flex;align-items:center;gap:6px}
-.me input{border:1px solid var(--line);background:var(--soft);border-radius:9px;
+   letter-spacing:.01em;text-wrap:balance;color:var(--licence-ink);
+   padding-bottom:4px;border-bottom:2px solid var(--gold)}
+.where{font-size:11px;color:var(--licence-dim);letter-spacing:.06em}
+.clock{font-size:11.5px;color:var(--licence-dim);margin-left:auto}
+.me{font-size:11px;color:var(--licence-dim);display:flex;align-items:center;gap:6px}
+.me input{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);
+          border-radius:9px;color:var(--licence-ink);
           padding:4px 9px;width:88px;font-size:12px}
-.me input:hover{border-color:var(--dim)}
+.me input::placeholder{color:var(--licence-dim)}
+.me input:hover,.me input:focus{border-color:var(--gold);outline:none}
 
 .tabs{display:flex;gap:2px}
 .tab{border:none;background:transparent;
-     padding:9px 2px;font-size:13px;color:var(--dim);
+     padding:9px 2px;font-size:13px;color:var(--licence-dim);
      flex:1 1 0;min-width:0;position:relative;font-weight:600}
 .tab::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;
             background:transparent;border-radius:2px 2px 0 0}
-.tab.on{color:var(--ink)}
+.tab:hover{color:var(--licence-ink)}
+.tab.on{color:var(--gold)}
 .tab.on::after{background:var(--gold)}
-.tab .td{display:block;font-size:9px;color:var(--accent);font-weight:700;letter-spacing:.12em;margin-top:1px}
+.tab .td{display:block;font-size:9px;color:var(--gold);font-weight:700;letter-spacing:.12em;margin-top:1px}
 
 /* ---------------- 主工具列 ---------------- */
 .bar1{background:var(--card);border-bottom:1px solid var(--line);padding:13px 24px;
