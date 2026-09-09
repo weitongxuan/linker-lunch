@@ -93,15 +93,15 @@ export function App() {
       <PickCard rows={allRows} onPickAgain={handleRandomPick} onViewOnMap={handleSelectOnMap} />
       <main className={state.view === 'list' ? 'list-only' : state.view === 'map' ? 'map-only' : ''}>
         <div id="listwrap">
-          <ShopList
-            allRows={allRows}
-            visibleRows={visibleRows}
+          <AfterSection
+            sectionKey="drinks"
+            title="吃飽再買(飲料)"
+            items={data.drinks}
             config={data.config}
-            menus={data.menus}
-            drinks={data.drinks}
+            parkings={data.parkings}
             day={state.day}
             nowMinute={nowMinute}
-            onSelectOnMap={handleSelectOnMap}
+            ratings={data.drinkRatings}
           />
           <AfterSection
             sectionKey="desserts"
@@ -113,15 +113,15 @@ export function App() {
             nowMinute={nowMinute}
             ratings={data.dessertRatings}
           />
-          <AfterSection
-            sectionKey="drinks"
-            title="吃飽再買(飲料)"
-            items={data.drinks}
+          <ShopList
+            allRows={allRows}
+            visibleRows={visibleRows}
             config={data.config}
-            parkings={data.parkings}
+            menus={data.menus}
+            drinks={data.drinks}
             day={state.day}
             nowMinute={nowMinute}
-            ratings={data.drinkRatings}
+            onSelectOnMap={handleSelectOnMap}
           />
         </div>
         <MapPane

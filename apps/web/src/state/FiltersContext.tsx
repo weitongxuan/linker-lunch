@@ -56,7 +56,7 @@ function initialState(): UiState {
     editDrinkId: null,
     openDetail: new Set(),
     dismissed: new Set(),
-    secOpen: { desserts: true, drinks: true },
+    secOpen: { desserts: false, drinks: false },
     filterDrawerOpen: false,
     keyword: '',
   };
