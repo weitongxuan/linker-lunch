@@ -102,27 +102,40 @@ export function App() {
       <PickCard rows={allRows} onPickAgain={handleRandomPick} onViewOnMap={handleSelectOnMap} />
       <main className={state.view === 'list' ? 'list-only' : state.view === 'map' ? 'map-only' : ''}>
         <div id="listwrap">
-          <AfterSection
-            sectionKey="drinks"
-            title="吃飽再買(飲料)"
-            items={data.drinks}
-            config={config}
-            parkings={data.parkings}
-            day={state.day}
-            nowMinute={nowMinute}
-            ratings={data.drinkRatings}
-            previewCount={3}
-          />
-          <ShopList
-            allRows={allRows}
-            visibleRows={visibleRows}
-            config={config}
-            menus={data.menus}
-            drinks={data.drinks}
-            day={state.day}
-            nowMinute={nowMinute}
-            onSelectOnMap={handleSelectOnMap}
-          />
+          <span className="seg listTabs">
+            {(['shops', 'drinks'] as const).map((tab) => (
+              <button
+                key={tab}
+                className={state.listTab === tab ? 'on' : ''}
+                onClick={() => dispatch({ type: 'SET_LIST_TAB', tab })}
+              >
+                {tab === 'shops' ? `餐廳 ${data.shops.length}` : `飲料 ${data.drinks.length}`}
+              </button>
+            ))}
+          </span>
+          {state.listTab === 'shops' ? (
+            <ShopList
+              allRows={allRows}
+              visibleRows={visibleRows}
+              config={config}
+              menus={data.menus}
+              drinks={data.drinks}
+              day={state.day}
+              nowMinute={nowMinute}
+              onSelectOnMap={handleSelectOnMap}
+            />
+          ) : (
+            <AfterSection
+              sectionKey="drinks"
+              title="吃飽再買(飲料)"
+              items={data.drinks}
+              config={config}
+              parkings={data.parkings}
+              day={state.day}
+              nowMinute={nowMinute}
+              ratings={data.drinkRatings}
+            />
+          )}
         </div>
         <MapPane
           config={config}

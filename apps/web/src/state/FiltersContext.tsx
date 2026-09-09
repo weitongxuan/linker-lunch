@@ -3,6 +3,8 @@ import { DEFAULT_FILTERS, TABS, todayKey } from '@lunch-map/shared';
 import type { DayKey, FilterState, Mood, Tier, Service } from '@lunch-map/shared';
 
 export type ViewMode = 'both' | 'list' | 'map';
+/** 清單要看餐廳還是飲料,預設餐廳 */
+export type ListTab = 'shops' | 'drinks';
 export type SortKey = 'travel' | 'score' | 'votes';
 export type TravelMode = 'auto' | 'walk' | 'drive';
 
@@ -15,6 +17,7 @@ export interface UiState {
   day: DayKey;
   mode: TravelMode;
   view: ViewMode;
+  listTab: ListTab;
   sort: SortKey;
   filters: FilterState;
   mood: Mood | 'auto';
@@ -43,6 +46,7 @@ function initialState(): UiState {
     day: initialDay(),
     mode: 'auto',
     view: 'both',
+    listTab: 'shops',
     sort: 'travel',
     filters: { ...DEFAULT_FILTERS, tier: new Set(), cat: new Set(), excludeCat: new Set(), price: new Set(), service: new Set() },
     mood: 'auto',
@@ -56,7 +60,7 @@ function initialState(): UiState {
     editDrinkId: null,
     openDetail: new Set(),
     dismissed: new Set(),
-    secOpen: { desserts: false, drinks: false },
+    secOpen: { desserts: false, drinks: true },
     filterDrawerOpen: false,
     keyword: '',
   };
@@ -66,6 +70,7 @@ type Action =
   | { type: 'SET_DAY'; day: DayKey }
   | { type: 'SET_MODE'; mode: TravelMode }
   | { type: 'SET_VIEW'; view: ViewMode }
+  | { type: 'SET_LIST_TAB'; tab: ListTab }
   | { type: 'SET_SORT'; sort: SortKey }
   | { type: 'TOGGLE_SET_FILTER'; key: 'tier' | 'cat' | 'excludeCat' | 'price' | 'service'; value: string }
   | { type: 'SET_SET_FILTER'; key: 'cat' | 'excludeCat'; values: string[] }
@@ -101,6 +106,8 @@ function reducer(state: UiState, action: Action): UiState {
       return { ...state, mode: action.mode, pickShopId: null, pickWeights: null };
     case 'SET_VIEW':
       return { ...state, view: action.view };
+    case 'SET_LIST_TAB':
+      return { ...state, listTab: action.tab };
     case 'SET_SORT':
       return { ...state, sort: action.sort };
     case 'TOGGLE_SET_FILTER': {

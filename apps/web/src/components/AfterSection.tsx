@@ -18,11 +18,9 @@ interface Props {
   day: DayKey;
   nowMinute: number;
   ratings: RatingMap;
-  /** 收起狀態下仍先露出最近的幾家;省略就是完全收起 */
-  previewCount?: number;
 }
 
-export function AfterSection({ sectionKey, title, items, config, parkings, day, nowMinute, ratings, previewCount = 0 }: Props) {
+export function AfterSection({ sectionKey, title, items, config, parkings, day, nowMinute, ratings }: Props) {
   const { state, dispatch } = useFilters();
   const [me] = useMe();
   const placeType = sectionKey === 'desserts' ? 'dessert' : 'drink';
@@ -50,8 +48,6 @@ export function AfterSection({ sectionKey, title, items, config, parkings, day, 
 
   const openCount = rows.filter((r) => r.open.code === 'open').length;
   const isOpen = state.secOpen[sectionKey];
-  const shownRows = isOpen ? rows : rows.slice(0, previewCount);
-  const hiddenCount = rows.length - shownRows.length;
 
   return (
     <div>
@@ -61,10 +57,10 @@ export function AfterSection({ sectionKey, title, items, config, parkings, day, 
           現在有開 <b>{openCount}</b>/{rows.length} 家
         </span>
         <button className="btn" onClick={() => dispatch({ type: 'TOGGLE_SEC_OPEN', key: sectionKey })}>
-          {isOpen ? '收起' : shownRows.length ? `還有 ${hiddenCount} 家` : '展開'}
+          {isOpen ? '收起' : '展開'}
         </button>
       </div>
-      {shownRows.map((r) => (
+      {(isOpen ? rows : []).map((r) => (
         <div key={r.d.id} className={`drow${r.open.code === 'closed' ? ' dim' : ''}`}>
           <span className="dn">{r.d.name}</span>
           <span className={`dst ${r.open.code}`}>{r.open.note || r.open.label}</span>
