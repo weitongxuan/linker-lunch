@@ -84,6 +84,8 @@ export interface PriceBand {
 
 export interface Config {
   office: LatLng & { name: string };
+  depart: { start: string; end: string };
+  backBy: string;
   eatMinutes: number;
   priceBands: PriceBand[];
   walkSpeed: number;
