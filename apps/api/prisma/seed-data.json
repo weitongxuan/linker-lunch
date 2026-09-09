@@ -527,30 +527,6 @@
    "hoursSource": "Google 地圖（2026-08-21 查，Google 上作「拿笑洋行」，地址濱海一路10號）"
   },
   {
-   "id": "f14",
-   "hoursUnknown": true,
-   "name": "正口味",
-   "lat": 22.622603,
-   "lng": 120.28032,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "note": ""
-  },
-  {
    "id": "f15",
    "name": "紅橋餐廳",
    "lat": 22.62421,
@@ -719,30 +695,6 @@
    "hoursSource": "部落格食記＋駁二官網店家頁（2026-08 查）。週一公休為文中僅列週二~週日之推論"
   },
   {
-   "id": "f20",
-   "hoursUnknown": true,
-   "name": "好貳",
-   "lat": 22.619912,
-   "lng": 120.28189,
-   "category": [
-    "火鍋"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "note": ""
-  },
-  {
    "id": "f21",
    "name": "鐵男食堂",
    "lat": 22.62272,
@@ -844,7 +796,9 @@
     "sat": [],
     "sun": []
    },
-   "note": ""
+   "note": "店名過於籠統,Google 上會對到「鴨肉珍」(另一家已收錄),需現場確認實際店名。",
+   "hoursSource": "Google 地圖（2026-09-09 查，名稱無法唯一比對，待現場確認）",
+   "needsReview": true
   },
   {
    "id": "f27",
@@ -855,7 +809,7 @@
    "category": [
     "其他"
    ],
-   "price": null,
+   "price": 3,
    "service": [
     "dine_in"
    ],
@@ -870,7 +824,9 @@
    },
    "addr": "804高雄市鼓山區鼓南街30號",
    "phone": "+886 7 531 8007",
-   "note": "⚠️ Google 地圖標示「暫時關閉」（2026-08-21 查）。網路上的營業時間各說各話應該就是這個原因。要去先打 07-531-3337。"
+   "note": "暫時關閉。純素餐廳(plant-based whole food),Google 上也沒有營業時間。",
+   "hoursSource": "Google 地圖（2026-09-09 查，鼓南街30號地址相符，狀態「暫時關閉」，Google 無營業時間資料）",
+   "needsReview": true
   },
   {
    "id": "f28",
@@ -1389,7 +1345,9 @@
     "sat": [],
     "sun": []
    },
-   "note": ""
+   "note": "這個座標上查不到店家 —— Google 只有華寧路的分店(僅外帶、17:00 才開),此筆疑為 OSM 舊資料,待現場確認。",
+   "hoursSource": "Google 地圖（2026-09-09 查，座標附近查無此店，需現場確認）",
+   "needsReview": true
   },
   {
    "id": "f39",
@@ -1400,7 +1358,7 @@
    "category": [
     "小吃"
    ],
-   "price": null,
+   "price": 1,
    "service": [
     "dine_in"
    ],
@@ -1414,7 +1372,9 @@
     "sun": []
    },
    "addr": "高雄市鼓山區延平街8號",
-   "note": "⚠️ Google 地圖標示「暫時關閉」（2026-08-21 查，延平街8號）。去之前先確認。"
+   "note": "暫時關閉。Google 上也沒有營業時間。",
+   "hoursSource": "Google 地圖（2026-09-09 查，延平街8號地址相符，狀態「暫時關閉」，Google 無營業時間資料）",
+   "needsReview": true
   },
   {
    "id": "f40",
