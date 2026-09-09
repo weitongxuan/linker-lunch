@@ -40,9 +40,11 @@ interface Props {
   config: Config;
   windowStart: number;
   menuText: string;
+  onSelectOnMap: (shopId: string) => void;
+  className?: string;
 }
 
-export function ShopCard({ row, config, windowStart, menuText }: Props) {
+export function ShopCard({ row, config, windowStart, menuText, onSelectOnMap, className }: Props) {
   const { sh, f, sc } = row;
   const { state, dispatch } = useFilters();
   const [me] = useMe();
@@ -67,9 +69,13 @@ export function ShopCard({ row, config, windowStart, menuText }: Props) {
   const votesInfo = row.votes;
 
   const mySVars = { background: `var(${BAR_VAR[f.code] ?? '--nobar'})` };
+  const isSelected = state.sel === sh.id;
 
   return (
-    <div className="shop">
+    <div
+      className={`shop${isSelected ? ' sel' : ''}${className ? ` ${className}` : ''}`}
+      onClick={() => (isSelected ? dispatch({ type: 'SET_SEL', id: null }) : onSelectOnMap(sh.id))}
+    >
       <div className="bar" style={mySVars} />
       <div className="top">
         <div className="nm">
@@ -82,7 +88,7 @@ export function ShopCard({ row, config, windowStart, menuText }: Props) {
       <div className="spine">
         <span>{travelText(row)}</span>
         <span className="dot">·</span>
-        <span>{sh.category}</span>
+        <span>{sh.category.join('、')}</span>
         {sh.price != null && (
           <>
             <span className="dot">·</span>
@@ -121,7 +127,7 @@ export function ShopCard({ row, config, windowStart, menuText }: Props) {
       <Timebar config={config} day={state.day} windowStart={windowStart} row={row} />
       <div className="why">{f.why || f.label}</div>
 
-      <div className="acts">
+      <div className="acts" onClick={(e) => e.stopPropagation()}>
         <span className="stars" title={`以「${me || '訪客'}」的身分評分`}>
           {[1, 2, 3, 4, 5].map((s) => (
             <b
@@ -150,13 +156,15 @@ export function ShopCard({ row, config, windowStart, menuText }: Props) {
       </div>
 
       {isOpenDetail && (
-        <DetailPanel
-          row={row}
-          menuText={menuText}
-          photos={photosQ.data ?? []}
-          messages={messagesQ.data ?? []}
-          me={me}
-        />
+        <div onClick={(e) => e.stopPropagation()}>
+          <DetailPanel
+            row={row}
+            menuText={menuText}
+            photos={photosQ.data ?? []}
+            messages={messagesQ.data ?? []}
+            me={me}
+          />
+        </div>
       )}
     </div>
   );

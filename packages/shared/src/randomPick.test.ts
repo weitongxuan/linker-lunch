@@ -7,7 +7,7 @@ import type { Shop, WeeklyHours } from './types.js';
 const emptyWeek = (): WeeklyHours => ({ mon: [], tue: [], wed: [], thu: [], fri: [], sat: [], sun: [] });
 
 function shop(id: string): Shop {
-  return { id, name: id, lat: 0, lng: 0, category: '其他', price: null, service: ['dine_in'], note: '', hours: emptyWeek() };
+  return { id, name: id, lat: 0, lng: 0, category: ['其他'], price: null, service: ['dine_in'], note: '', hours: emptyWeek() };
 }
 
 function row(id: string, opts: Partial<{ code: 'ok' | 'tight'; avg: number; n: number }> = {}): ComputedRow {

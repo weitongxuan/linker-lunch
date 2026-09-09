@@ -1,9 +1,9 @@
 {
  "config": {
   "office": {
-   "lat": 22.6208,
-   "lng": 120.2772,
-   "name": "蓬萊路 23 號"
+   "lat": 22.61843010659147,
+   "lng": 120.27825357910609,
+   "name": "目前位置"
   },
   "depart": {
    "start": "11:40",
@@ -91,7 +91,9 @@
    "name": "好市集手作料理",
    "lat": 22.620888,
    "lng": 120.274578,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": 4,
    "service": [
     "dine_in"
@@ -171,7 +173,9 @@
    "name": "義狗倆狗",
    "lat": 22.620491,
    "lng": 120.274575,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": 3,
    "service": [
     "dine_in"
@@ -249,7 +253,9 @@
    "name": "韓珍饌",
    "lat": 22.620365,
    "lng": 120.274454,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -325,7 +331,9 @@
    "name": "新濱．駅前",
    "lat": 22.622167,
    "lng": 120.274475,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": 3,
    "service": [
     "dine_in"
@@ -385,7 +393,9 @@
    "name": "壹貳樓",
    "lat": 22.622515,
    "lng": 120.274699,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": 3,
    "service": [
     "dine_in"
@@ -472,7 +482,9 @@
    "name": "Nachill Hamasen",
    "lat": 22.620126,
    "lng": 120.27383,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": 3,
    "service": [
     "dine_in"
@@ -520,7 +532,9 @@
    "name": "正口味",
    "lat": 22.622603,
    "lng": 120.28032,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -541,7 +555,9 @@
    "name": "紅橋餐廳",
    "lat": 22.62421,
    "lng": 120.277293,
-   "category": "海鮮",
+   "category": [
+    "海鮮"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -593,7 +609,9 @@
    "name": "丹丹漢堡",
    "lat": 22.622354,
    "lng": 120.27329,
-   "category": "速食",
+   "category": [
+    "速食"
+   ],
    "price": null,
    "service": [
     "dine_in",
@@ -650,7 +668,9 @@
    "name": "帕莎蒂娜駁二倉庫餐廳",
    "lat": 22.620565,
    "lng": 120.281881,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -704,7 +724,9 @@
    "name": "好貳",
    "lat": 22.619912,
    "lng": 120.28189,
-   "category": "火鍋",
+   "category": [
+    "火鍋"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -725,7 +747,9 @@
    "name": "鐵男食堂",
    "lat": 22.62272,
    "lng": 120.272631,
-   "category": "小吃",
+   "category": [
+    "小吃"
+   ],
    "price": 2,
    "service": [
     "dine_in"
@@ -804,7 +828,9 @@
    "name": "鴨肉飯",
    "lat": 22.621106,
    "lng": 120.282211,
-   "category": "飯",
+   "category": [
+    "飯"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -826,7 +852,9 @@
    "name": "木葉粗食",
    "lat": 22.620572,
    "lng": 120.271787,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -849,7 +877,9 @@
    "name": "朝月冷麵王",
    "lat": 22.619788,
    "lng": 120.271768,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -927,7 +957,9 @@
    "name": "Ju Tang",
    "lat": 22.620107,
    "lng": 120.271506,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -984,7 +1016,9 @@
    "name": "樓梯腳",
    "lat": 22.624186,
    "lng": 120.272738,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -1042,7 +1076,9 @@
    "name": "尚品牛肉麵",
    "lat": 22.624019,
    "lng": 120.281964,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -1117,7 +1153,9 @@
    "name": "阿珠",
    "lat": 22.619844,
    "lng": 120.271371,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -1139,7 +1177,9 @@
    "name": "火雞肉飯",
    "lat": 22.624779,
    "lng": 120.281316,
-   "category": "飯",
+   "category": [
+    "飯"
+   ],
    "price": null,
    "service": [
     "dine_in",
@@ -1161,7 +1201,9 @@
    "name": "哈瑪星汕頭意麵",
    "lat": 22.62235,
    "lng": 120.271471,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -1220,7 +1262,9 @@
    "name": "美女ㄟ麵店",
    "lat": 22.619739,
    "lng": 120.271337,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -1273,7 +1317,9 @@
    "name": "鴨肉珍 (總店)",
    "lat": 22.624999,
    "lng": 120.281162,
-   "category": "小吃",
+   "category": [
+    "小吃"
+   ],
    "price": 2,
    "service": [
     "dine_in"
@@ -1327,7 +1373,9 @@
    "name": "桶一天下",
    "lat": 22.623041,
    "lng": 120.271663,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -1349,7 +1397,9 @@
    "name": "阿雪小吃部",
    "lat": 22.620168,
    "lng": 120.27116,
-   "category": "小吃",
+   "category": [
+    "小吃"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -1371,7 +1421,9 @@
    "name": "哈瑪星旗魚大王",
    "lat": 22.622299,
    "lng": 120.271113,
-   "category": "海鮮",
+   "category": [
+    "海鮮"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -1431,7 +1483,9 @@
    "name": "珈琲舍道",
    "lat": 22.62387,
    "lng": 120.282636,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -1452,7 +1506,9 @@
    "name": "老先覺(哈瑪星店)",
    "lat": 22.620065,
    "lng": 120.270773,
-   "category": "火鍋",
+   "category": [
+    "火鍋"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -1509,7 +1565,9 @@
    "name": "沃夫餐廚",
    "lat": 22.622719,
    "lng": 120.28338,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -1531,7 +1589,9 @@
    "name": "紹興炒飯",
    "lat": 22.619688,
    "lng": 120.270661,
-   "category": "飯",
+   "category": [
+    "飯"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -1552,7 +1612,9 @@
    "name": "The Borage",
    "lat": 22.624887,
    "lng": 120.282188,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -1595,7 +1657,9 @@
    "name": "小李刀削麵",
    "lat": 22.626828,
    "lng": 120.278603,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -1650,7 +1714,9 @@
    "name": "豆菽叔",
    "lat": 22.623755,
    "lng": 120.283067,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -1701,7 +1767,9 @@
    "name": "鴨肉珍",
    "lat": 22.626006,
    "lng": 120.280787,
-   "category": "小吃",
+   "category": [
+    "小吃"
+   ],
    "price": 2,
    "service": [
     "dine_in"
@@ -1759,7 +1827,9 @@
    "name": "無華私房手作",
    "lat": 22.624903,
    "lng": 120.282195,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -1781,7 +1851,9 @@
    "name": "唯 手工水餃",
    "lat": 22.62465,
    "lng": 120.282458,
-   "category": "水餃",
+   "category": [
+    "水餃"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -1859,7 +1931,9 @@
    "name": "聚客堂",
    "lat": 22.619679,
    "lng": 120.270595,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": 2,
    "service": [
     "dine_in"
@@ -1918,7 +1992,9 @@
    "name": "大胖豬油拌麵",
    "lat": 22.625844,
    "lng": 120.281141,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -1975,7 +2051,9 @@
    "name": "好der",
    "lat": 22.626618,
    "lng": 120.279763,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -2051,7 +2129,9 @@
    "name": "阿木",
    "lat": 22.622411,
    "lng": 120.270582,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -2072,7 +2152,9 @@
    "name": "阿足姨肉粽",
    "lat": 22.622549,
    "lng": 120.270618,
-   "category": "小吃",
+   "category": [
+    "小吃"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -2127,7 +2209,9 @@
    "name": "咖哩大學",
    "lat": 22.62273,
    "lng": 120.270677,
-   "category": "飯",
+   "category": [
+    "飯"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -2148,7 +2232,9 @@
    "name": "阿進切仔麵",
    "lat": 22.624875,
    "lng": 120.282566,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -2206,7 +2292,9 @@
    "name": "發財小館",
    "lat": 22.625517,
    "lng": 120.281926,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -2260,7 +2348,9 @@
    "name": "虱目魚肉燥飯",
    "lat": 22.626034,
    "lng": 120.281278,
-   "category": "飯",
+   "category": [
+    "飯"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -2330,7 +2420,9 @@
    "name": "鼓波洋樓",
    "lat": 22.620853,
    "lng": 120.270164,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -2351,7 +2443,9 @@
    "name": "樂檸漢堡",
    "lat": 22.61758,
    "lng": 120.28338,
-   "category": "速食",
+   "category": [
+    "速食"
+   ],
    "price": 3,
    "service": [
     "dine_in"
@@ -2410,7 +2504,9 @@
    "name": "蘇阿嬤雞蛋酥",
    "lat": 22.619711,
    "lng": 120.270184,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -2468,7 +2564,9 @@
    "name": "新濱町海洋廚房",
    "lat": 22.619018,
    "lng": 120.270161,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": 3,
    "service": [
     "dine_in"
@@ -2528,7 +2626,9 @@
    "name": "小韓國",
    "lat": 22.62327,
    "lng": 120.283999,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -2603,7 +2703,9 @@
    "name": "東京小城",
    "lat": 22.623243,
    "lng": 120.284061,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": 3,
    "service": [
     "dine_in"
@@ -2656,7 +2758,9 @@
    "name": "鴨媽廚房",
    "lat": 22.622722,
    "lng": 120.270065,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -2677,7 +2781,9 @@
    "name": "九記 鹽埕食糖水",
    "lat": 22.625226,
    "lng": 120.283,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -2735,7 +2841,9 @@
    "name": "金記溫州餛飩大王",
    "lat": 22.624439,
    "lng": 120.283758,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -2792,7 +2900,9 @@
    "name": "Big Mama",
    "lat": 22.623918,
    "lng": 120.284073,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -2870,7 +2980,9 @@
    "name": "Lu‘s Liegeois",
    "lat": 22.618618,
    "lng": 120.284508,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -2930,7 +3042,9 @@
    "name": "Thai Funk Cafe",
    "lat": 22.622972,
    "lng": 120.284529,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -2951,7 +3065,9 @@
    "name": "HATA烏克蘭廚房",
    "lat": 22.623236,
    "lng": 120.284432,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": 3,
    "service": [
     "dine_in",
@@ -3012,7 +3128,9 @@
    "name": "大溝頂虱目魚米粉湯",
    "lat": 22.625953,
    "lng": 120.282607,
-   "category": "海鮮",
+   "category": [
+    "海鮮"
+   ],
    "price": 2,
    "service": [
     "dine_in",
@@ -3073,7 +3191,9 @@
    "name": "平津涮牛肉",
    "lat": 22.623659,
    "lng": 120.284329,
-   "category": "火鍋",
+   "category": [
+    "火鍋"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -3158,7 +3278,9 @@
    "name": "MARS睦工場",
    "lat": 22.624018,
    "lng": 120.284172,
-   "category": "速食",
+   "category": [
+    "速食"
+   ],
    "price": 3,
    "service": [
     "dine_in"
@@ -3237,7 +3359,9 @@
    "name": "黑乾溫州餛飩大王",
    "lat": 22.627227,
    "lng": 120.280799,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -3296,7 +3420,9 @@
    "name": "鹽埕地家",
    "lat": 22.624736,
    "lng": 120.283818,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -3317,7 +3443,9 @@
    "name": "胖嘟嘟の鬆餅",
    "lat": 22.623514,
    "lng": 120.284582,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -3370,7 +3498,9 @@
    "name": "黛麗莎",
    "lat": 22.623112,
    "lng": 120.284763,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -3429,7 +3559,9 @@
    "name": "春福",
    "lat": 22.625376,
    "lng": 120.283499,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -3470,7 +3602,9 @@
    "name": "典藏駁二餐廳",
    "lat": 22.61848,
    "lng": 120.284815,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": 4,
    "service": [
     "dine_in"
@@ -3548,7 +3682,9 @@
    "name": "老宋牛肉麵",
    "lat": 22.623072,
    "lng": 120.284851,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -3606,7 +3742,9 @@
    "name": "永和小籠湯包",
    "lat": 22.625191,
    "lng": 120.283718,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -3664,7 +3802,9 @@
    "name": "Jimmy's Hotdog Club",
    "lat": 22.619684,
    "lng": 120.269099,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in",
@@ -3716,7 +3856,9 @@
    "name": "呆呆滷味",
    "lat": 22.624256,
    "lng": 120.284546,
-   "category": "小吃",
+   "category": [
+    "小吃"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -3771,7 +3913,9 @@
    "name": "Hi Hsiao",
    "lat": 22.619685,
    "lng": 120.269037,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -3792,7 +3936,9 @@
    "name": "小西門燉肉飯",
    "lat": 22.625319,
    "lng": 120.28385,
-   "category": "飯",
+   "category": [
+    "飯"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -3880,7 +4026,9 @@
    "name": "Lab駁二",
    "lat": 22.618558,
    "lng": 120.285194,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -3902,7 +4050,9 @@
    "name": "林爸廚房",
    "lat": 22.62417,
    "lng": 120.28473,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": 2,
    "service": [
     "dine_in"
@@ -3926,7 +4076,9 @@
    "name": "拉麵屋",
    "lat": 22.619956,
    "lng": 120.268877,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -3947,7 +4099,9 @@
    "name": "泰老食",
    "lat": 22.625973,
    "lng": 120.283482,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4032,7 +4186,9 @@
    "name": "Pinguo Pinguo",
    "lat": 22.626197,
    "lng": 120.283327,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4054,7 +4210,9 @@
    "name": "飛碟漢堡",
    "lat": 22.626188,
    "lng": 120.283361,
-   "category": "速食",
+   "category": [
+    "速食"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4076,7 +4234,9 @@
    "name": "五零年代",
    "lat": 22.622097,
    "lng": 120.285584,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in",
@@ -4100,7 +4260,9 @@
    "name": "路人",
    "lat": 22.61825,
    "lng": 120.285293,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4122,7 +4284,9 @@
    "name": "不二本一.茶.製作所",
    "lat": 22.624043,
    "lng": 120.285011,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4145,7 +4309,9 @@
    "name": "千義",
    "lat": 22.624063,
    "lng": 120.285092,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4167,7 +4333,9 @@
    "name": "瑞園食堂",
    "lat": 22.6238,
    "lng": 120.285215,
-   "category": "小吃",
+   "category": [
+    "小吃"
+   ],
    "price": 4,
    "service": [
     "dine_in"
@@ -4215,7 +4383,9 @@
    "name": "香港馬興記燒臘臘味專賣店",
    "lat": 22.624113,
    "lng": 120.285156,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4289,7 +4459,9 @@
    "name": "米糕城",
    "lat": 22.625586,
    "lng": 120.284242,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4349,7 +4521,9 @@
    "name": "BOOKING",
    "lat": 22.626578,
    "lng": 120.283308,
-   "category": "小吃",
+   "category": [
+    "小吃"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4372,7 +4546,9 @@
    "name": "Now&Then",
    "lat": 22.618139,
    "lng": 120.285528,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4393,7 +4569,9 @@
    "name": "麵子粉大",
    "lat": 22.624237,
    "lng": 120.285218,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4477,7 +4655,9 @@
    "name": "壽山黑輪",
    "lat": 22.618614,
    "lng": 120.26864,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4537,7 +4717,9 @@
    "name": "茶工業",
    "lat": 22.622451,
    "lng": 120.286053,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in",
@@ -4559,7 +4741,9 @@
    "name": "三山國王廟虱目魚米粉",
    "lat": 22.626133,
    "lng": 120.284277,
-   "category": "海鮮",
+   "category": [
+    "海鮮"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4619,7 +4803,9 @@
    "name": "餓魔牛排館",
    "lat": 22.61871,
    "lng": 120.268293,
-   "category": "牛排",
+   "category": [
+    "牛排"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4641,7 +4827,9 @@
    "name": "松餅先生",
    "lat": 22.625173,
    "lng": 120.285119,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4662,7 +4850,9 @@
    "name": "柒壹喫堂",
    "lat": 22.627179,
    "lng": 120.28351,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4718,7 +4908,9 @@
    "name": "Pizza Rock",
    "lat": 22.622254,
    "lng": 120.286534,
-   "category": "速食",
+   "category": [
+    "速食"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4740,7 +4932,9 @@
    "name": "轉角pizza",
    "lat": 22.618099,
    "lng": 120.268135,
-   "category": "速食",
+   "category": [
+    "速食"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4761,7 +4955,9 @@
    "name": "下一鍋水煎包",
    "lat": 22.620739,
    "lng": 120.286743,
-   "category": "火鍋",
+   "category": [
+    "火鍋"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4818,7 +5014,9 @@
    "name": "塩程鴨肉店",
    "lat": 22.623077,
    "lng": 120.286444,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4840,7 +5038,9 @@
    "name": "1口香香",
    "lat": 22.618353,
    "lng": 120.267961,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4862,7 +5062,9 @@
    "name": "鐘庵日本料理",
    "lat": 22.621794,
    "lng": 120.286762,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4885,7 +5087,9 @@
    "name": "天味小館",
    "lat": 22.622235,
    "lng": 120.2867,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -4906,7 +5110,9 @@
    "name": "大智羊肉",
    "lat": 22.622325,
    "lng": 120.286741,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in",
@@ -4963,7 +5169,9 @@
    "name": "小蘭排骨飯",
    "lat": 22.623067,
    "lng": 120.286645,
-   "category": "飯",
+   "category": [
+    "飯"
+   ],
    "price": 2,
    "service": [
     "dine_in"
@@ -5053,7 +5261,9 @@
    "name": "隨豐餐廳",
    "lat": 22.622701,
    "lng": 120.286765,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5074,7 +5284,9 @@
    "name": "東東火鍋",
    "lat": 22.623774,
    "lng": 120.286475,
-   "category": "火鍋",
+   "category": [
+    "火鍋"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5120,7 +5332,9 @@
    "name": "老蔡虱目魚粥",
    "lat": 22.627455,
    "lng": 120.283909,
-   "category": "海鮮",
+   "category": [
+    "海鮮"
+   ],
    "price": 2,
    "service": [
     "dine_in"
@@ -5180,7 +5394,9 @@
    "name": "樂卡 咪長腳麵專賣店",
    "lat": 22.623011,
    "lng": 120.28681,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5260,7 +5476,9 @@
    "name": "東隆堂",
    "lat": 22.626337,
    "lng": 120.285101,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5282,7 +5500,9 @@
    "name": "木屋家常料理",
    "lat": 22.624184,
    "lng": 120.286685,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5303,7 +5523,9 @@
    "name": "港園牛肉麵",
    "lat": 22.620738,
    "lng": 120.287499,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": 2,
    "service": [
     "dine_in"
@@ -5364,7 +5586,9 @@
    "name": "古典玫瑰園",
    "lat": 22.617899,
    "lng": 120.267283,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5385,7 +5609,9 @@
    "name": "阿英排骨飯",
    "lat": 22.628436,
    "lng": 120.283783,
-   "category": "飯",
+   "category": [
+    "飯"
+   ],
    "price": 2,
    "service": [
     "dine_in"
@@ -5446,7 +5672,9 @@
    "name": "高雄清粥小菜",
    "lat": 22.621346,
    "lng": 120.287786,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5506,7 +5734,9 @@
    "name": "川味小吃",
    "lat": 22.627124,
    "lng": 120.285479,
-   "category": "小吃",
+   "category": [
+    "小吃"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5528,7 +5758,9 @@
    "name": "阿貴私塾",
    "lat": 22.622374,
    "lng": 120.287987,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5551,7 +5783,9 @@
    "name": "香原牛肉麵",
    "lat": 22.62117,
    "lng": 120.288146,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5573,7 +5807,9 @@
    "name": "morris",
    "lat": 22.614642,
    "lng": 120.268371,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5595,7 +5831,9 @@
    "name": "貝殼情人",
    "lat": 22.618254,
    "lng": 120.26647,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5617,7 +5855,9 @@
    "name": "呼嚕叫",
    "lat": 22.617793,
    "lng": 120.266602,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5639,7 +5879,9 @@
    "name": "合羽亭",
    "lat": 22.621394,
    "lng": 120.288325,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5662,7 +5904,9 @@
    "name": "二舅雞翅",
    "lat": 22.613264,
    "lng": 120.269496,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5684,7 +5928,9 @@
    "name": "阿財雞絲麵",
    "lat": 22.629534,
    "lng": 120.283506,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5738,7 +5984,9 @@
    "name": "愛上乾麵",
    "lat": 22.621341,
    "lng": 120.288561,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5760,7 +6008,9 @@
    "name": "茗城小吃",
    "lat": 22.61283,
    "lng": 120.269254,
-   "category": "小吃",
+   "category": [
+    "小吃"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5783,7 +6033,9 @@
    "name": "旗津阿宏壽司",
    "lat": 22.613009,
    "lng": 120.268965,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5806,7 +6058,9 @@
    "name": "蕃茄切盤",
    "lat": 22.61318,
    "lng": 120.268701,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5829,7 +6083,9 @@
    "name": "旗津蔥抓餅",
    "lat": 22.612348,
    "lng": 120.269498,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5851,7 +6107,9 @@
    "name": "渡時機海鮮熱炒店",
    "lat": 22.612604,
    "lng": 120.269161,
-   "category": "海鮮",
+   "category": [
+    "海鮮"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5874,7 +6132,9 @@
    "name": "紅毛仔鱔魚麵",
    "lat": 22.611745,
    "lng": 120.270295,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5896,7 +6156,9 @@
    "name": "阿霞肉圓",
    "lat": 22.611908,
    "lng": 120.269854,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5918,7 +6180,9 @@
    "name": "阿英肉粽",
    "lat": 22.612386,
    "lng": 120.269135,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5941,7 +6205,9 @@
    "name": "正古早味熱炒",
    "lat": 22.613114,
    "lng": 120.268251,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5964,7 +6230,9 @@
    "name": "椪嫂蕃薯椪",
    "lat": 22.61351,
    "lng": 120.267851,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -5987,7 +6255,9 @@
    "name": "胡椒手工魚麵店",
    "lat": 22.613563,
    "lng": 120.267744,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6010,7 +6280,9 @@
    "name": "林家麵店",
    "lat": 22.61362,
    "lng": 120.267571,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6032,7 +6304,9 @@
    "name": "老街小巷咖啡簡餐",
    "lat": 22.612601,
    "lng": 120.268567,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6055,7 +6329,9 @@
    "name": "憨蝦小吃部",
    "lat": 22.613373,
    "lng": 120.267628,
-   "category": "小吃",
+   "category": [
+    "小吃"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6078,7 +6354,9 @@
    "name": "海味鮮活海產",
    "lat": 22.612771,
    "lng": 120.268146,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6101,7 +6379,9 @@
    "name": "不一樣赤肉羹",
    "lat": 22.612564,
    "lng": 120.268346,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6124,7 +6404,9 @@
    "name": "阿惠越南河粉",
    "lat": 22.613958,
    "lng": 120.267029,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6147,7 +6429,9 @@
    "name": "握壽司 鍋燒麵",
    "lat": 22.612464,
    "lng": 120.268289,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6170,7 +6454,9 @@
    "name": "元啡驢派",
    "lat": 22.631197,
    "lng": 120.283503,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6192,7 +6478,9 @@
    "name": "山腳下無名麵店",
    "lat": 22.61374,
    "lng": 120.266746,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6215,7 +6503,9 @@
    "name": "珠古早味碗粿",
    "lat": 22.612413,
    "lng": 120.267967,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6238,7 +6528,9 @@
    "name": "我在中山找到幸福",
    "lat": 22.62488,
    "lng": 120.264688,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6261,7 +6553,9 @@
    "name": "旗后活海產",
    "lat": 22.612046,
    "lng": 120.267763,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6284,7 +6578,9 @@
    "name": "旗後海鮮",
    "lat": 22.611996,
    "lng": 120.2678,
-   "category": "海鮮",
+   "category": [
+    "海鮮"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6306,7 +6602,9 @@
    "name": "鴨角活海產",
    "lat": 22.611899,
    "lng": 120.267874,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6328,7 +6626,9 @@
    "name": "台灣好",
    "lat": 22.623835,
    "lng": 120.290271,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6350,7 +6650,9 @@
    "name": "MORE WORLD 河畔異國餐廳",
    "lat": 22.619886,
    "lng": 120.290673,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6373,7 +6675,9 @@
    "name": "郭家肉粽",
    "lat": 22.631689,
    "lng": 120.28416,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6434,7 +6738,9 @@
    "name": "美味便當",
    "lat": 22.609066,
    "lng": 120.27174,
-   "category": "便當",
+   "category": [
+    "便當"
+   ],
    "price": null,
    "service": [
     "dine_in",
@@ -6457,7 +6763,9 @@
    "name": "老字號烤小卷",
    "lat": 22.611648,
    "lng": 120.267548,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6480,7 +6788,9 @@
    "name": "旅行養分",
    "lat": 22.631687,
    "lng": 120.28448,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6502,7 +6812,9 @@
    "name": "旗津泡菜蝦蛋",
    "lat": 22.611588,
    "lng": 120.26751,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6524,7 +6836,9 @@
    "name": "漢德那斯番菜料理",
    "lat": 22.612218,
    "lng": 120.26665,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6546,7 +6860,9 @@
    "name": "旗津煎鳥蛋",
    "lat": 22.611166,
    "lng": 120.267714,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6568,7 +6884,9 @@
    "name": "阿蘭姨烤魷魚",
    "lat": 22.610913,
    "lng": 120.267899,
-   "category": "海鮮",
+   "category": [
+    "海鮮"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6591,7 +6909,9 @@
    "name": "Subway",
    "lat": 22.62086,
    "lng": 120.291401,
-   "category": "速食",
+   "category": [
+    "速食"
+   ],
    "price": null,
    "service": [
     "dine_in",
@@ -6614,7 +6934,9 @@
    "name": "雄夯",
    "lat": 22.611022,
    "lng": 120.267737,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6636,7 +6958,9 @@
    "name": "旗海園",
    "lat": 22.610712,
    "lng": 120.26798,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6658,7 +6982,9 @@
    "name": "金牌阿妹",
    "lat": 22.610193,
    "lng": 120.268371,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6680,7 +7006,9 @@
    "name": "七美望安",
    "lat": 22.619944,
    "lng": 120.291664,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6738,7 +7066,9 @@
    "name": "舌甘三口",
    "lat": 22.620858,
    "lng": 120.291753,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6760,7 +7090,9 @@
    "name": "二雄",
    "lat": 22.62103,
    "lng": 120.291809,
-   "category": "速食",
+   "category": [
+    "速食"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6783,7 +7115,9 @@
    "name": "黑店",
    "lat": 22.620887,
    "lng": 120.291818,
-   "category": "便當",
+   "category": [
+    "便當"
+   ],
    "price": null,
    "service": [
     "dine_in",
@@ -6806,7 +7140,9 @@
    "name": "山海樓（學生餐廳）",
    "lat": 22.62829,
    "lng": 120.264782,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6828,7 +7164,9 @@
    "name": "大學城",
    "lat": 22.607824,
    "lng": 120.272378,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6850,7 +7188,9 @@
    "name": "天天泰 泰式火鍋",
    "lat": 22.620846,
    "lng": 120.292162,
-   "category": "火鍋",
+   "category": [
+    "火鍋"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6874,7 +7214,9 @@
    "name": "海洋城排骨",
    "lat": 22.607595,
    "lng": 120.272503,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6896,7 +7238,9 @@
    "name": "旗津沙灘吧",
    "lat": 22.610053,
    "lng": 120.267604,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6918,7 +7262,9 @@
    "name": "山水漢堡店",
    "lat": 22.6075,
    "lng": 120.272574,
-   "category": "速食",
+   "category": [
+    "速食"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6940,7 +7286,9 @@
    "name": "天津味水餃",
    "lat": 22.634611,
    "lng": 120.27954,
-   "category": "水餃",
+   "category": [
+    "水餃"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6962,7 +7310,9 @@
    "name": "海中金海產店",
    "lat": 22.608701,
    "lng": 120.26953,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -6985,7 +7335,9 @@
    "name": "幸福食堂",
    "lat": 22.626699,
    "lng": 120.291346,
-   "category": "小吃",
+   "category": [
+    "小吃"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -7007,7 +7359,9 @@
    "name": "大眾鹽酥雞",
    "lat": 22.63371,
    "lng": 120.284052,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -7028,7 +7382,9 @@
    "name": "Acc Café de Coeur真心豆行",
    "lat": 22.630659,
    "lng": 120.288635,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -7082,7 +7438,9 @@
    "name": "米羅學生餐廳",
    "lat": 22.629567,
    "lng": 120.263971,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -7104,7 +7462,9 @@
    "name": "古早味什錦麵",
    "lat": 22.606185,
    "lng": 120.27162,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -7127,7 +7487,9 @@
    "name": "阿美越南美食館",
    "lat": 22.605438,
    "lng": 120.274124,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -7150,7 +7512,9 @@
    "name": "幕府",
    "lat": 22.620603,
    "lng": 120.294172,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -7172,7 +7536,9 @@
    "name": "三義客家麵食館",
    "lat": 22.605419,
    "lng": 120.27394,
-   "category": "麵",
+   "category": [
+    "麵"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -7195,7 +7561,9 @@
    "name": "定食8",
    "lat": 22.634205,
    "lng": 120.286001,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -7217,7 +7585,9 @@
    "name": "貞豪自助餐",
    "lat": 22.624394,
    "lng": 120.293817,
-   "category": "自助餐",
+   "category": [
+    "自助餐"
+   ],
    "price": 2,
    "service": [
     "dine_in"
@@ -7242,7 +7612,9 @@
    "name": "異國料理餐廳",
    "lat": 22.614262,
    "lng": 120.292757,
-   "category": "速食",
+   "category": [
+    "速食"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -7265,7 +7637,9 @@
    "name": "香利盈北平烤鴨",
    "lat": 22.616952,
    "lng": 120.293833,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -7288,7 +7662,9 @@
    "name": "海派平價海產",
    "lat": 22.605623,
    "lng": 120.272014,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"
@@ -7309,7 +7685,9 @@
    "name": "鋒勝 豚王豬排亭",
    "lat": 22.614788,
    "lng": 120.2933,
-   "category": "其他",
+   "category": [
+    "其他"
+   ],
    "price": null,
    "service": [
     "dine_in"

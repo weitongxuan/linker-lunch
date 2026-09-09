@@ -23,7 +23,7 @@ const emptyWeek = (): WeeklyHours => ({ mon: [], tue: [], wed: [], thu: [], fri:
 
 function shopWith(hours: Partial<WeeklyHours>): Shop {
   return {
-    id: 'x', name: '測試店', lat: 0, lng: 0, category: '其他', price: null,
+    id: 'x', name: '測試店', lat: 0, lng: 0, category: ['其他'], price: null,
     service: ['dine_in'], note: '', hours: { ...emptyWeek(), ...hours },
   };
 }

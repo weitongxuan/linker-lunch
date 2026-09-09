@@ -27,6 +27,8 @@ shopsRouter.post('/', async (req, res) => {
 
   const price = [1, 2, 3, 4].includes(Number(body.price)) ? (Number(body.price) as 1 | 2 | 3 | 4) : null;
   const service = Array.isArray(body.service) ? body.service.filter((s: unknown): s is Service => SERVICES.includes(s as Service)) : [];
+  const categoryList = Array.isArray(body.category) ? body.category : [body.category];
+  const category = categoryList.map((c: unknown) => String(c || '').trim()).filter(Boolean);
   const hoursUnknown = !!body.hoursUnknown;
   const hours = hoursUnknown ? EMPTY_HOURS : ((body.hours as WeeklyHours) ?? EMPTY_HOURS);
 
@@ -36,7 +38,7 @@ shopsRouter.post('/', async (req, res) => {
       name,
       lat,
       lng,
-      category: String(body.category || '').trim() || '其他',
+      category: category.length ? category : ['其他'],
       price,
       service,
       hours,

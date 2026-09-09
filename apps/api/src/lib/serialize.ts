@@ -9,13 +9,23 @@ type ShopRow = {
   needsReview: boolean;
 };
 
+function parseCategory(raw: string): string[] {
+  try {
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) return parsed as string[];
+  } catch {
+    // legacy rows stored category as a plain, non-JSON string
+  }
+  return raw ? [raw] : [];
+}
+
 export function toShop(row: ShopRow): Shop {
   return {
     id: row.id,
     name: row.name,
     lat: row.lat,
     lng: row.lng,
-    category: row.category,
+    category: parseCategory(row.category),
     price: (row.price as Shop['price']) ?? null,
     service: JSON.parse(row.service) as Service[],
     hours: JSON.parse(row.hours) as WeeklyHours,
@@ -42,7 +52,7 @@ export function fromShop(shop: Shop) {
     name: shop.name,
     lat: shop.lat,
     lng: shop.lng,
-    category: shop.category,
+    category: JSON.stringify(shop.category),
     price: shop.price,
     service: JSON.stringify(shop.service),
     hours: JSON.stringify(shop.hours),

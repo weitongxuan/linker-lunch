@@ -4,9 +4,10 @@ import { useFilters, type TravelMode } from '../state/FiltersContext.js';
 interface Props {
   rows: Row[];
   onPickAgain: () => void;
+  onViewOnMap: (shopId: string) => void;
 }
 
-export function PickCard({ rows, onPickAgain }: Props) {
+export function PickCard({ rows, onPickAgain, onViewOnMap }: Props) {
   const { state, dispatch } = useFilters();
 
   if (state.pickEmpty) {
@@ -36,7 +37,7 @@ export function PickCard({ rows, onPickAgain }: Props) {
           <div className="eyebrow">今天的推薦 · 抽中機率 {pct}%</div>
           <div className="who">{row.sh.name}</div>
           <div className="sub">
-            {row.f.label} · {row.sh.category}
+            {row.f.label} · {row.sh.category.join('、')}
           </div>
         </div>
         <span className="seg">
@@ -51,6 +52,9 @@ export function PickCard({ rows, onPickAgain }: Props) {
         </button>
         <button className="btn pri" onClick={() => dispatch({ type: 'CLEAR_PICK' })}>
           就這家
+        </button>
+        <button className="btn" onClick={() => onViewOnMap(row.sh.id)}>
+          在地圖上看
         </button>
       </div>
     </div>

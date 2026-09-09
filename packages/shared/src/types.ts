@@ -30,7 +30,7 @@ export interface LatLng {
 export interface Shop extends LatLng {
   id: string;
   name: string;
-  category: string;
+  category: string[];
   price: 1 | 2 | 3 | 4 | null;
   service: Service[];
   hours: WeeklyHours;

@@ -26,8 +26,8 @@ export function currentMood(override: Mood | 'auto', market: Market | null): Moo
 export function priceTilt(place: Shop | AfterPlace): 'fancy' | 'cheap' | null {
   if (place.price != null) return place.price >= 3 ? 'fancy' : 'cheap';
   const category = 'category' in place ? place.category : undefined;
-  if (category && FANCY_CAT.includes(category)) return 'fancy';
-  if (category && CHEAP_CAT.includes(category)) return 'cheap';
+  if (category?.some((c) => FANCY_CAT.includes(c))) return 'fancy';
+  if (category?.some((c) => CHEAP_CAT.includes(c))) return 'cheap';
   return null;
 }
 

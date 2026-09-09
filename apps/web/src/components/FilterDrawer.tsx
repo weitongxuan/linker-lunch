@@ -34,7 +34,7 @@ export function FilterDrawer({ config, shops, ratings, onCopyList }: Props) {
   const refreshMarketMut = useRefreshMarketMutation();
 
   const categories = useMemo(() => {
-    const set = new Set(shops.map((s) => s.category || '其他'));
+    const set = new Set(shops.flatMap((s) => (s.category.length ? s.category : ['其他'])));
     return [...set].sort((a, b) => a.localeCompare(b, 'zh-Hant'));
   }, [shops]);
 

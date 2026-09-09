@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import type { PlaceType, Shop } from '@lunch-map/shared';
+import type { AfterPlace, PlaceType, Shop } from '@lunch-map/shared';
 import * as places from '../api/places.js';
-import { addShop, importOsmParkings, importOsmShops, refreshMarket } from '../api/staticData.js';
+import { addDrink, addShop, importOsmParkings, importOsmShops, refreshMarket } from '../api/staticData.js';
 import { toast } from '../lib/toast.js';
 
 /** 星星評分:再點一次同樣的分數會取消評分(跟原本 rate() 的 toggle 行為一樣,由呼叫端判斷)。 */
@@ -71,6 +71,18 @@ export function useAddShopMutation() {
     mutationFn: (shop: Omit<Shop, 'id' | 'needsReview'>) => addShop(shop),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['shops'] });
+      toast('店家已新增');
+    },
+    onError: (err) => toast(`新增失敗:${err instanceof Error ? err.message : '未知錯誤'}`),
+  });
+}
+
+export function useAddDrinkMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (place: Omit<AfterPlace, 'id'>) => addDrink(place),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['drinks'] });
       toast('店家已新增');
     },
     onError: (err) => toast(`新增失敗:${err instanceof Error ? err.message : '未知錯誤'}`),

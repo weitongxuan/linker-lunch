@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { currentMood, nowMin, randomPick, toMin, todayKey } from '@lunch-map/shared';
+import { currentMood, nowMin, openNowState, randomPick, toMin, todayKey } from '@lunch-map/shared';
 import { useLunchData } from './hooks/useLunchData.js';
 import { useComputedRows, useVisibleRows } from './hooks/useComputedRows.js';
 import { useFilters } from './state/FiltersContext.js';
@@ -10,6 +10,7 @@ import { Banners } from './components/Banners.js';
 import { PickCard } from './components/PickCard.js';
 import { ShopList } from './components/ShopList.js';
 import { AfterSection } from './components/AfterSection.js';
+import { MapPane } from './components/MapPane.js';
 import { AddShopModal } from './components/AddShopModal.js';
 import { Toast } from './components/Toast.js';
 import { toast } from './lib/toast.js';
@@ -36,6 +37,11 @@ export function App() {
   }, [data.config, state.day, state.useNow]);
 
   const nowMinute = nowMin();
+  const afterRows = useMemo(() => {
+    const desserts = data.desserts.map((d) => ({ d, lat: d.lat, lng: d.lng, openCode: openNowState(d, state.day, nowMinute).code, kind: 'dessert' as const }));
+    const drinks = data.drinks.map((d) => ({ d, lat: d.lat, lng: d.lng, openCode: openNowState(d, state.day, nowMinute).code, kind: 'drink' as const }));
+    return [...desserts, ...drinks];
+  }, [data.desserts, data.drinks, state.day, nowMinute]);
 
   const handleRandomPick = () => {
     const pool = visibleRows.filter((r) => r.feasible);
@@ -53,12 +59,17 @@ export function App() {
     }
   };
 
+  const handleSelectOnMap = (shopId: string) => {
+    dispatch({ type: 'SET_SEL', id: shopId });
+    dispatch({ type: 'SET_VIEW', view: 'map' });
+  };
+
   const handleCopyList = () => {
     const feasible = visibleRows.filter((r) => r.feasible);
     const lines = feasible.map((r, i) => {
       const travel = r.by === 'walk' ? `走路 ${r.t.walk} 分` : r.by === 'drive' ? `開車 ${r.t.drive} 分` : '';
       const scoreTxt = r.sc.n ? `★${r.sc.avg.toFixed(1)} (${r.sc.n}人)` : '尚無評分';
-      return `${i + 1}. ${r.sh.name} — ${travel} / ${r.sh.category} / ${scoreTxt}`;
+      return `${i + 1}. ${r.sh.name} — ${travel} / ${r.sh.category.join('、')} / ${scoreTxt}`;
     });
     const header = data.config ? `${state.day} · ${data.config.depart.start} 出門\n` : '';
     const text = header + lines.join('\n') + '\n\n投票請回覆編號';
@@ -83,8 +94,8 @@ export function App() {
       />
       <FilterDrawer config={data.config} shops={data.shops} ratings={data.shopRatings} onCopyList={handleCopyList} />
       <Banners shops={data.shops} />
-      <PickCard rows={allRows} onPickAgain={handleRandomPick} />
-      <main>
+      <PickCard rows={allRows} onPickAgain={handleRandomPick} onViewOnMap={handleSelectOnMap} />
+      <main className={state.view === 'list' ? 'list-only' : state.view === 'map' ? 'map-only' : ''}>
         <div id="listwrap">
           <ShopList
             allRows={allRows}
@@ -92,6 +103,10 @@ export function App() {
             config={data.config}
             windowStart={windowStart}
             menus={data.menus}
+            drinks={data.drinks}
+            day={state.day}
+            nowMinute={nowMinute}
+            onSelectOnMap={handleSelectOnMap}
           />
           <AfterSection
             sectionKey="desserts"
@@ -114,8 +129,16 @@ export function App() {
             ratings={data.drinkRatings}
           />
         </div>
+        <MapPane
+          config={data.config}
+          parkings={data.parkings}
+          rows={visibleRows}
+          afterRows={afterRows}
+          selectedShopId={state.sel}
+          onSelectShop={(id) => dispatch({ type: 'SET_SEL', id })}
+        />
       </main>
-      {addShopOpen && <AddShopModal config={data.config} shops={data.shops} onClose={() => setAddShopOpen(false)} />}
+      {addShopOpen && <AddShopModal config={data.config} shops={data.shops} drinks={data.drinks} onClose={() => setAddShopOpen(false)} />}
       <Toast />
     </>
   );

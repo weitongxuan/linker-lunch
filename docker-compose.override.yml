@@ -1,0 +1,24 @@
+# docker compose up 會自動套用這個檔案(不用加 -f)。
+# 把整個 repo 掛到 /app,搭配 node_modules 的 anonymous volume:
+# - node_modules 是 image build 時裝好的(linux 版,Prisma engine 才對得起來,
+#   不能被 host 的 darwin node_modules 蓋掉)
+# - 其他原始碼都直接反映 host 的即時內容,改了就生效,不用重新 build image
+services:
+  api:
+    build:
+      context: .
+      dockerfile: deploy/docker/api.dev.Dockerfile
+    volumes:
+      - api-data:/app/apps/api/data
+      - .:/app
+      - /app/node_modules
+
+  web:
+    build:
+      context: .
+      dockerfile: deploy/docker/web.dev.Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules

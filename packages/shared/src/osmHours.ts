@@ -101,13 +101,11 @@ const OSM_CAT: [RegExp, string][] = [
   [/rice|飯/i, '飯'],
 ];
 
-/** 用店名+cuisine tag 猜分類,猜不到就丟「其他」,交給人工確認 */
-export function guessCategory(name: string, cuisine?: string): string {
+/** 用店名+cuisine tag 猜分類(可能猜中不只一種),猜不到就丟「其他」,交給人工確認 */
+export function guessCategory(name: string, cuisine?: string): string[] {
   const haystack = `${name} ${cuisine || ''}`;
-  for (const [re, label] of OSM_CAT) {
-    if (re.test(haystack)) return label;
-  }
-  return '其他';
+  const hits = OSM_CAT.filter(([re]) => re.test(haystack)).map(([, label]) => label);
+  return hits.length ? hits : ['其他'];
 }
 
 const PARKING_KIND: Record<string, string> = {

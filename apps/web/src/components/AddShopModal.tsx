@@ -1,12 +1,17 @@
 import { useMemo, useState } from 'react';
-import type { Config, HourRange, Service, Shop, WeeklyHours } from '@lunch-map/shared';
-import { useAddShopMutation } from '../hooks/useMutations.js';
+import type { AfterPlace, Config, HourRange, Service, Shop, WeeklyHours } from '@lunch-map/shared';
+import { useAddDrinkMutation, useAddShopMutation } from '../hooks/useMutations.js';
 
 interface Props {
   config: Config;
   shops: Shop[];
+  drinks: AfterPlace[];
   onClose: () => void;
 }
+
+type NewPlaceType = 'shop' | 'drink';
+
+const PLACE_TYPE_LABEL: Record<NewPlaceType, string> = { shop: '餐廳', drink: '飲料店' };
 
 const SERVICE_LABEL: Record<Service, string> = { dine_in: '內用', takeout: '外帶', delivery: '外送' };
 
@@ -16,16 +21,27 @@ function buildHours(open: string, close: string, weekendClosed: boolean): Weekly
   return { mon: weekday, tue: weekday, wed: weekday, thu: weekday, fri: weekday, sat: weekend, sun: weekend };
 }
 
-export function AddShopModal({ config, shops, onClose }: Props) {
+export function AddShopModal({ config, shops, drinks, onClose }: Props) {
   const addShopMut = useAddShopMutation();
+  const addDrinkMut = useAddDrinkMutation();
+
+  const [placeType, setPlaceType] = useState<NewPlaceType>('shop');
 
   const categories = useMemo(() => {
-    const set = new Set(shops.map((s) => s.category).filter(Boolean));
+    const set = new Set(shops.flatMap((s) => s.category).filter(Boolean));
     return [...set].sort((a, b) => a.localeCompare(b, 'zh-Hant'));
   }, [shops]);
 
+  const kinds = useMemo(() => {
+    const set = new Set(drinks.map((d) => d.kind).filter(Boolean));
+    return [...set].sort((a, b) => a.localeCompare(b, 'zh-Hant'));
+  }, [drinks]);
+
   const [name, setName] = useState('');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState<Set<string>>(new Set());
+  const [newCategory, setNewCategory] = useState('');
+  const [kind, setKind] = useState('');
+  const [newKind, setNewKind] = useState('');
   const [addr, setAddr] = useState('');
   const [lat, setLat] = useState(String(config.office.lat));
   const [lng, setLng] = useState(String(config.office.lng));
@@ -46,6 +62,29 @@ export function AddShopModal({ config, shops, onClose }: Props) {
     });
   };
 
+  const toggleCategory = (c: string) => {
+    setCategory((prev) => {
+      const next = new Set(prev);
+      if (next.has(c)) next.delete(c);
+      else next.add(c);
+      return next;
+    });
+  };
+
+  const addNewCategory = () => {
+    const trimmed = newCategory.trim();
+    if (!trimmed) return;
+    setCategory((prev) => new Set(prev).add(trimmed));
+    setNewCategory('');
+  };
+
+  const addNewKind = () => {
+    const trimmed = newKind.trim();
+    if (!trimmed) return;
+    setKind(trimmed);
+    setNewKind('');
+  };
+
   const handleSubmit = () => {
     const trimmedName = name.trim();
     const latNum = Number(lat);
@@ -56,22 +95,39 @@ export function AddShopModal({ config, shops, onClose }: Props) {
     if (!Number.isFinite(latNum) || !Number.isFinite(lngNum)) {
       return;
     }
-    addShopMut.mutate({
-      name: trimmedName,
-      lat: latNum,
-      lng: lngNum,
-      category: category.trim() || '其他',
-      price,
-      service: [...service],
-      hours: hoursUnknown ? { mon: [], tue: [], wed: [], thu: [], fri: [], sat: [], sun: [] } : buildHours(openTime, closeTime, weekendClosed),
-      hoursUnknown,
-      addr: addr.trim() || undefined,
-      note: note.trim(),
-    });
+    const hours = hoursUnknown ? { mon: [], tue: [], wed: [], thu: [], fri: [], sat: [], sun: [] } : buildHours(openTime, closeTime, weekendClosed);
+
+    if (placeType === 'shop') {
+      addShopMut.mutate({
+        name: trimmedName,
+        lat: latNum,
+        lng: lngNum,
+        category: category.size ? [...category] : ['其他'],
+        price,
+        service: [...service],
+        hours,
+        hoursUnknown,
+        addr: addr.trim() || undefined,
+        note: note.trim(),
+      });
+    } else {
+      addDrinkMut.mutate({
+        name: trimmedName,
+        lat: latNum,
+        lng: lngNum,
+        kind: kind.trim() || '其他',
+        price,
+        hours,
+        hoursUnknown,
+        addr: addr.trim() || undefined,
+        note: note.trim(),
+      });
+    }
     onClose();
   };
 
   const canSubmit = name.trim().length > 0 && Number.isFinite(Number(lat)) && Number.isFinite(Number(lng));
+  const isPending = addShopMut.isPending || addDrinkMut.isPending;
 
   return (
     <div className="mask on" onClick={(e) => e.target === e.currentTarget && onClose()}>
@@ -79,25 +135,72 @@ export function AddShopModal({ config, shops, onClose }: Props) {
         <h2>新增店家</h2>
 
         <div className="crow">
+          <span className="lbl">種類</span>
+          {(['shop', 'drink'] as NewPlaceType[]).map((t) => (
+            <button key={t} className={`chip${placeType === t ? ' on' : ''}`} onClick={() => setPlaceType(t)}>
+              {PLACE_TYPE_LABEL[t]}
+            </button>
+          ))}
+        </div>
+
+        <div className="crow">
           <span className="lbl">店名</span>
           <input className="msginput" value={name} onChange={(e) => setName(e.target.value)} placeholder="必填" />
         </div>
 
-        <div className="crow">
-          <span className="lbl">類別</span>
-          <input
-            className="msginput"
-            list="shop-category-options"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            placeholder="例如:小吃、便當、麵食…"
-          />
-          <datalist id="shop-category-options">
+        {placeType === 'shop' ? (
+          <div className="crow">
+            <span className="lbl">類別</span>
             {categories.map((c) => (
-              <option key={c} value={c} />
+              <button key={c} className={`chip${category.has(c) ? ' on' : ''}`} onClick={() => toggleCategory(c)}>
+                {c}
+              </button>
             ))}
-          </datalist>
-        </div>
+            <input
+              className="msginput"
+              style={{ flex: '0 1 140px' }}
+              value={newCategory}
+              onChange={(e) => setNewCategory(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  addNewCategory();
+                }
+              }}
+              placeholder="新增類別…"
+            />
+            <button className="btn" onClick={addNewCategory}>
+              加入
+            </button>
+            <span className="hint">可複選,沒選就預設「其他」</span>
+          </div>
+        ) : (
+          <div className="crow">
+            <span className="lbl">種類</span>
+            {kinds.map((k) => (
+              <button key={k} className={`chip${kind === k ? ' on' : ''}`} onClick={() => setKind(k)}>
+                {k}
+              </button>
+            ))}
+            <input
+              className="msginput"
+              style={{ flex: '0 1 140px' }}
+              value={newKind}
+              onChange={(e) => setNewKind(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  addNewKind();
+                }
+              }}
+              placeholder="新增種類…"
+            />
+            <button className="btn" onClick={addNewKind}>
+              加入
+            </button>
+            <span className="hint">單選,沒選就預設「其他」</span>
+          </div>
+        )}
 
         <div className="crow">
           <span className="lbl">地址</span>
@@ -123,14 +226,16 @@ export function AddShopModal({ config, shops, onClose }: Props) {
           ))}
         </div>
 
-        <div className="crow">
-          <span className="lbl">服務</span>
-          {(['dine_in', 'takeout', 'delivery'] as Service[]).map((s) => (
-            <button key={s} className={`chip${service.has(s) ? ' on' : ''}`} onClick={() => toggleService(s)}>
-              {SERVICE_LABEL[s]}
-            </button>
-          ))}
-        </div>
+        {placeType === 'shop' && (
+          <div className="crow">
+            <span className="lbl">服務</span>
+            {(['dine_in', 'takeout', 'delivery'] as Service[]).map((s) => (
+              <button key={s} className={`chip${service.has(s) ? ' on' : ''}`} onClick={() => toggleService(s)}>
+                {SERVICE_LABEL[s]}
+              </button>
+            ))}
+          </div>
+        )}
 
         <div className="crow">
           <span className="lbl">時間</span>
@@ -162,8 +267,8 @@ export function AddShopModal({ config, shops, onClose }: Props) {
         <textarea value={note} onChange={(e) => setNote(e.target.value)} placeholder="備註(選填)" />
 
         <div className="crow" style={{ marginTop: 9 }}>
-          <button className="btn pri" disabled={!canSubmit || addShopMut.isPending} onClick={handleSubmit}>
-            {addShopMut.isPending ? '儲存中…' : '儲存'}
+          <button className="btn pri" disabled={!canSubmit || isPending} onClick={handleSubmit}>
+            {isPending ? '儲存中…' : '儲存'}
           </button>
           <button className="btn" onClick={onClose}>
             取消

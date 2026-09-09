@@ -76,6 +76,13 @@ export function Toolbar({ config, market, onRandomPick, onOpenAddShop }: Props) 
       >
         篩選<b>{activeFilterCount > 0 ? activeFilterCount : ''}</b>
       </button>
+      <span className="seg viewSeg">
+        {(['both', 'list', 'map'] as const).map((v) => (
+          <button key={v} className={state.view === v ? 'on' : ''} onClick={() => dispatch({ type: 'SET_VIEW', view: v })}>
+            {v === 'both' ? '雙檢視' : v === 'list' ? '清單' : '地圖'}
+          </button>
+        ))}
+      </span>
     </div>
   );
 }

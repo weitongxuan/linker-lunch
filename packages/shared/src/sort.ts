@@ -67,7 +67,10 @@ export function passFilter(r: ComputedRow, filters: FilterState): boolean {
   if (!passScore(r, filters)) return false;
   if (filters.tier.size && !filters.tier.has(r.tier)) return false;
   if (filters.onlyOpen && !r.feasible && !(filters.showUnknown && r.f.code === 'unknown')) return false;
-  if (filters.cat.size && !filters.cat.has(r.sh.category || '其他')) return false;
+  if (filters.cat.size) {
+    const cats = r.sh.category.length ? r.sh.category : ['其他'];
+    if (!cats.some((c) => filters.cat.has(c))) return false;
+  }
   if (filters.price.size && !filters.price.has(String(r.sh.price || ''))) return false;
   if (filters.service.size) {
     const sv = r.sh.service || [];
