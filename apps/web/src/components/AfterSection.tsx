@@ -18,9 +18,11 @@ interface Props {
   day: DayKey;
   nowMinute: number;
   ratings: RatingMap;
+  /** 收起狀態下仍先露出最近的幾家;省略就是完全收起 */
+  previewCount?: number;
 }
 
-export function AfterSection({ sectionKey, title, items, config, parkings, day, nowMinute, ratings }: Props) {
+export function AfterSection({ sectionKey, title, items, config, parkings, day, nowMinute, ratings, previewCount = 0 }: Props) {
   const { state, dispatch } = useFilters();
   const [me] = useMe();
   const placeType = sectionKey === 'desserts' ? 'dessert' : 'drink';
@@ -48,6 +50,8 @@ export function AfterSection({ sectionKey, title, items, config, parkings, day, 
 
   const openCount = rows.filter((r) => r.open.code === 'open').length;
   const isOpen = state.secOpen[sectionKey];
+  const shownRows = isOpen ? rows : rows.slice(0, previewCount);
+  const hiddenCount = rows.length - shownRows.length;
 
   return (
     <div>
@@ -57,51 +61,50 @@ export function AfterSection({ sectionKey, title, items, config, parkings, day, 
           現在有開 <b>{openCount}</b>/{rows.length} 家
         </span>
         <button className="btn" onClick={() => dispatch({ type: 'TOGGLE_SEC_OPEN', key: sectionKey })}>
-          {isOpen ? '收起' : '展開'}
+          {isOpen ? '收起' : hiddenCount ? `還有 ${hiddenCount} 家` : '展開'}
         </button>
       </div>
-      {isOpen &&
-        rows.map((r) => (
-          <div key={r.d.id} className={`drow${r.open.code === 'closed' ? ' dim' : ''}`}>
-            <span className="dn">{r.d.name}</span>
-            <span className={`dst ${r.open.code}`}>{r.open.note || r.open.label}</span>
-            <span className="dmeta">
-              走路 {r.t.walk} 分 · {r.d.kind}
-              {r.d.note ? ` · ${r.d.note}` : ''}
-              {r.sc.n > 0 ? ` · ★${r.sc.avg.toFixed(1)}` : ''}
-            </span>
-            <span className="dstars">
-              {[1, 2, 3, 4, 5].map((s) => {
-                const mine = ratings[r.d.id]?.who?.[me] ?? 0;
-                return (
-                  <b
-                    key={s}
-                    className={s <= mine ? 'f' : ''}
-                    onClick={() => rateMut.mutate({ placeId: r.d.id, person: me || '訪客', score: s === mine ? 0 : s })}
-                  >
-                    ★
-                  </b>
-                );
-              })}
-            </span>
-            {isDrinks && (
-              <span className="dacts">
-                <button className="btn ghost" onClick={() => dispatch({ type: 'SET_EDIT_DRINK', id: r.d.id })}>
-                  ✏️ 修改
-                </button>
-                <button
-                  className="btn ghost"
-                  disabled={deleteDrinkMut.isPending}
-                  onClick={() => {
-                    if (window.confirm(`確定要刪除「${r.d.name}」嗎?此動作無法復原。`)) deleteDrinkMut.mutate(r.d.id);
-                  }}
+      {shownRows.map((r) => (
+        <div key={r.d.id} className={`drow${r.open.code === 'closed' ? ' dim' : ''}`}>
+          <span className="dn">{r.d.name}</span>
+          <span className={`dst ${r.open.code}`}>{r.open.note || r.open.label}</span>
+          <span className="dmeta">
+            走路 {r.t.walk} 分 · {r.d.kind}
+            {r.d.note ? ` · ${r.d.note}` : ''}
+            {r.sc.n > 0 ? ` · ★${r.sc.avg.toFixed(1)}` : ''}
+          </span>
+          <span className="dstars">
+            {[1, 2, 3, 4, 5].map((s) => {
+              const mine = ratings[r.d.id]?.who?.[me] ?? 0;
+              return (
+                <b
+                  key={s}
+                  className={s <= mine ? 'f' : ''}
+                  onClick={() => rateMut.mutate({ placeId: r.d.id, person: me || '訪客', score: s === mine ? 0 : s })}
                 >
-                  🗑 刪除
-                </button>
-              </span>
-            )}
-          </div>
-        ))}
+                  ★
+                </b>
+              );
+            })}
+          </span>
+          {isDrinks && (
+            <span className="dacts">
+              <button className="btn ghost" onClick={() => dispatch({ type: 'SET_EDIT_DRINK', id: r.d.id })}>
+                ✏️ 修改
+              </button>
+              <button
+                className="btn ghost"
+                disabled={deleteDrinkMut.isPending}
+                onClick={() => {
+                  if (window.confirm(`確定要刪除「${r.d.name}」嗎?此動作無法復原。`)) deleteDrinkMut.mutate(r.d.id);
+                }}
+              >
+                🗑 刪除
+              </button>
+            </span>
+          )}
+        </div>
+      ))}
     </div>
   );
 }

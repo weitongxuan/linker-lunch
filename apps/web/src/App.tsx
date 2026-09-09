@@ -102,6 +102,7 @@ export function App() {
             day={state.day}
             nowMinute={nowMinute}
             ratings={data.drinkRatings}
+            previewCount={3}
           />
           <AfterSection
             sectionKey="desserts"
