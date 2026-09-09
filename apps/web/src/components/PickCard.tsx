@@ -41,9 +41,9 @@ export function PickCard({ rows, onPickAgain, onViewOnMap }: Props) {
           </div>
         </div>
         <span className="seg">
-          {(['auto', 'walk', 'drive'] as TravelMode[]).map((m) => (
+          {(['walk', 'drive'] as TravelMode[]).map((m) => (
             <button key={m} className={state.mode === m ? 'on' : ''} onClick={() => { dispatch({ type: 'SET_MODE', mode: m }); onPickAgain(); }}>
-              {m === 'auto' ? '全部' : m === 'walk' ? '走路' : '開車'}
+              {m === 'walk' ? '走路' : '開車'}
             </button>
           ))}
         </span>

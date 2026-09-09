@@ -60,13 +60,13 @@ export function Toolbar({ market, onRandomPick, onOpenAddShop, myLocation }: Pro
   return (
     <div className="bar1">
       <span className="seg">
-        {(['auto', 'walk', 'drive'] as TravelMode[]).map((m) => (
+        {(['walk', 'drive'] as TravelMode[]).map((m) => (
           <button
             key={m}
             className={state.mode === m ? 'on' : ''}
             onClick={() => dispatch({ type: 'SET_MODE', mode: m })}
           >
-            {m === 'auto' ? '全部' : m === 'walk' ? '走路' : '開車'}
+            {m === 'walk' ? '走路' : '開車'}
           </button>
         ))}
       </span>
