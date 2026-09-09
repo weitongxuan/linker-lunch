@@ -47,6 +47,51 @@ function afterPlaceRouter(placeType: 'drink' | 'dessert') {
     res.status(201).json(toAfterPlace(row));
   });
 
+  router.put('/:id', async (req, res) => {
+    const existing = await prisma.afterPlace.findUnique({ where: { id: req.params.id } });
+    if (!existing || existing.placeType !== placeType) {
+      res.status(404).json({ error: '找不到這間店' });
+      return;
+    }
+    const current = toAfterPlace(existing);
+    const body = req.body ?? {};
+
+    const name = body.name !== undefined ? String(body.name).trim() : current.name;
+    const lat = body.lat !== undefined ? Number(body.lat) : current.lat;
+    const lng = body.lng !== undefined ? Number(body.lng) : current.lng;
+    if (!name || !Number.isFinite(lat) || !Number.isFinite(lng)) {
+      res.status(400).json({ error: '店名跟座標是必填的' });
+      return;
+    }
+
+    const price = body.price !== undefined
+      ? ([1, 2, 3, 4].includes(Number(body.price)) ? (Number(body.price) as 1 | 2 | 3 | 4) : null)
+      : current.price;
+    const hoursUnknown = body.hoursUnknown !== undefined ? !!body.hoursUnknown : current.hoursUnknown;
+    const hours = hoursUnknown ? EMPTY_HOURS : body.hours !== undefined ? (body.hours as WeeklyHours) : current.hours;
+
+    const row = await prisma.afterPlace.update({
+      where: { id: req.params.id },
+      data: fromAfterPlace(
+        {
+          ...current,
+          name,
+          lat,
+          lng,
+          kind: body.kind !== undefined ? String(body.kind).trim() || '其他' : current.kind,
+          price,
+          hours,
+          hoursUnknown,
+          addr: body.addr !== undefined ? (body.addr ? String(body.addr).trim() : undefined) : current.addr,
+          phone: body.phone !== undefined ? (body.phone ? String(body.phone).trim() : undefined) : current.phone,
+          note: body.note !== undefined ? String(body.note).trim() : current.note,
+        },
+        placeType,
+      ),
+    });
+    res.json(toAfterPlace(row));
+  });
+
   return router;
 }
 
