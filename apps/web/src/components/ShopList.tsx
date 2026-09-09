@@ -39,6 +39,9 @@ export function ShopList({ allRows, visibleRows, config, menus, drinks, day, now
 
   return (
     <>
+      <div className="dhead">
+        <span className="dtitle">中午吃這些(餐廳)</span>
+      </div>
       <div className="sum" id="count">
         <b>{openCount}</b> 家吃得到
         {unknownCount > 0 && (

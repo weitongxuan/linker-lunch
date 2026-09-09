@@ -61,7 +61,7 @@ export function AfterSection({ sectionKey, title, items, config, parkings, day, 
           現在有開 <b>{openCount}</b>/{rows.length} 家
         </span>
         <button className="btn" onClick={() => dispatch({ type: 'TOGGLE_SEC_OPEN', key: sectionKey })}>
-          {isOpen ? '收起' : hiddenCount ? `還有 ${hiddenCount} 家` : '展開'}
+          {isOpen ? '收起' : shownRows.length ? `還有 ${hiddenCount} 家` : '展開'}
         </button>
       </div>
       {shownRows.map((r) => (
