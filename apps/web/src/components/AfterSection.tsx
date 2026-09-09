@@ -39,7 +39,7 @@ export function AfterSection({ sectionKey, title, items, config, parkings, day, 
       })
       .filter((r) => r.tier !== 'far')
       .sort((a, b) => {
-        const order = { open: 0, later: 1, unknown: 2, closed: 3 } as const;
+        const order = { open: 0, later: 1, unknown: 2, closed: 3, out_of_range: 4 } as const;
         return order[a.open.code] - order[b.open.code] || a.t.walk - b.t.walk || a.d.name.localeCompare(b.d.name, 'zh-Hant');
       });
   }, [items, parkings, config, day, nowMinute, ratings]);
