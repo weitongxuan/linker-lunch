@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { currentMood, nowMin, openNowState, randomPick } from '@lunch-map/shared';
 import { useLunchData } from './hooks/useLunchData.js';
+import { useMyLocation } from './hooks/useMyLocation.js';
 import { useComputedRows, useVisibleRows } from './hooks/useComputedRows.js';
 import { useFilters } from './state/FiltersContext.js';
 import { Header } from './components/Header.js';
@@ -23,9 +24,16 @@ export function App() {
   const editingDrink = state.editDrinkId ? (data.drinks.find((d) => d.id === state.editDrinkId) ?? null) : null;
 
   const nowMinute = nowMin();
+  const myLocation = useMyLocation();
+
+  /** 定位成功就用我的位置當距離原點,否則沿用辦公室座標 */
+  const config = useMemo(() => {
+    if (!data.config || !myLocation.coords) return data.config;
+    return { ...data.config, office: { ...myLocation.coords, name: '我的位置' } };
+  }, [data.config, myLocation.coords]);
 
   const allRows = useComputedRows({
-    config: data.config,
+    config,
     shops: data.shops,
     parkings: data.parkings,
     ratings: data.shopRatings,
@@ -68,7 +76,7 @@ export function App() {
       const scoreTxt = r.sc.n ? `★${r.sc.avg.toFixed(1)} (${r.sc.n}人)` : '尚無評分';
       return `${i + 1}. ${r.sh.name} — ${travel} / ${r.sh.category.join('、')} / ${scoreTxt}`;
     });
-    const header = data.config ? `${state.day}\n` : '';
+    const header = config ? `${state.day}\n` : '';
     const text = header + lines.join('\n') + '\n\n投票請回覆編號';
     navigator.clipboard?.writeText(text).then(
       () => toast('已複製候選清單'),
@@ -76,19 +84,20 @@ export function App() {
     );
   };
 
-  if (data.isLoading || !data.config) {
+  if (data.isLoading || !config) {
     return <div style={{ padding: 24 }}>載入中…</div>;
   }
 
   return (
     <>
-      <Header config={data.config} />
+      <Header config={config} />
       <Toolbar
         market={data.market}
         onRandomPick={handleRandomPick}
         onOpenAddShop={() => setAddShopOpen(true)}
+        myLocation={myLocation}
       />
-      <FilterDrawer config={data.config} shops={data.shops} ratings={data.shopRatings} onCopyList={handleCopyList} />
+      <FilterDrawer config={config} shops={data.shops} ratings={data.shopRatings} onCopyList={handleCopyList} />
       <Banners shops={data.shops} />
       <PickCard rows={allRows} onPickAgain={handleRandomPick} onViewOnMap={handleSelectOnMap} />
       <main className={state.view === 'list' ? 'list-only' : state.view === 'map' ? 'map-only' : ''}>
@@ -97,27 +106,17 @@ export function App() {
             sectionKey="drinks"
             title="吃飽再買(飲料)"
             items={data.drinks}
-            config={data.config}
+            config={config}
             parkings={data.parkings}
             day={state.day}
             nowMinute={nowMinute}
             ratings={data.drinkRatings}
             previewCount={3}
           />
-          <AfterSection
-            sectionKey="desserts"
-            title="吃飽再吃(甜點)"
-            items={data.desserts}
-            config={data.config}
-            parkings={data.parkings}
-            day={state.day}
-            nowMinute={nowMinute}
-            ratings={data.dessertRatings}
-          />
           <ShopList
             allRows={allRows}
             visibleRows={visibleRows}
-            config={data.config}
+            config={config}
             menus={data.menus}
             drinks={data.drinks}
             day={state.day}
@@ -126,7 +125,7 @@ export function App() {
           />
         </div>
         <MapPane
-          config={data.config}
+          config={config}
           parkings={data.parkings}
           rows={visibleRows}
           afterRows={afterRows}
@@ -134,11 +133,11 @@ export function App() {
           onSelectShop={(id) => dispatch({ type: 'SET_SEL', id })}
         />
       </main>
-      {addShopOpen && <AddShopModal config={data.config} shops={data.shops} drinks={data.drinks} onClose={() => setAddShopOpen(false)} />}
+      {addShopOpen && <AddShopModal config={config} shops={data.shops} drinks={data.drinks} onClose={() => setAddShopOpen(false)} />}
       {editingShop && (
         <AddShopModal
           key={editingShop.id}
-          config={data.config}
+          config={config}
           shops={data.shops}
           drinks={data.drinks}
           shop={editingShop}
@@ -148,7 +147,7 @@ export function App() {
       {editingDrink && (
         <AddShopModal
           key={editingDrink.id}
-          config={data.config}
+          config={config}
           shops={data.shops}
           drinks={data.drinks}
           drink={editingDrink}
