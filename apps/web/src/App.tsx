@@ -109,13 +109,12 @@ export function App() {
                 className={state.listTab === tab ? 'on' : ''}
                 onClick={() => dispatch({ type: 'SET_LIST_TAB', tab })}
               >
-                {tab === 'shops' ? `餐廳 ${data.shops.length}` : `飲料 ${data.drinks.length}`}
+                {tab === 'shops' ? '餐廳' : '飲料'}
               </button>
             ))}
           </span>
           {state.listTab === 'shops' ? (
             <ShopList
-              allRows={allRows}
               visibleRows={visibleRows}
               config={config}
               menus={data.menus}
