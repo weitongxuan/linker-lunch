@@ -88,13 +88,22 @@ export function MapPane({ config, parkings, rows, afterRows, selectedShopId, onS
   }, [onSelectShop]);
 
   // 選定餐廳時,地圖 focus 過去;取消選取時回到原本的總覽視角。
+  // 手機版在「僅列表」畫面時 #mapwrap 是 display:none(容器尺寸為 0),
+  // 這時呼叫 flyTo 會讓 Leaflet 的動畫運算(除以容器尺寸)壞掉、把整頁卡死變空白,
+  // 所以容器不可見時改用沒有動畫的 setView。
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
-    if (selectedRow) {
-      map.flyTo([selectedRow.sh.lat, selectedRow.sh.lng], FOCUS_ZOOM, { duration: 0.5 });
+    const size = map.getSize();
+    const canAnimate = size.x > 0 && size.y > 0;
+    const target: [number, number] = selectedRow
+      ? [selectedRow.sh.lat, selectedRow.sh.lng]
+      : [config.office.lat, config.office.lng];
+    const zoom = selectedRow ? FOCUS_ZOOM : 15;
+    if (canAnimate) {
+      map.flyTo(target, zoom, { duration: 0.5 });
     } else {
-      map.flyTo([config.office.lat, config.office.lng], 15, { duration: 0.5 });
+      map.setView(target, zoom, { animate: false });
     }
   }, [selectedRow, config]);
 

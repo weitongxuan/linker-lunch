@@ -8,6 +8,7 @@ import { useMe } from '../hooks/useMe.js';
 import * as places from '../api/places.js';
 import {
   useAddMessageMutation,
+  useDeleteShopMutation,
   useRateMutation,
   useSetMenuMutation,
   useUploadPhotoMutation,
@@ -52,6 +53,7 @@ export function ShopCard({ row, config, windowStart, menuText, onSelectOnMap, cl
 
   const rateMut = useRateMutation('shop');
   const voteMut = useVoteMutation('shop');
+  const deleteMut = useDeleteShopMutation();
 
   const photosQ = useQuery({
     queryKey: ['photos', 'shop', sh.id],
@@ -141,6 +143,15 @@ export function ShopCard({ row, config, windowStart, menuText, onSelectOnMap, cl
         </span>
         <button className="btn" onClick={() => dispatch({ type: 'TOGGLE_DETAIL', id: sh.id })}>
           {isOpenDetail ? '收起' : '詳情／留言'}
+        </button>
+        <button
+          className="btn ghost"
+          disabled={deleteMut.isPending}
+          onClick={() => {
+            if (window.confirm(`確定要刪除「${sh.name}」嗎?此動作無法復原。`)) deleteMut.mutate(sh.id);
+          }}
+        >
+          🗑 刪除
         </button>
         {state.voteMode && (
           <span className="votebox">

@@ -100,6 +100,16 @@ shopsRouter.put('/:id', async (req, res) => {
   res.json(toShop(row));
 });
 
+shopsRouter.delete('/:id', async (req, res) => {
+  const existing = await prisma.shop.findUnique({ where: { id: req.params.id } });
+  if (!existing) {
+    res.status(404).json({ error: '找不到這間店' });
+    return;
+  }
+  await prisma.shop.delete({ where: { id: req.params.id } });
+  res.json({ ok: true });
+});
+
 shopsRouter.post('/import/osm', async (_req, res) => {
   const cfgRow = await prisma.config.findUnique({ where: { id: 1 } });
   if (!cfgRow) {
