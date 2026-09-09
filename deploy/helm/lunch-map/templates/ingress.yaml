@@ -21,6 +21,20 @@ spec:
     - host: {{ .Values.ingress.host }}
       http:
         paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "lunch-map.apiName" . }}
+                port:
+                  number: {{ .Values.api.port }}
+          - path: /photos
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "lunch-map.apiName" . }}
+                port:
+                  number: {{ .Values.api.port }}
           - path: /
             pathType: Prefix
             backend:
