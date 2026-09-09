@@ -1,6 +1,5 @@
 import type { Config } from '@lunch-map/shared';
 import type { Row } from '../hooks/useComputedRows.js';
-import type { Report } from '../api/types.js';
 import { ShopCard } from './ShopCard.js';
 
 interface Props {
@@ -9,15 +8,13 @@ interface Props {
   config: Config;
   windowStart: number;
   menus: Record<string, string>;
-  reports: Record<string, Report[]>;
-  onSelectOnMap: (shopId: string) => void;
 }
 
-export function ShopList({ allRows, visibleRows, config, windowStart, menus, reports, onSelectOnMap }: Props) {
+export function ShopList({ allRows, visibleRows, config, windowStart, menus }: Props) {
   const okCount = allRows.filter((r) => r.f.code === 'ok').length;
   const tightCount = allRows.filter((r) => r.f.code === 'tight').length;
   const unknownCount = allRows.filter((r) => r.f.code === 'unknown').length;
-  const notTodayCount = allRows.filter((r) => ['not_enough', 'not_lunch', 'closed', 'temp', 'no_time'].includes(r.f.code)).length;
+  const notTodayCount = allRows.filter((r) => ['not_enough', 'not_lunch', 'closed', 'no_time'].includes(r.f.code)).length;
   const outOfRangeCount = allRows.filter((r) => r.f.code === 'out_of_range' || r.tier === 'far').length;
 
   return (
@@ -58,8 +55,6 @@ export function ShopList({ allRows, visibleRows, config, windowStart, menus, rep
             config={config}
             windowStart={windowStart}
             menuText={menus[row.sh.id] ?? ''}
-            reports={reports[row.sh.id] ?? []}
-            onSelectOnMap={onSelectOnMap}
           />
         ))}
       </div>

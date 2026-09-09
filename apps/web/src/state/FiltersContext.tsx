@@ -2,7 +2,6 @@ import { createContext, useContext, useMemo, useReducer, type ReactNode } from '
 import { DEFAULT_FILTERS, TABS, todayKey } from '@lunch-map/shared';
 import type { DayKey, FilterState, Mood, Tier, Service } from '@lunch-map/shared';
 
-export type ViewMode = 'both' | 'list' | 'map';
 export type SortKey = 'travel' | 'score' | 'usable' | 'votes';
 export type TravelMode = 'auto' | 'walk' | 'drive';
 
@@ -15,7 +14,6 @@ export interface UiState {
   day: DayKey;
   mode: TravelMode;
   useNow: boolean;
-  view: ViewMode;
   sort: SortKey;
   filters: FilterState;
   mood: Mood | 'auto';
@@ -24,7 +22,6 @@ export interface UiState {
   pickEmpty: boolean;
   pickWeights: PickWeight[] | null;
   pickTotal: number;
-  sel: string | null;
   openDetail: Set<string>;
   dismissed: Set<string>;
   secOpen: { desserts: boolean; drinks: boolean };
@@ -41,7 +38,6 @@ function initialState(): UiState {
     day: initialDay(),
     mode: 'auto',
     useNow: false,
-    view: 'both',
     sort: 'travel',
     filters: { ...DEFAULT_FILTERS, tier: new Set(), cat: new Set(), price: new Set(), service: new Set() },
     mood: 'auto',
@@ -50,7 +46,6 @@ function initialState(): UiState {
     pickEmpty: false,
     pickWeights: null,
     pickTotal: 0,
-    sel: null,
     openDetail: new Set(),
     dismissed: new Set(),
     secOpen: { desserts: true, drinks: true },
@@ -62,7 +57,6 @@ type Action =
   | { type: 'SET_DAY'; day: DayKey }
   | { type: 'SET_MODE'; mode: TravelMode }
   | { type: 'SET_USE_NOW'; value: boolean }
-  | { type: 'SET_VIEW'; view: ViewMode }
   | { type: 'SET_SORT'; sort: SortKey }
   | { type: 'TOGGLE_SET_FILTER'; key: 'tier' | 'cat' | 'price' | 'service'; value: string }
   | { type: 'SET_BOOL_FILTER'; key: 'onlyOpen' | 'showUnknown' | 'hideBad' | 'hideUnrated'; value: boolean }
@@ -73,7 +67,6 @@ type Action =
   | { type: 'SET_PICK'; shopId: string | null; weights: PickWeight[]; total: number }
   | { type: 'SET_PICK_EMPTY' }
   | { type: 'CLEAR_PICK' }
-  | { type: 'SET_SEL'; id: string | null }
   | { type: 'TOGGLE_DETAIL'; id: string }
   | { type: 'DISMISS_BANNER'; id: string }
   | { type: 'TOGGLE_SEC_OPEN'; key: 'desserts' | 'drinks' }
@@ -94,8 +87,6 @@ function reducer(state: UiState, action: Action): UiState {
       return { ...state, mode: action.mode, pickShopId: null, pickWeights: null };
     case 'SET_USE_NOW':
       return { ...state, useNow: action.value, pickShopId: null, pickWeights: null };
-    case 'SET_VIEW':
-      return { ...state, view: action.view };
     case 'SET_SORT':
       return { ...state, sort: action.sort };
     case 'TOGGLE_SET_FILTER': {
@@ -119,8 +110,6 @@ function reducer(state: UiState, action: Action): UiState {
       return { ...state, pickShopId: null, pickWeights: null, pickEmpty: true };
     case 'CLEAR_PICK':
       return { ...state, pickShopId: null, pickWeights: null, pickEmpty: false };
-    case 'SET_SEL':
-      return { ...state, sel: action.id };
     case 'TOGGLE_DETAIL':
       return { ...state, openDetail: toggleInSet(state.openDetail, action.id) };
     case 'DISMISS_BANNER':

@@ -1,18 +1,13 @@
 import type { Row } from '../hooks/useComputedRows.js';
 import { useFilters, type TravelMode } from '../state/FiltersContext.js';
-import { useMarkEatenMutation } from '../hooks/useMutations.js';
-import { useMe } from '../hooks/useMe.js';
 
 interface Props {
   rows: Row[];
   onPickAgain: () => void;
-  onViewOnMap: (shopId: string) => void;
 }
 
-export function PickCard({ rows, onPickAgain, onViewOnMap }: Props) {
+export function PickCard({ rows, onPickAgain }: Props) {
   const { state, dispatch } = useFilters();
-  const [me] = useMe();
-  const eatenMut = useMarkEatenMutation('shop');
 
   if (state.pickEmpty) {
     return (
@@ -42,7 +37,6 @@ export function PickCard({ rows, onPickAgain, onViewOnMap }: Props) {
           <div className="who">{row.sh.name}</div>
           <div className="sub">
             {row.f.label} · {row.sh.category}
-            {row.ate != null && row.ate < 7 ? ` · ${row.ate === 0 ? '今天吃過' : `${row.ate} 天前吃過`}` : ''}
           </div>
         </div>
         <span className="seg">
@@ -55,17 +49,8 @@ export function PickCard({ rows, onPickAgain, onViewOnMap }: Props) {
         <button className="btn" onClick={onPickAgain}>
           換一家
         </button>
-        <button
-          className="btn pri"
-          onClick={() => {
-            eatenMut.mutate({ placeId: row.sh.id, person: me || '訪客' });
-            dispatch({ type: 'CLEAR_PICK' });
-          }}
-        >
-          就這家,記錄下來
-        </button>
-        <button className="btn" onClick={() => onViewOnMap(row.sh.id)}>
-          在地圖上看
+        <button className="btn pri" onClick={() => dispatch({ type: 'CLEAR_PICK' })}>
+          就這家
         </button>
       </div>
     </div>

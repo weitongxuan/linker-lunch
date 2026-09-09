@@ -12,3 +12,4 @@ export const getMarket = () => apiGet<Market>('/api/market').catch(() => null);
 export const refreshMarket = () => apiPost<Market>('/api/market/refresh');
 export const importOsmShops = () => apiPost<OsmImportSummary>('/api/shops/import/osm');
 export const importOsmParkings = () => apiPost<OsmImportSummary>('/api/parkings/import/osm');
+export const addShop = (shop: Omit<Shop, 'id' | 'needsReview'>) => apiPost<Shop>('/api/shops', shop);

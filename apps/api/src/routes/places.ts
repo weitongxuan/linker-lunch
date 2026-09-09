@@ -2,7 +2,6 @@ import { Router } from 'express';
 import multer from 'multer';
 import path from 'node:path';
 import fs from 'node:fs';
-import { today } from '@lunch-map/shared';
 import { prisma } from '../lib/prisma.js';
 import { requirePlaceType } from '../lib/placeType.js';
 
@@ -81,22 +80,6 @@ placesRouter.put<PlaceParams>('/menu', async (req, res) => {
   res.json({ ok: true });
 });
 
-// ---- 錯誤回報 ----
-placesRouter.get<PlaceParams>('/reports', async (req, res) => {
-  const { placeType, placeId } = req.params;
-  const rows = await prisma.report.findMany({ where: { placeType, placeId }, orderBy: { createdAt: 'desc' } });
-  res.json(rows);
-});
-
-placesRouter.post<PlaceParams>('/reports', async (req, res) => {
-  const { placeType, placeId } = req.params;
-  const who = clean(req.body.who);
-  const type = String(req.body.type || '其他');
-  const text = String(req.body.text || '');
-  const row = await prisma.report.create({ data: { placeType, placeId, who, type, text, date: today(), done: false } });
-  res.status(201).json(row);
-});
-
 // ---- 照片 ----
 placesRouter.get<PlaceParams>('/photos', async (req, res) => {
   const { placeType, placeId } = req.params;
@@ -158,43 +141,4 @@ placesRouter.post<PlaceParams>('/messages', async (req, res) => {
   }
   const row = await prisma.message.create({ data: { placeType, placeId, personName: person, text } });
   res.status(201).json({ id: row.id, who: row.personName, text: row.text, date: row.createdAt.toISOString().slice(0, 10) });
-});
-
-// ---- 吃過紀錄 ----
-placesRouter.get<PlaceParams>('/eaten', async (req, res) => {
-  const { placeType, placeId } = req.params;
-  const person = clean(req.query.person as string);
-  const rows = await prisma.eatenLog.findMany({ where: { placeType, placeId, personName: person }, orderBy: { date: 'desc' }, take: 12 });
-  res.json({ dates: rows.map((r) => r.date) });
-});
-
-placesRouter.post<PlaceParams>('/eaten', async (req, res) => {
-  const { placeType, placeId } = req.params;
-  const person = clean(req.body.person);
-  const date = today();
-  const exists = await prisma.eatenLog.findFirst({ where: { placeType, placeId, personName: person, date } });
-  if (!exists) await prisma.eatenLog.create({ data: { placeType, placeId, personName: person, date } });
-  res.json({ ok: true });
-});
-
-// ---- 今天臨時公休 ----
-placesRouter.get<PlaceParams>('/temp-closed', async (req, res) => {
-  const { placeType, placeId } = req.params;
-  const date = today();
-  const row = await prisma.tempClosed.findUnique({ where: { placeId_placeType_date: { placeId, placeType, date } } });
-  res.json({ closed: !!row });
-});
-
-placesRouter.post<PlaceParams>('/temp-closed/toggle', async (req, res) => {
-  const { placeType, placeId } = req.params;
-  const date = today();
-  const key = { placeId_placeType_date: { placeId, placeType, date } };
-  const existing = await prisma.tempClosed.findUnique({ where: key });
-  if (existing) {
-    await prisma.tempClosed.delete({ where: key });
-    res.json({ closed: false });
-  } else {
-    await prisma.tempClosed.create({ data: { placeId, placeType, date, reportedBy: clean(req.body.person) } });
-    res.json({ closed: true });
-  }
 });

@@ -8,25 +8,22 @@ import { useMe } from '../hooks/useMe.js';
 import * as places from '../api/places.js';
 import {
   useAddMessageMutation,
-  useAddReportMutation,
-  useMarkEatenMutation,
   useRateMutation,
   useSetMenuMutation,
-  useToggleTempClosedMutation,
   useUploadPhotoMutation,
   useVoteMutation,
 } from '../hooks/useMutations.js';
 import type { Config } from '@lunch-map/shared';
-import type { Message, Photo, Report } from '../api/types.js';
+import type { Message, Photo } from '../api/types.js';
 
 const STCLS: Record<string, string> = {
   ok: 'ok', tight: 'tight', unknown: 'unk', not_enough: 'tight',
-  not_lunch: 'no', closed: 'closed', temp: 'closed', no_time: 'no', out_of_range: 'no',
+  not_lunch: 'no', closed: 'closed', no_time: 'no', out_of_range: 'no',
 };
 
 const BAR_VAR: Record<string, string> = {
   ok: '--okbar', tight: '--tightbar', unknown: '--nobar', not_enough: '--tightbar',
-  not_lunch: '--nobar', closed: '--closedbar', temp: '--closedbar', no_time: '--nobar', out_of_range: '--nobar',
+  not_lunch: '--nobar', closed: '--closedbar', no_time: '--nobar', out_of_range: '--nobar',
 };
 
 const SERVICE_LABEL: Record<string, string> = { dine_in: '內用', takeout: '外帶', delivery: '外送' };
@@ -43,19 +40,15 @@ interface Props {
   config: Config;
   windowStart: number;
   menuText: string;
-  reports: Report[];
-  onSelectOnMap: (shopId: string) => void;
 }
 
-export function ShopCard({ row, config, windowStart, menuText, reports, onSelectOnMap }: Props) {
-  const { sh, f, sc, ate } = row;
+export function ShopCard({ row, config, windowStart, menuText }: Props) {
+  const { sh, f, sc } = row;
   const { state, dispatch } = useFilters();
   const [me] = useMe();
   const isOpenDetail = state.openDetail.has(sh.id);
 
   const rateMut = useRateMutation('shop');
-  const eatenMut = useMarkEatenMutation('shop');
-  const tempClosedMut = useToggleTempClosedMutation('shop');
   const voteMut = useVoteMutation('shop');
 
   const photosQ = useQuery({
@@ -76,7 +69,7 @@ export function ShopCard({ row, config, windowStart, menuText, reports, onSelect
   const mySVars = { background: `var(${BAR_VAR[f.code] ?? '--nobar'})` };
 
   return (
-    <div className={`shop${state.sel === sh.id ? ' sel' : ''}`}>
+    <div className="shop">
       <div className="bar" style={mySVars} />
       <div className="top">
         <div className="nm">
@@ -119,8 +112,6 @@ export function ShopCard({ row, config, windowStart, menuText, reports, onSelect
         <span className="tgs">
           {row.by === 'drive' && row.t.park && <span className="tag pk">🅿 {row.t.park.name}</span>}
           {sh.peak && <span className="tag peak">⚠ {sh.peak.note || `尖峰 ${sh.peak.from}-${sh.peak.to}`}</span>}
-          {ate != null && ate < 7 && <span className="tag ate">{ate === 0 ? '今天吃過' : `${ate} 天前吃過`}</span>}
-          {reports.length > 0 && <span className="tag rep">🚩 {reports.length} 則回報:{reports[0].type}</span>}
           {(sh.service || []).filter((s) => s !== 'dine_in').map((s) => (
             <span key={s} className="tag">{SERVICE_LABEL[s]}</span>
           ))}
@@ -142,21 +133,8 @@ export function ShopCard({ row, config, windowStart, menuText, reports, onSelect
             </b>
           ))}
         </span>
-        <button className="btn" onClick={() => eatenMut.mutate({ placeId: sh.id, person: me || '訪客' })}>
-          吃過了
-        </button>
         <button className="btn" onClick={() => dispatch({ type: 'TOGGLE_DETAIL', id: sh.id })}>
           {isOpenDetail ? '收起' : '詳情／留言'}
-        </button>
-        <ReportButton shopId={sh.id} me={me} />
-        <button
-          className={`btn${f.code === 'temp' ? ' warn' : ''}`}
-          onClick={() => tempClosedMut.mutate({ placeId: sh.id, person: me || '訪客' })}
-        >
-          {f.code === 'temp' ? '取消臨時公休' : '今天臨時公休'}
-        </button>
-        <button className="btn" onClick={() => onSelectOnMap(sh.id)}>
-          地圖
         </button>
         {state.voteMode && (
           <span className="votebox">
@@ -180,56 +158,6 @@ export function ShopCard({ row, config, windowStart, menuText, reports, onSelect
           me={me}
         />
       )}
-    </div>
-  );
-}
-
-function ReportButton({ shopId, me }: { shopId: string; me: string }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <>
-      <button className="btn" onClick={() => setOpen(true)}>
-        🚩 回報
-      </button>
-      {open && <ReportModal shopId={shopId} me={me} onClose={() => setOpen(false)} />}
-    </>
-  );
-}
-
-const REPORT_TYPES = ['時間不對', '今天沒開', '已歇業', '位置不對', '名稱不對', '其他'];
-
-function ReportModal({ shopId, me, onClose }: { shopId: string; me: string; onClose: () => void }) {
-  const [type, setType] = useState(REPORT_TYPES[0]);
-  const [text, setText] = useState('');
-  const addReport = useAddReportMutation('shop');
-
-  return (
-    <div className="mask on" onClick={(e) => e.target === e.currentTarget && onClose()}>
-      <div className="modal">
-        <h2>回報問題</h2>
-        <div className="crow">
-          {REPORT_TYPES.map((t) => (
-            <button key={t} className={`chip${type === t ? ' on' : ''}`} onClick={() => setType(t)}>
-              {t}
-            </button>
-          ))}
-        </div>
-        <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="想補充什麼?(選填)" />
-        <div className="crow" style={{ marginTop: 9 }}>
-          <button
-            className="btn pri"
-            onClick={() => {
-              addReport.mutate({ placeId: shopId, who: me || '訪客', type, text });
-              onClose();
-            }}
-          >
-            送出
-          </button>
-          <button className="btn" onClick={onClose}>
-            取消
-          </button>
-        </div>
-      </div>
     </div>
   );
 }

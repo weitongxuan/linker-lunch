@@ -1,17 +1,15 @@
 import { currentMood, MOOD_TABLE } from '@lunch-map/shared';
 import type { Config, Market } from '@lunch-map/shared';
-import type { Report } from '../api/types.js';
 import { useFilters, type TravelMode } from '../state/FiltersContext.js';
 
 interface Props {
   config: Config | undefined;
   market: Market | null;
-  reports: Record<string, Report[]>;
   onRandomPick: () => void;
-  onOpenReportList: () => void;
+  onOpenAddShop: () => void;
 }
 
-export function Toolbar({ config, market, reports, onRandomPick, onOpenReportList }: Props) {
+export function Toolbar({ config, market, onRandomPick, onOpenAddShop }: Props) {
   const { state, dispatch } = useFilters();
   const f = state.filters;
 
@@ -26,8 +24,6 @@ export function Toolbar({ config, market, reports, onRandomPick, onOpenReportLis
     (f.hideBad ? 0 : 1) +
     (f.showUnknown ? 0 : 1) +
     (f.minGoogle ? 1 : 0);
-
-  const openReportCount = Object.values(reports).reduce((s, list) => s + list.length, 0);
 
   const mood = currentMood(state.mood, market);
   const mktClass = !market ? 'off' : mood === 'up' ? 'up' : mood === 'down' ? 'down' : 'flat';
@@ -65,28 +61,21 @@ export function Toolbar({ config, market, reports, onRandomPick, onOpenReportLis
       </span>
       <span className="plan">{planText}</span>
       <span className="spacer" />
+      <button className="btn" onClick={onOpenAddShop}>
+        ➕ 新增店家
+      </button>
       <button className="btn pri" onClick={onRandomPick}>
         🎲 隨機推薦
       </button>
       <span className={`mkt ${mktClass}`} title="看行情決定吃什麼">
         {mktLabel}
       </span>
-      <button className="btn" onClick={onOpenReportList}>
-        🚩<b>{openReportCount > 0 ? openReportCount : ''}</b>
-      </button>
       <button
         className={`btn${state.filterDrawerOpen ? ' pri' : ''}`}
         onClick={() => dispatch({ type: 'TOGGLE_FILTER_DRAWER' })}
       >
         篩選<b>{activeFilterCount > 0 ? activeFilterCount : ''}</b>
       </button>
-      <span className="seg viewSeg">
-        {(['both', 'list', 'map'] as const).map((v) => (
-          <button key={v} className={state.view === v ? 'on' : ''} onClick={() => dispatch({ type: 'SET_VIEW', view: v })}>
-            {v === 'both' ? '雙檢視' : v === 'list' ? '清單' : '地圖'}
-          </button>
-        ))}
-      </span>
     </div>
   );
 }

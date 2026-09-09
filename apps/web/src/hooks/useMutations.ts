@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import type { PlaceType } from '@lunch-map/shared';
+import type { PlaceType, Shop } from '@lunch-map/shared';
 import * as places from '../api/places.js';
-import { importOsmParkings, importOsmShops, refreshMarket } from '../api/staticData.js';
+import { addShop, importOsmParkings, importOsmShops, refreshMarket } from '../api/staticData.js';
 import { toast } from '../lib/toast.js';
 
 /** 星星評分:再點一次同樣的分數會取消評分(跟原本 rate() 的 toggle 行為一樣,由呼叫端判斷)。 */
@@ -18,49 +18,12 @@ export function useRateMutation(placeType: PlaceType) {
   });
 }
 
-export function useMarkEatenMutation(placeType: PlaceType) {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: ({ placeId, person }: { placeId: string; person: string }) => places.markEaten(placeType, placeId, person),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['eaten', placeType] }),
-  });
-}
-
-export function useToggleTempClosedMutation(placeType: PlaceType) {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: ({ placeId, person }: { placeId: string; person: string }) => places.toggleTempClosed(placeType, placeId, person),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['tempClosed', placeType] }),
-  });
-}
-
 export function useVoteMutation(placeType: PlaceType) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ placeId, person, value }: { placeId: string; person: string; value: number }) =>
       places.setVote(placeType, placeId, person, value),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['votes', placeType] }),
-  });
-}
-
-export function useAddReportMutation(placeType: PlaceType) {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: ({ placeId, who, type, text }: { placeId: string; who: string; type: string; text: string }) =>
-      places.addReport(placeType, placeId, who, type, text),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ['reports', placeType] });
-      toast('回報已送出,大家都看得到');
-    },
-    onError: () => toast('回報沒送出,再試一次'),
-  });
-}
-
-export function useResolveReportMutation(placeType: PlaceType) {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: ({ id, done }: { id: number; done: boolean }) => places.resolveReport(id, done),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['reports', placeType] }),
   });
 }
 
@@ -99,6 +62,18 @@ export function useUploadPhotoMutation(placeType: PlaceType, placeId: string) {
       toast('照片已上傳');
     },
     onError: () => toast('照片沒傳成功,再試一次'),
+  });
+}
+
+export function useAddShopMutation() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (shop: Omit<Shop, 'id' | 'needsReview'>) => addShop(shop),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['shops'] });
+      toast('店家已新增');
+    },
+    onError: (err) => toast(`新增失敗:${err instanceof Error ? err.message : '未知錯誤'}`),
   });
 }
 

@@ -114,7 +114,6 @@ export type FeasibilityCode =
   | 'not_enough'
   | 'not_lunch'
   | 'closed'
-  | 'temp'
   | 'no_time'
   | 'out_of_range';
 
@@ -167,13 +166,3 @@ export interface ScoreInfo {
   mine?: number;
   who?: Record<string, number>;
 }
-
-export interface ReportItem {
-  who: string;
-  type: string;
-  text: string;
-  date: string;
-  done?: boolean;
-}
-
-export const REPORT_TYPES = ['時間不對', '今天沒開', '已歇業', '位置不對', '名稱不對', '其他'] as const;

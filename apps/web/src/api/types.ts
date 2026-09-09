@@ -1,5 +1,3 @@
-import type { PlaceType, ReportItem } from '@lunch-map/shared';
-
 export interface OsmImportSummary {
   found: number;
   added: number;
@@ -26,13 +24,6 @@ export interface Photo {
   date: string;
   kb: number;
   shared: boolean;
-}
-
-export interface Report extends ReportItem {
-  id: number;
-  placeId: string;
-  placeType: PlaceType;
-  createdAt: string;
 }
 
 export interface Message {

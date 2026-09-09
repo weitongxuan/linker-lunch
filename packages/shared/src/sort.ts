@@ -8,9 +8,8 @@ export const RANK: Record<FeasibilityCode, number> = {
   not_enough: 3,
   not_lunch: 4,
   closed: 5,
-  temp: 6,
-  no_time: 7,
-  out_of_range: 8,
+  no_time: 6,
+  out_of_range: 7,
 };
 
 export type SortKey = 'travel' | 'score' | 'usable' | 'votes';

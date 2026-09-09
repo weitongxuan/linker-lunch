@@ -133,18 +133,6 @@ model Menu {
   @@id([placeId, placeType])
 }
 
-model Report {
-  id        Int      @id @default(autoincrement())
-  placeId   String
-  placeType String
-  who       String
-  type      String
-  text      String
-  date      String
-  done      Boolean  @default(false)
-  createdAt DateTime @default(now())
-}
-
 model Photo {
   id           String   @id @default(uuid())
   placeId      String
@@ -166,27 +154,6 @@ model Vote {
   updatedAt  DateTime @updatedAt
 
   @@id([placeId, placeType, personName])
-}
-
-/// 「今天臨時公休」是客觀事實,全體共用,靠 date 自然每天失效
-model TempClosed {
-  placeId    String
-  placeType  String
-  date       String
-  reportedBy String?
-
-  @@id([placeId, placeType, date])
-}
-
-model EatenLog {
-  id         Int      @id @default(autoincrement())
-  placeId    String
-  placeType  String
-  personName String
-  date       String
-  createdAt  DateTime @default(now())
-
-  @@index([placeId, placeType, personName])
 }
 
 /// 留言板:公開留言,大家都看得到,依地點分組、依時間排序

@@ -10,9 +10,8 @@ import { drinksRouter, dessertsRouter } from './routes/afterPlaces.js';
 import { parkingsRouter } from './routes/parkings.js';
 import { marketRouter } from './routes/market.js';
 import { placesRouter } from './routes/places.js';
-import { reportsRouter } from './routes/reports.js';
 import { photosRouter } from './routes/photos.js';
-import { eatenRouter, menusRouter, ratingsRouter, tempClosedRouter, votesRouter } from './routes/bulk.js';
+import { menusRouter, ratingsRouter, votesRouter } from './routes/bulk.js';
 import { startMarketCron } from './lib/marketCron.js';
 
 const PORT = Number(process.env.PORT) || 4000;
@@ -32,12 +31,9 @@ app.use('/api/drinks', drinksRouter);
 app.use('/api/desserts', dessertsRouter);
 app.use('/api/parkings', parkingsRouter);
 app.use('/api/market', marketRouter);
-app.use('/api/reports', reportsRouter);
 app.use('/api/photos', photosRouter);
 app.use('/api/ratings', ratingsRouter);
 app.use('/api/votes', votesRouter);
-app.use('/api/temp-closed', tempClosedRouter);
-app.use('/api/eaten', eatenRouter);
 app.use('/api/menus', menusRouter);
 app.use('/api/places/:placeType/:placeId', placesRouter);
 

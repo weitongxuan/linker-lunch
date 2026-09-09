@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import {
-  daysSinceEaten,
   feasibility,
   nowMin,
   passFilter,
@@ -15,9 +14,7 @@ import type { Config, Feasibility, Parking, Shop } from '@lunch-map/shared';
 import type { ComputedRow } from '@lunch-map/shared';
 import { useFilters, type UiState } from '../state/FiltersContext.js';
 
-export interface Row extends ComputedRow {
-  ate: number | null;
-}
+export type Row = ComputedRow;
 
 interface RatingMap {
   [placeId: string]: { avg: number; n: number; who: Record<string, number> };
@@ -33,8 +30,6 @@ interface Args {
   parkings: Parking[];
   ratings: RatingMap;
   votes: VoteMap;
-  tempClosed: Set<string>;
-  eaten: Record<string, string[]>;
 }
 
 function departWindow(state: UiState, cfg: Config) {
@@ -46,13 +41,12 @@ function departWindow(state: UiState, cfg: Config) {
   return { s: toMin(cfg.depart.start), e: toMin(cfg.depart.end) };
 }
 
-/** 對照原本的 computeAll():每家店算一次交通時間、可行性、評分、投票、回訪天數。 */
-export function useComputedRows({ config, shops, parkings, ratings, votes, tempClosed, eaten }: Args): Row[] {
+/** 對照原本的 computeAll():每家店算一次交通時間、可行性、評分、投票。 */
+export function useComputedRows({ config, shops, parkings, ratings, votes }: Args): Row[] {
   const { state } = useFilters();
 
   return useMemo(() => {
     if (!config) return [];
-    const isToday = state.day === todayKey();
     const dw = departWindow(state, config);
 
     return shops.map((sh): Row => {
@@ -63,8 +57,6 @@ export function useComputedRows({ config, shops, parkings, ratings, votes, tempC
       let f: Feasibility;
       if (!pt) {
         f = { code: 'out_of_range', label: '超出範圍' };
-      } else if (isToday && tempClosed.has(sh.id)) {
-        f = { code: 'temp', label: '臨時公休', travelMin: pt.min };
       } else if (sh.hoursUnknown) {
         f = { code: 'unknown', label: '營業時間未知', travelMin: pt.min };
       } else {
@@ -73,7 +65,6 @@ export function useComputedRows({ config, shops, parkings, ratings, votes, tempC
 
       const sc = ratings[sh.id] ?? { avg: 0, n: 0, who: {} };
       const voteTotal = votes[sh.id]?.total ?? 0;
-      const ate = daysSinceEaten(eaten[sh.id] ?? []);
 
       return {
         sh,
@@ -84,11 +75,10 @@ export function useComputedRows({ config, shops, parkings, ratings, votes, tempC
         sc,
         votes: voteTotal,
         feasible: f.code === 'ok' || f.code === 'tight',
-        ate,
       };
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps -- state.filters/state.sort intentionally excluded, only day/mode/useNow affect row computation
-  }, [config, shops, parkings, ratings, votes, tempClosed, eaten, state.day, state.mode, state.useNow]);
+  }, [config, shops, parkings, ratings, votes, state.day, state.mode, state.useNow]);
 }
 
 /** 篩選 + 排序過的可見清單 —— 給地圖跟清單共用同一份順序。 */

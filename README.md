@@ -23,7 +23,7 @@ npm run dev:api      # http://localhost:4000
 npm run dev:web       # http://localhost:5173(proxy /api、/photos 到 4000)
 ```
 
-`npm run seed` 只需要跑一次(之後店家資料就在 SQLite 裡了);重跑也安全,它會先清空 `Shop`/`AfterPlace`/`Parking`/`Market` 表再重新灌入,不會動到評分/回報/照片等共用資料。
+`npm run seed` 只需要跑一次(之後店家資料就在 SQLite 裡了);重跑也安全,它會先清空 `Shop`/`AfterPlace`/`Parking`/`Market` 表再重新灌入,不會動到評分/照片等共用資料。
 
 `apps/api/prisma/seed-data.json` 是從 `legacy/index.html` 一次性挖出來的快照,跟著 image 一起發布,容器執行期不再需要 `legacy/index.html`。要重新從舊檔案挖資料的話:`npm run extract-legacy-data -w apps/api`。
 
@@ -61,7 +61,7 @@ helm install lunch-map deploy/helm/lunch-map \
 
 **已知取捨**:資料庫是 SQLite(檔案存在 PVC 上),所以 `api` deployment 固定 1 個 replica、用 `Recreate` 策略——這對一個公司內部午餐推薦工具來說很夠用,但代表 API 沒辦法水平擴充。真的需要高可用的話,要換成 Postgres(改 `apps/api/prisma/schema.prisma` 的 `datasource.provider` 跟接一個外部資料庫)。
 
-首次部署一樣會自動 migrate + seed(邏輯跟 docker-compose 那邊相同),不用額外手動操作。之後要更新店家資料,可以用 `POST /api/shops/import/osm`、`POST /api/parkings/import/osm` 兩個管理端點從 OpenStreetMap 現抓,或 `kubectl exec` 進 pod 跑 `npm run seed`(會清空重灌 `Shop`/`AfterPlace`/`Parking`/`Market`,不影響評分/回報/照片)。
+首次部署一樣會自動 migrate + seed(邏輯跟 docker-compose 那邊相同),不用額外手動操作。之後要更新店家資料,可以用 `POST /api/shops/import/osm`、`POST /api/parkings/import/osm` 兩個管理端點從 OpenStreetMap 現抓,或 `kubectl exec` 進 pod 跑 `npm run seed`(會清空重灌 `Shop`/`AfterPlace`/`Parking`/`Market`,不影響評分/照片)。
 
 ## 環境變數(`apps/api`)
 
