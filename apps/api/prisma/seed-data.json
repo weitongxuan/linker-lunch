@@ -801,34 +801,6 @@
    "needsReview": true
   },
   {
-   "id": "f27",
-   "hoursUnknown": true,
-   "name": "木葉粗食",
-   "lat": 22.620572,
-   "lng": 120.271787,
-   "category": [
-    "其他"
-   ],
-   "price": 3,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "804高雄市鼓山區鼓南街30號",
-   "phone": "+886 7 531 8007",
-   "note": "暫時關閉。純素餐廳(plant-based whole food),Google 上也沒有營業時間。",
-   "hoursSource": "Google 地圖（2026-09-09 查，鼓南街30號地址相符，狀態「暫時關閉」，Google 無營業時間資料）",
-   "needsReview": true
-  },
-  {
    "id": "f28",
    "name": "朝月冷麵王",
    "lat": 22.619788,
@@ -1350,33 +1322,6 @@
    "needsReview": true
   },
   {
-   "id": "f39",
-   "hoursUnknown": true,
-   "name": "阿雪小吃部",
-   "lat": 22.620168,
-   "lng": 120.27116,
-   "category": [
-    "小吃"
-   ],
-   "price": 1,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市鼓山區延平街8號",
-   "note": "暫時關閉。Google 上也沒有營業時間。",
-   "hoursSource": "Google 地圖（2026-09-09 查，延平街8號地址相符，狀態「暫時關閉」，Google 無營業時間資料）",
-   "needsReview": true
-  },
-  {
    "id": "f40",
    "name": "哈瑪星旗魚大王",
    "lat": 22.622299,
@@ -1780,31 +1725,6 @@
    },
    "note": "Google 上「鴨肉珍」有總店（五福四路258號）與大公店（大公路55號）兩筆，兩家都是 4.3；這筆對應哪一家還沒確認，所以沒填評論數。（2026-08-25）",
    "googleRating": 4.3
-  },
-  {
-   "id": "f50",
-   "hoursUnknown": true,
-   "name": "無華私房手作",
-   "lat": 22.624903,
-   "lng": 120.282195,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "803高雄市鹽埕區瀨南街141之7號",
-   "note": ""
   },
   {
    "id": "f51",
@@ -4190,29 +4110,61 @@
   },
   {
    "id": "f99",
-   "hoursUnknown": true,
-   "name": "五零年代",
+   "hoursUnknown": false,
+   "name": "五零年代咖啡（手沖專門・自家烘焙）",
    "lat": 22.622097,
    "lng": 120.285584,
    "category": [
-    "其他"
+    "甜點"
    ],
-   "price": null,
+   "price": 3,
    "service": [
     "dine_in",
     "takeout"
    ],
    "hours": {
-    "mon": [],
-    "tue": [],
+    "mon": [
+     [
+      "12:30",
+      "19:00"
+     ]
+    ],
+    "tue": [
+     [
+      "12:30",
+      "19:00"
+     ]
+    ],
     "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
+    "thu": [
+     [
+      "12:30",
+      "19:00"
+     ]
+    ],
+    "fri": [
+     [
+      "12:30",
+      "19:00"
+     ]
+    ],
+    "sat": [
+     [
+      "12:30",
+      "19:00"
+     ]
+    ],
+    "sun": [
+     [
+      "12:30",
+      "19:00"
+     ]
+    ]
    },
    "addr": "高雄市鹽埕區河濱里21鄰大智路99號",
-   "note": ""
+   "note": "手沖咖啡/甜點店,12:30 才開,午休時間趕不上。",
+   "hoursRaw": "12:30–19:00（週三休）",
+   "hoursSource": "Google 地圖（2026-09-09 查，大智路99號地址相符）"
   },
   {
    "id": "f100",
@@ -4241,15 +4193,15 @@
   {
    "id": "f102",
    "hoursUnknown": true,
-   "name": "不二本一.茶.製作所",
+   "name": "不二 TEA&NO.1",
    "lat": 22.624043,
    "lng": 120.285011,
    "category": [
-    "其他"
+    "飲料"
    ],
    "price": null,
    "service": [
-    "dine_in"
+    "takeout"
    ],
    "hours": {
     "mon": [],
@@ -4261,32 +4213,65 @@
     "sun": []
    },
    "addr": "803高雄市鹽埕區新樂街129號",
-   "note": ""
+   "note": "冰品飲料店,禁止內用只能外帶 —— 本質上屬於飲料店而非午餐選項。",
+   "hoursSource": "Google 地圖（2026-09-09 查，新樂街129號地址相符,10:00 開始營業,僅外帶）"
   },
   {
    "id": "f104",
-   "hoursUnknown": true,
-   "name": "千義",
+   "hoursUnknown": false,
+   "name": "千義 Pasta & Risotto",
    "lat": 22.624063,
    "lng": 120.285092,
    "category": [
-    "其他"
+    "麵"
    ],
-   "price": null,
+   "price": 3,
    "service": [
     "dine_in"
    ],
    "hours": {
-    "mon": [],
+    "mon": [
+     [
+      "11:00",
+      "19:00"
+     ]
+    ],
     "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
+    "wed": [
+     [
+      "11:00",
+      "19:00"
+     ]
+    ],
+    "thu": [
+     [
+      "11:00",
+      "19:00"
+     ]
+    ],
+    "fri": [
+     [
+      "11:00",
+      "19:00"
+     ]
+    ],
+    "sat": [
+     [
+      "11:00",
+      "19:00"
+     ]
+    ],
+    "sun": [
+     [
+      "11:00",
+      "19:00"
+     ]
+    ]
    },
    "addr": "高雄市鹽埕區莒光街122號",
-   "note": ""
+   "note": "義大利麵/燉飯,店名標示「中午不休息」。",
+   "hoursRaw": "11:00–19:00（週二休）",
+   "hoursSource": "Google 地圖（2026-09-09 查，新樂街122號 —— 資料原記莒光街122號，店名相符，以 Google 為準）"
   },
   {
    "id": "f105",
@@ -5018,28 +5003,93 @@
   },
   {
    "id": "f127",
-   "hoursUnknown": true,
+   "hoursUnknown": false,
    "name": "鐘庵日本料理",
    "lat": 22.621794,
    "lng": 120.286762,
    "category": [
     "麵"
    ],
-   "price": null,
+   "price": 3,
    "service": [
     "dine_in"
    ],
    "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
+    "mon": [
+     [
+      "11:00",
+      "14:00"
+     ],
+     [
+      "17:30",
+      "20:30"
+     ]
+    ],
+    "tue": [
+     [
+      "11:00",
+      "14:00"
+     ],
+     [
+      "17:30",
+      "20:30"
+     ]
+    ],
+    "wed": [
+     [
+      "11:00",
+      "14:00"
+     ],
+     [
+      "17:30",
+      "20:30"
+     ]
+    ],
+    "thu": [
+     [
+      "11:00",
+      "14:00"
+     ],
+     [
+      "17:30",
+      "20:30"
+     ]
+    ],
+    "fri": [
+     [
+      "11:00",
+      "14:00"
+     ],
+     [
+      "17:30",
+      "20:30"
+     ]
+    ],
+    "sat": [
+     [
+      "11:00",
+      "14:00"
+     ],
+     [
+      "17:00",
+      "20:30"
+     ]
+    ],
+    "sun": [
+     [
+      "11:00",
+      "14:00"
+     ],
+     [
+      "17:00",
+      "20:30"
+     ]
+    ]
    },
    "addr": "高雄市鹽埕區五福四路65號",
-   "note": ""
+   "note": "",
+   "hoursRaw": "11:00–14:00、17:30–20:30（週末晚間 17:00 開始）",
+   "hoursSource": "Google 地圖（2026-09-09 查，五福四路65號地址相符）"
   },
   {
    "id": "f128",
@@ -5714,28 +5764,65 @@
   },
   {
    "id": "f146",
-   "hoursUnknown": true,
+   "hoursUnknown": false,
    "name": "阿貴私塾",
    "lat": 22.622374,
    "lng": 120.287987,
    "category": [
     "其他"
    ],
-   "price": null,
+   "price": 3,
    "service": [
     "dine_in"
    ],
    "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
+    "mon": [
+     [
+      "08:00",
+      "17:00"
+     ]
+    ],
+    "tue": [
+     [
+      "08:00",
+      "17:00"
+     ]
+    ],
+    "wed": [
+     [
+      "08:00",
+      "17:00"
+     ]
+    ],
+    "thu": [
+     [
+      "08:00",
+      "17:00"
+     ]
+    ],
+    "fri": [
+     [
+      "08:00",
+      "17:00"
+     ]
+    ],
+    "sat": [
+     [
+      "08:00",
+      "17:00"
+     ]
+    ],
+    "sun": [
+     [
+      "08:00",
+      "17:00"
+     ]
+    ]
    },
    "addr": "高雄市鹽埕區新樂街39號",
-   "note": ""
+   "note": "早午餐餐廳。",
+   "hoursRaw": "每日 08:00–17:00",
+   "hoursSource": "Google 地圖（2026-09-09 查，Google 上地址為莒光街85號 —— 與資料的新樂街39號不符,店名相符,建議現場確認）"
   },
   {
    "id": "f147",
@@ -5745,30 +5832,6 @@
    "lng": 120.288146,
    "category": [
     "麵"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "note": ""
-  },
-  {
-   "id": "f148",
-   "hoursUnknown": true,
-   "name": "morris",
-   "lat": 22.614642,
-   "lng": 120.268371,
-   "category": [
-    "其他"
    ],
    "price": null,
    "service": [
@@ -5835,53 +5898,68 @@
   },
   {
    "id": "f151",
-   "hoursUnknown": true,
+   "hoursUnknown": false,
    "name": "合羽亭",
    "lat": 22.621394,
    "lng": 120.288325,
    "category": [
     "其他"
    ],
-   "price": null,
+   "price": 3,
    "service": [
     "dine_in"
    ],
    "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
+    "mon": [
+     [
+      "17:00",
+      "22:00"
+     ]
+    ],
+    "tue": [
+     [
+      "17:00",
+      "22:00"
+     ]
+    ],
+    "wed": [
+     [
+      "17:00",
+      "22:00"
+     ]
+    ],
     "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
+    "fri": [
+     [
+      "17:00",
+      "22:00"
+     ]
+    ],
+    "sat": [
+     [
+      "11:00",
+      "14:00"
+     ],
+     [
+      "17:00",
+      "22:00"
+     ]
+    ],
+    "sun": [
+     [
+      "11:00",
+      "14:00"
+     ],
+     [
+      "17:00",
+      "22:00"
+     ]
+    ]
    },
    "addr": "高雄市鹽埕區五福四路30號",
-   "note": ""
-  },
-  {
-   "id": "f153",
-   "hoursUnknown": true,
-   "name": "二舅雞翅",
-   "lat": 22.613264,
-   "lng": 120.269496,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區大關路51號",
-   "note": ""
+   "note": "居酒屋,平日只有晚餐時段,週末才有午餐。",
+   "hoursRaw": "平日 17:00–22:00（週四休）,週末加開 11:00–14:00",
+   "hoursSource": "Google 地圖（2026-09-09 查，五福四路30號地址相符）"
   },
   {
    "id": "f154",
@@ -5963,452 +6041,6 @@
    "note": ""
   },
   {
-   "id": "f157",
-   "hoursUnknown": true,
-   "name": "茗城小吃",
-   "lat": 22.61283,
-   "lng": 120.269254,
-   "category": [
-    "小吃"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區通山路2號",
-   "note": ""
-  },
-  {
-   "id": "f159",
-   "hoursUnknown": true,
-   "name": "旗津阿宏壽司",
-   "lat": 22.613009,
-   "lng": 120.268965,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區通山路14號",
-   "note": ""
-  },
-  {
-   "id": "f161",
-   "hoursUnknown": true,
-   "name": "蕃茄切盤",
-   "lat": 22.61318,
-   "lng": 120.268701,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區廟前路70號",
-   "note": ""
-  },
-  {
-   "id": "f162",
-   "hoursUnknown": true,
-   "name": "旗津蔥抓餅",
-   "lat": 22.612348,
-   "lng": 120.269498,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "note": ""
-  },
-  {
-   "id": "f163",
-   "hoursUnknown": true,
-   "name": "渡時機海鮮熱炒店",
-   "lat": 22.612604,
-   "lng": 120.269161,
-   "category": [
-    "海鮮"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區通山路3號",
-   "note": ""
-  },
-  {
-   "id": "f164",
-   "hoursUnknown": true,
-   "name": "紅毛仔鱔魚麵",
-   "lat": 22.611745,
-   "lng": 120.270295,
-   "category": [
-    "麵"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "note": ""
-  },
-  {
-   "id": "f165",
-   "hoursUnknown": true,
-   "name": "阿霞肉圓",
-   "lat": 22.611908,
-   "lng": 120.269854,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "note": ""
-  },
-  {
-   "id": "f166",
-   "hoursUnknown": true,
-   "name": "阿英肉粽",
-   "lat": 22.612386,
-   "lng": 120.269135,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區大關路17號",
-   "note": ""
-  },
-  {
-   "id": "f168",
-   "hoursUnknown": true,
-   "name": "正古早味熱炒",
-   "lat": 22.613114,
-   "lng": 120.268251,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區通山路35號",
-   "note": ""
-  },
-  {
-   "id": "f169",
-   "hoursUnknown": true,
-   "name": "椪嫂蕃薯椪",
-   "lat": 22.61351,
-   "lng": 120.267851,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區通山路40號",
-   "note": ""
-  },
-  {
-   "id": "f170",
-   "hoursUnknown": true,
-   "name": "胡椒手工魚麵店",
-   "lat": 22.613563,
-   "lng": 120.267744,
-   "category": [
-    "麵"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區通山路44號",
-   "note": ""
-  },
-  {
-   "id": "f171",
-   "hoursUnknown": true,
-   "name": "林家麵店",
-   "lat": 22.61362,
-   "lng": 120.267571,
-   "category": [
-    "麵"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "note": ""
-  },
-  {
-   "id": "f172",
-   "hoursUnknown": true,
-   "name": "老街小巷咖啡簡餐",
-   "lat": 22.612601,
-   "lng": 120.268567,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區廟前路60巷7號",
-   "note": ""
-  },
-  {
-   "id": "f173",
-   "hoursUnknown": true,
-   "name": "憨蝦小吃部",
-   "lat": 22.613373,
-   "lng": 120.267628,
-   "category": [
-    "小吃"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區通山路57號",
-   "note": ""
-  },
-  {
-   "id": "f174",
-   "hoursUnknown": true,
-   "name": "海味鮮活海產",
-   "lat": 22.612771,
-   "lng": 120.268146,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區廟前路75號",
-   "note": ""
-  },
-  {
-   "id": "f175",
-   "hoursUnknown": true,
-   "name": "不一樣赤肉羹",
-   "lat": 22.612564,
-   "lng": 120.268346,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區廟前路56號",
-   "note": ""
-  },
-  {
-   "id": "f176",
-   "hoursUnknown": true,
-   "name": "阿惠越南河粉",
-   "lat": 22.613958,
-   "lng": 120.267029,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區海岸路66號",
-   "note": ""
-  },
-  {
-   "id": "f177",
-   "hoursUnknown": true,
-   "name": "握壽司 鍋燒麵",
-   "lat": 22.612464,
-   "lng": 120.268289,
-   "category": [
-    "麵"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區廟前路50號",
-   "note": ""
-  },
-  {
    "id": "f178",
    "hoursUnknown": true,
    "name": "元啡驢派",
@@ -6430,56 +6062,6 @@
     "sat": [],
     "sun": []
    },
-   "note": ""
-  },
-  {
-   "id": "f179",
-   "hoursUnknown": true,
-   "name": "山腳下無名麵店",
-   "lat": 22.61374,
-   "lng": 120.266746,
-   "category": [
-    "麵"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區通山路93號",
-   "note": ""
-  },
-  {
-   "id": "f180",
-   "hoursUnknown": true,
-   "name": "珠古早味碗粿",
-   "lat": 22.612413,
-   "lng": 120.267967,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區吉祥街2號",
    "note": ""
   },
   {
@@ -6505,79 +6087,6 @@
     "sun": []
    },
    "addr": "804高雄市鼓山區蓮海路51號",
-   "note": ""
-  },
-  {
-   "id": "f183",
-   "hoursUnknown": true,
-   "name": "旗后活海產",
-   "lat": 22.612046,
-   "lng": 120.267763,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區廟前路31號",
-   "note": ""
-  },
-  {
-   "id": "f184",
-   "hoursUnknown": true,
-   "name": "旗後海鮮",
-   "lat": 22.611996,
-   "lng": 120.2678,
-   "category": [
-    "海鮮"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "note": ""
-  },
-  {
-   "id": "f185",
-   "hoursUnknown": true,
-   "name": "鴨角活海產",
-   "lat": 22.611899,
-   "lng": 120.267874,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
    "note": ""
   },
   {
@@ -6693,56 +6202,6 @@
    "googleReviews": 133
   },
   {
-   "id": "f190",
-   "hoursUnknown": true,
-   "name": "美味便當",
-   "lat": 22.609066,
-   "lng": 120.27174,
-   "category": [
-    "便當"
-   ],
-   "price": null,
-   "service": [
-    "dine_in",
-    "takeout"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "note": ""
-  },
-  {
-   "id": "f191",
-   "hoursUnknown": true,
-   "name": "老字號烤小卷",
-   "lat": 22.611648,
-   "lng": 120.267548,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區廟前路9號",
-   "note": ""
-  },
-  {
    "id": "f192",
    "hoursUnknown": true,
    "name": "旅行養分",
@@ -6764,103 +6223,6 @@
     "sat": [],
     "sun": []
    },
-   "note": ""
-  },
-  {
-   "id": "f193",
-   "hoursUnknown": true,
-   "name": "旗津泡菜蝦蛋",
-   "lat": 22.611588,
-   "lng": 120.26751,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "note": ""
-  },
-  {
-   "id": "f194",
-   "hoursUnknown": true,
-   "name": "漢德那斯番菜料理",
-   "lat": 22.612218,
-   "lng": 120.26665,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "note": ""
-  },
-  {
-   "id": "f195",
-   "hoursUnknown": true,
-   "name": "旗津煎鳥蛋",
-   "lat": 22.611166,
-   "lng": 120.267714,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "note": ""
-  },
-  {
-   "id": "f196",
-   "hoursUnknown": true,
-   "name": "阿蘭姨烤魷魚",
-   "lat": 22.610913,
-   "lng": 120.267899,
-   "category": [
-    "海鮮"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區旗津三路1100號",
    "note": ""
   },
   {
@@ -6886,79 +6248,6 @@
     "sat": [],
     "sun": []
    },
-   "note": ""
-  },
-  {
-   "id": "f198",
-   "hoursUnknown": true,
-   "name": "雄夯",
-   "lat": 22.611022,
-   "lng": 120.267737,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "note": ""
-  },
-  {
-   "id": "f199",
-   "hoursUnknown": true,
-   "name": "旗海園",
-   "lat": 22.610712,
-   "lng": 120.26798,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "note": ""
-  },
-  {
-   "id": "f201",
-   "hoursUnknown": true,
-   "name": "金牌阿妹",
-   "lat": 22.610193,
-   "lng": 120.268371,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區旗津三路1050號",
    "note": ""
   },
   {
@@ -7119,30 +6408,6 @@
    "note": ""
   },
   {
-   "id": "f208",
-   "hoursUnknown": true,
-   "name": "大學城",
-   "lat": 22.607824,
-   "lng": 120.272378,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "note": ""
-  },
-  {
    "id": "f210",
    "hoursUnknown": true,
    "name": "天天泰 泰式火鍋",
@@ -7169,78 +6434,6 @@
    "note": ""
   },
   {
-   "id": "f213",
-   "hoursUnknown": true,
-   "name": "海洋城排骨",
-   "lat": 22.607595,
-   "lng": 120.272503,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "note": ""
-  },
-  {
-   "id": "f214",
-   "hoursUnknown": true,
-   "name": "旗津沙灘吧",
-   "lat": 22.610053,
-   "lng": 120.267604,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "note": ""
-  },
-  {
-   "id": "f216",
-   "hoursUnknown": true,
-   "name": "山水漢堡店",
-   "lat": 22.6075,
-   "lng": 120.272574,
-   "category": [
-    "速食"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "note": ""
-  },
-  {
    "id": "f217",
    "hoursUnknown": true,
    "name": "天津味水餃",
@@ -7262,31 +6455,6 @@
     "sat": [],
     "sun": []
    },
-   "note": ""
-  },
-  {
-   "id": "f218",
-   "hoursUnknown": true,
-   "name": "海中金海產店",
-   "lat": 22.608701,
-   "lng": 120.26953,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區旗津三路996-2號",
    "note": ""
   },
   {
@@ -7417,56 +6585,6 @@
    "note": ""
   },
   {
-   "id": "f225",
-   "hoursUnknown": true,
-   "name": "古早味什錦麵",
-   "lat": 22.606185,
-   "lng": 120.27162,
-   "category": [
-    "麵"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區旗津三路924巷4號",
-   "note": ""
-  },
-  {
-   "id": "f226",
-   "hoursUnknown": true,
-   "name": "阿美越南美食館",
-   "lat": 22.605438,
-   "lng": 120.274124,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區中洲三路442號",
-   "note": ""
-  },
-  {
    "id": "f227",
    "hoursUnknown": true,
    "name": "幕府",
@@ -7488,31 +6606,6 @@
     "sat": [],
     "sun": []
    },
-   "note": ""
-  },
-  {
-   "id": "f228",
-   "hoursUnknown": true,
-   "name": "三義客家麵食館",
-   "lat": 22.605419,
-   "lng": 120.27394,
-   "category": [
-    "麵"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "addr": "高雄市旗津區中洲三路483-1號",
    "note": ""
   },
   {
@@ -7614,30 +6707,6 @@
     "sun": []
    },
    "phone": "+886 7 330 1235",
-   "note": ""
-  },
-  {
-   "id": "f233",
-   "hoursUnknown": true,
-   "name": "海派平價海產",
-   "lat": 22.605623,
-   "lng": 120.272014,
-   "category": [
-    "其他"
-   ],
-   "price": null,
-   "service": [
-    "dine_in"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
    "note": ""
   },
   {
