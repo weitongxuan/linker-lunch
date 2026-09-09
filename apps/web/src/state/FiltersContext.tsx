@@ -44,7 +44,7 @@ function initialState(): UiState {
     mode: 'auto',
     view: 'both',
     sort: 'travel',
-    filters: { ...DEFAULT_FILTERS, tier: new Set(), cat: new Set(), price: new Set(), service: new Set() },
+    filters: { ...DEFAULT_FILTERS, tier: new Set(), cat: new Set(), excludeCat: new Set(), price: new Set(), service: new Set() },
     mood: 'auto',
     voteMode: false,
     pickShopId: null,
@@ -67,7 +67,8 @@ type Action =
   | { type: 'SET_MODE'; mode: TravelMode }
   | { type: 'SET_VIEW'; view: ViewMode }
   | { type: 'SET_SORT'; sort: SortKey }
-  | { type: 'TOGGLE_SET_FILTER'; key: 'tier' | 'cat' | 'price' | 'service'; value: string }
+  | { type: 'TOGGLE_SET_FILTER'; key: 'tier' | 'cat' | 'excludeCat' | 'price' | 'service'; value: string }
+  | { type: 'SET_SET_FILTER'; key: 'cat' | 'excludeCat'; values: string[] }
   | { type: 'SET_BOOL_FILTER'; key: 'onlyOpen' | 'showUnknown' | 'hideBad' | 'hideUnrated'; value: boolean }
   | { type: 'SET_MIN_SCORE'; value: number }
   | { type: 'SET_MIN_GOOGLE'; value: number }
@@ -105,6 +106,10 @@ function reducer(state: UiState, action: Action): UiState {
     case 'TOGGLE_SET_FILTER': {
       const current = state.filters[action.key] as Set<string>;
       const nextFilters: FilterState = { ...state.filters, [action.key]: toggleInSet(current, action.value) };
+      return { ...state, filters: nextFilters, pickShopId: null, pickWeights: null };
+    }
+    case 'SET_SET_FILTER': {
+      const nextFilters: FilterState = { ...state.filters, [action.key]: new Set(action.values) };
       return { ...state, filters: nextFilters, pickShopId: null, pickWeights: null };
     }
     case 'SET_BOOL_FILTER':

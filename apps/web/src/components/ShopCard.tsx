@@ -33,6 +33,10 @@ function travelText(row: Row): string {
   return `開車 ${row.t.drive} 分(${parkTxt})`;
 }
 
+function isDoDoHome(park: Row['t']['park']): boolean {
+  return park?.kind === '嘟嘟房';
+}
+
 interface Props {
   row: Row;
   config: Config;
@@ -115,6 +119,7 @@ export function ShopCard({ row, config, menuText, onSelectOnMap, className }: Pr
         )}
         <span className="tgs">
           {row.by === 'drive' && row.t.park && <span className="tag pk">🅿 {row.t.park.name}</span>}
+          {row.by === 'drive' && isDoDoHome(row.t.park) && <span className="tag dodo">💰 嘟嘟房付費停車場</span>}
           {sh.peak && <span className="tag peak">⚠ {sh.peak.note || `尖峰 ${sh.peak.from}-${sh.peak.to}`}</span>}
           {(sh.service || []).filter((s) => s !== 'dine_in').map((s) => (
             <span key={s} className="tag">{SERVICE_LABEL[s]}</span>
@@ -224,7 +229,7 @@ function DetailPanel({
 
       <div className="why">
         {t.park
-          ? `開車:到 ${t.park.name}(約 ${t.parkWalk} 分走到店),含找車位約 ${t.searchMin ?? 3} 分。`
+          ? `開車:到 ${t.park.name}(約 ${t.parkWalk} 分走到店),含找車位約 ${t.searchMin ?? 3} 分。${isDoDoHome(t.park) ? '嘟嘟房是付費智慧停車場,收費以現場為準。' : ''}`
           : t.street
             ? `開車:路邊找位,抓 ${t.searchMin} 分。`
             : ''}

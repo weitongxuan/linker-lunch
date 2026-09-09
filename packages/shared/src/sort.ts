@@ -14,6 +14,7 @@ export type SortKey = 'travel' | 'score' | 'votes';
 export interface FilterState {
   tier: Set<Tier>;
   cat: Set<string>;
+  excludeCat: Set<string>;
   price: Set<string>;
   service: Set<Service>;
   onlyOpen: boolean;
@@ -28,6 +29,7 @@ export interface FilterState {
 export const DEFAULT_FILTERS: FilterState = {
   tier: new Set(),
   cat: new Set(),
+  excludeCat: new Set(),
   price: new Set(),
   service: new Set(),
   onlyOpen: true,
@@ -65,9 +67,10 @@ export function passFilter(r: ComputedRow, filters: FilterState): boolean {
   if (!passScore(r, filters)) return false;
   if (filters.tier.size && !filters.tier.has(r.tier)) return false;
   if (filters.onlyOpen && !r.feasible && !(filters.showUnknown && r.f.code === 'unknown')) return false;
-  if (filters.cat.size) {
+  if (filters.cat.size || filters.excludeCat.size) {
     const cats = r.sh.category.length ? r.sh.category : ['其他'];
-    if (!cats.some((c) => filters.cat.has(c))) return false;
+    if (filters.cat.size && !cats.some((c) => filters.cat.has(c))) return false;
+    if (filters.excludeCat.size && cats.some((c) => filters.excludeCat.has(c))) return false;
   }
   if (filters.price.size && !filters.price.has(String(r.sh.price || ''))) return false;
   if (filters.service.size) {

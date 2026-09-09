@@ -16,7 +16,7 @@ export function Header({ config }: { config: Config | undefined }) {
   return (
     <header>
       <div className="hrow">
-        <h1>午餐地圖</h1>
+        <h1>Linker Vision Lunch Map</h1>
         <div className="tabs">
           {TABS.map((day) => (
             <button

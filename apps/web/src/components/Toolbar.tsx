@@ -26,6 +26,7 @@ export function Toolbar({ market, onRandomPick, onOpenAddShop }: Props) {
   const activeFilterCount =
     f.tier.size +
     f.cat.size +
+    f.excludeCat.size +
     f.price.size +
     f.service.size +
     (f.minScore ? 1 : 0) +
