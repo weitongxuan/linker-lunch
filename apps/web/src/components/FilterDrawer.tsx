@@ -212,9 +212,6 @@ export function FilterDrawer({ config, shops, ratings, onCopyList }: Props) {
           <option value="score">大家的評分</option>
           <option value="votes">票數</option>
         </select>
-        <button className="btn" onClick={() => dispatch({ type: 'TOGGLE_VOTE_MODE' })}>
-          👥 多人投票
-        </button>
         <button className="btn" onClick={onCopyList}>
           📋 複製候選清單
         </button>

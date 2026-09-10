@@ -6,7 +6,7 @@ import { getDismissed, persistDismissed } from '../lib/dismissed.js';
 export type { SortKey };
 export type ViewMode = 'both' | 'list' | 'map';
 /** 清單要看餐廳還是飲料,預設餐廳 */
-export type ListTab = 'shops' | 'drinks';
+export type ListTab = 'shops' | 'drinks' | 'desserts';
 /** 只給使用者走路/開車兩個選項:開車 15 分的範圍涵蓋所有店家,再加一個「全部」跟開車完全重複 */
 export type TravelMode = 'walk' | 'drive';
 

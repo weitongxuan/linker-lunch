@@ -92,6 +92,9 @@ export function Toolbar({ market, onRandomPick, onOpenAddShop, myLocation }: Pro
       <button className="btn pri" onClick={onRandomPick}>
         🎲 隨機推薦
       </button>
+      <button className={`btn${state.voteMode ? ' pri' : ''}`} onClick={() => dispatch({ type: 'TOGGLE_VOTE_MODE' })}>
+        👥 多人投票
+      </button>
       <span className={`mkt ${mktClass}`} title="看行情決定吃什麼">
         {mktLabel}
       </span>

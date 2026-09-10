@@ -41,6 +41,9 @@ export function App() {
     nowMinute,
   });
   const visibleRows = useVisibleRows(allRows);
+  // 甜點/咖啡店不是午餐選項:自己一個分頁,不進隨機推薦與候選清單
+  const lunchRows = useMemo(() => visibleRows.filter((r) => !r.sh.category.includes('甜點')), [visibleRows]);
+  const dessertRows = useMemo(() => visibleRows.filter((r) => r.sh.category.includes('甜點')), [visibleRows]);
 
   const afterRows = useMemo(() => {
     const desserts = data.desserts.map((d) => ({ d, lat: d.lat, lng: d.lng, openCode: openNowState(d, state.day, nowMinute).code, kind: 'dessert' as const }));
@@ -49,8 +52,7 @@ export function App() {
   }, [data.desserts, data.drinks, state.day, nowMinute]);
 
   const handleRandomPick = () => {
-    // 甜點/咖啡店不是午餐選項,不要抽到星巴克叫大家去吃中飯
-    const pool = visibleRows.filter((r) => r.feasible && !r.sh.category.includes('甜點'));
+    const pool = lunchRows.filter((r) => r.feasible);
     const mood = currentMood(state.mood, data.market);
     const result = randomPick(pool, mood);
     if (result.empty) {
@@ -71,14 +73,14 @@ export function App() {
   };
 
   const handleCopyList = () => {
-    const feasible = visibleRows.filter((r) => r.feasible);
-    const lines = feasible.map((r, i) => {
+    const feasible = lunchRows.filter((r) => r.feasible);
+    const lines = feasible.map((r) => {
       const travel = r.by === 'walk' ? `走路 ${r.t.walk} 分` : r.by === 'drive' ? `開車 ${r.t.drive} 分` : '';
       const scoreTxt = r.sc.n ? `★${r.sc.avg.toFixed(1)} (${r.sc.n}人)` : '尚無評分';
-      return `${i + 1}. ${r.sh.name} — ${travel} / ${r.sh.category.join('、')} / ${scoreTxt}`;
+      return `• ${r.sh.name} — ${travel} / ${r.sh.category.join('、')} / ${scoreTxt}`;
     });
     const header = config ? `${state.day}\n` : '';
-    const text = header + lines.join('\n') + '\n\n投票請回覆編號';
+    const text = header + lines.join('\n') + '\n\n投票請回覆店名';
     navigator.clipboard?.writeText(text).then(
       () => toast('已複製候選清單'),
       () => toast('複製失敗'),
@@ -104,19 +106,19 @@ export function App() {
       <main className={state.view === 'list' ? 'list-only' : state.view === 'map' ? 'map-only' : ''}>
         <div id="listwrap">
           <span className="seg listTabs">
-            {(['shops', 'drinks'] as const).map((tab) => (
+            {(['shops', 'drinks', 'desserts'] as const).map((tab) => (
               <button
                 key={tab}
                 className={state.listTab === tab ? 'on' : ''}
                 onClick={() => dispatch({ type: 'SET_LIST_TAB', tab })}
               >
-                {tab === 'shops' ? '餐廳' : '飲料'}
+                {tab === 'shops' ? '餐廳' : tab === 'drinks' ? '飲料' : '甜點'}
               </button>
             ))}
           </span>
-          {state.listTab === 'shops' ? (
+          {state.listTab !== 'drinks' ? (
             <ShopList
-              visibleRows={visibleRows}
+              visibleRows={state.listTab === 'shops' ? lunchRows : dessertRows}
               config={config}
               menus={data.menus}
               drinks={data.drinks}

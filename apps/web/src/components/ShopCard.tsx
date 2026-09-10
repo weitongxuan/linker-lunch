@@ -53,7 +53,6 @@ export function ShopCard({ row, config, menuText, onSelectOnMap, className }: Pr
 
   const rateMut = useRateMutation('shop');
   const voteMut = useVoteMutation('shop');
-  const deleteMut = useDeleteShopMutation();
 
   const photosQ = useQuery({
     queryKey: ['photos', 'shop', sh.id],
@@ -130,34 +129,22 @@ export function ShopCard({ row, config, menuText, onSelectOnMap, className }: Pr
       {f.note && <div className="why">{f.note}</div>}
 
       <div className="acts" onClick={(e) => e.stopPropagation()}>
-        <span className={`stars${sc.n ? '' : ' empty'}`} title={`以「${me || '訪客'}」的身分評分`}>
-          {[1, 2, 3, 4, 5].map((s) => (
-            <b
-              key={s}
-              className={s <= myScore ? 'f' : ''}
-              onClick={() => rateMut.mutate({ placeId: sh.id, person: me || '訪客', score: s === myScore ? 0 : s })}
-            >
-              ★
-            </b>
-          ))}
-        </span>
+        {(sc.n > 0 || isOpenDetail) && (
+          <span className="stars" title={`以「${me || '訪客'}」的身分評分`}>
+            {[1, 2, 3, 4, 5].map((s) => (
+              <b
+                key={s}
+                className={s <= myScore ? 'f' : ''}
+                onClick={() => rateMut.mutate({ placeId: sh.id, person: me || '訪客', score: s === myScore ? 0 : s })}
+              >
+                ★
+              </b>
+            ))}
+          </span>
+        )}
         <button className="btn" onClick={() => dispatch({ type: 'TOGGLE_DETAIL', id: sh.id })}>
           {isOpenDetail ? '收起' : '詳情／留言'}
         </button>
-        <span className="acts-admin">
-          <button className="btn ghost" onClick={() => dispatch({ type: 'SET_EDIT_SHOP', id: sh.id })}>
-            ✏️ 修改
-          </button>
-          <button
-            className="btn ghost"
-            disabled={deleteMut.isPending}
-            onClick={() => {
-              if (window.confirm(`確定要刪除「${sh.name}」嗎?此動作無法復原。`)) deleteMut.mutate(sh.id);
-            }}
-          >
-            🗑 刪除
-          </button>
-        </span>
         {state.voteMode && (
           <span className="votebox">
             <button className="btn ghost" onClick={() => voteMut.mutate({ placeId: sh.id, person: me || '訪客', value: Math.max(0, votesInfo - 1) })}>
@@ -200,7 +187,8 @@ function DetailPanel({
   me: string;
 }) {
   const { sh, sc, t } = row;
-  const { state } = useFilters();
+  const { state, dispatch } = useFilters();
+  const deleteMut = useDeleteShopMutation();
   const setMenuMut = useSetMenuMutation('shop');
   const uploadPhotoMut = useUploadPhotoMutation('shop', sh.id);
   const addMessageMut = useAddMessageMutation('shop');
@@ -307,6 +295,21 @@ function DetailPanel({
             送出
           </button>
         </div>
+      </div>
+
+      <div className="crow admin">
+        <button className="btn ghost" onClick={() => dispatch({ type: 'SET_EDIT_SHOP', id: sh.id })}>
+          ✏️ 修改店家資料
+        </button>
+        <button
+          className="btn ghost"
+          disabled={deleteMut.isPending}
+          onClick={() => {
+            if (window.confirm(`確定要刪除「${sh.name}」嗎?此動作無法復原。`)) deleteMut.mutate(sh.id);
+          }}
+        >
+          🗑 刪除店家
+        </button>
       </div>
     </div>
   );
