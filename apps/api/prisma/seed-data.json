@@ -119,7 +119,8 @@
    "note": "Google 標平均每人 $600–1,400（超過我們最高價位帶）。熱門：油煮蝦、慢燉羊肩。西班牙海鮮飯要前一天預約、最少 3 人份。（Google 地圖 2026-08-25 查）",
    "hoursSource": "部落格食記／店家資訊,地址電話與 OSM 相符（2026-08 查）",
    "googleRating": 4.6,
-   "googleReviews": 1389
+   "googleReviews": 1389,
+   "cuisine": "西式"
   },
   {
    "id": "f04",
@@ -199,7 +200,8 @@
    "note": "Google 熱門：干貝魚卵義大利麵、濃湯。（Google 地圖 2026-08-25 查）",
    "hoursSource": "Google 地圖（2026-08-21 查，Google 上作「義狗倆狗」，地址鼓山一路10-1號）",
    "googleRating": 4.7,
-   "googleReviews": 491
+   "googleReviews": 491,
+   "cuisine": "義式"
   },
   {
    "id": "f05",
@@ -277,7 +279,8 @@
     ]
    },
    "addr": "804高雄市鼓山區鼓山一路10-1號",
-   "note": "⚠️ 待確認：搜「韓珍饌」找不到，該地址（鼓山一路10號）現在是「理寶行」，而資料裡的 10-1 號是義狗倆狗。可能已歇業或改名 —— 路過看一眼。（Google 地圖 2026-08-25 查）"
+   "note": "⚠️ 待確認：搜「韓珍饌」找不到，該地址（鼓山一路10號）現在是「理寶行」，而資料裡的 10-1 號是義狗倆狗。可能已歇業或改名 —— 路過看一眼。（Google 地圖 2026-08-25 查）",
+   "cuisine": "韓式"
   },
   {
    "id": "f06",
@@ -339,7 +342,8 @@
    "note": "Google 分類是早午餐，平均每人 $200–400。（Google 地圖 2026-08-25 查）",
    "hoursSource": "ksdelicacy 西子灣站美食38間整理（2026-08 查）",
    "googleRating": 4.6,
-   "googleReviews": 3961
+   "googleReviews": 3961,
+   "cuisine": "日式"
   },
   {
    "id": "f07",
@@ -428,7 +432,8 @@
    "note": "Google 熱門：富貴魚、筍干大封肉（台菜合菜，適合多人分）。（Google 地圖 2026-08-25 查）",
    "hoursSource": "Google 地圖（2026-08-21 查，Google 上作「壹貳樓企業有限公司」，地址臨海三路14號）",
    "googleRating": 4,
-   "googleReviews": 745
+   "googleReviews": 745,
+   "cuisine": "台式"
   },
   {
    "id": "f11",
@@ -477,7 +482,8 @@
     ]
    },
    "note": "Google 上作「拿笑洋行」,咖啡店",
-   "hoursSource": "Google 地圖（2026-08-21 查，Google 上作「拿笑洋行」，地址濱海一路10號）"
+   "hoursSource": "Google 地圖（2026-08-21 查，Google 上作「拿笑洋行」，地址濱海一路10號）",
+   "cuisine": null
   },
   {
    "id": "f15",
@@ -531,7 +537,8 @@
     ]
    },
    "note": "⚠️ 有資料顯示可能已歇業（TripAdvisor 標示已歇業）,去之前先打電話確認。",
-   "hoursSource": "搜尋結果（2026-08 查）"
+   "hoursSource": "搜尋結果（2026-08 查）",
+   "cuisine": "台式"
   },
   {
    "id": "f16",
@@ -590,7 +597,8 @@
    "note": "",
    "hoursSource": "丹丹漢堡分店整理（西子灣店・臨海二路24號,與 OSM 地址電話相符,2026-08 查）",
    "googleRating": 4.3,
-   "googleReviews": 7249
+   "googleReviews": 7249,
+   "cuisine": "美式"
   },
   {
    "id": "f19",
@@ -645,7 +653,8 @@
    },
    "addr": "高雄市鹽埕區新化里8鄰大勇路5號",
    "note": "",
-   "hoursSource": "部落格食記＋駁二官網店家頁（2026-08 查）。週一公休為文中僅列週二~週日之推論"
+   "hoursSource": "部落格食記＋駁二官網店家頁（2026-08 查）。週一公休為文中僅列週二~週日之推論",
+   "cuisine": null
   },
   {
    "id": "f21",
@@ -725,7 +734,8 @@
    "note": "",
    "hoursSource": "部落格食記（臨海二路32號,2026-08 查）",
    "googleRating": 4,
-   "googleReviews": 625
+   "googleReviews": 625,
+   "cuisine": "日式"
   },
   {
    "id": "f22",
@@ -751,7 +761,8 @@
    },
    "note": "店名過於籠統,Google 上會對到「鴨肉珍」(另一家已收錄),需現場確認實際店名。",
    "hoursSource": "Google 地圖（2026-09-09 查，名稱無法唯一比對，待現場確認；2026-09-10 再以精確座標探測與釘子 10 公尺內餐廳列表兩法複查,座標上無任何商家,最近一家為熳温（日式烤雞串,五福四路103號） —— 三種檢索法皆無此店,勿再重查）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": "日式"
   },
   {
    "id": "f28",
@@ -831,7 +842,8 @@
    "note": "",
    "hoursSource": "部落格食記（濱海一路57號,2026-08 查）",
    "googleRating": 4.1,
-   "googleReviews": 1683
+   "googleReviews": 1683,
+   "cuisine": "韓式"
   },
   {
    "id": "f29",
@@ -890,7 +902,8 @@
     ]
    },
    "addr": "高雄市鼓山區濱海一路58巷2之1號",
-   "note": ""
+   "note": "",
+   "cuisine": null
   },
   {
    "id": "f30",
@@ -950,7 +963,8 @@
    },
    "addr": "高雄市鼓山區登山街34-1號",
    "phone": "+886 989 200 057",
-   "note": ""
+   "note": "",
+   "cuisine": null
   },
   {
    "id": "f32",
@@ -1026,7 +1040,8 @@
    "note": "",
    "hoursSource": "Google 地圖（2026-08-21 查，鹽埕區瀨南街111號 —— 與新興區南台路那家同名不同店，這筆是鹽埕這家）",
    "googleRating": 4.1,
-   "googleReviews": 53
+   "googleReviews": 53,
+   "cuisine": "台式"
   },
   {
    "id": "f33",
@@ -1052,7 +1067,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，查到「阿珠切仔擔」大勇路149號,與座標不符,無法確認；2026-09-10 再以精確座標探測與釘子 10 公尺內餐廳列表兩法複查,座標上無任何商家,最近一家為聚客堂（已收錄為 f52,濱海一路105號） —— 三種檢索法皆無此店,勿再重查）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": "台式"
   },
   {
    "id": "f34",
@@ -1079,7 +1095,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，查到「嘉義黃火雞肉飯」華夏路679號,與座標不符,無法確認）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": "台式"
   },
   {
    "id": "f35",
@@ -1140,7 +1157,8 @@
    "note": "",
    "hoursSource": "ETtoday 哈瑪星必吃整理（2026-08 查）",
    "googleRating": 3.8,
-   "googleReviews": 552
+   "googleReviews": 552,
+   "cuisine": "台式"
   },
   {
    "id": "f36",
@@ -1195,7 +1213,8 @@
    },
    "addr": "高雄市鼓山區濱海一路73號",
    "phone": "+886 7 531 7337",
-   "note": ""
+   "note": "",
+   "cuisine": "台式"
   },
   {
    "id": "f37",
@@ -1252,7 +1271,8 @@
    "googleRating": 4.3,
    "googleReviews": 11579,
    "addr": "高雄市鹽埕區五福四路258號",
-   "hoursSource": "Google 地圖（2026-09-10 查，總店五福四路258號,與大公店為不同分店）"
+   "hoursSource": "Google 地圖（2026-09-10 查，總店五福四路258號,與大公店為不同分店）",
+   "cuisine": "台式"
   },
   {
    "id": "f38",
@@ -1278,7 +1298,8 @@
    },
    "note": "這個座標上查不到店家 —— Google 只有華寧路的分店(僅外帶、17:00 才開),此筆疑為 OSM 舊資料,待現場確認。",
    "hoursSource": "Google 地圖（2026-09-09 查，座標附近查無此店，需現場確認；2026-09-10 再以精確座標探測與釘子 10 公尺內餐廳列表兩法複查,座標上無任何商家,最近一家為阪城海鮮料理（濱海二路25號） —— 三種檢索法皆無此店,勿再重查）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": "台式"
   },
   {
    "id": "f40",
@@ -1339,7 +1360,8 @@
    "note": "",
    "hoursSource": "搜尋結果標示為「哈瑪星黑旗魚丸大王」鼓波街27-7號 —— ⚠ 店名與 OSM 略有出入,請自行確認（2026-08 查）",
    "googleRating": 3.8,
-   "googleReviews": 619
+   "googleReviews": 619,
+   "cuisine": "台式"
   },
   {
    "id": "f41",
@@ -1365,7 +1387,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，座標附近查無同名店家,Google 地圖上沒有這家店）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": null
   },
   {
    "id": "f42",
@@ -1423,7 +1446,8 @@
      ]
     ]
    },
-   "note": ""
+   "note": "",
+   "cuisine": "台式"
   },
   {
    "id": "f43",
@@ -1449,7 +1473,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，座標附近查無同名店家,Google 地圖上沒有這家店）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": null
   },
   {
    "id": "f45",
@@ -1475,7 +1500,8 @@
    },
    "note": "⚠️ Google 上的「紹興炒飯」在楠梓與三民（離辦公室 4–12 公里），跟這筆的座標對不上。可能是 OSM 上的舊資料或位置有誤。",
    "hoursSource": "Google 地圖（2026-09-09 查，查到「紹興炒飯」中山路462之9號,與座標不符,無法確認）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": "中式"
   },
   {
    "id": "f46",
@@ -1520,7 +1546,8 @@
    },
    "addr": "803高雄市鹽埕區瀨南街141之7號",
    "phone": "+886 933486259",
-   "note": ""
+   "note": "",
+   "cuisine": "西式"
   },
   {
    "id": "f47",
@@ -1577,7 +1604,8 @@
    "note": "",
    "hoursSource": "Google 地圖（2026-08-21 查，Google 上作「小李山西刀削麵 本店」，鼓山一路86號與資料地址相同）",
    "googleRating": 4,
-   "googleReviews": 1461
+   "googleReviews": 1461,
+   "cuisine": "中式"
   },
   {
    "id": "f49",
@@ -1638,7 +1666,8 @@
    "note": "Google 上「鴨肉珍」有總店（五福四路258號）與大公店（大公路55號）兩筆，兩家都是 4.3；這筆對應哪一家還沒確認，所以沒填評論數。（2026-08-25）",
    "googleRating": 4.3,
    "addr": "高雄市鹽埕區大公路55號",
-   "hoursSource": "Google 地圖（2026-09-10 查，大公店大公路55號,Google 上另有總店在五福四路258號,兩家皆 4.3 分,並非重複）"
+   "hoursSource": "Google 地圖（2026-09-10 查，大公店大公路55號,Google 上另有總店在五福四路258號,兩家皆 4.3 分,並非重複）",
+   "cuisine": "台式"
   },
   {
    "id": "f51",
@@ -1718,7 +1747,8 @@
    "note": "",
    "hoursSource": "Google 地圖（2026-08-25 查，Google 上作「唯。手工黑豬肉水餃」，瀨南街142號）",
    "googleRating": 4.2,
-   "googleReviews": 369
+   "googleReviews": 369,
+   "cuisine": "中式"
   },
   {
    "id": "f52",
@@ -1779,7 +1809,8 @@
    "note": "",
    "hoursSource": "Google 地圖（2026-08-25 查，Google 上作「聚客堂(手工水餃、黃金泡菜、冰品)」，濱海一路105號）",
    "googleRating": 4.8,
-   "googleReviews": 225
+   "googleReviews": 225,
+   "cuisine": "中式"
   },
   {
    "id": "f53",
@@ -1838,7 +1869,8 @@
     ]
    },
    "note": "",
-   "hoursSource": "mable.tw 鹽埕老店小吃整理（2026-08 查）"
+   "hoursSource": "mable.tw 鹽埕老店小吃整理（2026-08 查）",
+   "cuisine": "台式"
   },
   {
    "id": "f54",
@@ -1915,7 +1947,8 @@
      ]
     ]
    },
-   "note": ""
+   "note": "",
+   "cuisine": null
   },
   {
    "id": "f55",
@@ -1941,7 +1974,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，查到「阿木的店 貝果」長安街11號,與座標不符,無法確認）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": null
   },
   {
    "id": "f56",
@@ -1997,7 +2031,8 @@
    "note": "",
    "hoursSource": "Google 地圖（2026-08-25 查，Google 上作「阿足姨肉粽碗粿專門店」，鼓元街112號）",
    "googleRating": 4.7,
-   "googleReviews": 160
+   "googleReviews": 160,
+   "cuisine": "台式"
   },
   {
    "id": "f57",
@@ -2022,7 +2057,8 @@
     "sun": []
    },
    "note": "",
-   "hoursSource": "Google 地圖（2026-09-09 查，壽山街,Google 上有此地標但沒有任何營業資訊）"
+   "hoursSource": "Google 地圖（2026-09-09 查，壽山街,Google 上有此地標但沒有任何營業資訊）",
+   "cuisine": "日式"
   },
   {
    "id": "f58",
@@ -2082,7 +2118,8 @@
    },
    "note": "",
    "googleRating": 4.2,
-   "googleReviews": 3676
+   "googleReviews": 3676,
+   "cuisine": "台式"
   },
   {
    "id": "f60",
@@ -2138,7 +2175,8 @@
    "note": "",
    "hoursSource": "Google 地圖（2026-08-25 查，Google 上作「香港發財小館(七賢店)」，七賢三路108號）",
    "googleRating": 4.1,
-   "googleReviews": 2246
+   "googleReviews": 2246,
+   "cuisine": "港式"
   },
   {
    "id": "f61",
@@ -2209,7 +2247,8 @@
    "note": "",
    "hoursSource": "Google 地圖（2026-08-25 查，Google 上作「虱目魚專賣店」，新興街77號，座標與資料相差不到 10 公尺）",
    "googleRating": 4.1,
-   "googleReviews": 981
+   "googleReviews": 981,
+   "cuisine": "台式"
   },
   {
    "id": "f62",
@@ -2235,7 +2274,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，座標附近查無同名店家,Google 地圖上沒有這家店）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": null
   },
   {
    "id": "f63",
@@ -2296,7 +2336,8 @@
    "note": "",
    "hoursSource": "Google 地圖（2026-08-21 查，Google 上作「樂檸漢堡（高雄駁二大港倉門市）」，蓬萊路6之8號）",
    "googleRating": 4.1,
-   "googleReviews": 592
+   "googleReviews": 592,
+   "cuisine": "美式"
   },
   {
    "id": "f66",
@@ -2358,7 +2399,8 @@
    "phone": "+886 7 2136612",
    "note": "",
    "googleRating": 3.9,
-   "googleReviews": 470
+   "googleReviews": 470,
+   "cuisine": "日式"
   },
   {
    "id": "f67",
@@ -2435,7 +2477,8 @@
      ]
     ]
    },
-   "note": ""
+   "note": "",
+   "cuisine": "韓式"
   },
   {
    "id": "f68",
@@ -2489,7 +2532,8 @@
     ]
    },
    "note": "",
-   "hoursSource": "Google 地圖（2026-08-25 查，Google 上作「東京小城(五福店)」，五福四路145號）"
+   "hoursSource": "Google 地圖（2026-08-25 查，Google 上作「東京小城(五福店)」，五福四路145號）",
+   "cuisine": "日式"
   },
   {
    "id": "f69",
@@ -2515,7 +2559,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，座標附近只有「新濱町海洋廚房」濱海一路109-1號,非同一家）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": "日式"
   },
   {
    "id": "f70",
@@ -2575,7 +2620,8 @@
    },
    "addr": "80342高雄市鹽埕區鹽埕路36巷23號",
    "phone": "+886 7 531 4007",
-   "note": ""
+   "note": "",
+   "cuisine": null
   },
   {
    "id": "f71",
@@ -2634,7 +2680,8 @@
     ]
    },
    "note": "",
-   "hoursSource": "Google 地圖（2026-09-10 查，新樂街163巷1號,Google 上作「金溫州餛飩大王」—— 平日 14:00 才開、週末 11:30 開,與資料完全吻合,已確認）"
+   "hoursSource": "Google 地圖（2026-09-10 查，新樂街163巷1號,Google 上作「金溫州餛飩大王」—— 平日 14:00 才開、週末 11:30 開,與資料完全吻合,已確認）",
+   "cuisine": "中式"
   },
   {
    "id": "f72",
@@ -2714,7 +2761,8 @@
    },
    "addr": "高雄市鹽埕區大勇路78號",
    "phone": "+886 7 531 1829",
-   "note": ""
+   "note": "",
+   "cuisine": "美式"
   },
   {
    "id": "f73",
@@ -2775,7 +2823,8 @@
    "note": "",
    "hoursSource": "Google 地圖（2026-08-25 查，Google 上作「邁斯列日咖啡駁二店」(Liegeois=列日)，大義輕軌站旁，座標與資料相差不到 20 公尺）",
    "googleRating": 4.7,
-   "googleReviews": 287
+   "googleReviews": 287,
+   "cuisine": null
   },
   {
    "id": "f74",
@@ -2846,7 +2895,8 @@
    },
    "note": "泰國菜。",
    "hoursRaw": "平日 11:00–15:00、17:30–22:00;週末 11:30–15:30、17:30–22:00（週二、三休）",
-   "hoursSource": "Google 地圖（2026-09-09 查，五福四路129之1號 —— ⚠ Google 上名稱為「泰法客泰味小食光」,音譯自 Thai Funk,座標同區,研判為同一家,請自行確認）"
+   "hoursSource": "Google 地圖（2026-09-09 查，五福四路129之1號 —— ⚠ Google 上名稱為「泰法客泰味小食光」,音譯自 Thai Funk,座標同區,研判為同一家,請自行確認）",
+   "cuisine": "泰式"
   },
   {
    "id": "f75",
@@ -2909,7 +2959,8 @@
    "note": "",
    "hoursSource": "Google 地圖（2026-08-21 查，五福四路150號與資料地址相同）",
    "googleRating": 4.7,
-   "googleReviews": 612
+   "googleReviews": 612,
+   "cuisine": "西式"
   },
   {
    "id": "f76",
@@ -2972,7 +3023,8 @@
    "phone": "+886 7 5214919",
    "note": "",
    "googleRating": 4.3,
-   "googleReviews": 3250
+   "googleReviews": 3250,
+   "cuisine": "台式"
   },
   {
    "id": "f77",
@@ -3059,7 +3111,8 @@
     ]
    },
    "addr": "803高雄市鹽埕區大勇路8號",
-   "note": ""
+   "note": "",
+   "cuisine": "中式"
   },
   {
    "id": "f78",
@@ -3140,7 +3193,8 @@
    "note": "",
    "hoursSource": "Google 地圖（2026-08-21 查，Google 上作「MARS Cafe 麻森咖啡義式餐廳-鹽埕場」，大勇路80號與資料地址相同）",
    "googleRating": 4,
-   "googleReviews": 1032
+   "googleReviews": 1032,
+   "cuisine": "義式"
   },
   {
    "id": "f79",
@@ -3196,7 +3250,8 @@
    "addr": "高雄市鹽埕區大仁路30號",
    "note": "",
    "hoursSource": "Google 地圖（2026-09-10 查，大仁路30號,中式麵食店 —— 補上部落格漏掉的週四公休,打烊延至 00:00）",
-   "hoursRaw": "16:30–00:00(週四休)"
+   "hoursRaw": "16:30–00:00(週四休)",
+   "cuisine": "中式"
   },
   {
    "id": "f80",
@@ -3222,7 +3277,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，座標附近只有「柒壹喫堂x鹽海小餐館」,非同一家）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": "西式"
   },
   {
    "id": "f81",
@@ -3277,7 +3333,8 @@
    },
    "addr": "803高雄市鹽埕區莒光街159號",
    "phone": "+886 970125605",
-   "note": ""
+   "note": "",
+   "cuisine": null
   },
   {
    "id": "f82",
@@ -3338,7 +3395,8 @@
    "addr": "803高雄市鹽埕區五福四路146號",
    "note": "",
    "googleRating": 4.3,
-   "googleReviews": 1454
+   "googleReviews": 1454,
+   "cuisine": "西式"
   },
   {
    "id": "f83",
@@ -3381,7 +3439,8 @@
      ]
     ]
    },
-   "note": ""
+   "note": "",
+   "cuisine": null
   },
   {
    "id": "f84",
@@ -3461,7 +3520,8 @@
    "note": "",
    "hoursSource": "Google 地圖（2026-08-21 查，Google 上作「典藏駁二餐廳 ARTCO」，大義街2號）",
    "googleRating": 4.3,
-   "googleReviews": 2195
+   "googleReviews": 2195,
+   "cuisine": null
   },
   {
    "id": "f85",
@@ -3521,7 +3581,8 @@
    },
    "note": "",
    "googleRating": 3.5,
-   "googleReviews": 1121
+   "googleReviews": 1121,
+   "cuisine": "台式"
   },
   {
    "id": "f89",
@@ -3575,7 +3636,8 @@
      ]
     ]
    },
-   "note": ""
+   "note": "",
+   "cuisine": "美式"
   },
   {
    "id": "f91",
@@ -3601,7 +3663,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，座標處只有已收錄的 Shoreline Coffee,查無此店）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": null
   },
   {
    "id": "f92",
@@ -3690,7 +3753,8 @@
    "note": "",
    "hoursSource": "mable.tw 鹽埕老店小吃整理（2026-08 查）",
    "googleRating": 4,
-   "googleReviews": 1815
+   "googleReviews": 1815,
+   "cuisine": null
   },
   {
    "id": "f93",
@@ -3741,7 +3805,8 @@
    },
    "note": "駁二藝術特區內小餐館。",
    "hoursRaw": "10:30–21:30（週一、二休）",
-   "hoursSource": "Google 地圖（2026-09-09 查，大義街2-1號駁二大義C7倉庫）"
+   "hoursSource": "Google 地圖（2026-09-09 查，大義街2-1號駁二大義C7倉庫）",
+   "cuisine": "西式"
   },
   {
    "id": "f94",
@@ -3814,7 +3879,8 @@
    "googleRating": 4.1,
    "googleReviews": 274,
    "hoursRaw": "平日 11:00–14:00、17:00–19:30（週末休）",
-   "hoursSource": "Google 地圖（2026-09-09 查，新樂街141號）"
+   "hoursSource": "Google 地圖（2026-09-09 查，新樂街141號）",
+   "cuisine": null
   },
   {
    "id": "f95",
@@ -3840,7 +3906,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，哈瑪星一帶查無「拉麵屋」,只有商圈地標）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": "日式"
   },
   {
    "id": "f96",
@@ -3926,7 +3993,8 @@
      ]
     ]
    },
-   "note": ""
+   "note": "",
+   "cuisine": "泰式"
   },
   {
    "id": "f97",
@@ -3952,7 +4020,8 @@
    },
    "note": "素食餐廳。",
    "hoursSource": "Google 地圖（2026-09-09 查，大仁路136號,Google 上作「品果品果蔬食午晚餐」(Pinguo 為品果音譯) —— ⚠ 為素食餐廳,同類店家多在 config.ignore 名單中）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": "素食"
   },
   {
    "id": "f98",
@@ -3978,7 +4047,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，只找到「52幽浮手工漢堡專賣店」益群路73號,與座標不符）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": "美式"
   },
   {
    "id": "f99",
@@ -4036,7 +4106,8 @@
    "addr": "高雄市鹽埕區河濱里21鄰大智路99號",
    "note": "手沖咖啡/甜點店,12:30 才開,午休時間趕不上。",
    "hoursRaw": "12:30–19:00（週三休）",
-   "hoursSource": "Google 地圖（2026-09-09 查，大智路99號地址相符）"
+   "hoursSource": "Google 地圖（2026-09-09 查，大智路99號地址相符）",
+   "cuisine": null
   },
   {
    "id": "f100",
@@ -4097,7 +4168,8 @@
    },
    "note": "咖啡店,13:00 才開,趕不上午休。",
    "hoursRaw": "13:00 開始營業（Google 僅顯示開始時間,打烊時間為推估）",
-   "hoursSource": "Google 地圖（2026-09-09 查，大義街2-2號C8-2駁二 —— ⚠ 只顯示 13:00 開始,打烊時間未確認）"
+   "hoursSource": "Google 地圖（2026-09-09 查，大義街2-2號C8-2駁二 —— ⚠ 只顯示 13:00 開始,打烊時間未確認）",
+   "cuisine": null
   },
   {
    "id": "f104",
@@ -4154,7 +4226,8 @@
    "addr": "高雄市鹽埕區莒光街122號",
    "note": "義大利麵/燉飯,店名標示「中午不休息」。",
    "hoursRaw": "11:00–19:00（週二休）",
-   "hoursSource": "Google 地圖（2026-09-09 查，新樂街122號 —— 資料原記莒光街122號，店名相符，以 Google 為準）"
+   "hoursSource": "Google 地圖（2026-09-09 查，新樂街122號 —— 資料原記莒光街122號，店名相符，以 Google 為準）",
+   "cuisine": "義式"
   },
   {
    "id": "f105",
@@ -4191,7 +4264,8 @@
    "note": "",
    "hoursSource": "Google 地圖（2026-09-10 查，新樂街117號 —— 更正:平日全休,只開週末,原資料的週三至五晚上已過期）",
    "hoursUnknown": false,
-   "hoursRaw": "週六 11:00–22:00、週日 12:00–22:00(平日休)"
+   "hoursRaw": "週六 11:00–22:00、週日 12:00–22:00(平日休)",
+   "cuisine": "日式"
   },
   {
    "id": "f107",
@@ -4267,7 +4341,8 @@
    "note": "",
    "hoursSource": "Google 地圖（2026-08-25 查，Google 上作「香港馬興記燒臘店」，莒光街184號）",
    "googleRating": 4.1,
-   "googleReviews": 165
+   "googleReviews": 165,
+   "cuisine": "港式"
   },
   {
    "id": "f108",
@@ -4328,7 +4403,8 @@
    "note": "",
    "hoursSource": "mable.tw 鹽埕老店小吃整理（2026-08 查）",
    "googleRating": 3.7,
-   "googleReviews": 2400
+   "googleReviews": 2400,
+   "cuisine": "台式"
   },
   {
    "id": "f109",
@@ -4355,7 +4431,8 @@
    "phone": "+886 7 561 2220",
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，座標附近為「武夜鹿鳴 酒肆私房菜」五福四路152號,店名不符）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": null
   },
   {
    "id": "f110",
@@ -4416,7 +4493,8 @@
    },
    "note": "咖啡店,在駁二藝術特區內。",
    "hoursRaw": "10:00–17:30（週末 09:00–18:00）",
-   "hoursSource": "Google 地圖（2026-09-09 查，大義街2號駁二大義C9倉庫）"
+   "hoursSource": "Google 地圖（2026-09-09 查，大義街2號駁二大義C9倉庫）",
+   "cuisine": null
   },
   {
    "id": "f112",
@@ -4502,7 +4580,8 @@
      ]
     ]
    },
-   "note": ""
+   "note": "",
+   "cuisine": "台式"
   },
   {
    "id": "f113",
@@ -4563,7 +4642,8 @@
    "note": "",
    "hoursSource": "ksdelicacy 西子灣站美食38間整理（2026-08 查）",
    "googleRating": 4.1,
-   "googleReviews": 381
+   "googleReviews": 381,
+   "cuisine": "台式"
   },
   {
    "id": "f115",
@@ -4590,7 +4670,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，只找到「香茗茶行」五福四路264號茶葉店,非同一家）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": null
   },
   {
    "id": "f117",
@@ -4651,7 +4732,8 @@
    "note": "",
    "hoursSource": "Google 地圖（2026-08-25 查，Google 上作「三山國王廟虱目魚米粉店」，鹽埕街61號）",
    "googleRating": 4.3,
-   "googleReviews": 245
+   "googleReviews": 245,
+   "cuisine": "台式"
   },
   {
    "id": "f119",
@@ -4677,7 +4759,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，只找到「鬆餅先生蔬食主義-瑞豐店」華豐街47巷15號(素食,且在瑞豐非鹽埕),與座標不符）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": null
   },
   {
    "id": "f120",
@@ -4734,7 +4817,8 @@
    "phone": "+886 7 521 6971",
    "note": "",
    "googleRating": 4.2,
-   "googleReviews": 1379
+   "googleReviews": 1379,
+   "cuisine": "西式"
   },
   {
    "id": "f122",
@@ -4760,7 +4844,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，Google 只找到富民路327號的富民店,與座標不符,此分店無法確認）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": "義式"
   },
   {
    "id": "f123",
@@ -4786,7 +4871,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，只對到 Pizza Rock 富民店,查無「轉角pizza」）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": "義式"
   },
   {
    "id": "f125",
@@ -4812,7 +4898,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，搜尋只對到已收錄的「鴨肉珍」,查無「塩程鴨肉店」）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": "台式"
   },
   {
    "id": "f126",
@@ -4838,7 +4925,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，只找到「一口香豆乳雞」九如四路761號,與座標不符）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": null
   },
   {
    "id": "f127",
@@ -4928,7 +5016,8 @@
    "addr": "高雄市鹽埕區五福四路65號",
    "note": "",
    "hoursRaw": "11:00–14:00、17:30–20:30（週末晚間 17:00 開始）",
-   "hoursSource": "Google 地圖（2026-09-09 查，五福四路65號地址相符）"
+   "hoursSource": "Google 地圖（2026-09-09 查，五福四路65號地址相符）",
+   "cuisine": "日式"
   },
   {
    "id": "f128",
@@ -4984,7 +5073,8 @@
    },
    "note": "",
    "hoursRaw": "11:00–21:00（週四休）",
-   "hoursSource": "Google 地圖（2026-09-09 查，大義街108號）"
+   "hoursSource": "Google 地圖（2026-09-09 查，大義街108號）",
+   "cuisine": null
   },
   {
    "id": "f130",
@@ -5043,7 +5133,8 @@
      ]
     ]
    },
-   "note": ""
+   "note": "",
+   "cuisine": "台式"
   },
   {
    "id": "f131",
@@ -5134,7 +5225,8 @@
    "note": "",
    "hoursSource": "mable.tw 鹽埕老店小吃整理（2026-08 查）",
    "googleRating": 3.9,
-   "googleReviews": 111
+   "googleReviews": 111,
+   "cuisine": "台式"
   },
   {
    "id": "f132",
@@ -5195,7 +5287,8 @@
    },
    "note": "閩菜/福建菜。",
    "hoursRaw": "每日 11:00–21:00",
-   "hoursSource": "Google 地圖（2026-09-09 查，大義街123-1號）"
+   "hoursSource": "Google 地圖（2026-09-09 查，大義街123-1號）",
+   "cuisine": "閩菜"
   },
   {
    "id": "f133",
@@ -5243,7 +5336,8 @@
      ]
     ]
    },
-   "note": ""
+   "note": "",
+   "cuisine": "台式"
   },
   {
    "id": "f134",
@@ -5305,7 +5399,8 @@
    "phone": "+886 7 5519689",
    "note": "",
    "googleRating": 4.1,
-   "googleReviews": 754
+   "googleReviews": 754,
+   "cuisine": "台式"
   },
   {
    "id": "f135",
@@ -5386,7 +5481,8 @@
    "note": "",
    "hoursSource": "mable.tw 鹽埕老店小吃整理（2026-08 查）",
    "googleRating": 3.9,
-   "googleReviews": 1608
+   "googleReviews": 1608,
+   "cuisine": null
   },
   {
    "id": "f136",
@@ -5442,7 +5538,8 @@
    },
    "note": "龜苓膏甜品店。",
    "hoursRaw": "10:00–21:00（週三休）",
-   "hoursSource": "Google 地圖（2026-09-09 查，大公路1號 —— Google 分類為「甜品店」,龜苓膏專賣,不是一般餐廳）"
+   "hoursSource": "Google 地圖（2026-09-09 查，大公路1號 —— Google 分類為「甜品店」,龜苓膏專賣,不是一般餐廳）",
+   "cuisine": null
   },
   {
    "id": "f139",
@@ -5468,7 +5565,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，座標附近為「大廚創意料理/熱炒」大公路13號且暫時關閉,店名不符,無法確認）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": "台式"
   },
   {
    "id": "f140",
@@ -5530,7 +5628,8 @@
    "phone": "+886 7 561 3842",
    "note": "",
    "googleRating": 4.2,
-   "googleReviews": 9744
+   "googleReviews": 9744,
+   "cuisine": "台式"
   },
   {
    "id": "f142",
@@ -5586,7 +5685,8 @@
    },
    "note": "英式下午茶/咖啡店,在打狗英國領事館園區內。",
    "hoursRaw": "10:00–19:00（週末 09:00 開始,週三休）",
-   "hoursSource": "Google 地圖（2026-09-09 查，蓮海路20號打狗英國領事館內）"
+   "hoursSource": "Google 地圖（2026-09-09 查，蓮海路20號打狗英國領事館內）",
+   "cuisine": null
   },
   {
    "id": "f143",
@@ -5649,7 +5749,8 @@
    "note": "",
    "hoursSource": "mable.tw 鹽埕老店小吃整理（2026-08 查）",
    "googleRating": 4.1,
-   "googleReviews": 2640
+   "googleReviews": 2640,
+   "cuisine": "台式"
   },
   {
    "id": "f144",
@@ -5710,7 +5811,8 @@
    "addr": "高雄市鹽埕區五福四路43號",
    "phone": "+886 7 551 4988",
    "note": "",
-   "hoursSource": "mable.tw 鹽埕老店小吃整理（2026-08 查）"
+   "hoursSource": "mable.tw 鹽埕老店小吃整理（2026-08 查）",
+   "cuisine": "台式"
   },
   {
    "id": "f145",
@@ -5799,7 +5901,8 @@
    },
    "note": "四川菜,價位比店名看起來高。",
    "hoursRaw": "每日 11:30–14:00、17:30–21:00",
-   "hoursSource": "Google 地圖（2026-09-09 查，七賢三路165號1樓）"
+   "hoursSource": "Google 地圖（2026-09-09 查，七賢三路165號1樓）",
+   "cuisine": "川菜"
   },
   {
    "id": "f146",
@@ -5861,7 +5964,8 @@
    "addr": "高雄市鹽埕區新樂街39號",
    "note": "早午餐餐廳。",
    "hoursRaw": "每日 08:00–17:00",
-   "hoursSource": "Google 地圖（2026-09-09 查，Google 上地址為莒光街85號 —— 與資料的新樂街39號不符,店名相符,建議現場確認）"
+   "hoursSource": "Google 地圖（2026-09-09 查，Google 上地址為莒光街85號 —— 與資料的新樂街39號不符,店名相符,建議現場確認）",
+   "cuisine": "西式"
   },
   {
    "id": "f147",
@@ -5887,7 +5991,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，只找到「原香牛肉拉麵」大昌二路479號(三民區),與座標不符）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": "日式"
   },
   {
    "id": "f149",
@@ -5913,7 +6018,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，只對到旗津貝殼館(旅遊景點),查無餐廳）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": null
   },
   {
    "id": "f150",
@@ -5939,7 +6045,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，只找到「咕嚕叫土司-博愛店」博愛二路306號,店名與位置皆不符）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": null
   },
   {
    "id": "f151",
@@ -6004,7 +6111,8 @@
    "addr": "高雄市鹽埕區五福四路30號",
    "note": "居酒屋,平日只有晚餐時段,週末才有午餐。",
    "hoursRaw": "平日 17:00–22:00（週四休）,週末加開 11:00–14:00",
-   "hoursSource": "Google 地圖（2026-09-09 查，五福四路30號地址相符）"
+   "hoursSource": "Google 地圖（2026-09-09 查，五福四路30號地址相符）",
+   "cuisine": "日式"
   },
   {
    "id": "f154",
@@ -6081,7 +6189,8 @@
    "note": "",
    "hoursSource": "Google 地圖（2026-09-10 查，麵店 —— 更正原部落格的 15:00–23:00,實際有午餐時段）",
    "hoursUnknown": false,
-   "hoursRaw": "平日 11:30–14:00、16:30–21:00;週六 11:30–21:00(週日休)"
+   "hoursRaw": "平日 11:30–14:00、16:30–21:00;週六 11:30–21:00(週日休)",
+   "cuisine": "台式"
   },
   {
    "id": "f155",
@@ -6107,7 +6216,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，只找到「愛麵族」成功一路278號,店名不符,無法確認）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": "台式"
   },
   {
    "id": "f178",
@@ -6163,7 +6273,8 @@
    },
    "note": "咖啡店,12:00 才開。",
    "hoursRaw": "12:00–18:00（週三休）",
-   "hoursSource": "Google 地圖（2026-09-09 查，建國四路276號）"
+   "hoursSource": "Google 地圖（2026-09-09 查，建國四路276號）",
+   "cuisine": null
   },
   {
    "id": "f181",
@@ -6189,7 +6300,8 @@
    },
    "addr": "804高雄市鼓山區蓮海路51號",
    "note": "此地址為西子灣沙灘會館,該飯店已在 config.ignore 名單中,原店疑已不存在。",
-   "hoursSource": "Google 地圖（2026-09-09 查，蓮海路51號查到的是「西子灣沙灘會館」飯店,原店查無資料）"
+   "hoursSource": "Google 地圖（2026-09-09 查，蓮海路51號查到的是「西子灣沙灘會館」飯店,原店查無資料）",
+   "cuisine": null
   },
   {
    "id": "f186",
@@ -6215,7 +6327,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，查無此店,搜尋只回傳「前金區」行政區）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": "台式"
   },
   {
    "id": "f189",
@@ -6277,7 +6390,8 @@
    "phone": "+886 7 551 2747",
    "note": "",
    "googleRating": 3.7,
-   "googleReviews": 133
+   "googleReviews": 133,
+   "cuisine": "台式"
   },
   {
    "id": "f192",
@@ -6344,7 +6458,8 @@
    },
    "note": "早午餐咖啡廳。",
    "hoursRaw": "週三 11:00–17:00;週四五 11:00–15:30、17:30–20:00;週末 10:00 開始（週一、二休）",
-   "hoursSource": "Google 地圖（2026-09-09 查，新興街291號2樓）"
+   "hoursSource": "Google 地圖（2026-09-09 查，新興街291號2樓）",
+   "cuisine": null
   },
   {
    "id": "f202",
@@ -6403,7 +6518,8 @@
     ]
    },
    "addr": "高雄市苓雅區海邊路75號",
-   "note": ""
+   "note": "",
+   "cuisine": "台式"
   },
   {
    "id": "f203",
@@ -6454,7 +6570,8 @@
    },
    "note": "綠豆湯甜品店。",
    "hoursRaw": "11:30–21:30（週三、週日休）",
-   "hoursSource": "Google 地圖（2026-09-09 查，五福三路130號 —— Google 分類為「甜品店」,不是一般餐廳）"
+   "hoursSource": "Google 地圖（2026-09-09 查，五福三路130號 —— Google 分類為「甜品店」,不是一般餐廳）",
+   "cuisine": null
   },
   {
    "id": "f204",
@@ -6511,7 +6628,8 @@
    "addr": "高雄市前金區市中一路2-2號",
    "note": "咖啡店,不是速食店。",
    "hoursRaw": "10:30–18:00（週三休）",
-   "hoursSource": "Google 地圖（2026-09-09 查，市中一路2-2號地址相符）"
+   "hoursSource": "Google 地圖（2026-09-09 查，市中一路2-2號地址相符）",
+   "cuisine": null
   },
   {
    "id": "f205",
@@ -6563,7 +6681,8 @@
    },
    "note": "平價便當,只開到 13:00,可公司團訂。",
    "hoursRaw": "平日 10:30–13:00（週末休）",
-   "hoursSource": "Google 地圖（2026-09-09 查，五福三路128號,Google 上作「勝黑店」）"
+   "hoursSource": "Google 地圖（2026-09-09 查，五福三路128號,Google 上作「勝黑店」）",
+   "cuisine": "台式"
   },
   {
    "id": "f207",
@@ -6589,7 +6708,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，蓮海路70號中山大學活動中心,08:00 開始營業,Google 無完整時段）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": null
   },
   {
    "id": "f210",
@@ -6672,7 +6792,8 @@
    "phone": "+886 7 2016866",
    "note": "",
    "hoursRaw": "平日 11:00–14:00、17:00–22:00;週末 11:00–22:00",
-   "hoursSource": "Google 地圖（2026-09-09 查，五福三路124號地址相符）"
+   "hoursSource": "Google 地圖（2026-09-09 查，五福三路124號地址相符）",
+   "cuisine": "泰式"
   },
   {
    "id": "f221",
@@ -6698,7 +6819,8 @@
    },
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，只找到「幸福錦」長明街303號,店名不符,無法確認）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": "日式"
   },
   {
    "id": "f223",
@@ -6753,7 +6875,8 @@
    },
    "addr": "高雄市前金區七賢二路365號",
    "phone": "+886 7 241 9850",
-   "note": ""
+   "note": "",
+   "cuisine": null
   },
   {
    "id": "f224",
@@ -6833,7 +6956,8 @@
    },
    "note": "中山大學校內自助餐,有素食與清真餐點。",
    "hoursRaw": "11:00–14:00、16:30–20:00（週六休）",
-   "hoursSource": "Google 地圖（2026-09-09 查，蓮海路70號中山大學武嶺男生宿舍）"
+   "hoursSource": "Google 地圖（2026-09-09 查，蓮海路70號中山大學武嶺男生宿舍）",
+   "cuisine": "素食"
   },
   {
    "id": "f227",
@@ -6889,7 +7013,8 @@
    },
    "note": "壽司。",
    "hoursRaw": "11:00–21:00（週二休）",
-   "hoursSource": "Google 地圖（2026-09-09 查，五福三路117號）"
+   "hoursSource": "Google 地圖（2026-09-09 查，五福三路117號）",
+   "cuisine": "日式"
   },
   {
    "id": "f229",
@@ -6950,7 +7075,8 @@
    },
    "note": "日式定食/便當外帶專門店。",
    "hoursRaw": "每日 11:00–21:00",
-   "hoursSource": "Google 地圖（2026-09-09 查，河東路356號1F）"
+   "hoursSource": "Google 地圖（2026-09-09 查，河東路356號1F）",
+   "cuisine": "日式"
   },
   {
    "id": "f230",
@@ -6978,7 +7104,8 @@
    "note": "飯盒/自助餐,Google 無營業時間。",
    "googleRating": 3.5,
    "googleReviews": 129,
-   "hoursSource": "Google 地圖（2026-09-09 查，成功一路408號地址相符,但 Google 上沒有營業時間資料）"
+   "hoursSource": "Google 地圖（2026-09-09 查，成功一路408號地址相符,但 Google 上沒有營業時間資料）",
+   "cuisine": "台式"
   },
   {
    "id": "f232",
@@ -7005,7 +7132,8 @@
    "phone": "+886 7 330 1235",
    "note": "",
    "hoursSource": "Google 地圖（2026-09-09 查，僅找到「台北真來香烤鴨莊」建國三路228號,非同一家,無法確認）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": "中式"
   },
   {
    "id": "f235",
@@ -7091,7 +7219,8 @@
      ]
     ]
    },
-   "note": ""
+   "note": "",
+   "cuisine": "日式"
   },
   {
    "id": "d03",
@@ -7147,7 +7276,8 @@
    },
    "note": "咖啡店。",
    "addr": "803高雄市鹽埕區必信街116號",
-   "phone": "+886 75213635"
+   "phone": "+886 75213635",
+   "cuisine": null
   },
   {
    "id": "d04",
@@ -7208,7 +7338,8 @@
    },
    "note": "咖啡店。",
    "addr": "804003高雄市鼓山區鼓元街4號二樓",
-   "phone": "+886 7 5310330"
+   "phone": "+886 7 5310330",
+   "cuisine": null
   },
   {
    "id": "d06",
@@ -7264,7 +7395,8 @@
    },
    "note": "咖啡店。",
    "addr": "804高雄市鼓山區濱海一路79號",
-   "phone": "+886 7 531 0190"
+   "phone": "+886 7 531 0190",
+   "cuisine": null
   },
   {
    "id": "d08",
@@ -7291,7 +7423,8 @@
    "note": "咖啡店。",
    "hoursUnknown": true,
    "hoursSource": "Google 地圖（2026-09-10 查，搜尋只回到篩選介面未落到店家頁,查無）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": null
   },
   {
    "id": "d13",
@@ -7320,7 +7453,8 @@
    "googleRating": 5,
    "googleReviews": 32,
    "hoursSource": "Google 地圖（2026-09-10 查，哨船街66號,09:30 開始營業(來自先前搜尋結果列),完整時段未取得）",
-   "needsReview": true
+   "needsReview": true,
+   "cuisine": null
   },
   {
    "id": "d15",
@@ -7370,7 +7504,8 @@
     ]
    },
    "note": "咖啡店。",
-   "addr": "802高雄市苓雅區海邊路48之2號"
+   "addr": "802高雄市苓雅區海邊路48之2號",
+   "cuisine": null
   }
  ],
  "desserts": [

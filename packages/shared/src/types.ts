@@ -31,6 +31,8 @@ export interface Shop extends LatLng {
   id: string;
   name: string;
   category: string[];
+  /** 菜系(台式/日式/港式…),甜點類不給;不確定就留空,不猜 */
+  cuisine?: string;
   price: 1 | 2 | 3 | 4 | null;
   service: Service[];
   hours: WeeklyHours;
