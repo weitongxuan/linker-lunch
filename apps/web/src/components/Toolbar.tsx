@@ -92,10 +92,10 @@ export function Toolbar({ market, onRandomPick, onOpenAddShop, categories, myLoc
       <button className="btn" onClick={onOpenAddShop}>
         ➕ 新增店家
       </button>
-      <IntentBox categories={categories} />
       <button className="btn pri" onClick={onRandomPick}>
         🎲 隨機推薦
       </button>
+      <IntentBox categories={categories} />
       <button className={`btn${state.voteMode ? ' pri' : ''}`} onClick={() => dispatch({ type: 'TOGGLE_VOTE_MODE' })}>
         👥 多人投票
       </button>

@@ -40,8 +40,10 @@ export interface UiState {
   keyword: string;
   /** 套用意圖後先立旗,等 rows 依新篩選重算完才抽,不然抽到舊清單 */
   pendingPick: boolean;
-  /** 「我理解為:…」,顯示在推薦卡上 */
+  /** 「我理解為:…」短標籤 */
   intentNote: string | null;
+  /** 像在回話的回答句,{shop} 由推薦卡填入 */
+  intentReply: string | null;
 }
 
 const SHOW_DESSERTS_KEY = 'lunchmap.showDesserts';
@@ -90,6 +92,7 @@ function initialState(): UiState {
     keyword: '',
     pendingPick: false,
     intentNote: null,
+    intentReply: null,
   };
 }
 
@@ -118,7 +121,7 @@ type Action =
   | { type: 'TOGGLE_SEC_OPEN'; key: 'drinks' }
   | { type: 'TOGGLE_FILTER_DRAWER' }
   | { type: 'SET_KEYWORD'; keyword: string }
-  | { type: 'APPLY_INTENT'; actions: IntentActions; label: string }
+  | { type: 'APPLY_INTENT'; actions: IntentActions; label: string; reply: string }
   | { type: 'CLEAR_PENDING_PICK' };
 
 function toggleInSet<T>(set: Set<T>, value: T): Set<T> {
@@ -169,7 +172,7 @@ function reducer(state: UiState, action: Action): UiState {
     case 'SET_PICK_EMPTY':
       return { ...state, pickShopId: null, pickWeights: null, pickEmpty: true };
     case 'CLEAR_PICK':
-      return { ...state, pickShopId: null, pickWeights: null, pickEmpty: false, intentNote: null };
+      return { ...state, pickShopId: null, pickWeights: null, pickEmpty: false, intentNote: null, intentReply: null };
     case 'SET_SEL':
       return { ...state, sel: action.id };
     case 'SET_EDIT_SHOP':
@@ -196,6 +199,7 @@ function reducer(state: UiState, action: Action): UiState {
         excludeCat: a.excludeCat ? new Set(a.excludeCat) : state.filters.excludeCat,
         cat: a.cat ? new Set(a.cat) : state.filters.cat,
         minGoogle: a.minGoogle ?? state.filters.minGoogle,
+        service: a.service ? new Set(a.service) : state.filters.service,
       };
       return {
         ...state,
@@ -204,6 +208,7 @@ function reducer(state: UiState, action: Action): UiState {
         mode: a.mode ?? state.mode,
         pendingPick: true,
         intentNote: action.label,
+        intentReply: action.reply,
         pickShopId: null,
         pickWeights: null,
       };

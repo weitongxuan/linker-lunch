@@ -114,13 +114,14 @@ h1{font-family:"Noto Serif TC",serif;font-size:22px;margin:0;font-weight:700;
      padding:6px 13px;font-size:12.5px;color:var(--ink);width:160px}
 .searchInput::placeholder{color:var(--dim)}
 .searchInput:focus{outline:none;border-color:var(--accent)}
-.intent{position:relative;display:inline-flex}
-.intentInput{border:1px solid var(--goldline);background:var(--soft);border-radius:11px;padding:6px 13px;font-size:12.5px;color:var(--ink);width:220px}
+.intentWrap{position:relative;display:inline-flex}
+.intentPanel{position:absolute;top:calc(100% + 8px);left:0;z-index:40;width:320px;padding:8px;
+  background:var(--card);border:1px solid var(--goldline);border-radius:14px;
+  box-shadow:0 1px 2px rgba(23,20,16,.06),0 18px 40px -16px rgba(23,20,16,.28)}
+.intentInput{width:100%;border:1px solid var(--line);background:var(--soft);border-radius:10px;padding:9px 12px;font-size:13px;color:var(--ink)}
 .intentInput::placeholder{color:var(--dim)}
 .intentInput:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,.15)}
-.intentChips{position:absolute;top:calc(100% + 6px);left:0;z-index:30;display:flex;flex-wrap:wrap;gap:6px;max-width:520px;
-  background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;box-shadow:var(--shadow)}
-.intentChips .chip{font-size:12px}
+.pickcard .reply{font-size:13.5px;color:var(--ink2);margin:2px 0 4px}
 .btn.ghost:hover{background:var(--tagbg);border-color:transparent;color:var(--ink2)}
 #fcount:empty{display:none}
 #fcount{display:inline-block;min-width:16px;margin-left:5px;padding:0 4px;border-radius:99px;
@@ -350,8 +351,8 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
   .acts{gap:6px}
   .acts .btn{min-height:42px;padding:9px 13px;font-size:12.5px}
   .bar1{padding:10px 14px;gap:7px;flex-wrap:wrap}
-  .intent,.intentInput{width:100%}
-  .intentChips{max-width:calc(100vw - 28px)}
+  .intentWrap{position:static}
+  .intentPanel{position:fixed;left:14px;right:14px;top:var(--intent-top,22vh);width:auto}
   .bar1 .spacer{display:none}
   .bar1 .btn,.drawer .btn,.chip{min-height:42px;padding:9px 13px}
   .seg button{min-height:42px;padding:9px 13px}

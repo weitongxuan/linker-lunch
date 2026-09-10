@@ -36,9 +36,8 @@ export function PickCard({ rows, onPickAgain, onViewOnMap }: Props) {
     <div id="pick">
       <div className="pickcard">
         <div>
-          <div className="eyebrow">
-            {state.intentNote ? `我理解為:${state.intentNote} · ` : '今天的推薦 · '}抽中機率 {pct}%
-          </div>
+          <div className="eyebrow">{state.intentNote ? `我理解為:${state.intentNote} · ` : '今天的推薦 · '}抽中機率 {pct}%</div>
+          {state.intentReply && <div className="reply">{state.intentReply.replace('{shop}', row.sh.name)}</div>}
           <div className="who">{row.sh.name}</div>
           <div className="sub">
             {row.f.label} · {row.sh.category.join('、')}
