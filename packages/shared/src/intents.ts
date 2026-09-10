@@ -4,9 +4,18 @@ import type { IntentActions } from './intentCatalogue.js';
 export { CATALOGUE, SLOT_TEMPLATES, UNKNOWN_REPLY } from './intentCatalogue.js';
 export type { IntentActions, CatalogueEntry } from './intentCatalogue.js';
 
+/** 反問時給使用者點的候選意圖 */
+export interface IntentCandidate {
+  id: string;
+  question: string;
+  label: string;
+  reply: string;
+  actions: IntentActions;
+}
+
 export type Intent =
   | { kind: 'matched'; label: string; reply: string; actions: IntentActions }
-  | { kind: 'unknown'; reply: string; suggestions: string[] };
+  | { kind: 'unknown'; reply: string; suggestions: string[]; candidates: IntentCandidate[] };
 
 /** 給使用者看的例句:兩句帶類別槽位的 + 每個意圖的代表句 */
 export const EXAMPLE_QUESTIONS = ['我今天不想吃便當', '想吃麵', ...CATALOGUE.map((e) => e.examples[0])];
@@ -71,13 +80,25 @@ function findCategories(text: string, categories: string[]): string[] {
   return [...found];
 }
 
-function unknown(): Intent {
-  return { kind: 'unknown', reply: UNKNOWN_REPLY, suggestions: EXAMPLE_QUESTIONS };
+/** 沒聽懂時的默認候選:最常用的三個 */
+const DEFAULT_CANDIDATE_IDS = ['any', 'cheap', 'walk'];
+
+/** 依相似度排出最接近的意圖(每個意圖取其例句的最高分);全都不像就用默認三個 */
+export function rankCandidates(text: string, limit = 3): IntentCandidate[] {
+  const scored = CATALOGUE.map((e) => ({ e, s: Math.max(...e.examples.map((ex) => similarity(text, normalizeText(ex)))) }))
+    .sort((a, b) => b.s - a.s);
+  const meaningful = scored.filter((x) => x.s >= 0.2).slice(0, limit);
+  const picked = meaningful.length ? meaningful.map((x) => x.e) : DEFAULT_CANDIDATE_IDS.map((id) => CATALOGUE.find((e) => e.id === id)!);
+  return picked.map((e) => ({ id: e.id, question: e.question, label: e.label, reply: e.reply, actions: e.actions }));
+}
+
+function unknown(text: string): Intent {
+  return { kind: 'unknown', reply: UNKNOWN_REPLY, suggestions: EXAMPLE_QUESTIONS, candidates: rankCandidates(text) };
 }
 
 export function parseIntent(input: string, categories: string[]): Intent {
   const text = normalizeText(input);
-  if (!text) return unknown();
+  if (!text) return unknown(text);
 
   const actions: IntentActions = {};
   const labels: string[] = [];
@@ -125,6 +146,6 @@ export function parseIntent(input: string, categories: string[]): Intent {
     }
   }
 
-  if (!labels.length) return unknown();
+  if (!labels.length) return unknown(text);
   return { kind: 'matched', label: labels.join(' · '), reply: replies[replies.length - 1], actions };
 }

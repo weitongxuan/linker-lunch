@@ -28,9 +28,18 @@ test('相似度兜底:差不多的問法', () => {
   assert.ok(similarity('不知道吃什麼', '不知道要吃什麼') > 0.5);
   assert.equal(m('今天不知道要吃什麼').label, '隨便推薦');
 });
-test('聽不懂 → unknown 帶回覆與例句', () => {
+test('聽不懂 → unknown 帶回覆、例句與 3 個候選', () => {
   const r = parseIntent('今天天氣真好', CATS);
   assert.equal(r.kind, 'unknown');
-  if (r.kind === 'unknown') assert.ok(r.suggestions.length >= 7);
+  if (r.kind === 'unknown') {
+    assert.ok(r.suggestions.length >= 7);
+    assert.equal(r.candidates.length, 3);
+    assert.ok(r.candidates.every((c) => c.question && c.reply));
+  }
+});
+test('「101」也要有候選可反問', () => {
+  const r = parseIntent('101', CATS);
+  assert.equal(r.kind, 'unknown');
+  if (r.kind === 'unknown') assert.equal(r.candidates.length, 3);
 });
 test('有動詞但類別對不到 → 不亂猜', () => assert.equal(parseIntent('不想吃西班牙菜', CATS).kind, 'unknown'));

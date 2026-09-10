@@ -20,6 +20,8 @@ export interface CatalogueEntry {
   label: string;
   /** 像在回話的回答,{shop} 由推薦卡填入 */
   reply: string;
+  /** 聽不懂時反問用的選項文字 */
+  question: string;
 }
 
 /**
@@ -38,6 +40,7 @@ export const CATALOGUE: CatalogueEntry[] = [
     actions: { mood: 'down' },
     label: '省一點',
     reply: '省一點的話,這家不錯:{shop}',
+    question: '想找便宜一點的?',
   },
   {
     id: 'fancy',
@@ -49,6 +52,7 @@ export const CATALOGUE: CatalogueEntry[] = [
     actions: { mood: 'up' },
     label: '吃好一點',
     reply: '今天吃好一點,{shop} 如何?',
+    question: '今天想吃好一點?',
   },
   {
     id: 'walk',
@@ -60,6 +64,7 @@ export const CATALOGUE: CatalogueEntry[] = [
     actions: { mode: 'walk' },
     label: '走路',
     reply: '走路就到,不用找車位:{shop}',
+    question: '走路就到的?',
   },
   {
     id: 'drive',
@@ -71,6 +76,7 @@ export const CATALOGUE: CatalogueEntry[] = [
     actions: { mode: 'drive' },
     label: '開車',
     reply: '那就開車,範圍放大一點:{shop}',
+    question: '開車去遠一點的?',
   },
   {
     id: 'good',
@@ -82,6 +88,7 @@ export const CATALOGUE: CatalogueEntry[] = [
     actions: { minGoogle: 4.0 },
     label: 'Google 4.0 以上',
     reply: 'Google 4 分以上的:{shop}',
+    question: '要評價好的?',
   },
   {
     id: 'takeout',
@@ -93,6 +100,7 @@ export const CATALOGUE: CatalogueEntry[] = [
     actions: { service: ['takeout'] },
     label: '外帶',
     reply: '可以外帶的:{shop}',
+    question: '要外帶回來吃?',
   },
   {
     id: 'dinein',
@@ -103,6 +111,7 @@ export const CATALOGUE: CatalogueEntry[] = [
     actions: { service: ['dine_in'] },
     label: '內用',
     reply: '可以坐下來吃的:{shop}',
+    question: '想坐下來內用?',
   },
   {
     id: 'again',
@@ -113,6 +122,7 @@ export const CATALOGUE: CatalogueEntry[] = [
     actions: {},
     label: '換一家',
     reply: '好,換這家:{shop}',
+    question: '換一家看看?',
   },
   {
     id: 'any',
@@ -125,6 +135,7 @@ export const CATALOGUE: CatalogueEntry[] = [
     actions: {},
     label: '隨便推薦',
     reply: '那就交給運氣:{shop}!',
+    question: '直接幫你隨便推薦一家?',
   },
   {
     id: 'quick',
@@ -135,6 +146,7 @@ export const CATALOGUE: CatalogueEntry[] = [
     actions: { mode: 'walk' },
     label: '趕時間(走路)',
     reply: '趕時間的話走路最快,這家:{shop}',
+    question: '趕時間,要快的?',
   },
   {
     id: 'light',
@@ -146,6 +158,7 @@ export const CATALOGUE: CatalogueEntry[] = [
     actions: {},
     label: '清淡/口味(資料沒有這個欄位)',
     reply: '我還分不出清淡或有沒有湯,先隨機給你一家,你再看:{shop}',
+    question: '想吃清淡一點的?',
   },
   {
     id: 'group',
@@ -156,6 +169,7 @@ export const CATALOGUE: CatalogueEntry[] = [
     actions: { service: ['dine_in'] },
     label: '聚餐(內用)',
     reply: '人多要能坐,這家可以內用:{shop}',
+    question: '很多人一起吃?',
   },
 ];
 

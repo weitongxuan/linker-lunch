@@ -121,6 +121,10 @@ h1{font-family:"Noto Serif TC",serif;font-size:22px;margin:0;font-weight:700;
 .intentInput{width:100%;border:1px solid var(--line);background:var(--soft);border-radius:10px;padding:9px 12px;font-size:13px;color:var(--ink)}
 .intentInput::placeholder{color:var(--dim)}
 .intentInput:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,.15)}
+.intentAsk{font-size:13px;color:var(--ink);margin:2px 2px 8px;line-height:1.5}
+.intentOpts{display:flex;flex-wrap:wrap;gap:6px}
+.intentOpts .chip{font-size:12px}
+.intentOpts .chip.ghost{border-style:dashed;color:var(--dim)}
 .pickcard .reply{font-size:13.5px;color:var(--ink2);margin:2px 0 4px}
 .btn.ghost:hover{background:var(--tagbg);border-color:transparent;color:var(--ink2)}
 #fcount:empty{display:none}

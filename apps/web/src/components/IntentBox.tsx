@@ -1,30 +1,35 @@
 import { useEffect, useRef, useState } from 'react';
 import { EXAMPLE_QUESTIONS, parseIntent } from '@lunch-map/shared';
+import type { IntentCandidate } from '@lunch-map/shared';
 import { useFilters } from '../state/FiltersContext.js';
 
 interface Props {
   categories: string[];
 }
 
+type Step =
+  | { kind: 'input' }
+  | { kind: 'clarify'; asked: string; candidates: IntentCandidate[] }
+  | { kind: 'pickCat'; asked: string };
+
 /**
- * 「隨機推薦」旁的小視窗:就一個輸入框。
- * 一句話對到問題目錄就套篩選並抽一家(結果在推薦卡),對不到就把例句寫回 placeholder。
+ * 「隨機推薦」旁的小視窗。平常只有一個輸入框;聽不懂時反問並給幾個選項,
+ * 「不想吃某一類…」再列類別,「其他」回到輸入框重新偵測。
  */
 export function IntentBox({ categories }: Props) {
   const { dispatch } = useFilters();
   const [open, setOpen] = useState(false);
   const [text, setText] = useState('');
-  const [placeholder, setPlaceholder] = useState(`例如:${EXAMPLE_QUESTIONS[0]}`);
+  const [step, setStep] = useState<Step>({ kind: 'input' });
   const wrapRef = useRef<HTMLSpanElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) return;
-    // 手機版面板是 fixed,頂端要貼著按鈕底緣,否則會蓋到工具列別的按鈕
     const bottom = wrapRef.current?.getBoundingClientRect().bottom ?? 0;
     panelRef.current?.style.setProperty('--intent-top', `${Math.round(bottom + 8)}px`);
-    inputRef.current?.focus();
+    if (step.kind === 'input') inputRef.current?.focus();
     const onDown = (e: MouseEvent) => {
       if (!wrapRef.current?.contains(e.target as Node)) setOpen(false);
     };
@@ -37,21 +42,26 @@ export function IntentBox({ categories }: Props) {
       document.removeEventListener('mousedown', onDown);
       document.removeEventListener('keydown', onKey);
     };
-  }, [open]);
+  }, [open, step.kind]);
+
+  const apply = (label: string, reply: string, actions: IntentCandidate['actions']) => {
+    dispatch({ type: 'APPLY_INTENT', actions, label, reply });
+    setText('');
+    setStep({ kind: 'input' });
+    setOpen(false);
+  };
 
   const run = () => {
-    const r = parseIntent(text, categories);
-    if (r.kind === 'matched') {
-      dispatch({ type: 'APPLY_INTENT', actions: r.actions, label: r.label, reply: r.reply });
-      setText('');
-      setPlaceholder(`例如:${EXAMPLE_QUESTIONS[0]}`);
-      setOpen(false);
-      return;
-    }
-    // 聽不懂:換一句例句放回 placeholder,不另開提示元素
-    const next = r.suggestions[Math.floor(Math.random() * r.suggestions.length)];
+    const raw = text.trim();
+    if (!raw) return;
+    const r = parseIntent(raw, categories);
+    if (r.kind === 'matched') apply(r.label, r.reply, r.actions);
+    else setStep({ kind: 'clarify', asked: raw, candidates: r.candidates });
+  };
+
+  const backToInput = () => {
     setText('');
-    setPlaceholder(`${r.reply}${next}`);
+    setStep({ kind: 'input' });
   };
 
   return (
@@ -61,17 +71,58 @@ export function IntentBox({ categories }: Props) {
       </button>
       {open && (
         <div ref={panelRef} className="intentPanel" role="dialog" aria-label="今天想怎麼吃">
-          <input
-            ref={inputRef}
-            className="intentInput"
-            type="text"
-            value={text}
-            placeholder={placeholder}
-            onChange={(e) => setText(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') run();
-            }}
-          />
+          {step.kind === 'input' && (
+            <input
+              ref={inputRef}
+              className="intentInput"
+              type="text"
+              value={text}
+              placeholder={`例如:${EXAMPLE_QUESTIONS[0]}`}
+              onChange={(e) => setText(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') run();
+              }}
+            />
+          )}
+
+          {step.kind === 'clarify' && (
+            <>
+              <div className="intentAsk">「{step.asked}」我不太懂,你是想…?</div>
+              <div className="intentOpts">
+                {step.candidates.map((c) => (
+                  <button key={c.id} className="chip" onClick={() => apply(c.label, c.reply, c.actions)}>
+                    {c.question}
+                  </button>
+                ))}
+                <button className="chip" onClick={() => setStep({ kind: 'pickCat', asked: step.asked })}>
+                  不想吃某一類…
+                </button>
+                <button className="chip ghost" onClick={backToInput}>
+                  其他,我再說一次
+                </button>
+              </div>
+            </>
+          )}
+
+          {step.kind === 'pickCat' && (
+            <>
+              <div className="intentAsk">不想吃哪一類?</div>
+              <div className="intentOpts">
+                {categories.map((c) => (
+                  <button
+                    key={c}
+                    className="chip"
+                    onClick={() => apply(`不吃${c}`, `好,今天避開${c}。這家如何:{shop}?`, { excludeCat: [c] })}
+                  >
+                    {c}
+                  </button>
+                ))}
+                <button className="chip ghost" onClick={backToInput}>
+                  其他,我再說一次
+                </button>
+              </div>
+            </>
+          )}
         </div>
       )}
     </span>
