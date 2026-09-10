@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo, useReducer, type ReactNode } from 'react';
 import { DEFAULT_FILTERS, TABS, todayKey } from '@lunch-map/shared';
-import type { DayKey, FilterState, Mood, SortKey } from '@lunch-map/shared';
+import type { DayKey, FilterState, IntentActions, Mood, SortKey } from '@lunch-map/shared';
 import { getDismissed, persistDismissed } from '../lib/dismissed.js';
 
 export type { SortKey };
@@ -38,6 +38,10 @@ export interface UiState {
   secOpen: { drinks: boolean };
   filterDrawerOpen: boolean;
   keyword: string;
+  /** 套用意圖後先立旗,等 rows 依新篩選重算完才抽,不然抽到舊清單 */
+  pendingPick: boolean;
+  /** 「我理解為:…」,顯示在推薦卡上 */
+  intentNote: string | null;
 }
 
 const SHOW_DESSERTS_KEY = 'lunchmap.showDesserts';
@@ -84,6 +88,8 @@ function initialState(): UiState {
     secOpen: { drinks: true },
     filterDrawerOpen: false,
     keyword: '',
+    pendingPick: false,
+    intentNote: null,
   };
 }
 
@@ -111,7 +117,9 @@ type Action =
   | { type: 'DISMISS_BANNER'; id: string }
   | { type: 'TOGGLE_SEC_OPEN'; key: 'drinks' }
   | { type: 'TOGGLE_FILTER_DRAWER' }
-  | { type: 'SET_KEYWORD'; keyword: string };
+  | { type: 'SET_KEYWORD'; keyword: string }
+  | { type: 'APPLY_INTENT'; actions: IntentActions; label: string }
+  | { type: 'CLEAR_PENDING_PICK' };
 
 function toggleInSet<T>(set: Set<T>, value: T): Set<T> {
   const next = new Set(set);
@@ -161,7 +169,7 @@ function reducer(state: UiState, action: Action): UiState {
     case 'SET_PICK_EMPTY':
       return { ...state, pickShopId: null, pickWeights: null, pickEmpty: true };
     case 'CLEAR_PICK':
-      return { ...state, pickShopId: null, pickWeights: null, pickEmpty: false };
+      return { ...state, pickShopId: null, pickWeights: null, pickEmpty: false, intentNote: null };
     case 'SET_SEL':
       return { ...state, sel: action.id };
     case 'SET_EDIT_SHOP':
@@ -181,6 +189,27 @@ function reducer(state: UiState, action: Action): UiState {
       return { ...state, filterDrawerOpen: !state.filterDrawerOpen };
     case 'SET_KEYWORD':
       return { ...state, keyword: action.keyword };
+    case 'APPLY_INTENT': {
+      const a = action.actions;
+      const filters: FilterState = {
+        ...state.filters,
+        excludeCat: a.excludeCat ? new Set(a.excludeCat) : state.filters.excludeCat,
+        cat: a.cat ? new Set(a.cat) : state.filters.cat,
+        minGoogle: a.minGoogle ?? state.filters.minGoogle,
+      };
+      return {
+        ...state,
+        filters,
+        mood: a.mood ?? state.mood,
+        mode: a.mode ?? state.mode,
+        pendingPick: true,
+        intentNote: action.label,
+        pickShopId: null,
+        pickWeights: null,
+      };
+    }
+    case 'CLEAR_PENDING_PICK':
+      return { ...state, pendingPick: false };
     default:
       return state;
   }

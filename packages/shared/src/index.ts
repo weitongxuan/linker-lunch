@@ -6,3 +6,4 @@ export * from './mood.js';
 export * from './sort.js';
 export * from './randomPick.js';
 export * from './osmHours.js';
+export * from './intents.js';

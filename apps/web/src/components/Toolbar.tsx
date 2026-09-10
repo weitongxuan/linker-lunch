@@ -3,11 +3,14 @@ import { currentMood, MOOD_TABLE } from '@lunch-map/shared';
 import type { Market } from '@lunch-map/shared';
 import { useFilters, type TravelMode } from '../state/FiltersContext.js';
 import type { LocationStatus } from '../hooks/useMyLocation.js';
+import { IntentBox } from './IntentBox.js';
 
 interface Props {
   market: Market | null;
   onRandomPick: () => void;
   onOpenAddShop: () => void;
+  /** 資料裡實際存在的類別,給意圖解析當槽位 */
+  categories: string[];
   myLocation: {
     coords: { lat: number; lng: number } | null;
     status: LocationStatus;
@@ -26,7 +29,7 @@ const LOCATION_LABEL: Record<LocationStatus, string> = {
 
 const SEARCH_DEBOUNCE_MS = 500;
 
-export function Toolbar({ market, onRandomPick, onOpenAddShop, myLocation }: Props) {
+export function Toolbar({ market, onRandomPick, onOpenAddShop, categories, myLocation }: Props) {
   const { state, dispatch } = useFilters();
   const f = state.filters;
 
@@ -89,6 +92,7 @@ export function Toolbar({ market, onRandomPick, onOpenAddShop, myLocation }: Pro
       <button className="btn" onClick={onOpenAddShop}>
         ➕ 新增店家
       </button>
+      <IntentBox categories={categories} />
       <button className="btn pri" onClick={onRandomPick}>
         🎲 隨機推薦
       </button>

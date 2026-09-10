@@ -16,7 +16,9 @@ export function PickCard({ rows, onPickAgain, onViewOnMap }: Props) {
         <div className="pickcard">
           <div>
             <div className="eyebrow">今天的推薦</div>
-            <div className="sub">目前篩選條件下沒有吃得到的店 —— 先放寬篩選再試一次。</div>
+            <div className="sub">
+              {state.intentNote ? `「${state.intentNote}」之下` : '目前篩選條件下'}沒有吃得到的店 —— 先放寬篩選再試一次。
+            </div>
           </div>
         </div>
       </div>
@@ -34,7 +36,9 @@ export function PickCard({ rows, onPickAgain, onViewOnMap }: Props) {
     <div id="pick">
       <div className="pickcard">
         <div>
-          <div className="eyebrow">今天的推薦 · 抽中機率 {pct}%</div>
+          <div className="eyebrow">
+            {state.intentNote ? `我理解為:${state.intentNote} · ` : '今天的推薦 · '}抽中機率 {pct}%
+          </div>
           <div className="who">{row.sh.name}</div>
           <div className="sub">
             {row.f.label} · {row.sh.category.join('、')}

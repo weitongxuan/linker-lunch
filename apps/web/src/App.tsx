@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { currentMood, nowMin, openNowState, randomPick } from '@lunch-map/shared';
 import { useLunchData } from './hooks/useLunchData.js';
 import { useMyLocation } from './hooks/useMyLocation.js';
@@ -43,6 +43,7 @@ export function App() {
   const visibleRows = useVisibleRows(allRows);
   // 甜點/咖啡店不是午餐選項:自己一個分頁,不進隨機推薦與候選清單
   const lunchRows = useMemo(() => visibleRows.filter((r) => !r.sh.category.includes('甜點')), [visibleRows]);
+  const categories = useMemo(() => [...new Set(data.shops.flatMap((s) => (s.category.length ? s.category : ['其他'])))], [data.shops]);
   const dessertRows = useMemo(() => visibleRows.filter((r) => r.sh.category.includes('甜點')), [visibleRows]);
 
   const afterRows = useMemo(() => {
@@ -66,6 +67,14 @@ export function App() {
       });
     }
   };
+
+  // 意圖套用後 filters 已變,但 visibleRows/lunchRows 要下一輪才重算;等它們更新再抽
+  useEffect(() => {
+    if (!state.pendingPick) return;
+    handleRandomPick();
+    dispatch({ type: 'CLEAR_PENDING_PICK' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- 只在旗標立起且 rows 重算後跑一次
+  }, [state.pendingPick, lunchRows]);
 
   const handleSelectOnMap = (shopId: string) => {
     dispatch({ type: 'SET_SEL', id: shopId });
@@ -98,6 +107,7 @@ export function App() {
         market={data.market}
         onRandomPick={handleRandomPick}
         onOpenAddShop={() => setAddShopOpen(true)}
+        categories={categories}
         myLocation={myLocation}
       />
       <FilterDrawer config={config} shops={data.shops} ratings={data.shopRatings} onCopyList={handleCopyList} />
