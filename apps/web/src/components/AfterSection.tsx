@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { openNowState, tierOf, travelOf } from '@lunch-map/shared';
+import { openNowState, passScore, tierOf, travelOf } from '@lunch-map/shared';
 import type { AfterPlace, Config, DayKey, Parking } from '@lunch-map/shared';
 import { useMe } from '../hooks/useMe.js';
 import { useDeleteDrinkMutation, useRateMutation } from '../hooks/useMutations.js';
@@ -34,12 +34,12 @@ export function AfterSection({ title, items, config, parkings, day, nowMinute, r
         const sc = ratings[d.id] ?? { avg: 0, n: 0 };
         return { d, t, tier, open, sc };
       })
-      .filter((r) => r.tier !== 'far')
+      .filter((r) => r.tier !== 'far' && passScore({ sh: r.d, sc: r.sc }, state.filters))
       .sort((a, b) => {
         const order = { open: 0, later: 1, unknown: 2, closed: 3, out_of_range: 4 } as const;
         return order[a.open.code] - order[b.open.code] || a.t.walk - b.t.walk || a.d.name.localeCompare(b.d.name, 'zh-Hant');
       });
-  }, [items, parkings, config, day, nowMinute, ratings]);
+  }, [items, parkings, config, day, nowMinute, ratings, state.filters]);
 
   if (rows.length === 0) return null;
 
@@ -65,6 +65,7 @@ export function AfterSection({ title, items, config, parkings, day, nowMinute, r
             走路 {r.t.walk} 分 · {r.d.kind}
             {r.d.note ? ` · ${r.d.note}` : ''}
             {r.sc.n > 0 ? ` · ★${r.sc.avg.toFixed(1)}` : ''}
+            {r.d.googleRating != null ? ` · G ${r.d.googleRating.toFixed(1)}` : ''}
           </span>
           <span className="dstars">
             {[1, 2, 3, 4, 5].map((s) => {

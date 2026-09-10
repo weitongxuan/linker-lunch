@@ -20,6 +20,8 @@ export interface UiState {
   mode: TravelMode;
   view: ViewMode;
   listTab: ListTab;
+  /** 甜點分頁平常隱藏,使用者叫出來才顯示;偏好記在 localStorage */
+  showDesserts: boolean;
   sort: SortKey;
   filters: FilterState;
   mood: Mood | 'auto';
@@ -38,6 +40,22 @@ export interface UiState {
   keyword: string;
 }
 
+const SHOW_DESSERTS_KEY = 'lunchmap.showDesserts';
+function readShowDesserts(): boolean {
+  try {
+    return localStorage.getItem(SHOW_DESSERTS_KEY) === '1';
+  } catch {
+    return false;
+  }
+}
+function writeShowDesserts(v: boolean) {
+  try {
+    localStorage.setItem(SHOW_DESSERTS_KEY, v ? '1' : '0');
+  } catch {
+    // 無 localStorage 時偏好只活在這次 session
+  }
+}
+
 function initialDay(): DayKey {
   const t = todayKey();
   return (TABS as string[]).includes(t) ? t : 'mon';
@@ -49,6 +67,7 @@ function initialState(): UiState {
     mode: 'drive',
     view: 'both',
     listTab: 'shops',
+    showDesserts: readShowDesserts(),
     sort: 'travel',
     filters: { ...DEFAULT_FILTERS, tier: new Set(), cat: new Set(), excludeCat: new Set(), price: new Set(), service: new Set() },
     mood: 'auto',
@@ -73,6 +92,7 @@ type Action =
   | { type: 'SET_MODE'; mode: TravelMode }
   | { type: 'SET_VIEW'; view: ViewMode }
   | { type: 'SET_LIST_TAB'; tab: ListTab }
+  | { type: 'TOGGLE_DESSERTS' }
   | { type: 'SET_SORT'; sort: SortKey }
   | { type: 'TOGGLE_SET_FILTER'; key: 'tier' | 'cat' | 'excludeCat' | 'price' | 'service'; value: string }
   | { type: 'SET_SET_FILTER'; key: 'cat' | 'excludeCat'; values: string[] }
@@ -110,6 +130,11 @@ function reducer(state: UiState, action: Action): UiState {
       return { ...state, view: action.view };
     case 'SET_LIST_TAB':
       return { ...state, listTab: action.tab };
+    case 'TOGGLE_DESSERTS': {
+      const show = !state.showDesserts;
+      writeShowDesserts(show);
+      return { ...state, showDesserts: show, listTab: !show && state.listTab === 'desserts' ? 'shops' : state.listTab };
+    }
     case 'SET_SORT':
       return { ...state, sort: action.sort };
     case 'TOGGLE_SET_FILTER': {

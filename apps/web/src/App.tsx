@@ -106,7 +106,7 @@ export function App() {
       <main className={state.view === 'list' ? 'list-only' : state.view === 'map' ? 'map-only' : ''}>
         <div id="listwrap">
           <span className="seg listTabs">
-            {(['shops', 'drinks', 'desserts'] as const).map((tab) => (
+            {(state.showDesserts ? (['shops', 'drinks', 'desserts'] as const) : (['shops', 'drinks'] as const)).map((tab) => (
               <button
                 key={tab}
                 className={state.listTab === tab ? 'on' : ''}
@@ -115,6 +115,16 @@ export function App() {
                 {tab === 'shops' ? '餐廳' : tab === 'drinks' ? '飲料' : '甜點'}
               </button>
             ))}
+            <button
+              className="tabmore"
+              title={state.showDesserts ? '隱藏甜點分頁' : '顯示甜點／咖啡店'}
+              onClick={() => {
+                dispatch({ type: 'TOGGLE_DESSERTS' });
+                if (!state.showDesserts) dispatch({ type: 'SET_LIST_TAB', tab: 'desserts' });
+              }}
+            >
+              {state.showDesserts ? '×' : '＋ 甜點'}
+            </button>
           </span>
           {state.listTab !== 'drinks' ? (
             <ShopList
