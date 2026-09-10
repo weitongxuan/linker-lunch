@@ -49,7 +49,8 @@ export function App() {
   }, [data.desserts, data.drinks, state.day, nowMinute]);
 
   const handleRandomPick = () => {
-    const pool = visibleRows.filter((r) => r.feasible);
+    // 甜點/咖啡店不是午餐選項,不要抽到星巴克叫大家去吃中飯
+    const pool = visibleRows.filter((r) => r.feasible && !r.sh.category.includes('甜點'));
     const mood = currentMood(state.mood, data.market);
     const result = randomPick(pool, mood);
     if (result.empty) {

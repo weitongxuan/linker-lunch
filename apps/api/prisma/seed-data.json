@@ -6499,68 +6499,6 @@
    "hoursSource": "Google 地圖（2026-09-09 查，新興街291號2樓）"
   },
   {
-   "id": "f197",
-   "hoursUnknown": false,
-   "name": "SUBWAY（愛河店）",
-   "lat": 22.62086,
-   "lng": 120.291401,
-   "category": [
-    "速食"
-   ],
-   "price": 1,
-   "service": [
-    "dine_in",
-    "takeout"
-   ],
-   "hours": {
-    "mon": [
-     [
-      "08:00",
-      "22:00"
-     ]
-    ],
-    "tue": [
-     [
-      "08:00",
-      "22:00"
-     ]
-    ],
-    "wed": [
-     [
-      "08:00",
-      "22:00"
-     ]
-    ],
-    "thu": [
-     [
-      "08:00",
-      "22:00"
-     ]
-    ],
-    "fri": [
-     [
-      "08:00",
-      "22:00"
-     ]
-    ],
-    "sat": [
-     [
-      "09:30",
-      "23:59"
-     ]
-    ],
-    "sun": [
-     [
-      "09:30",
-      "21:00"
-     ]
-    ]
-   },
-   "note": "",
-   "hoursRaw": "平日 08:00–22:00;週六 09:30–00:00,週日 09:30–21:00",
-   "hoursSource": "Google 地圖（2026-09-09 查，五福三路148號）"
-  },
-  {
    "id": "f202",
    "name": "七美望安",
    "lat": 22.619944,
@@ -7425,65 +7363,6 @@
    "note": ""
   },
   {
-   "id": "d02",
-   "name": "路易莎咖啡",
-   "lat": 22.618678,
-   "lng": 120.277779,
-   "category": [
-    "甜點"
-   ],
-   "price": null,
-   "service": [
-    "dine_in",
-    "takeout"
-   ],
-   "hours": {
-    "mon": [
-     [
-      "10:00",
-      "21:00"
-     ]
-    ],
-    "tue": [
-     [
-      "10:00",
-      "21:00"
-     ]
-    ],
-    "wed": [
-     [
-      "10:00",
-      "21:00"
-     ]
-    ],
-    "thu": [
-     [
-      "10:00",
-      "21:00"
-     ]
-    ],
-    "fri": [
-     [
-      "10:00",
-      "22:00"
-     ]
-    ],
-    "sat": [
-     [
-      "10:00",
-      "22:00"
-     ]
-    ],
-    "sun": [
-     [
-      "10:00",
-      "21:00"
-     ]
-    ]
-   },
-   "note": "咖啡店。"
-  },
-  {
    "id": "d03",
    "name": "Do good coffee & dessert",
    "lat": 22.621658,
@@ -7682,56 +7561,6 @@
    "hoursUnknown": true
   },
   {
-   "id": "d11",
-   "name": "星巴克",
-   "lat": 22.618043,
-   "lng": 120.268701,
-   "category": [
-    "甜點"
-   ],
-   "price": null,
-   "service": [
-    "dine_in",
-    "takeout"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "note": "咖啡店。",
-   "hoursUnknown": true
-  },
-  {
-   "id": "d12",
-   "name": "布蘭奇研磨咖啡",
-   "lat": 22.627193,
-   "lng": 120.285505,
-   "category": [
-    "甜點"
-   ],
-   "price": null,
-   "service": [
-    "dine_in",
-    "takeout"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "note": "咖啡店。",
-   "hoursUnknown": true
-  },
-  {
    "id": "d13",
    "name": "Shoreline Coffee & Roaster",
    "lat": 22.615159,
@@ -7757,31 +7586,6 @@
    "hoursUnknown": true,
    "googleRating": 5,
    "googleReviews": 32
-  },
-  {
-   "id": "d14",
-   "name": "季洋莊園咖啡隨行吧",
-   "lat": 22.627289,
-   "lng": 120.292472,
-   "category": [
-    "甜點"
-   ],
-   "price": null,
-   "service": [
-    "dine_in",
-    "takeout"
-   ],
-   "hours": {
-    "mon": [],
-    "tue": [],
-    "wed": [],
-    "thu": [],
-    "fri": [],
-    "sat": [],
-    "sun": []
-   },
-   "note": "咖啡店。",
-   "hoursUnknown": true
   },
   {
    "id": "d15",
