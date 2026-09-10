@@ -126,7 +126,6 @@ export function App() {
             />
           ) : (
             <AfterSection
-              sectionKey="drinks"
               title="吃飽再買(飲料)"
               items={data.drinks}
               config={config}

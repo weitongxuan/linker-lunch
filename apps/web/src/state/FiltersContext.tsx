@@ -1,11 +1,12 @@
 import { createContext, useContext, useMemo, useReducer, type ReactNode } from 'react';
 import { DEFAULT_FILTERS, TABS, todayKey } from '@lunch-map/shared';
-import type { DayKey, FilterState, Mood, Tier, Service } from '@lunch-map/shared';
+import type { DayKey, FilterState, Mood, SortKey } from '@lunch-map/shared';
+import { getDismissed, persistDismissed } from '../lib/dismissed.js';
 
+export type { SortKey };
 export type ViewMode = 'both' | 'list' | 'map';
 /** 清單要看餐廳還是飲料,預設餐廳 */
 export type ListTab = 'shops' | 'drinks';
-export type SortKey = 'travel' | 'score' | 'votes';
 /** 只給使用者走路/開車兩個選項:開車 15 分的範圍涵蓋所有店家,再加一個「全部」跟開車完全重複 */
 export type TravelMode = 'walk' | 'drive';
 
@@ -32,7 +33,7 @@ export interface UiState {
   editDrinkId: string | null;
   openDetail: Set<string>;
   dismissed: Set<string>;
-  secOpen: { desserts: boolean; drinks: boolean };
+  secOpen: { drinks: boolean };
   filterDrawerOpen: boolean;
   keyword: string;
 }
@@ -60,8 +61,8 @@ function initialState(): UiState {
     editShopId: null,
     editDrinkId: null,
     openDetail: new Set(),
-    dismissed: new Set(),
-    secOpen: { desserts: false, drinks: true },
+    dismissed: getDismissed(),
+    secOpen: { drinks: true },
     filterDrawerOpen: false,
     keyword: '',
   };
@@ -88,7 +89,7 @@ type Action =
   | { type: 'SET_EDIT_DRINK'; id: string | null }
   | { type: 'TOGGLE_DETAIL'; id: string }
   | { type: 'DISMISS_BANNER'; id: string }
-  | { type: 'TOGGLE_SEC_OPEN'; key: 'desserts' | 'drinks' }
+  | { type: 'TOGGLE_SEC_OPEN'; key: 'drinks' }
   | { type: 'TOGGLE_FILTER_DRAWER' }
   | { type: 'SET_KEYWORD'; keyword: string };
 
@@ -144,8 +145,11 @@ function reducer(state: UiState, action: Action): UiState {
       return { ...state, editDrinkId: action.id };
     case 'TOGGLE_DETAIL':
       return { ...state, openDetail: toggleInSet(state.openDetail, action.id) };
-    case 'DISMISS_BANNER':
-      return { ...state, dismissed: new Set(state.dismissed).add(action.id) };
+    case 'DISMISS_BANNER': {
+      const dismissed = new Set(state.dismissed).add(action.id);
+      persistDismissed(dismissed);
+      return { ...state, dismissed };
+    }
     case 'TOGGLE_SEC_OPEN':
       return { ...state, secOpen: { ...state.secOpen, [action.key]: !state.secOpen[action.key] } };
     case 'TOGGLE_FILTER_DRAWER':

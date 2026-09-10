@@ -10,7 +10,6 @@ interface RatingMap {
 }
 
 interface Props {
-  sectionKey: 'desserts' | 'drinks';
   title: string;
   items: AfterPlace[];
   config: Config;
@@ -20,13 +19,11 @@ interface Props {
   ratings: RatingMap;
 }
 
-export function AfterSection({ sectionKey, title, items, config, parkings, day, nowMinute, ratings }: Props) {
+export function AfterSection({ title, items, config, parkings, day, nowMinute, ratings }: Props) {
   const { state, dispatch } = useFilters();
   const [me] = useMe();
-  const placeType = sectionKey === 'desserts' ? 'dessert' : 'drink';
-  const rateMut = useRateMutation(placeType);
+  const rateMut = useRateMutation('drink');
   const deleteDrinkMut = useDeleteDrinkMutation();
-  const isDrinks = sectionKey === 'drinks';
 
   const rows = useMemo(() => {
     return items
@@ -47,7 +44,7 @@ export function AfterSection({ sectionKey, title, items, config, parkings, day, 
   if (rows.length === 0) return null;
 
   const openCount = rows.filter((r) => r.open.code === 'open').length;
-  const isOpen = state.secOpen[sectionKey];
+  const isOpen = state.secOpen.drinks;
 
   return (
     <div>
@@ -56,7 +53,7 @@ export function AfterSection({ sectionKey, title, items, config, parkings, day, 
         <span className="dsub">
           現在有開 <b>{openCount}</b>/{rows.length} 家
         </span>
-        <button className="btn" onClick={() => dispatch({ type: 'TOGGLE_SEC_OPEN', key: sectionKey })}>
+        <button className="btn" onClick={() => dispatch({ type: 'TOGGLE_SEC_OPEN', key: 'drinks' })}>
           {isOpen ? '收起' : '展開'}
         </button>
       </div>
@@ -83,22 +80,20 @@ export function AfterSection({ sectionKey, title, items, config, parkings, day, 
               );
             })}
           </span>
-          {isDrinks && (
-            <span className="dacts">
-              <button className="btn ghost" onClick={() => dispatch({ type: 'SET_EDIT_DRINK', id: r.d.id })}>
-                ✏️ 修改
-              </button>
-              <button
-                className="btn ghost"
-                disabled={deleteDrinkMut.isPending}
-                onClick={() => {
-                  if (window.confirm(`確定要刪除「${r.d.name}」嗎?此動作無法復原。`)) deleteDrinkMut.mutate(r.d.id);
-                }}
-              >
-                🗑 刪除
-              </button>
-            </span>
-          )}
+          <span className="dacts">
+            <button className="btn ghost" onClick={() => dispatch({ type: 'SET_EDIT_DRINK', id: r.d.id })}>
+              ✏️ 修改
+            </button>
+            <button
+              className="btn ghost"
+              disabled={deleteDrinkMut.isPending}
+              onClick={() => {
+                if (window.confirm(`確定要刪除「${r.d.name}」嗎?此動作無法復原。`)) deleteDrinkMut.mutate(r.d.id);
+              }}
+            >
+              🗑 刪除
+            </button>
+          </span>
         </div>
       ))}
     </div>

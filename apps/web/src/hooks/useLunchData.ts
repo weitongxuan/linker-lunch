@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getConfig, getDesserts, getDrinks, getMarket, getParkings, getShops } from '../api/staticData.js';
 import { getMenusBulk, getRatingsBulk, getVotesBulk } from '../api/places.js';
 
-/** 一次載入全部靜態資料 + 三種 place type 各自的批次共用資料(評分/投票/菜單)。 */
+/** 一次載入全部靜態資料 + shop/drink 兩種 place type 的批次共用資料(評分/投票/菜單)。 */
 export function useLunchData() {
   const config = useQuery({ queryKey: ['config'], queryFn: getConfig, staleTime: Infinity });
   const shops = useQuery({ queryKey: ['shops'], queryFn: getShops, staleTime: Infinity });
@@ -13,7 +13,6 @@ export function useLunchData() {
 
   const shopRatings = useQuery({ queryKey: ['ratings', 'shop'], queryFn: () => getRatingsBulk('shop') });
   const drinkRatings = useQuery({ queryKey: ['ratings', 'drink'], queryFn: () => getRatingsBulk('drink') });
-  const dessertRatings = useQuery({ queryKey: ['ratings', 'dessert'], queryFn: () => getRatingsBulk('dessert') });
 
   const votes = useQuery({ queryKey: ['votes', 'shop'], queryFn: () => getVotesBulk('shop') });
   const menus = useQuery({ queryKey: ['menus', 'shop'], queryFn: () => getMenusBulk('shop') });
@@ -30,7 +29,6 @@ export function useLunchData() {
     market: market.data ?? null,
     shopRatings: shopRatings.data ?? {},
     drinkRatings: drinkRatings.data ?? {},
-    dessertRatings: dessertRatings.data ?? {},
     votes: votes.data ?? {},
     menus: menus.data ?? {},
   };
