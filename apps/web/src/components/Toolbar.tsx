@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { currentMood, MOOD_TABLE } from '@lunch-map/shared';
 import type { Market } from '@lunch-map/shared';
-import { useFilters, type TravelMode } from '../state/FiltersContext.js';
+import { useFilters, type TravelMode } from '../state/filtersStore.js';
 import type { LocationStatus } from '../hooks/useMyLocation.js';
 import { IntentBox } from './IntentBox.js';
 

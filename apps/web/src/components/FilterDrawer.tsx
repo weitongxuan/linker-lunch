@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { Config, Service, Shop, Tier } from '@lunch-map/shared';
-import { useFilters, type SortKey } from '../state/FiltersContext.js';
+import { useFilters, type SortKey } from '../state/filtersStore.js';
 import { useImportOsmParkingsMutation, useImportOsmShopsMutation, useRefreshMarketMutation } from '../hooks/useMutations.js';
 
 const CAT_INPUT_DEBOUNCE_MS = 400;

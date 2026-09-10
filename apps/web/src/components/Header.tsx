@@ -2,7 +2,7 @@ import { LABEL, TABS } from '@lunch-map/shared';
 import type { Config } from '@lunch-map/shared';
 import { useClock } from '../hooks/useClock.js';
 import { useMe } from '../hooks/useMe.js';
-import { useFilters } from '../state/FiltersContext.js';
+import { useFilters } from '../state/filtersStore.js';
 import { Emblem } from './Emblem.js';
 
 function fmtClock(d: Date): string {

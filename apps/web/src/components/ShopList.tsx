@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { haversine, openNowState, walkMinFor } from '@lunch-map/shared';
 import type { AfterPlace, Config, DayKey } from '@lunch-map/shared';
 import type { Row } from '../hooks/useComputedRows.js';
-import { useFilters } from '../state/FiltersContext.js';
+import { useFilters } from '../state/filtersStore.js';
 import { ShopCard } from './ShopCard.js';
 
 interface Props {

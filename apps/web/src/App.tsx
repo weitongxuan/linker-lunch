@@ -3,7 +3,7 @@ import { currentMood, nowMin, openNowState, randomPick } from '@lunch-map/shared
 import { useLunchData } from './hooks/useLunchData.js';
 import { useMyLocation } from './hooks/useMyLocation.js';
 import { useComputedRows, useVisibleRows } from './hooks/useComputedRows.js';
-import { useFilters } from './state/FiltersContext.js';
+import { useFilters } from './state/filtersStore.js';
 import { Header } from './components/Header.js';
 import { Toolbar } from './components/Toolbar.js';
 import { FilterDrawer } from './components/FilterDrawer.js';

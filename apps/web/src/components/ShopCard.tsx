@@ -2,7 +2,7 @@ import { Fragment, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { LABEL, ORDER } from '@lunch-map/shared';
 import type { Row } from '../hooks/useComputedRows.js';
-import { useFilters } from '../state/FiltersContext.js';
+import { useFilters } from '../state/filtersStore.js';
 import { useMe } from '../hooks/useMe.js';
 import * as places from '../api/places.js';
 import {

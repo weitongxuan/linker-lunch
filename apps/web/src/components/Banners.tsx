@@ -1,5 +1,5 @@
 import type { Shop } from '@lunch-map/shared';
-import { useFilters } from '../state/FiltersContext.js';
+import { useFilters } from '../state/filtersStore.js';
 
 function Banner({ id, className, children }: { id: string; className: string; children: React.ReactNode }) {
   const { dispatch } = useFilters();

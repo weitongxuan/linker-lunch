@@ -400,3 +400,9 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
        box-shadow:var(--shadow);
        transition:opacity .18s,transform .18s;z-index:10000;white-space:nowrap}
 #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---------------- 致命錯誤畫面(ErrorBoundary) ---------------- */
+.fatal{max-width:520px;margin:12vh auto;padding:28px;background:var(--card);border:1px solid var(--line);border-radius:16px;text-align:center}
+.fatal-title{font-family:"Noto Serif TC",serif;font-size:22px;font-weight:700;margin-bottom:8px}
+.fatal-sub{font-size:13px;color:var(--ink2);line-height:1.6;margin-bottom:12px}
+.fatal-msg{display:block;text-align:left;white-space:pre-wrap;word-break:break-all;margin-bottom:16px;padding:8px 10px}

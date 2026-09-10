@@ -1,5 +1,5 @@
 import type { Row } from '../hooks/useComputedRows.js';
-import { useFilters, type TravelMode } from '../state/FiltersContext.js';
+import { useFilters, type TravelMode } from '../state/filtersStore.js';
 
 interface Props {
   rows: Row[];

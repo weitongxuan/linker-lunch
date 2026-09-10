@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import { haversine } from '@lunch-map/shared';
 import type { AfterPlace, Config, Parking } from '@lunch-map/shared';
 import type { Row } from '../hooks/useComputedRows.js';
-import { useFilters } from '../state/FiltersContext.js';
+import { useFilters } from '../state/filtersStore.js';
 
 /** 選定一間餐廳後,只保留離它最近的這麼多個停車場/飲料店。 */
 const NEAR_LIMIT = 5;

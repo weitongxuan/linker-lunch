@@ -3,7 +3,7 @@ import { openNowState, passScore, tierOf, travelOf } from '@lunch-map/shared';
 import type { AfterPlace, Config, DayKey, Parking } from '@lunch-map/shared';
 import { useMe } from '../hooks/useMe.js';
 import { useDeleteDrinkMutation, useRateMutation } from '../hooks/useMutations.js';
-import { useFilters } from '../state/FiltersContext.js';
+import { useFilters } from '../state/filtersStore.js';
 
 interface RatingMap {
   [placeId: string]: { avg: number; n: number; who?: Record<string, number> };

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { EXAMPLE_QUESTIONS, parseIntent } from '@lunch-map/shared';
 import type { IntentCandidate } from '@lunch-map/shared';
-import { useFilters } from '../state/FiltersContext.js';
+import { useFilters } from '../state/filtersStore.js';
 
 interface Props {
   categories: string[];
