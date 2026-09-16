@@ -42,6 +42,7 @@ const CAT_ALIAS: Record<string, string> = {
   漢堡: '速食', 披薩: '速食', pizza: '速食', 炸雞: '速食', 薯條: '速食',
   飯盒: '便當', 快餐: '自助餐', 自助: '自助餐',
   排餐: '牛排',
+  麵包: '', // 不是麵,只把字吃掉
 };
 
 const CUISINE_ALIAS: Record<string, string> = {
@@ -110,11 +111,36 @@ function splitClauses(raw: string): string[] {
   return t.split('|').map((c) => c.trim()).filter(Boolean);
 }
 
+/**
+ * 從一個子句裡找類別/菜系:詞彙本身與別名一起依長度排序,長的先比、比到就從文字裡「吃掉」,
+ * 這樣「鍋貼」不會再讓「鍋」對到火鍋、「麵包」不會對到麵。別名對到空字串代表只吃掉、不算類別。
+ */
 function findTerms(text: string, vocab: string[], alias: Record<string, string>): string[] {
+  const terms: [string, string][] = [...vocab.map((v): [string, string] => [v, v]), ...Object.entries(alias)];
+  terms.sort((a, b) => b[0].length - a[0].length);
   const found = new Set<string>();
-  for (const v of [...vocab].sort((a, b) => b.length - a.length)) if (v && text.includes(v.toLowerCase())) found.add(v);
-  for (const [a, v] of Object.entries(alias)) if (text.includes(a.toLowerCase()) && vocab.includes(v)) found.add(v);
+  let rest = text;
+  for (const [term, target] of terms) {
+    if (!term) continue;
+    const t = term.toLowerCase();
+    if (!rest.includes(t)) continue;
+    rest = rest.split(t).join('\u0000');
+    if (target && vocab.includes(target)) found.add(target);
+  }
   return [...found];
+}
+
+/** 目錄條目在這句話裡有沒有命中:否定子句裡的關鍵字不算(「不要外帶」不是要外帶),除非關鍵字本身就帶否定(「不想開車」) */
+function catalogueHit(clauses: { text: string; negated: boolean }[], keywords: string[]): number {
+  let best = 0;
+  for (const k of keywords) {
+    const kw = k.toLowerCase();
+    const selfNegated = hit(kw, NEGATE);
+    for (const c of clauses) {
+      if (c.text.includes(kw) && (!c.negated || selfNegated)) best = Math.max(best, kw.length);
+    }
+  }
+  return best;
 }
 
 function unknown(text: string): Intent {
@@ -127,10 +153,10 @@ export function parseIntent(input: string, categories: string[], cuisines: strin
 
   // 1. 子句 → 想吃/不想吃 × 類別/菜系;同一項同時出現時「不吃」優先
   const wantCat = new Set<string>(), noCat = new Set<string>(), wantCui = new Set<string>(), noCui = new Set<string>();
-  for (const clause of splitClauses(input)) {
-    const exclude = hit(clause, NEGATE);
-    for (const c of findTerms(clause, categories, CAT_ALIAS)) (exclude ? noCat : wantCat).add(c);
-    for (const c of findTerms(clause, cuisines, CUISINE_ALIAS)) (exclude ? noCui : wantCui).add(c);
+  const clauses = splitClauses(input).map((text) => ({ text, negated: hit(text, NEGATE) }));
+  for (const { text, negated } of clauses) {
+    for (const c of findTerms(text, categories, CAT_ALIAS)) (negated ? noCat : wantCat).add(c);
+    for (const c of findTerms(text, cuisines, CUISINE_ALIAS)) (negated ? noCui : wantCui).add(c);
   }
   for (const c of noCat) wantCat.delete(c);
   for (const c of noCui) wantCui.delete(c);
@@ -143,11 +169,26 @@ export function parseIntent(input: string, categories: string[], cuisines: strin
   if (noCui.size) { actions.excludeCuisine = [...noCui]; labels.push(`不吃${[...noCui].join('、')}`); }
   const slotParts = labels.length;
 
-  // 2. 目錄關鍵字(可疊加)
+  // 2. 目錄關鍵字(可疊加)。同一個動作欄位(mode/service…)被多個條目命中時,關鍵字最長的那個贏:
+  //    「不想開車」同時中 走路(不想開車) 與 開車(開車),走路的關鍵字較長所以是走路。
+  const strength = new Map<string, number>();
+  for (const e of CATALOGUE) {
+    const n = catalogueHit(clauses, e.keywords);
+    if (n) strength.set(e.id, n);
+  }
+  const winners = new Set<string>();
+  for (const e of CATALOGUE) {
+    const n = strength.get(e.id);
+    if (!n) continue;
+    const beaten = CATALOGUE.some(
+      (o) => o.id !== e.id && (strength.get(o.id) ?? 0) > n && Object.keys(o.actions).some((k) => k in e.actions),
+    );
+    if (!beaten) winners.add(e.id);
+  }
   const condLabels: string[] = [];
   let lastReply: string | null = null;
   for (const e of CATALOGUE) {
-    if (hit(whole, e.keywords)) {
+    if (winners.has(e.id)) {
       Object.assign(actions, e.actions);
       labels.push(e.label);
       condLabels.push(e.label);

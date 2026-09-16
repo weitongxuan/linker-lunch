@@ -86,7 +86,7 @@ export type Action =
   | { type: 'SET_LIST_TAB'; tab: ListTab }
   | { type: 'SET_SORT'; sort: SortKey }
   | { type: 'TOGGLE_SET_FILTER'; key: 'tier' | 'cat' | 'excludeCat' | 'price' | 'service'; value: string }
-  | { type: 'SET_SET_FILTER'; key: 'cat' | 'excludeCat' | 'cuisine' | 'excludeCuisine'; values: string[] }
+  | { type: 'SET_SET_FILTER'; key: 'cat' | 'excludeCat' | 'cuisine' | 'excludeCuisine' | 'service'; values: string[] }
   | { type: 'SET_BOOL_FILTER'; key: 'onlyOpen' | 'showUnknown' | 'hideBad' | 'hideUnrated'; value: boolean }
   | { type: 'SET_MIN_SCORE'; value: number }
   | { type: 'SET_MIN_GOOGLE'; value: number }
@@ -112,10 +112,13 @@ function toggleInSet<T>(set: Set<T>, value: T): Set<T> {
   return next;
 }
 
+/** 使用者自己動了條件,問問看那句「我理解為…」就不再成立,一起清掉 */
+const NO_INTENT = { intentNote: null, intentReply: null } as const;
+
 export function reducer(state: UiState, action: Action): UiState {
   switch (action.type) {
     case 'SET_DAY':
-      return { ...state, day: action.day, pickShopId: null, pickWeights: null };
+      return { ...state, ...NO_INTENT, day: action.day, pickShopId: null, pickWeights: null };
     case 'SET_MODE':
       return { ...state, mode: action.mode, pickShopId: null, pickWeights: null };
     case 'SET_VIEW':
@@ -127,20 +130,20 @@ export function reducer(state: UiState, action: Action): UiState {
     case 'TOGGLE_SET_FILTER': {
       const current = state.filters[action.key] as Set<string>;
       const nextFilters: FilterState = { ...state.filters, [action.key]: toggleInSet(current, action.value) };
-      return { ...state, filters: nextFilters, pickShopId: null, pickWeights: null };
+      return { ...state, ...NO_INTENT, filters: nextFilters, pickShopId: null, pickWeights: null };
     }
     case 'SET_SET_FILTER': {
       const nextFilters: FilterState = { ...state.filters, [action.key]: new Set(action.values) };
-      return { ...state, filters: nextFilters, pickShopId: null, pickWeights: null };
+      return { ...state, ...NO_INTENT, filters: nextFilters, pickShopId: null, pickWeights: null };
     }
     case 'SET_BOOL_FILTER':
-      return { ...state, filters: { ...state.filters, [action.key]: action.value } };
+      return { ...state, ...NO_INTENT, filters: { ...state.filters, [action.key]: action.value } };
     case 'SET_MIN_SCORE':
-      return { ...state, filters: { ...state.filters, minScore: action.value } };
+      return { ...state, ...NO_INTENT, filters: { ...state.filters, minScore: action.value } };
     case 'SET_MIN_GOOGLE':
-      return { ...state, filters: { ...state.filters, minGoogle: action.value } };
+      return { ...state, ...NO_INTENT, filters: { ...state.filters, minGoogle: action.value } };
     case 'SET_MOOD':
-      return { ...state, mood: action.mood, pickShopId: null, pickWeights: null };
+      return { ...state, ...NO_INTENT, mood: action.mood, pickShopId: null, pickWeights: null };
     case 'TOGGLE_VOTE_MODE':
       return { ...state, voteMode: !state.voteMode, sort: !state.voteMode ? 'votes' : state.sort };
     case 'SET_PICK':
@@ -165,12 +168,20 @@ export function reducer(state: UiState, action: Action): UiState {
       return { ...state, keyword: action.keyword };
     case 'APPLY_INTENT': {
       const a = action.actions;
+      // 不同句之間的條件會累加(「不想吃便當」之後再說「不想吃麵」= 兩個都不吃);
+      // 同一項新說想吃就從不吃裡拿掉,反之亦然。條件列有 × 可以逐一移除。
+      const merge = (cur: Set<string>, add?: string[], drop?: string[]) => {
+        const s = new Set(cur);
+        (add ?? []).forEach((v) => s.add(v));
+        (drop ?? []).forEach((v) => s.delete(v));
+        return s;
+      };
       const filters: FilterState = {
         ...state.filters,
-        excludeCat: a.excludeCat ? new Set(a.excludeCat) : state.filters.excludeCat,
-        cat: a.cat ? new Set(a.cat) : state.filters.cat,
-        cuisine: a.cuisine ? new Set(a.cuisine) : state.filters.cuisine,
-        excludeCuisine: a.excludeCuisine ? new Set(a.excludeCuisine) : state.filters.excludeCuisine,
+        cat: merge(state.filters.cat, a.cat, a.excludeCat),
+        excludeCat: merge(state.filters.excludeCat, a.excludeCat, a.cat),
+        cuisine: merge(state.filters.cuisine, a.cuisine, a.excludeCuisine),
+        excludeCuisine: merge(state.filters.excludeCuisine, a.excludeCuisine, a.cuisine),
         minGoogle: a.minGoogle ?? state.filters.minGoogle,
         service: a.service ? new Set(a.service) : state.filters.service,
       };

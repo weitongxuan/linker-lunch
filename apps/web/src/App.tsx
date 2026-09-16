@@ -33,19 +33,17 @@ export function App() {
     return { ...data.config, office: { ...myLocation.coords, name: '我的位置' } };
   }, [data.config, myLocation.coords]);
 
+  // 甜點/咖啡店不是午餐選項:在源頭就過濾掉,清單、地圖、隨機推薦、問問看詞彙全用同一份
+  const listedShops = useMemo(() => data.shops.filter((s) => !s.category.includes('甜點')), [data.shops]);
   const allRows = useComputedRows({
     config,
-    shops: data.shops,
+    shops: listedShops,
     parkings: data.parkings,
     ratings: data.shopRatings,
     votes: data.votes,
     nowMinute,
   });
   const visibleRows = useVisibleRows(allRows);
-  // 甜點/咖啡店不是午餐選項,不列、不進隨機推薦與候選清單
-  const lunchRows = useMemo(() => visibleRows.filter((r) => !r.sh.category.includes('甜點')), [visibleRows]);
-  // 類別/菜系詞彙只從會被列出的店取,否則「想吃甜點」會對到一個永遠空的篩選
-  const listedShops = useMemo(() => data.shops.filter((s) => !s.category.includes('甜點')), [data.shops]);
   const categories = useMemo(() => [...new Set(listedShops.flatMap((s) => (s.category.length ? s.category : ['其他'])))], [listedShops]);
   const cuisines = useMemo(() => [...new Set(listedShops.map((s) => s.cuisine).filter((c): c is string => !!c))].sort(), [listedShops]);
 
@@ -54,7 +52,7 @@ export function App() {
   }, [data.drinks]);
 
   const handleRandomPick = () => {
-    const pool = lunchRows.filter((r) => r.feasible);
+    const pool = visibleRows.filter((r) => r.feasible);
     const mood = currentMood(state.mood, data.market);
     const result = randomPick(pool, mood);
     if (result.empty) {
@@ -69,13 +67,13 @@ export function App() {
     }
   };
 
-  // 意圖套用後 filters 已變,但 visibleRows/lunchRows 要下一輪才重算;等它們更新再抽
+  // 意圖套用後 filters 已變,但 visibleRows/visibleRows 要下一輪才重算;等它們更新再抽
   useEffect(() => {
     if (!state.pendingPick) return;
     handleRandomPick();
     dispatch({ type: 'CLEAR_PENDING_PICK' });
     // eslint-disable-next-line react-hooks/exhaustive-deps -- 只在旗標立起且 rows 重算後跑一次
-  }, [state.pendingPick, lunchRows]);
+  }, [state.pendingPick, visibleRows]);
 
   const handleSelectOnMap = (shopId: string) => {
     dispatch({ type: 'SET_SEL', id: shopId });
@@ -83,7 +81,7 @@ export function App() {
   };
 
   const handleCopyList = () => {
-    const feasible = lunchRows.filter((r) => r.feasible);
+    const feasible = visibleRows.filter((r) => r.feasible);
     const lines = feasible.map((r) => {
       const travel = r.by === 'walk' ? `走路 ${r.t.walk} 分` : r.by === 'drive' ? `開車 ${r.t.drive} 分` : '';
       const scoreTxt = r.sc.n ? `★${r.sc.avg.toFixed(1)} (${r.sc.n}人)` : '尚無評分';
@@ -112,7 +110,7 @@ export function App() {
         cuisines={cuisines}
         myLocation={myLocation}
       />
-      <FilterDrawer config={config} shops={data.shops} ratings={data.shopRatings} onCopyList={handleCopyList} />
+      <FilterDrawer config={config} shops={listedShops} ratings={data.shopRatings} onCopyList={handleCopyList} />
       <ActiveConditions />
       <Banners shops={data.shops} />
       <PickCard rows={allRows} onPickAgain={handleRandomPick} onViewOnMap={handleSelectOnMap} />
@@ -131,7 +129,7 @@ export function App() {
           </span>
           {state.listTab !== 'drinks' ? (
             <ShopList
-              visibleRows={lunchRows}
+              visibleRows={visibleRows}
               config={config}
               menus={data.menus}
               drinks={data.drinks}

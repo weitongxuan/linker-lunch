@@ -46,7 +46,6 @@ const market = evalObjectLiteral<Market>(extractObjectLiteral(html, 'window.MARK
 const data = evalObjectLiteral<{
   config: Config;
   shops: Shop[];
-  desserts: AfterPlace[];
   drinks: AfterPlace[];
   parkings: Parking[];
 }>(extractObjectLiteral(html, 'window.LUNCH_DATA'));
@@ -54,5 +53,5 @@ const data = evalObjectLiteral<{
 fs.writeFileSync(OUT_FILE, JSON.stringify({ ...data, market }, null, 1));
 console.log(
   `寫入 ${OUT_FILE}:${data.shops.length} 家店、${data.drinks.length} 個飲料、` +
-    `${data.desserts.length} 個甜點、${data.parkings.length} 個停車場`,
+    `${data.parkings.length} 個停車場`,
 );

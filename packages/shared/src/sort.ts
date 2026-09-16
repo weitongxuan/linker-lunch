@@ -65,7 +65,8 @@ export interface Scorable {
 }
 
 export function passScore(r: Scorable, filters: FilterState): boolean {
-  if (filters.minGoogle && r.sh.googleRating != null && r.sh.googleRating < filters.minGoogle) return false;
+  // 要求 Google 幾分以上時,沒有 Google 評分的店也不算過,否則「Google 4 分以上」會抽到沒分數的店
+  if (filters.minGoogle && (r.sh.googleRating == null || r.sh.googleRating < filters.minGoogle)) return false;
   if (!r.sc.n) return !filters.hideUnrated;
   if (filters.hideBad && r.sc.avg < filters.badBelow) return false;
   if (filters.minScore && r.sc.avg < filters.minScore) return false;
