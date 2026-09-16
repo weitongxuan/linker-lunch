@@ -158,10 +158,6 @@ h1{font-family:"Noto Serif TC",serif;font-size:22px;margin:0;font-weight:700;
 .banner{margin:0;padding:10px 24px;font-size:12px;line-height:1.6;
         border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
 .banner .bx{flex:1}
-.banner .bclose{border:none;background:transparent;color:inherit;opacity:.5;
-                font-size:15px;line-height:1;padding:0 2px;flex:0 0 auto}
-.banner .bclose:hover{opacity:1}
-.banner.sample{background:var(--soft);color:var(--ink2);border-bottom:1px solid var(--line2)}
 .banner.err{background:var(--closedbg);color:var(--closed)}
 
 /* ---------------- 隨機推薦 ---------------- */
