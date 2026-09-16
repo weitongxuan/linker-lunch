@@ -6,7 +6,7 @@ import fs from 'node:fs';
 
 import { configRouter } from './routes/config.js';
 import { shopsRouter } from './routes/shops.js';
-import { drinksRouter, dessertsRouter } from './routes/afterPlaces.js';
+import { drinksRouter } from './routes/afterPlaces.js';
 import { parkingsRouter } from './routes/parkings.js';
 import { marketRouter } from './routes/market.js';
 import { placesRouter } from './routes/places.js';
@@ -28,7 +28,6 @@ app.get('/api/health', (_req, res) => res.json({ ok: true }));
 app.use('/api/config', configRouter);
 app.use('/api/shops', shopsRouter);
 app.use('/api/drinks', drinksRouter);
-app.use('/api/desserts', dessertsRouter);
 app.use('/api/parkings', parkingsRouter);
 app.use('/api/market', marketRouter);
 app.use('/api/photos', photosRouter);

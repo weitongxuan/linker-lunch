@@ -103,7 +103,7 @@ export function toAfterPlace(row: AfterPlaceRow): AfterPlace {
   };
 }
 
-export function fromAfterPlace(place: AfterPlace, placeType: 'drink' | 'dessert') {
+export function fromAfterPlace(place: AfterPlace, placeType: 'drink') {
   return {
     id: place.id,
     placeType,

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { currentMood, nowMin, openNowState, randomPick } from '@lunch-map/shared';
+import { currentMood, nowMin, randomPick } from '@lunch-map/shared';
 import { useLunchData } from './hooks/useLunchData.js';
 import { useMyLocation } from './hooks/useMyLocation.js';
 import { useComputedRows, useVisibleRows } from './hooks/useComputedRows.js';
@@ -42,17 +42,14 @@ export function App() {
     nowMinute,
   });
   const visibleRows = useVisibleRows(allRows);
-  // 甜點/咖啡店不是午餐選項:自己一個分頁,不進隨機推薦與候選清單
+  // 甜點/咖啡店不是午餐選項,不列、不進隨機推薦與候選清單
   const lunchRows = useMemo(() => visibleRows.filter((r) => !r.sh.category.includes('甜點')), [visibleRows]);
   const categories = useMemo(() => [...new Set(data.shops.flatMap((s) => (s.category.length ? s.category : ['其他'])))], [data.shops]);
   const cuisines = useMemo(() => [...new Set(data.shops.map((s) => s.cuisine).filter((c): c is string => !!c))].sort(), [data.shops]);
-  const dessertRows = useMemo(() => visibleRows.filter((r) => r.sh.category.includes('甜點')), [visibleRows]);
 
   const afterRows = useMemo(() => {
-    const desserts = data.desserts.map((d) => ({ d, lat: d.lat, lng: d.lng, openCode: openNowState(d, state.day, nowMinute).code, kind: 'dessert' as const }));
-    const drinks = data.drinks.map((d) => ({ d, lat: d.lat, lng: d.lng, openCode: openNowState(d, state.day, nowMinute).code, kind: 'drink' as const }));
-    return [...desserts, ...drinks];
-  }, [data.desserts, data.drinks, state.day, nowMinute]);
+    return data.drinks.map((d) => ({ d, lat: d.lat, lng: d.lng }));
+  }, [data.drinks]);
 
   const handleRandomPick = () => {
     const pool = lunchRows.filter((r) => r.feasible);
@@ -120,29 +117,19 @@ export function App() {
       <main className={state.view === 'list' ? 'list-only' : state.view === 'map' ? 'map-only' : ''}>
         <div id="listwrap">
           <span className="seg listTabs">
-            {(state.showDesserts ? (['shops', 'drinks', 'desserts'] as const) : (['shops', 'drinks'] as const)).map((tab) => (
+            {(['shops', 'drinks'] as const).map((tab) => (
               <button
                 key={tab}
                 className={state.listTab === tab ? 'on' : ''}
                 onClick={() => dispatch({ type: 'SET_LIST_TAB', tab })}
               >
-                {tab === 'shops' ? '餐廳' : tab === 'drinks' ? '飲料' : '甜點'}
+                {tab === 'shops' ? '餐廳' : '飲料'}
               </button>
             ))}
-            <button
-              className="tabmore"
-              title={state.showDesserts ? '隱藏甜點分頁' : '顯示甜點／咖啡店'}
-              onClick={() => {
-                dispatch({ type: 'TOGGLE_DESSERTS' });
-                if (!state.showDesserts) dispatch({ type: 'SET_LIST_TAB', tab: 'desserts' });
-              }}
-            >
-              {state.showDesserts ? '×' : '＋ 甜點'}
-            </button>
           </span>
           {state.listTab !== 'drinks' ? (
             <ShopList
-              visibleRows={state.listTab === 'shops' ? lunchRows : dessertRows}
+              visibleRows={lunchRows}
               config={config}
               menus={data.menus}
               drinks={data.drinks}

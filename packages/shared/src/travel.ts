@@ -1,6 +1,6 @@
 import type { Config, LatLng, Parking, PickedTravel, Tier, Travel, TravelMode } from './types.js';
 
-/** travelOf()/driveVia() 只需要這幾個欄位 —— shops 跟 drinks/desserts(AfterPlace)都適用。 */
+/** travelOf()/driveVia() 只需要這幾個欄位 —— shops 跟 drinks(AfterPlace)都適用。 */
 export interface TravelSubject extends LatLng {
   walkMin?: number;
   driveMin?: number;

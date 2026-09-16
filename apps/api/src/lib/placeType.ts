@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 import type { PlaceType } from '@lunch-map/shared';
 
-const VALID: PlaceType[] = ['shop', 'drink', 'dessert'];
+const VALID: PlaceType[] = ['shop', 'drink'];
 
 export function requirePlaceType(req: Request, res: Response, next: NextFunction) {
   const placeType = req.params.placeType;

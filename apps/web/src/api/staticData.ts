@@ -5,7 +5,6 @@ import type { OsmImportSummary } from './types.js';
 export const getConfig = () => apiGet<Config>('/api/config');
 export const getShops = () => apiGet<Shop[]>('/api/shops');
 export const getDrinks = () => apiGet<AfterPlace[]>('/api/drinks');
-export const getDesserts = () => apiGet<AfterPlace[]>('/api/desserts');
 export const getParkings = () => apiGet<Parking[]>('/api/parkings');
 export const getMarket = () => apiGet<Market>('/api/market').catch(() => null);
 
