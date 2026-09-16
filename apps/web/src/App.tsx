@@ -33,19 +33,17 @@ export function App() {
     return { ...data.config, office: { ...myLocation.coords, name: '我的位置' } };
   }, [data.config, myLocation.coords]);
 
-  // 甜點/咖啡店不是午餐選項:在源頭就過濾掉,清單、地圖、隨機推薦、問問看詞彙全用同一份
-  const listedShops = useMemo(() => data.shops.filter((s) => !s.category.includes('甜點')), [data.shops]);
   const allRows = useComputedRows({
     config,
-    shops: listedShops,
+    shops: data.shops,
     parkings: data.parkings,
     ratings: data.shopRatings,
     votes: data.votes,
     nowMinute,
   });
   const visibleRows = useVisibleRows(allRows);
-  const categories = useMemo(() => [...new Set(listedShops.flatMap((s) => (s.category.length ? s.category : ['其他'])))], [listedShops]);
-  const cuisines = useMemo(() => [...new Set(listedShops.map((s) => s.cuisine).filter((c): c is string => !!c))].sort(), [listedShops]);
+  const categories = useMemo(() => [...new Set(data.shops.flatMap((s) => (s.category.length ? s.category : ['其他'])))], [data.shops]);
+  const cuisines = useMemo(() => [...new Set(data.shops.map((s) => s.cuisine).filter((c): c is string => !!c))].sort(), [data.shops]);
 
   const afterRows = useMemo(() => {
     return data.drinks.map((d) => ({ d, lat: d.lat, lng: d.lng }));
@@ -110,7 +108,7 @@ export function App() {
         cuisines={cuisines}
         myLocation={myLocation}
       />
-      <FilterDrawer config={config} shops={listedShops} ratings={data.shopRatings} onCopyList={handleCopyList} />
+      <FilterDrawer config={config} shops={data.shops} ratings={data.shopRatings} onCopyList={handleCopyList} />
       <ActiveConditions />
       <Banners shops={data.shops} />
       <PickCard rows={allRows} onPickAgain={handleRandomPick} onViewOnMap={handleSelectOnMap} />
