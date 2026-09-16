@@ -15,6 +15,8 @@ export interface FilterState {
   tier: Set<Tier>;
   cat: Set<string>;
   excludeCat: Set<string>;
+  cuisine: Set<string>;
+  excludeCuisine: Set<string>;
   price: Set<string>;
   service: Set<Service>;
   onlyOpen: boolean;
@@ -30,6 +32,8 @@ export const DEFAULT_FILTERS: FilterState = {
   tier: new Set(),
   cat: new Set(),
   excludeCat: new Set(),
+  cuisine: new Set(),
+  excludeCuisine: new Set(),
   price: new Set(),
   service: new Set(),
   onlyOpen: true,
@@ -78,6 +82,9 @@ export function passFilter(r: ComputedRow, filters: FilterState): boolean {
     if (filters.cat.size && !cats.some((c) => filters.cat.has(c))) return false;
     if (filters.excludeCat.size && cats.some((c) => filters.excludeCat.has(c))) return false;
   }
+  // 菜系:沒有菜系的店在「想吃某菜系」時被排除,在「不吃某菜系」時不受影響
+  if (filters.cuisine.size && !(r.sh.cuisine && filters.cuisine.has(r.sh.cuisine))) return false;
+  if (filters.excludeCuisine.size && r.sh.cuisine && filters.excludeCuisine.has(r.sh.cuisine)) return false;
   if (filters.price.size && !filters.price.has(String(r.sh.price || ''))) return false;
   if (filters.service.size) {
     const sv = r.sh.service || [];

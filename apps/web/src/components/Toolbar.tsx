@@ -11,6 +11,8 @@ interface Props {
   onOpenAddShop: () => void;
   /** 資料裡實際存在的類別,給意圖解析當槽位 */
   categories: string[];
+  /** 資料裡實際存在的菜系,同樣是槽位 */
+  cuisines: string[];
   myLocation: {
     coords: { lat: number; lng: number } | null;
     status: LocationStatus;
@@ -29,7 +31,7 @@ const LOCATION_LABEL: Record<LocationStatus, string> = {
 
 const SEARCH_DEBOUNCE_MS = 500;
 
-export function Toolbar({ market, onRandomPick, onOpenAddShop, categories, myLocation }: Props) {
+export function Toolbar({ market, onRandomPick, onOpenAddShop, categories, cuisines, myLocation }: Props) {
   const { state, dispatch } = useFilters();
   const f = state.filters;
 
@@ -45,6 +47,8 @@ export function Toolbar({ market, onRandomPick, onOpenAddShop, categories, myLoc
     f.tier.size +
     f.cat.size +
     f.excludeCat.size +
+    f.cuisine.size +
+    f.excludeCuisine.size +
     f.price.size +
     f.service.size +
     (f.minScore ? 1 : 0) +
@@ -95,7 +99,7 @@ export function Toolbar({ market, onRandomPick, onOpenAddShop, categories, myLoc
       <button className="btn pri" onClick={onRandomPick}>
         🎲 隨機推薦
       </button>
-      <IntentBox categories={categories} />
+      <IntentBox categories={categories} cuisines={cuisines} />
       <button className={`btn${state.voteMode ? ' pri' : ''}`} onClick={() => dispatch({ type: 'TOGGLE_VOTE_MODE' })}>
         👥 多人投票
       </button>

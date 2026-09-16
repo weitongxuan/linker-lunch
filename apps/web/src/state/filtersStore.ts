@@ -80,7 +80,7 @@ export function initialState(): UiState {
     listTab: 'shops',
     showDesserts: readShowDesserts(),
     sort: 'travel',
-    filters: { ...DEFAULT_FILTERS, tier: new Set(), cat: new Set(), excludeCat: new Set(), price: new Set(), service: new Set() },
+    filters: { ...DEFAULT_FILTERS, tier: new Set(), cat: new Set(), excludeCat: new Set(), cuisine: new Set(), excludeCuisine: new Set(), price: new Set(), service: new Set() },
     mood: 'auto',
     voteMode: false,
     pickShopId: null,
@@ -109,7 +109,7 @@ export type Action =
   | { type: 'TOGGLE_DESSERTS' }
   | { type: 'SET_SORT'; sort: SortKey }
   | { type: 'TOGGLE_SET_FILTER'; key: 'tier' | 'cat' | 'excludeCat' | 'price' | 'service'; value: string }
-  | { type: 'SET_SET_FILTER'; key: 'cat' | 'excludeCat'; values: string[] }
+  | { type: 'SET_SET_FILTER'; key: 'cat' | 'excludeCat' | 'cuisine' | 'excludeCuisine'; values: string[] }
   | { type: 'SET_BOOL_FILTER'; key: 'onlyOpen' | 'showUnknown' | 'hideBad' | 'hideUnrated'; value: boolean }
   | { type: 'SET_MIN_SCORE'; value: number }
   | { type: 'SET_MIN_GOOGLE'; value: number }
@@ -203,6 +203,8 @@ export function reducer(state: UiState, action: Action): UiState {
         ...state.filters,
         excludeCat: a.excludeCat ? new Set(a.excludeCat) : state.filters.excludeCat,
         cat: a.cat ? new Set(a.cat) : state.filters.cat,
+        cuisine: a.cuisine ? new Set(a.cuisine) : state.filters.cuisine,
+        excludeCuisine: a.excludeCuisine ? new Set(a.excludeCuisine) : state.filters.excludeCuisine,
         minGoogle: a.minGoogle ?? state.filters.minGoogle,
         service: a.service ? new Set(a.service) : state.filters.service,
       };

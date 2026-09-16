@@ -1,19 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import type { Config, Service, Shop, Tier } from '@lunch-map/shared';
 import { useFilters, type SortKey } from '../state/filtersStore.js';
 import { useImportOsmParkingsMutation, useImportOsmShopsMutation, useRefreshMarketMutation } from '../hooks/useMutations.js';
-
-const CAT_INPUT_DEBOUNCE_MS = 400;
-
-/** 逗號/空白分隔的關鍵字,對照已知類別做「包含」比對(不分大小寫),回傳有命中的類別名稱。 */
-function matchCategories(text: string, known: string[]): string[] {
-  const terms = text
-    .split(/[,、，\s]+/)
-    .map((t) => t.trim().toLowerCase())
-    .filter(Boolean);
-  if (!terms.length) return [];
-  return known.filter((cat) => terms.some((t) => cat.toLowerCase().includes(t)));
-}
 
 interface RatingMap {
   [placeId: string]: { avg: number; n: number };
@@ -44,30 +32,6 @@ export function FilterDrawer({ config, shops, ratings, onCopyList }: Props) {
   const importShops = useImportOsmShopsMutation();
   const importParkings = useImportOsmParkingsMutation();
   const refreshMarketMut = useRefreshMarketMutation();
-
-  const categories = useMemo(() => {
-    const set = new Set(shops.flatMap((s) => (s.category.length ? s.category : ['其他'])));
-    return [...set].sort((a, b) => a.localeCompare(b, 'zh-Hant'));
-  }, [shops]);
-
-  const [catText, setCatText] = useState(() => [...f.cat].join('、'));
-  const [excludeCatText, setExcludeCatText] = useState(() => [...f.excludeCat].join('、'));
-
-  useEffect(() => {
-    const id = setTimeout(() => {
-      dispatch({ type: 'SET_SET_FILTER', key: 'cat', values: matchCategories(catText, categories) });
-    }, CAT_INPUT_DEBOUNCE_MS);
-    return () => clearTimeout(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- only debounce on local text changes
-  }, [catText, categories]);
-
-  useEffect(() => {
-    const id = setTimeout(() => {
-      dispatch({ type: 'SET_SET_FILTER', key: 'excludeCat', values: matchCategories(excludeCatText, categories) });
-    }, CAT_INPUT_DEBOUNCE_MS);
-    return () => clearTimeout(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- only debounce on local text changes
-  }, [excludeCatText, categories]);
 
   const ratedInfo = useMemo(() => {
     const total = shops.length;
@@ -135,36 +99,6 @@ export function FilterDrawer({ config, shops, ratings, onCopyList }: Props) {
           ))}
         </span>
         <span className="hint">{ratedInfo}</span>
-      </div>
-
-      <datalist id="cat-options">
-        {categories.map((cat) => (
-          <option key={cat} value={cat} />
-        ))}
-      </datalist>
-
-      <div className="crow">
-        <span className="lbl">類別</span>
-        <input
-          className="catinput"
-          list="cat-options"
-          value={catText}
-          onChange={(e) => setCatText(e.target.value)}
-          placeholder="輸入想吃的類別,逗號分隔,例如:麵、飯"
-        />
-        {f.cat.size > 0 && <span className="hint">符合:{[...f.cat].join('、')}</span>}
-      </div>
-
-      <div className="crow">
-        <span className="lbl">今天不想吃</span>
-        <input
-          className="catinput exclude"
-          list="cat-options"
-          value={excludeCatText}
-          onChange={(e) => setExcludeCatText(e.target.value)}
-          placeholder="輸入不想吃的類別,逗號分隔,例如:便當"
-        />
-        {f.excludeCat.size > 0 && <span className="hint">已排除:{[...f.excludeCat].join('、')}</span>}
       </div>
 
       <div className="crow">

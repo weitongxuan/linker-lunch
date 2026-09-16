@@ -7,6 +7,7 @@ import { useFilters } from './state/filtersStore.js';
 import { Header } from './components/Header.js';
 import { Toolbar } from './components/Toolbar.js';
 import { FilterDrawer } from './components/FilterDrawer.js';
+import { ActiveConditions } from './components/ActiveConditions.js';
 import { Banners } from './components/Banners.js';
 import { PickCard } from './components/PickCard.js';
 import { ShopList } from './components/ShopList.js';
@@ -44,6 +45,7 @@ export function App() {
   // 甜點/咖啡店不是午餐選項:自己一個分頁,不進隨機推薦與候選清單
   const lunchRows = useMemo(() => visibleRows.filter((r) => !r.sh.category.includes('甜點')), [visibleRows]);
   const categories = useMemo(() => [...new Set(data.shops.flatMap((s) => (s.category.length ? s.category : ['其他'])))], [data.shops]);
+  const cuisines = useMemo(() => [...new Set(data.shops.map((s) => s.cuisine).filter((c): c is string => !!c))].sort(), [data.shops]);
   const dessertRows = useMemo(() => visibleRows.filter((r) => r.sh.category.includes('甜點')), [visibleRows]);
 
   const afterRows = useMemo(() => {
@@ -108,9 +110,11 @@ export function App() {
         onRandomPick={handleRandomPick}
         onOpenAddShop={() => setAddShopOpen(true)}
         categories={categories}
+        cuisines={cuisines}
         myLocation={myLocation}
       />
       <FilterDrawer config={config} shops={data.shops} ratings={data.shopRatings} onCopyList={handleCopyList} />
+      <ActiveConditions />
       <Banners shops={data.shops} />
       <PickCard rows={allRows} onPickAgain={handleRandomPick} onViewOnMap={handleSelectOnMap} />
       <main className={state.view === 'list' ? 'list-only' : state.view === 'map' ? 'map-only' : ''}>

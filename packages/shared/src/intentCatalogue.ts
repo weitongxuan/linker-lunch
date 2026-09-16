@@ -4,6 +4,8 @@ import type { Mood, Service } from './types.js';
 export interface IntentActions {
   excludeCat?: string[];
   cat?: string[];
+  cuisine?: string[];
+  excludeCuisine?: string[];
   mood?: Mood;
   mode?: 'walk' | 'drive';
   minGoogle?: number;
@@ -177,6 +179,8 @@ export const CATALOGUE: CatalogueEntry[] = [
 export const SLOT_TEMPLATES = {
   exclude: ['我今天不想吃{cat}', '不要{cat}', '{cat}吃膩了', '別再吃{cat}了', '{cat}以外的', '除了{cat}都可以', '不吃{cat}'],
   include: ['想吃{cat}', '來點{cat}', '今天吃{cat}', '有沒有{cat}', '給我{cat}', '{cat}有推薦的嗎'],
+  excludeCuisine: ['不想吃{cuisine}', '不要{cuisine}', '{cuisine}以外的', '{cuisine}吃膩了'],
+  includeCuisine: ['想吃{cuisine}', '來點{cuisine}', '今天吃{cuisine}', '有沒有{cuisine}'],
 };
 
 export const UNKNOWN_REPLY = '這句我還不太懂,可以像這樣問我:';

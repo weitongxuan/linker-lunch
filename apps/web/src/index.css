@@ -406,3 +406,11 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
 .fatal-title{font-family:"Noto Serif TC",serif;font-size:22px;font-weight:700;margin-bottom:8px}
 .fatal-sub{font-size:13px;color:var(--ink2);line-height:1.6;margin-bottom:12px}
 .fatal-msg{display:block;text-align:left;white-space:pre-wrap;word-break:break-all;margin-bottom:16px;padding:8px 10px}
+
+/* ---------------- 目前條件 chip 列 ---------------- */
+.conds{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px 24px;background:var(--soft);border-bottom:1px solid var(--line)}
+.conds-lbl{font-size:10px;color:var(--dim);font-weight:700;letter-spacing:.12em;margin-right:4px}
+.conds .chip{display:inline-flex;align-items:center;gap:6px;padding-right:6px}
+.conds-x{border:none;background:transparent;color:inherit;opacity:.7;font-size:14px;line-height:1;padding:0 2px;cursor:pointer}
+.conds-x:hover{opacity:1}
+@media(max-width:600px){.conds{padding:8px 14px}}
