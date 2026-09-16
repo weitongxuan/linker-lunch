@@ -44,8 +44,10 @@ export function App() {
   const visibleRows = useVisibleRows(allRows);
   // 甜點/咖啡店不是午餐選項,不列、不進隨機推薦與候選清單
   const lunchRows = useMemo(() => visibleRows.filter((r) => !r.sh.category.includes('甜點')), [visibleRows]);
-  const categories = useMemo(() => [...new Set(data.shops.flatMap((s) => (s.category.length ? s.category : ['其他'])))], [data.shops]);
-  const cuisines = useMemo(() => [...new Set(data.shops.map((s) => s.cuisine).filter((c): c is string => !!c))].sort(), [data.shops]);
+  // 類別/菜系詞彙只從會被列出的店取,否則「想吃甜點」會對到一個永遠空的篩選
+  const listedShops = useMemo(() => data.shops.filter((s) => !s.category.includes('甜點')), [data.shops]);
+  const categories = useMemo(() => [...new Set(listedShops.flatMap((s) => (s.category.length ? s.category : ['其他'])))], [listedShops]);
+  const cuisines = useMemo(() => [...new Set(listedShops.map((s) => s.cuisine).filter((c): c is string => !!c))].sort(), [listedShops]);
 
   const afterRows = useMemo(() => {
     return data.drinks.map((d) => ({ d, lat: d.lat, lng: d.lng }));
