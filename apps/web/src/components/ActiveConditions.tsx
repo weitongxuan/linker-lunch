@@ -13,8 +13,7 @@ export function ActiveConditions() {
   const { state, dispatch } = useFilters();
   const f = state.filters;
 
-  const removeFrom = (key: SetKey, value: string) =>
-    dispatch({ type: 'SET_SET_FILTER', key, values: [...f[key]].filter((v) => v !== value) });
+  const removeFrom = (key: SetKey, value: string) => dispatch({ type: 'TOGGLE_SET_FILTER', key, value });
 
   const chips: { key: string; text: string; onRemove: () => void }[] = [
     ...[...f.cuisine].map((v) => ({ key: `cu:${v}`, text: `想吃 ${v}`, onRemove: () => removeFrom('cuisine', v) })),

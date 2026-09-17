@@ -25,7 +25,8 @@ export function AfterSection({ title, items, config, parkings, day, nowMinute, r
   const rateMut = useRateMutation('drink');
   const deleteDrinkMut = useDeleteDrinkMutation();
 
-  const rows = useMemo(() => {
+  // 距離與營業狀態跟篩選條件無關,分開算:改個類別篩選不必重跑每家的 haversine 與停車場掃描
+  const computed = useMemo(() => {
     return items
       .map((d) => {
         const t = travelOf(d, parkings, config);
@@ -34,17 +35,19 @@ export function AfterSection({ title, items, config, parkings, day, nowMinute, r
         const sc = ratings[d.id] ?? { avg: 0, n: 0 };
         return { d, t, tier, open, sc };
       })
-      .filter((r) => r.tier !== 'far' && passScore({ sh: r.d, sc: r.sc }, state.filters))
+      .filter((r) => r.tier !== 'far')
       .sort((a, b) => {
         const order = { open: 0, later: 1, unknown: 2, closed: 3, out_of_range: 4 } as const;
         return order[a.open.code] - order[b.open.code] || a.t.walk - b.t.walk || a.d.name.localeCompare(b.d.name, 'zh-Hant');
       });
-  }, [items, parkings, config, day, nowMinute, ratings, state.filters]);
+  }, [items, parkings, config, day, nowMinute, ratings]);
+
+  const rows = useMemo(() => computed.filter((r) => passScore({ sh: r.d, sc: r.sc }, state.filters)), [computed, state.filters]);
 
   if (rows.length === 0) return null;
 
   const openCount = rows.filter((r) => r.open.code === 'open').length;
-  const isOpen = state.secOpen.drinks;
+  const isOpen = state.drinksOpen;
 
   return (
     <div>
@@ -53,7 +56,7 @@ export function AfterSection({ title, items, config, parkings, day, nowMinute, r
         <span className="dsub">
           現在有開 <b>{openCount}</b>/{rows.length} 家
         </span>
-        <button className="btn" onClick={() => dispatch({ type: 'TOGGLE_SEC_OPEN', key: 'drinks' })}>
+        <button className="btn" onClick={() => dispatch({ type: 'TOGGLE_DRINKS_OPEN' })}>
           {isOpen ? '收起' : '展開'}
         </button>
       </div>

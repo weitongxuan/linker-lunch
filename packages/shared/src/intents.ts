@@ -32,6 +32,9 @@ const NEGATE_PREFIX = ['不想吃', '不要吃', '不吃', '不要', '不想', '
 /** 子句分隔:標點與轉折連接詞 */
 const CONNECTIVES = ['但是', '不過', '然後', '還有', '以及', '另外', '順便', '而且', '但'];
 const SEPARATORS = /[,，、;；。.!！?？~～]/g;
+/** 長的先切,否則「但是」會被「但」先切開 */
+const CONNECTIVES_BY_LEN = [...CONNECTIVES].sort((a, b) => b.length - a.length);
+const NEGATE_PREFIX_BY_LEN = [...NEGATE_PREFIX].sort((a, b) => b.length - a.length);
 
 const CAT_ALIAS: Record<string, string> = {
   拉麵: '麵', 麵食: '麵', 麵條: '麵', 義大利麵: '麵', 乾麵: '麵', 湯麵: '麵', 烏龍麵: '麵', 米粉: '麵',
@@ -88,11 +91,17 @@ export function similarity(a: string, b: string): number {
   return (2 * inter) / total;
 }
 
+/** 例句的正規化結果每次解析都一樣,載入時算一次就好 */
+const NORMALIZED_EXAMPLES: { entry: (typeof CATALOGUE)[number]; texts: string[] }[] = CATALOGUE.map((e) => ({
+  entry: e,
+  texts: e.examples.map(normalizeText),
+}));
+
 const SIMILARITY_THRESHOLD = 0.5;
 const DEFAULT_CANDIDATE_IDS = ['any', 'cheap', 'walk'];
 
 export function rankCandidates(text: string, limit = 3): IntentCandidate[] {
-  const scored = CATALOGUE.map((e) => ({ e, s: Math.max(...e.examples.map((ex) => similarity(text, normalizeText(ex)))) }))
+  const scored = NORMALIZED_EXAMPLES.map(({ entry, texts }) => ({ e: entry, s: Math.max(...texts.map((t) => similarity(text, t))) }))
     .sort((a, b) => b.s - a.s);
   const meaningful = scored.filter((x) => x.s >= 0.2).slice(0, limit);
   const picked = meaningful.length ? meaningful.map((x) => x.e) : DEFAULT_CANDIDATE_IDS.map((id) => CATALOGUE.find((e) => e.id === id)!);
@@ -106,8 +115,8 @@ export function rankCandidates(text: string, limit = 3): IntentCandidate[] {
 function splitClauses(raw: string): string[] {
   let t = raw.toLowerCase().replace(/[\s'"「」『』()（）:：]/g, '');
   t = t.replace(SEPARATORS, '|');
-  for (const w of [...CONNECTIVES].sort((a, b) => b.length - a.length)) t = t.split(w).join('|');
-  for (const w of [...NEGATE_PREFIX].sort((a, b) => b.length - a.length)) t = t.split(w).join('|' + w);
+  for (const w of CONNECTIVES_BY_LEN) t = t.split(w).join('|');
+  for (const w of NEGATE_PREFIX_BY_LEN) t = t.split(w).join('|' + w);
   return t.split('|').map((c) => c.trim()).filter(Boolean);
 }
 
@@ -162,11 +171,16 @@ export function parseIntent(input: string, categories: string[], cuisines: strin
   for (const c of noCui) wantCui.delete(c);
 
   const actions: IntentActions = {};
+  if (wantCat.size) actions.cat = [...wantCat];
+  if (wantCui.size) actions.cuisine = [...wantCui];
+  if (noCat.size) actions.excludeCat = [...noCat];
+  if (noCui.size) actions.excludeCuisine = [...noCui];
+  // 想吃/不吃的清單同時餵給標籤與回答句,只組一次
+  const want = [...wantCui, ...wantCat];
+  const avoid = [...noCui, ...noCat];
   const labels: string[] = [];
-  if (wantCat.size) { actions.cat = [...wantCat]; labels.push(`想吃${[...wantCat].join('、')}`); }
-  if (wantCui.size) { actions.cuisine = [...wantCui]; labels.push(`想吃${[...wantCui].join('、')}`); }
-  if (noCat.size) { actions.excludeCat = [...noCat]; labels.push(`不吃${[...noCat].join('、')}`); }
-  if (noCui.size) { actions.excludeCuisine = [...noCui]; labels.push(`不吃${[...noCui].join('、')}`); }
+  if (want.length) labels.push(`想吃${want.join('、')}`);
+  if (avoid.length) labels.push(`不吃${avoid.join('、')}`);
   const slotParts = labels.length;
 
   // 2. 目錄關鍵字(可疊加)。同一個動作欄位(mode/service…)被多個條目命中時,關鍵字最長的那個贏:
@@ -199,9 +213,9 @@ export function parseIntent(input: string, categories: string[], cuisines: strin
   // 3. 都沒中才用相似度兜底
   if (!labels.length) {
     let best: { e: (typeof CATALOGUE)[number]; s: number } | null = null;
-    for (const e of CATALOGUE) for (const ex of e.examples) {
-      const s = similarity(whole, normalizeText(ex));
-      if (!best || s > best.s) best = { e, s };
+    for (const { entry, texts } of NORMALIZED_EXAMPLES) for (const t of texts) {
+      const s = similarity(whole, t);
+      if (!best || s > best.s) best = { e: entry, s };
     }
     if (best && best.s >= SIMILARITY_THRESHOLD) {
       Object.assign(actions, best.e.actions);
@@ -214,8 +228,6 @@ export function parseIntent(input: string, categories: string[], cuisines: strin
   // 4. 回答句:有槽位就組句,否則用目錄那句
   let reply: string;
   if (slotParts) {
-    const want = [...wantCui, ...wantCat];
-    const avoid = [...noCui, ...noCat];
     const bits = [want.length ? `想吃${want.join('、')}` : '', avoid.length ? `避開${avoid.join('、')}` : ''].filter(Boolean).join(',');
     const cond = condLabels.length ? `,${condLabels.join('、')}` : '';
     reply = `好,${bits}${cond} —— 這家如何:{shop}?`;

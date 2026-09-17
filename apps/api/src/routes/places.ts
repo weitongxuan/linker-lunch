@@ -31,8 +31,15 @@ const MAX_MESSAGE_CHARS = 500;
 const MAX_MENU_CHARS = 4000;
 const MAX_VOTE = 99;
 
-/** 寫評分/投票/留言前先確認店家真的存在,不然會留下對不到任何店的孤兒資料 */
+/**
+ * 寫評分/投票/留言前先確認店家真的存在,不然會留下對不到任何店的孤兒資料。
+ * 讀取不需要:店不存在時那些路由本來就回空陣列,多查一次只是白花一趟資料庫。
+ */
 placesRouter.use<PlaceParams>(async (req, res, next) => {
+  if (req.method === 'GET') {
+    next();
+    return;
+  }
   const { placeType, placeId } = req.params;
   const exists =
     placeType === 'shop'

@@ -133,9 +133,9 @@ export function MapPane({ config, parkings, rows, afterRows, selectedShopId, onS
       ? nearestFirst(selectedRow.sh, afterRows).slice(0, NEAR_LIMIT)
       : afterRows;
 
+    const drinkColor = cssVar('--map-drink');
     for (const a of afterRowsToShow) {
-      const fillColor = cssVar('--map-drink');
-      L.circleMarker([a.lat, a.lng], { radius: 7, color: '#000000', fillColor, fillOpacity: 0.8, weight: 1.5, bubblingMouseEvents: false })
+      L.circleMarker([a.lat, a.lng], { radius: 7, color: '#000000', fillColor: drinkColor, fillOpacity: 0.8, weight: 1.5, bubblingMouseEvents: false })
         .bindPopup(`<b>${a.d.name}</b><br>${a.d.kind}`)
         .addTo(layer);
     }

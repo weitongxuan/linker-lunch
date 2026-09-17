@@ -36,7 +36,8 @@ export interface UiState {
   editShopId: string | null;
   editDrinkId: string | null;
   openDetail: Set<string>;
-  secOpen: { drinks: boolean };
+  /** 飲料區是否展開 */
+  drinksOpen: boolean;
   filterDrawerOpen: boolean;
   keyword: string;
   /** 套用意圖後先立旗,等 rows 依新篩選重算完才抽,不然抽到舊清單 */
@@ -70,7 +71,7 @@ export function initialState(): UiState {
     editShopId: null,
     editDrinkId: null,
     openDetail: new Set(),
-    secOpen: { drinks: true },
+    drinksOpen: true,
     filterDrawerOpen: false,
     keyword: '',
     pendingPick: false,
@@ -79,14 +80,17 @@ export function initialState(): UiState {
   };
 }
 
+/** filters 裡值為 Set 的欄位,加/減一項與整組覆寫共用 */
+export type SetFilterKey = 'tier' | 'cat' | 'excludeCat' | 'cuisine' | 'excludeCuisine' | 'price' | 'service';
+
 export type Action =
   | { type: 'SET_DAY'; day: DayKey }
   | { type: 'SET_MODE'; mode: TravelMode }
   | { type: 'SET_VIEW'; view: ViewMode }
   | { type: 'SET_LIST_TAB'; tab: ListTab }
   | { type: 'SET_SORT'; sort: SortKey }
-  | { type: 'TOGGLE_SET_FILTER'; key: 'tier' | 'cat' | 'excludeCat' | 'price' | 'service'; value: string }
-  | { type: 'SET_SET_FILTER'; key: 'cat' | 'excludeCat' | 'cuisine' | 'excludeCuisine' | 'service'; values: string[] }
+  | { type: 'TOGGLE_SET_FILTER'; key: SetFilterKey; value: string }
+  | { type: 'SET_SET_FILTER'; key: SetFilterKey; values: string[] }
   | { type: 'SET_BOOL_FILTER'; key: 'onlyOpen' | 'showUnknown' | 'hideBad' | 'hideUnrated'; value: boolean }
   | { type: 'SET_MIN_SCORE'; value: number }
   | { type: 'SET_MIN_GOOGLE'; value: number }
@@ -99,7 +103,7 @@ export type Action =
   | { type: 'SET_EDIT_SHOP'; id: string | null }
   | { type: 'SET_EDIT_DRINK'; id: string | null }
   | { type: 'TOGGLE_DETAIL'; id: string }
-  | { type: 'TOGGLE_SEC_OPEN'; key: 'drinks' }
+  | { type: 'TOGGLE_DRINKS_OPEN' }
   | { type: 'TOGGLE_FILTER_DRAWER' }
   | { type: 'SET_KEYWORD'; keyword: string }
   | { type: 'APPLY_INTENT'; actions: IntentActions; label: string; reply: string }
@@ -160,8 +164,8 @@ export function reducer(state: UiState, action: Action): UiState {
       return { ...state, editDrinkId: action.id };
     case 'TOGGLE_DETAIL':
       return { ...state, openDetail: toggleInSet(state.openDetail, action.id) };
-    case 'TOGGLE_SEC_OPEN':
-      return { ...state, secOpen: { ...state.secOpen, [action.key]: !state.secOpen[action.key] } };
+    case 'TOGGLE_DRINKS_OPEN':
+      return { ...state, drinksOpen: !state.drinksOpen };
     case 'TOGGLE_FILTER_DRAWER':
       return { ...state, filterDrawerOpen: !state.filterDrawerOpen };
     case 'SET_KEYWORD':
