@@ -5,6 +5,8 @@ import type { Config, Travel } from './types.js';
 
 const CFG: Config = {
   office: { lat: 22.6208, lng: 120.2772, name: '辦公室' },
+  depart: { start: '11:40', end: '11:40' },
+  backBy: '13:00',
   eatMinutes: 25,
   priceBands: [],
   walkSpeed: 80,
