@@ -45,7 +45,7 @@
       "lat": 22.620888,
       "lng": 120.274578,
       "category": [
-        "其他"
+        "海鮮"
       ],
       "price": 4,
       "service": [
@@ -209,7 +209,7 @@
       "lat": 22.620365,
       "lng": 120.274454,
       "category": [
-        "其他"
+        "飯"
       ],
       "price": null,
       "service": [
@@ -278,8 +278,8 @@
           ]
         ]
       },
-      "addr": "804高雄市鼓山區鼓山一路10-1號",
-      "note": "⚠️ 待確認：搜「韓珍饌」找不到，該地址（鼓山一路10號）現在是「理寶行」，而資料裡的 10-1 號是義狗倆狗。可能已歇業或改名 —— 路過看一眼。（Google 地圖 2026-08-25 查）",
+      "addr": "高雄市鼓山區臨海二路69號",
+      "note": "⚠️ 待確認：搜「韓珍饌」找不到，該地址（鼓山一路10號）現在是「理寶行」，而資料裡的 10-1 號是義狗倆狗。可能已歇業或改名 —— 路過看一眼。（Google 地圖 2026-08-25 查） 地址更正為臨海二路69號(原鼓山一路10-1號有誤),韓式石鍋拌飯。",
       "cuisine": "韓式"
     },
     {
@@ -288,7 +288,7 @@
       "lat": 22.622515,
       "lng": 120.274699,
       "category": [
-        "其他"
+        "海鮮"
       ],
       "price": 3,
       "service": [
@@ -380,7 +380,7 @@
       "category": [
         "速食"
       ],
-      "price": null,
+      "price": 1,
       "service": [
         "dine_in",
         "takeout"
@@ -438,9 +438,11 @@
       "lat": 22.620565,
       "lng": 120.281881,
       "category": [
-        "其他"
+        "麵",
+        "飯",
+        "速食"
       ],
-      "price": null,
+      "price": 3,
       "service": [
         "dine_in"
       ],
@@ -486,7 +488,7 @@
       "addr": "高雄市鹽埕區新化里8鄰大勇路5號",
       "note": "",
       "hoursSource": "部落格食記＋駁二官網店家頁（2026-08 查）。週一公休為文中僅列週二~週日之推論",
-      "cuisine": null
+      "cuisine": "義式"
     },
     {
       "id": "f21",
@@ -604,7 +606,7 @@
       "category": [
         "麵"
       ],
-      "price": null,
+      "price": 3,
       "service": [
         "dine_in"
       ],
@@ -745,7 +747,7 @@
       "category": [
         "麵"
       ],
-      "price": null,
+      "price": 2,
       "service": [
         "dine_in"
       ],
@@ -806,7 +808,7 @@
       "category": [
         "麵"
       ],
-      "price": null,
+      "price": 2,
       "service": [
         "dine_in"
       ],
@@ -939,7 +941,7 @@
       "category": [
         "麵"
       ],
-      "price": null,
+      "price": 1,
       "service": [
         "dine_in"
       ],
@@ -1001,7 +1003,7 @@
       "category": [
         "麵"
       ],
-      "price": null,
+      "price": 2,
       "service": [
         "dine_in"
       ],
@@ -1143,7 +1145,7 @@
       "category": [
         "小吃"
       ],
-      "price": null,
+      "price": 1,
       "service": [
         "dine_in"
       ],
@@ -1205,7 +1207,7 @@
       "category": [
         "火鍋"
       ],
-      "price": null,
+      "price": 3,
       "service": [
         "dine_in"
       ],
@@ -1266,7 +1268,7 @@
         "速食",
         "麵"
       ],
-      "price": null,
+      "price": 3,
       "service": [
         "dine_in"
       ],
@@ -1328,7 +1330,7 @@
       "addr": "803高雄市鹽埕區瀨南街141之7號",
       "phone": "+886 933486259",
       "note": "",
-      "cuisine": "西式"
+      "cuisine": "素食"
     },
     {
       "id": "f47",
@@ -1338,7 +1340,7 @@
       "category": [
         "麵"
       ],
-      "price": null,
+      "price": 2,
       "service": [
         "dine_in"
       ],
@@ -1391,8 +1393,8 @@
     {
       "id": "f49",
       "name": "鴨肉珍（大公店）",
-      "lat": 22.626006,
-      "lng": 120.280787,
+      "lat": 22.6268758,
+      "lng": 120.2839371,
       "category": [
         "小吃",
         "飯"
@@ -1459,7 +1461,7 @@
       "category": [
         "水餃"
       ],
-      "price": null,
+      "price": 1,
       "service": [
         "dine_in"
       ],
@@ -1602,7 +1604,7 @@
       "category": [
         "麵"
       ],
-      "price": null,
+      "price": 1,
       "service": [
         "dine_in"
       ],
@@ -1663,7 +1665,7 @@
         "速食",
         "麵"
       ],
-      "price": null,
+      "price": 2,
       "service": [
         "dine_in"
       ],
@@ -1851,7 +1853,7 @@
       "category": [
         "麵"
       ],
-      "price": null,
+      "price": 1,
       "service": [
         "dine_in"
       ],
@@ -1912,7 +1914,7 @@
       "category": [
         "飯"
       ],
-      "price": null,
+      "price": 2,
       "service": [
         "dine_in"
       ],
@@ -1969,7 +1971,7 @@
       "category": [
         "飯"
       ],
-      "price": null,
+      "price": 2,
       "service": [
         "dine_in"
       ],
@@ -2035,30 +2037,86 @@
     },
     {
       "id": "f62",
-      "hoursUnknown": true,
+      "hoursUnknown": false,
       "name": "鼓波洋樓",
       "lat": 22.620853,
       "lng": 120.270164,
       "category": [
-        "其他"
+        "海鮮"
       ],
       "price": null,
       "service": [
         "dine_in"
       ],
       "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
+        "mon": [
+          [
+            "11:00",
+            "14:00"
+          ],
+          [
+            "17:00",
+            "01:00"
+          ]
+        ],
+        "tue": [
+          [
+            "11:00",
+            "14:00"
+          ],
+          [
+            "17:00",
+            "01:00"
+          ]
+        ],
+        "wed": [
+          [
+            "11:00",
+            "14:00"
+          ],
+          [
+            "17:00",
+            "01:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "14:00"
+          ],
+          [
+            "17:00",
+            "01:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "14:00"
+          ],
+          [
+            "17:00",
+            "01:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "01:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "01:00"
+          ]
+        ]
       },
       "note": "",
-      "hoursSource": "Google 地圖（2026-09-09 查，座標附近查無同名店家,Google 地圖上沒有這家店）",
+      "hoursSource": "網路查證(2026-09-18,多篇痞客邦食記一致記載:鼓波洋樓(HARBOR VILLA,泰式/亞洲料理,AMY'S 餐飲集團),鼓山區濱海二路12號,電話 07-969)",
       "needsReview": true,
-      "cuisine": null
+      "cuisine": "泰式",
+      "hoursRaw": "平日 11:00-14:00、17:00-01:00;週六日及例假日 11:00-01:00,無固定公休"
     },
     {
       "id": "f63",
@@ -2128,7 +2186,8 @@
       "lat": 22.619018,
       "lng": 120.270161,
       "category": [
-        "其他"
+        "麵",
+        "飯"
       ],
       "price": 3,
       "service": [
@@ -2275,7 +2334,7 @@
       "category": [
         "麵"
       ],
-      "price": null,
+      "price": 2,
       "service": [
         "dine_in"
       ],
@@ -2335,7 +2394,7 @@
       "category": [
         "麵"
       ],
-      "price": null,
+      "price": 2,
       "service": [
         "dine_in"
       ],
@@ -2415,7 +2474,8 @@
       "lat": 22.622972,
       "lng": 120.284529,
       "category": [
-        "其他"
+        "飯",
+        "麵"
       ],
       "price": 3,
       "service": [
@@ -2617,7 +2677,7 @@
       "category": [
         "火鍋"
       ],
-      "price": null,
+      "price": 4,
       "service": [
         "dine_in"
       ],
@@ -2788,7 +2848,7 @@
       "category": [
         "麵"
       ],
-      "price": null,
+      "price": 2,
       "service": [
         "dine_in"
       ],
@@ -2839,30 +2899,62 @@
     },
     {
       "id": "f80",
-      "hoursUnknown": true,
+      "hoursUnknown": false,
       "name": "鹽埕地家",
       "lat": 22.624736,
       "lng": 120.283818,
       "category": [
         "其他"
       ],
-      "price": null,
+      "price": 3,
       "service": [
         "dine_in"
       ],
       "hours": {
-        "mon": [],
+        "mon": [
+          [
+            "09:00",
+            "21:00"
+          ]
+        ],
         "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
+        "wed": [
+          [
+            "09:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "09:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "09:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "09:00",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "09:00",
+            "21:00"
+          ]
+        ]
       },
       "note": "",
-      "hoursSource": "Google 地圖（2026-09-09 查，座標附近只有「柒壹喫堂x鹽海小餐館」,非同一家）",
+      "hoursSource": "網路查證(2026-09-18,塩埕地家 Di Jia,鹽埕區新樂街152號,電話 07-551-5023,09:00-21:00、週二公休。來源:愛食記 https://)",
       "needsReview": true,
-      "cuisine": "西式"
+      "cuisine": "西式",
+      "hoursRaw": "09:00-21:00,週二公休",
+      "addr": "高雄市鹽埕區新樂街152號"
     },
     {
       "id": "f82",
@@ -2870,9 +2962,10 @@
       "lat": 22.623112,
       "lng": 120.284763,
       "category": [
-        "其他"
+        "飯",
+        "海鮮"
       ],
-      "price": null,
+      "price": 3,
       "service": [
         "dine_in"
       ],
@@ -2935,7 +3028,7 @@
         "飯",
         "速食"
       ],
-      "price": null,
+      "price": 3,
       "service": [
         "dine_in"
       ],
@@ -3061,7 +3154,7 @@
       "category": [
         "麵"
       ],
-      "price": null,
+      "price": 2,
       "service": [
         "dine_in"
       ],
@@ -3122,7 +3215,7 @@
       "category": [
         "速食"
       ],
-      "price": null,
+      "price": 2,
       "service": [
         "dine_in",
         "takeout"
@@ -3178,7 +3271,7 @@
         "飯",
         "便當"
       ],
-      "price": null,
+      "price": 2,
       "service": [
         "dine_in"
       ],
@@ -3267,7 +3360,7 @@
       "lat": 22.618558,
       "lng": 120.285194,
       "category": [
-        "其他"
+        "麵"
       ],
       "price": 4,
       "service": [
@@ -3415,7 +3508,7 @@
     },
     {
       "id": "f97",
-      "hoursUnknown": true,
+      "hoursUnknown": false,
       "name": "品果品果蔬食午晚餐",
       "lat": 22.626197,
       "lng": 120.283327,
@@ -3429,17 +3522,64 @@
       ],
       "hours": {
         "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
+        "tue": [
+          [
+            "07:30",
+            "14:00"
+          ],
+          [
+            "17:00",
+            "19:30"
+          ]
+        ],
+        "wed": [
+          [
+            "07:30",
+            "14:00"
+          ],
+          [
+            "17:00",
+            "19:30"
+          ]
+        ],
+        "thu": [
+          [
+            "07:30",
+            "14:00"
+          ],
+          [
+            "17:00",
+            "19:30"
+          ]
+        ],
+        "fri": [
+          [
+            "07:30",
+            "14:00"
+          ],
+          [
+            "17:00",
+            "19:30"
+          ]
+        ],
+        "sat": [
+          [
+            "07:30",
+            "19:30"
+          ]
+        ],
+        "sun": [
+          [
+            "07:30",
+            "19:30"
+          ]
+        ]
       },
       "note": "素食餐廳。",
-      "hoursSource": "Google 地圖（2026-09-09 查，大仁路136號,Google 上作「品果品果蔬食午晚餐」(Pinguo 為品果音譯) —— ⚠ 為素食餐廳,同類店家多在 config.ignore 名單中）",
+      "hoursSource": "網路查證(2026-09-18,品果品果蔬食早午晚餐,鹽埕區大仁路136號,電話 07-5315989。來源:OpenRice 台灣 https://tw.openrice)",
       "needsReview": true,
-      "cuisine": "素食"
+      "cuisine": "素食",
+      "hoursRaw": "週二至週五 07:30-14:00、17:00-19:30;週六日 07:30-19:30;週一公休"
     },
     {
       "id": "f104",
@@ -3622,7 +3762,7 @@
       "category": [
         "飯"
       ],
-      "price": null,
+      "price": 2,
       "service": [
         "dine_in"
       ],
@@ -3772,7 +3912,7 @@
       "category": [
         "小吃"
       ],
-      "price": null,
+      "price": 2,
       "service": [
         "dine_in"
       ],
@@ -3863,7 +4003,7 @@
         "麵",
         "海鮮"
       ],
-      "price": null,
+      "price": 1,
       "service": [
         "dine_in"
       ],
@@ -3925,7 +4065,7 @@
       "category": [
         "飯"
       ],
-      "price": null,
+      "price": 3,
       "service": [
         "dine_in"
       ],
@@ -3977,30 +4117,66 @@
     },
     {
       "id": "f122",
-      "hoursUnknown": true,
+      "hoursUnknown": false,
       "name": "Pizza Rock",
       "lat": 22.622254,
       "lng": 120.286534,
       "category": [
         "速食"
       ],
-      "price": null,
+      "price": 2,
       "service": [
         "dine_in"
       ],
       "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
+        "mon": [
+          [
+            "11:30",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "11:30",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "11:30",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:30",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:30",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:30",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:30",
+            "21:00"
+          ]
+        ]
       },
       "note": "",
-      "hoursSource": "Google 地圖（2026-09-09 查，Google 只找到富民路327號的富民店,與座標不符,此分店無法確認）",
+      "hoursSource": "網路查證(2026-09-18,Pizza Rock 搖滾披薩 高雄鹽埕店官網,鹽埕區五福四路96號,電話 07-5333252,11:30-21:00(L.O. 20:3)",
       "needsReview": true,
-      "cuisine": "義式"
+      "cuisine": "義式",
+      "hoursRaw": "11:30-21:00(最後點餐 20:30),無公休"
     },
     {
       "id": "f123",
@@ -4241,7 +4417,7 @@
         "麵",
         "飯"
       ],
-      "price": null,
+      "price": 2,
       "service": [
         "dine_in",
         "takeout"
@@ -4392,7 +4568,8 @@
       "lat": 22.622701,
       "lng": 120.286765,
       "category": [
-        "其他"
+        "海鮮",
+        "麵"
       ],
       "price": 3,
       "service": [
@@ -4455,7 +4632,7 @@
       "category": [
         "火鍋"
       ],
-      "price": null,
+      "price": 3,
       "service": [
         "dine_in"
       ],
@@ -4567,7 +4744,7 @@
       "category": [
         "麵"
       ],
-      "price": null,
+      "price": 1,
       "service": [
         "dine_in"
       ],
@@ -4643,30 +4820,67 @@
     },
     {
       "id": "f139",
-      "hoursUnknown": true,
+      "hoursUnknown": false,
       "name": "木屋家常料理",
       "lat": 22.624184,
       "lng": 120.286685,
       "category": [
         "海鮮"
       ],
-      "price": null,
+      "price": 2,
       "service": [
         "dine_in"
       ],
       "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
+        "mon": [
+          [
+            "17:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "17:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "17:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "17:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "17:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "17:00",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "17:00",
+            "21:00"
+          ]
+        ]
       },
       "note": "",
-      "hoursSource": "Google 地圖（2026-09-09 查，座標附近為「大廚創意料理/熱炒」大公路13號且暫時關閉,店名不符,無法確認）",
+      "hoursSource": "網路查證(2026-09-18,木屋家常料理,鹽埕區大智路151號,電話 07-561-3591,每天只賣 17:00-21:00 五小時(「一天只賣五小時」為該店招牌特色)",
       "needsReview": true,
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "hoursRaw": "17:00-21:00,週一至週日皆同,不定期公休(中午不營業)",
+      "addr": "高雄市鹽埕區大智路151號"
     },
     {
       "id": "f140",
@@ -4804,7 +5018,7 @@
       "category": [
         "飯"
       ],
-      "price": null,
+      "price": 1,
       "service": [
         "dine_in"
       ],
@@ -4865,7 +5079,6 @@
       "lat": 22.627124,
       "lng": 120.285479,
       "category": [
-        "其他",
         "便當"
       ],
       "price": 4,
@@ -5077,7 +5290,7 @@
       "category": [
         "麵"
       ],
-      "price": null,
+      "price": 2,
       "service": [
         "dine_in"
       ],
@@ -5209,7 +5422,7 @@
       "category": [
         "小吃"
       ],
-      "price": null,
+      "price": 1,
       "service": [
         "dine_in"
       ],
@@ -5272,7 +5485,7 @@
       "category": [
         "海鮮"
       ],
-      "price": null,
+      "price": 4,
       "service": [
         "dine_in"
       ],
@@ -5379,30 +5592,60 @@
     },
     {
       "id": "f207",
-      "hoursUnknown": true,
+      "hoursUnknown": false,
       "name": "山海樓（中山大學活動中心）",
       "lat": 22.62829,
       "lng": 120.264782,
       "category": [
-        "其他"
+        "自助餐",
+        "飯",
+        "麵",
+        "水餃",
+        "速食"
       ],
       "price": null,
       "service": [
         "dine_in"
       ],
       "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
+        "mon": [
+          [
+            "11:00",
+            "19:00"
+          ]
+        ],
+        "tue": [
+          [
+            "11:00",
+            "19:00"
+          ]
+        ],
+        "wed": [
+          [
+            "11:00",
+            "19:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "19:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "19:00"
+          ]
+        ],
         "sat": [],
         "sun": []
       },
       "note": "",
-      "hoursSource": "Google 地圖（2026-09-09 查，蓮海路70號中山大學活動中心,08:00 開始營業,Google 無完整時段）",
+      "hoursSource": "網路查證(2026-09-18,中山大學總務處資產經營管理組「校內商家(餐飲類)」官方頁面:山海樓饗食廣場,活動中心二樓,11:00-19:00,例假日及國定假日公休。ht)",
       "needsReview": true,
-      "cuisine": null
+      "cuisine": "台式",
+      "hoursRaw": "11:00-19:00,例假日及國定假日公休(即週六日不營業)"
     },
     {
       "id": "f210",
@@ -5603,7 +5846,7 @@
       "lat": 22.620603,
       "lng": 120.294172,
       "category": [
-        "其他"
+        "飯"
       ],
       "price": 4,
       "service": [
@@ -5780,7 +6023,7 @@
       "category": [
         "飯"
       ],
-      "price": null,
+      "price": 2,
       "service": [
         "dine_in"
       ],
@@ -6020,8 +6263,8 @@
     {
       "id": "f238",
       "name": "老鹽埕福記",
-      "lat": 22.62353,
-      "lng": 120.27567,
+      "lat": 22.6266916,
+      "lng": 120.2851794,
       "category": [
         "小吃",
         "麵"
@@ -6306,13 +6549,12 @@
       "googleReviews": null,
       "hoursSource": "網路整理(https://bearlovefood.com/blog/post/poojas-indian-restaurant,2026-09-16 查;座標由地址經 OpenStreetMap 換算)",
       "category": [
-        "其他",
         "飯"
       ],
       "service": [
         "dine_in"
       ],
-      "cuisine": "中式"
+      "cuisine": "印度"
     },
     {
       "id": "f242",
@@ -7495,8 +7737,8 @@
       "googleReviews": null,
       "hoursSource": "網路整理(https://nellydyu.tw/blog/post/44556487,2026-09-16 查;座標由地址經 OpenStreetMap 換算)",
       "category": [
-        "其他",
-        "海鮮"
+        "海鮮",
+        "麵"
       ],
       "service": [
         "dine_in"
@@ -7728,8 +7970,7 @@
       "googleReviews": null,
       "hoursSource": "網路整理(https://www.xinmedia.com/article/304269,2026-09-16 查;座標由地址經 OpenStreetMap 換算)",
       "category": [
-        "速食",
-        "其他"
+        "速食"
       ],
       "service": [
         "dine_in"
@@ -8371,8 +8612,7 @@
       "googleReviews": null,
       "hoursSource": "網路整理(https://nellydyu.tw/blog/post/hamasi,2026-09-16 查;座標由地址經 OpenStreetMap 換算)",
       "category": [
-        "飯",
-        "其他"
+        "飯"
       ],
       "service": [
         "dine_in"
@@ -8583,8 +8823,8 @@
       "googleReviews": null,
       "hoursSource": "網路整理(https://www.gomaji.com/blog/%E8%A5%BF%E5%AD%90%E7%81%A3%E6%8D%B7%E9%81%8B%E7%AB%99%E7%BE%8E%E9%A3%9F/,2026-09-16 查;座標由地址經 OpenStreetMap 換算)",
       "category": [
-        "其他",
-        "麵"
+        "麵",
+        "飯"
       ],
       "service": [
         "dine_in"
@@ -8873,8 +9113,7 @@
       "googleReviews": null,
       "hoursSource": "網路整理(https://blog.toko9463.net/%E9%AB%98%E9%9B%84%E9%BC%93%E5%B1%B1%E2%80%A7a-house-u%E7%BE%A9%E5%BC%8F%E6%96%99%E7%90%86,2026-09-16 查;座標由地址經 OpenStreetMap 換算)",
       "category": [
-        "麵",
-        "其他"
+        "麵"
       ],
       "service": [
         "dine_in"
@@ -8958,8 +9197,7 @@
       "googleReviews": null,
       "hoursSource": "網路整理(https://ksdelicacy.pixnet.net/blog/posts/5054057892,2026-09-16 查;座標由地址經 OpenStreetMap 換算)",
       "category": [
-        "速食",
-        "其他"
+        "速食"
       ],
       "service": [
         "dine_in"
@@ -9089,7 +9327,7 @@
       "googleReviews": null,
       "hoursSource": "網路整理(https://ksdelicacy.pixnet.net/blog/posts/5054057892,2026-09-16 查;座標由地址經 OpenStreetMap 換算)",
       "category": [
-        "其他"
+        "速食"
       ],
       "service": [
         "dine_in"
@@ -9149,7 +9387,7 @@
       "googleReviews": null,
       "hoursSource": "網路整理(https://ksdelicacy.pixnet.net/blog/posts/5054057892,2026-09-16 查;座標由地址經 OpenStreetMap 換算)",
       "category": [
-        "其他"
+        "速食"
       ],
       "service": [
         "dine_in"
@@ -9430,7 +9668,6 @@
       "googleReviews": null,
       "hoursSource": "網路整理(https://www.kw2.com.tw/post/kw2-food-and-beverage,2026-09-16 查;座標由地址經 OpenStreetMap 換算)",
       "category": [
-        "其他",
         "麵"
       ],
       "service": [
@@ -9694,8 +9931,8 @@
     {
       "id": "f290",
       "name": "永心浮島（大港倉410）",
-      "lat": 22.618665,
-      "lng": 120.279578,
+      "lat": 22.617159,
+      "lng": 120.283489,
       "price": 4,
       "hours": {
         "mon": [
@@ -9777,8 +10014,7 @@
       "googleReviews": null,
       "hoursSource": "網路整理(https://www.kw2.com.tw/post/kw2-food-and-beverage,2026-09-16 查;座標由地址經 OpenStreetMap 換算)",
       "category": [
-        "海鮮",
-        "其他"
+        "海鮮"
       ],
       "service": [
         "dine_in"
@@ -9788,8 +10024,8 @@
     {
       "id": "f291",
       "name": "周氏蝦捲（大港倉410）",
-      "lat": 22.618665,
-      "lng": 120.279578,
+      "lat": 22.617159,
+      "lng": 120.283489,
       "price": 2,
       "hours": {
         "mon": [
@@ -9882,8 +10118,8 @@
     {
       "id": "f292",
       "name": "慢慢來義式料理（大港倉410）",
-      "lat": 22.618665,
-      "lng": 120.279578,
+      "lat": 22.617159,
+      "lng": 120.283489,
       "price": 2,
       "hours": {
         "mon": [
@@ -9966,7 +10202,7 @@
       "hoursSource": "網路整理(https://www.kw2.com.tw/post/kw2-food-and-beverage,2026-09-16 查;座標由地址經 OpenStreetMap 換算)",
       "category": [
         "麵",
-        "其他"
+        "飯"
       ],
       "service": [
         "dine_in"
@@ -11586,7 +11822,6 @@
       "googleReviews": null,
       "hoursSource": "網路整理(https://sweetday.tw/%E5%89%8D%E9%87%91%E5%8D%80%E7%BE%8E%E9%A3%9F/,2026-09-16 查;座標由地址經 OpenStreetMap 換算)",
       "category": [
-        "其他",
         "飯"
       ],
       "service": [
@@ -11660,8 +11895,8 @@
       "id": "d01",
       "hoursUnknown": true,
       "name": "50嵐（七賢鹽埕店）",
-      "lat": 22.621044,
-      "lng": 120.27912,
+      "lat": 22.6262819,
+      "lng": 120.2823934,
       "kind": "飲料",
       "price": null,
       "hours": {
@@ -12139,8 +12374,8 @@
     {
       "id": "d16",
       "name": "鹽埕小熊奶茶",
-      "lat": 22.627123,
-      "lng": 120.284825,
+      "lat": 22.6245079,
+      "lng": 120.283534,
       "price": null,
       "hours": {
         "mon": [
