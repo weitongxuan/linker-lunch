@@ -5,6 +5,10 @@ UA = 'linker-lunch-map/1.0 (momoyu@linkervision.com)'
 ROOT = pathlib.Path('/Users/momo/code/linker-lunch')
 SEED = ROOT / 'apps/api/prisma/seed-data.json'
 OK_DISTRICTS = ['鹽埕區', '鼓山區', '前金區', '苓雅區']
+# category 與 cuisine 都是受控詞彙:問問看的槽位是從資料裡的實際值長出來的,
+# 一旦混進「豬油乾麵」這種菜色描述,使用者永遠不會那樣問,那個值就是死的。
+OK_CATEGORIES = {'便當', '小吃', '水餃', '海鮮', '火鍋', '牛排', '自助餐', '速食', '飯', '麵', '其他'}
+OK_CUISINES = {'台式', '日式', '港式', '泰式', '韓式', '義式', '美式', '越式', '川菜', '閩菜', '中式', '西式', '素食', '印度'}
 MAX_M = 2500
 DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
 
@@ -75,18 +79,22 @@ def main():
             d = dist_m(office['lat'], office['lng'], *coord)
             if d > MAX_M:
                 skipped.append((name, f'距離 {d:.0f}m 超出範圍')); continue
+            cats = [c for c in (r.get('category') or []) if c in OK_CATEGORIES]
+            if not cats:
+                cats = ['其他']
+            cuisine = r.get('cuisine') if r.get('cuisine') in OK_CUISINES else None
             hours = r.get('hours') or {k: [] for k in DAYS}
             hours = {k: hours.get(k) or [] for k in DAYS}
             unknown = not any(hours.values())
             shop = {
                 'id': f'f{next_id}', 'name': name, 'lat': coord[0], 'lng': coord[1],
-                'category': r.get('category') or ['其他'],
+                'category': cats,
                 'price': r.get('price'), 'service': ['dine_in'],
                 'hours': hours, 'addr': r['addr'], 'phone': None,
                 'note': r.get('note') or '',
                 'hoursSource': f"網路查證(2026-09-18,{(r.get('source') or '')[:70]})",
                 'googleRating': r.get('googleRating'), 'googleReviews': r.get('googleReviews'),
-                'cuisine': r.get('cuisine'), 'hoursUnknown': unknown,
+                'cuisine': cuisine, 'hoursUnknown': unknown,
             }
             if r.get('hoursRaw'):
                 shop['hoursRaw'] = r['hoursRaw']
