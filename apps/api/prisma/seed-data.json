@@ -680,66 +680,6 @@
       "cuisine": "韓式"
     },
     {
-      "id": "f29",
-      "name": "Ju Tang",
-      "lat": 22.620107,
-      "lng": 120.271506,
-      "category": [
-        "其他"
-      ],
-      "price": null,
-      "service": [
-        "dine_in"
-      ],
-      "hours": {
-        "mon": [
-          [
-            "12:30",
-            "23:00"
-          ]
-        ],
-        "tue": [
-          [
-            "12:30",
-            "23:00"
-          ]
-        ],
-        "wed": [
-          [
-            "12:30",
-            "23:00"
-          ]
-        ],
-        "thu": [
-          [
-            "12:30",
-            "23:00"
-          ]
-        ],
-        "fri": [
-          [
-            "12:30",
-            "23:00"
-          ]
-        ],
-        "sat": [
-          [
-            "12:30",
-            "23:00"
-          ]
-        ],
-        "sun": [
-          [
-            "12:30",
-            "23:00"
-          ]
-        ]
-      },
-      "addr": "高雄市鼓山區濱海一路58巷2之1號",
-      "note": "",
-      "cuisine": null
-    },
-    {
       "id": "f30",
       "name": "樓梯腳",
       "lat": 22.624186,
@@ -1111,33 +1051,6 @@
       "cuisine": "台式"
     },
     {
-      "id": "f38",
-      "hoursUnknown": true,
-      "name": "桶一天下",
-      "lat": 22.623041,
-      "lng": 120.271663,
-      "category": [
-        "其他"
-      ],
-      "price": null,
-      "service": [
-        "dine_in"
-      ],
-      "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
-      },
-      "note": "這個座標上查不到店家 —— Google 只有華寧路的分店(僅外帶、17:00 才開),此筆疑為 OSM 舊資料,待現場確認。",
-      "hoursSource": "Google 地圖（2026-09-09 查，座標附近查無此店，需現場確認；2026-09-10 再以精確座標探測與釘子 10 公尺內餐廳列表兩法複查,座標上無任何商家,最近一家為阪城海鮮料理（濱海二路25號） —— 三種檢索法皆無此店,勿再重查）",
-      "needsReview": true,
-      "cuisine": "台式"
-    },
-    {
       "id": "f40",
       "name": "哈瑪星旗魚大王",
       "lat": 22.622299,
@@ -1259,34 +1172,6 @@
       "cuisine": "台式"
     },
     {
-      "id": "f43",
-      "hoursUnknown": true,
-      "name": "沃夫餐廚",
-      "lat": 22.622719,
-      "lng": 120.28338,
-      "category": [
-        "速食",
-        "麵"
-      ],
-      "price": 3,
-      "service": [
-        "dine_in"
-      ],
-      "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
-      },
-      "note": "",
-      "hoursSource": "Google 地圖（2026-09-09 查，座標附近查無同名店家,Google 地圖上沒有這家店）",
-      "needsReview": true,
-      "cuisine": "西式"
-    },
-    {
       "id": "f46",
       "name": "The Borage",
       "lat": 22.624887,
@@ -1329,7 +1214,7 @@
       },
       "addr": "803高雄市鹽埕區瀨南街141之7號",
       "phone": "+886 933486259",
-      "note": "",
+      "note": "2026 米其林入選純植物料理,四道式套餐;只開週四~日 16:30-21:00,午餐吃不到。",
       "cuisine": "素食"
     },
     {
@@ -1734,33 +1619,6 @@
       },
       "note": "",
       "cuisine": "西式"
-    },
-    {
-      "id": "f55",
-      "hoursUnknown": true,
-      "name": "阿木",
-      "lat": 22.622411,
-      "lng": 120.270582,
-      "category": [
-        "其他"
-      ],
-      "price": null,
-      "service": [
-        "dine_in"
-      ],
-      "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
-      },
-      "note": "",
-      "hoursSource": "Google 地圖（2026-09-09 查，查到「阿木的店 貝果」長安街11號,與座標不符,無法確認）",
-      "needsReview": true,
-      "cuisine": null
     },
     {
       "id": "f56",
@@ -2300,33 +2158,6 @@
       "cuisine": "台式"
     },
     {
-      "id": "f69",
-      "hoursUnknown": true,
-      "name": "鴨媽廚房",
-      "lat": 22.622722,
-      "lng": 120.270065,
-      "category": [
-        "其他"
-      ],
-      "price": null,
-      "service": [
-        "dine_in"
-      ],
-      "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
-      },
-      "note": "",
-      "hoursSource": "Google 地圖（2026-09-09 查，座標附近只有「新濱町海洋廚房」濱海一路109-1號,非同一家）",
-      "needsReview": true,
-      "cuisine": null
-    },
-    {
       "id": "f71",
       "name": "金記溫州餛飩大王",
       "lat": 22.624439,
@@ -2546,7 +2377,8 @@
       "lat": 22.623236,
       "lng": 120.284432,
       "category": [
-        "其他"
+        "其他",
+        "飯"
       ],
       "price": 3,
       "service": [
@@ -2598,7 +2430,7 @@
         ]
       },
       "addr": "803高雄市鹽埕區五福四路150號",
-      "note": "",
+      "note": "烏克蘭家常菜:羅宋湯、高麗菜捲、燉肉,現有類別沒有完全對應的。",
       "hoursSource": "Google 地圖（2026-08-21 查，五福四路150號與資料地址相同）",
       "googleRating": 4.7,
       "googleReviews": 612,
@@ -2904,7 +2736,8 @@
       "lat": 22.624736,
       "lng": 120.283818,
       "category": [
-        "其他"
+        "其他",
+        "飯"
       ],
       "price": 3,
       "service": [
@@ -2949,7 +2782,7 @@
           ]
         ]
       },
-      "note": "",
+      "note": "新樂街152號,小農食材早午餐與簡餐。",
       "hoursSource": "網路查證(2026-09-18,塩埕地家 Di Jia,鹽埕區新樂街152號,電話 07-551-5023,09:00-21:00、週二公休。來源:愛食記 https://)",
       "needsReview": true,
       "cuisine": "西式",
@@ -3967,34 +3800,6 @@
       "cuisine": "台式"
     },
     {
-      "id": "f115",
-      "hoursUnknown": true,
-      "name": "茶工業",
-      "lat": 22.622451,
-      "lng": 120.286053,
-      "category": [
-        "其他"
-      ],
-      "price": null,
-      "service": [
-        "dine_in",
-        "takeout"
-      ],
-      "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
-      },
-      "note": "",
-      "hoursSource": "Google 地圖（2026-09-09 查，只找到「香茗茶行」五福四路264號茶葉店,非同一家）",
-      "needsReview": true,
-      "cuisine": null
-    },
-    {
       "id": "f117",
       "name": "三山國王廟虱目魚米粉",
       "lat": 22.626133,
@@ -4231,33 +4036,6 @@
       "hoursSource": "Google 地圖（2026-09-09 查，搜尋只對到已收錄的「鴨肉珍」,查無「塩程鴨肉店」）",
       "needsReview": true,
       "cuisine": "台式"
-    },
-    {
-      "id": "f126",
-      "hoursUnknown": true,
-      "name": "1口香香",
-      "lat": 22.618353,
-      "lng": 120.267961,
-      "category": [
-        "其他"
-      ],
-      "price": null,
-      "service": [
-        "dine_in"
-      ],
-      "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
-      },
-      "note": "",
-      "hoursSource": "Google 地圖（2026-09-09 查，只找到「一口香豆乳雞」九如四路761號,與座標不符）",
-      "needsReview": true,
-      "cuisine": null
     },
     {
       "id": "f127",
@@ -5190,33 +4968,6 @@
       "cuisine": "台式"
     },
     {
-      "id": "f150",
-      "hoursUnknown": true,
-      "name": "呼嚕叫",
-      "lat": 22.617793,
-      "lng": 120.266602,
-      "category": [
-        "其他"
-      ],
-      "price": null,
-      "service": [
-        "dine_in"
-      ],
-      "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
-      },
-      "note": "",
-      "hoursSource": "Google 地圖（2026-09-09 查，只找到「咕嚕叫土司-博愛店」博愛二路306號,店名與位置皆不符）",
-      "needsReview": true,
-      "cuisine": null
-    },
-    {
       "id": "f151",
       "hoursUnknown": false,
       "name": "合羽亭",
@@ -5358,60 +5109,6 @@
       "hoursSource": "Google 地圖（2026-09-10 查，麵店 —— 更正原部落格的 15:00–23:00,實際有午餐時段）",
       "hoursUnknown": false,
       "hoursRaw": "平日 11:30–14:00、16:30–21:00;週六 11:30–21:00(週日休)",
-      "cuisine": "台式"
-    },
-    {
-      "id": "f181",
-      "hoursUnknown": true,
-      "name": "我在中山找到幸福",
-      "lat": 22.62488,
-      "lng": 120.264688,
-      "category": [
-        "其他"
-      ],
-      "price": null,
-      "service": [
-        "dine_in"
-      ],
-      "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
-      },
-      "addr": "804高雄市鼓山區蓮海路51號",
-      "note": "此地址為西子灣沙灘會館,該飯店已在 config.ignore 名單中,原店疑已不存在。",
-      "hoursSource": "Google 地圖（2026-09-09 查，蓮海路51號查到的是「西子灣沙灘會館」飯店,原店查無資料）",
-      "cuisine": null
-    },
-    {
-      "id": "f186",
-      "hoursUnknown": true,
-      "name": "台灣好",
-      "lat": 22.623835,
-      "lng": 120.290271,
-      "category": [
-        "其他"
-      ],
-      "price": null,
-      "service": [
-        "dine_in"
-      ],
-      "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
-      },
-      "note": "",
-      "hoursSource": "Google 地圖（2026-09-09 查，查無此店,搜尋只回傳「前金區」行政區）",
-      "needsReview": true,
       "cuisine": "台式"
     },
     {
@@ -13636,6 +13333,29 @@
       "googleReviews": null,
       "hoursSource": "網路整理(https://sipspot.wisplu.com.tw/高雄市/烏弄/,2026-09-16 查;座標由地址經 OpenStreetMap 換算)",
       "kind": "飲料"
+    },
+    {
+      "id": "d103",
+      "name": "茶工業",
+      "lat": 22.622451,
+      "lng": 120.286053,
+      "kind": "飲料",
+      "price": null,
+      "hours": {
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [],
+        "fri": [],
+        "sat": [],
+        "sun": []
+      },
+      "hoursUnknown": true,
+      "note": "烏龍茶專門所,不是午餐選項,改列飲料。",
+      "addr": null,
+      "hoursSource": "Google 地圖（2026-09-09 查，只找到「香茗茶行」五福四路264號茶葉店,非同一家）",
+      "googleRating": null,
+      "googleReviews": null
     }
   ],
   "parkings": [
