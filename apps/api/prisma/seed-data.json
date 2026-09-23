@@ -5945,7 +5945,8 @@
       "hoursSource": "部落格食記(nellydyu.tw、nigi33.tw、inmap.tw,2026-09-16 查,座標依大公路門牌 55/71 號外推,未經 Google 確認,11:00–14:00 / 16:30–19:30,週日公休)",
       "googleRating": null,
       "googleReviews": null,
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "hoursRaw": "11:00–14:00、16:30–19:30,週日公休"
     },
     {
       "id": "f239",
