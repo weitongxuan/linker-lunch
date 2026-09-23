@@ -583,33 +583,6 @@
       "needsReview": false
     },
     {
-      "id": "f22",
-      "hoursUnknown": true,
-      "name": "鴨肉飯",
-      "lat": 22.621106,
-      "lng": 120.282211,
-      "category": [
-        "飯"
-      ],
-      "price": null,
-      "service": [
-        "dine_in"
-      ],
-      "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
-      },
-      "note": "店名過於籠統,Google 上會對到「鴨肉珍」(另一家已收錄),需現場確認實際店名。",
-      "hoursSource": "Google 地圖（2026-09-09 查，名稱無法唯一比對，待現場確認；2026-09-10 再以精確座標探測與釘子 10 公尺內餐廳列表兩法複查,座標上無任何商家,最近一家為熳温（日式烤雞串,五福四路103號） —— 三種檢索法皆無此店,勿再重查）",
-      "needsReview": true,
-      "cuisine": "台式"
-    },
-    {
       "id": "f28",
       "name": "朝月冷麵王",
       "lat": 22.619788,
@@ -892,34 +865,6 @@
       "cuisine": "台式",
       "addr": "高雄市鼓山區濱海一路64號",
       "hoursRaw": "11:00–18:30（週一公休）"
-    },
-    {
-      "id": "f34",
-      "hoursUnknown": true,
-      "name": "火雞肉飯",
-      "lat": 22.624779,
-      "lng": 120.281316,
-      "category": [
-        "飯"
-      ],
-      "price": null,
-      "service": [
-        "dine_in",
-        "takeout"
-      ],
-      "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
-      },
-      "note": "",
-      "hoursSource": "Google 地圖（2026-09-09 查，查到「嘉義黃火雞肉飯」華夏路679號,與座標不符,無法確認）",
-      "needsReview": true,
-      "cuisine": "台式"
     },
     {
       "id": "f35",
@@ -1684,33 +1629,6 @@
       "cuisine": "台式",
       "addr": "高雄市鼓山區鼓元街112號",
       "needsReview": false
-    },
-    {
-      "id": "f57",
-      "hoursUnknown": true,
-      "name": "咖哩大學",
-      "lat": 22.62273,
-      "lng": 120.270677,
-      "category": [
-        "飯"
-      ],
-      "price": null,
-      "service": [
-        "dine_in"
-      ],
-      "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
-      },
-      "note": "",
-      "hoursSource": "Google 地圖（2026-09-09 查，壽山街,Google 上有此地標但沒有任何營業資訊）",
-      "cuisine": "日式",
-      "needsReview": true
     },
     {
       "id": "f58",
@@ -3929,60 +3847,6 @@
       "addr": "高雄市鹽埕區五福四路96號"
     },
     {
-      "id": "f123",
-      "hoursUnknown": true,
-      "name": "轉角pizza",
-      "lat": 22.618099,
-      "lng": 120.268135,
-      "category": [
-        "速食"
-      ],
-      "price": null,
-      "service": [
-        "dine_in"
-      ],
-      "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
-      },
-      "note": "",
-      "hoursSource": "Google 地圖（2026-09-09 查，只對到 Pizza Rock 富民店,查無「轉角pizza」）",
-      "needsReview": true,
-      "cuisine": "義式"
-    },
-    {
-      "id": "f125",
-      "hoursUnknown": true,
-      "name": "塩程鴨肉店",
-      "lat": 22.623077,
-      "lng": 120.286444,
-      "category": [
-        "麵"
-      ],
-      "price": null,
-      "service": [
-        "dine_in"
-      ],
-      "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
-      },
-      "note": "",
-      "hoursSource": "Google 地圖（2026-09-09 查，搜尋只對到已收錄的「鴨肉珍」,查無「塩程鴨肉店」）",
-      "needsReview": true,
-      "cuisine": "台式"
-    },
-    {
       "id": "f127",
       "hoursUnknown": false,
       "name": "鐘庵日本料理",
@@ -4903,33 +4767,6 @@
       "needsReview": false
     },
     {
-      "id": "f147",
-      "hoursUnknown": true,
-      "name": "香原牛肉麵",
-      "lat": 22.62117,
-      "lng": 120.288146,
-      "category": [
-        "麵"
-      ],
-      "price": null,
-      "service": [
-        "dine_in"
-      ],
-      "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
-      },
-      "note": "",
-      "hoursSource": "Google 地圖（2026-09-09 查，只找到「原香牛肉拉麵」大昌二路479號(三民區),與座標不符）",
-      "needsReview": true,
-      "cuisine": "台式"
-    },
-    {
       "id": "f151",
       "hoursUnknown": false,
       "name": "合羽亭",
@@ -5397,33 +5234,6 @@
       "hoursSource": "Google 地圖（2026-09-09 查，五福三路124號地址相符）",
       "cuisine": "泰式",
       "needsReview": false
-    },
-    {
-      "id": "f221",
-      "hoursUnknown": true,
-      "name": "幸福食堂",
-      "lat": 22.626699,
-      "lng": 120.291346,
-      "category": [
-        "小吃"
-      ],
-      "price": null,
-      "service": [
-        "dine_in"
-      ],
-      "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
-      },
-      "note": "",
-      "hoursSource": "Google 地圖（2026-09-09 查，只找到「幸福錦」長明街303號,店名不符,無法確認）",
-      "needsReview": true,
-      "cuisine": null
     },
     {
       "id": "f224",
