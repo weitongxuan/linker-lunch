@@ -34,7 +34,8 @@ export const DEFAULT_FILTERS: FilterState = {
   excludeCat: new Set(),
   cuisine: new Set(),
   excludeCuisine: new Set(),
-  price: new Set(),
+  // 預設只看 $$$ 以下:午餐一個人 500 元以上的店平常不會是選項,要看再到篩選把 $$$$ 點開
+  price: new Set(['1', '2', '3']),
   service: new Set(),
   onlyOpen: true,
   showUnknown: true,
@@ -86,7 +87,8 @@ export function passFilter(r: ComputedRow, filters: FilterState): boolean {
   // 菜系:沒有菜系的店在「想吃某菜系」時被排除,在「不吃某菜系」時不受影響
   if (filters.cuisine.size && !(r.sh.cuisine && filters.cuisine.has(r.sh.cuisine))) return false;
   if (filters.excludeCuisine.size && r.sh.cuisine && filters.excludeCuisine.has(r.sh.cuisine)) return false;
-  if (filters.price.size && !filters.price.has(String(r.sh.price || ''))) return false;
+  // 沒有價位的店不因價位篩選被藏掉:不知道 ≠ 貴,跟 hoursUnknown 用 showUnknown 放行是同一個道理
+  if (filters.price.size && r.sh.price && !filters.price.has(String(r.sh.price))) return false;
   if (filters.service.size) {
     const sv = r.sh.service || [];
     let hit = false;

@@ -60,7 +60,8 @@ export function initialState(): UiState {
     view: 'both',
     listTab: 'shops',
     sort: 'travel',
-    filters: { ...DEFAULT_FILTERS, tier: new Set(), cat: new Set(), excludeCat: new Set(), cuisine: new Set(), excludeCuisine: new Set(), price: new Set(), service: new Set() },
+    // Set 要各自複製一份,不然多個 store 實例會共用同一個 Set;price 沿用預設的 $$$ 以下
+    filters: { ...DEFAULT_FILTERS, tier: new Set(), cat: new Set(), excludeCat: new Set(), cuisine: new Set(), excludeCuisine: new Set(), price: new Set(DEFAULT_FILTERS.price), service: new Set() },
     mood: 'auto',
     voteMode: false,
     pickShopId: null,

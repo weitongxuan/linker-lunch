@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { currentMood, MOOD_TABLE } from '@lunch-map/shared';
+import { currentMood, DEFAULT_FILTERS, MOOD_TABLE } from '@lunch-map/shared';
 import type { Market } from '@lunch-map/shared';
 import { useFilters, type TravelMode } from '../state/filtersStore.js';
 import type { LocationStatus } from '../hooks/useMyLocation.js';
@@ -49,7 +49,8 @@ export function Toolbar({ market, onRandomPick, onOpenAddShop, categories, cuisi
     f.excludeCat.size +
     f.cuisine.size +
     f.excludeCuisine.size +
-    f.price.size +
+    // 價位有預設值,跟預設一樣就不算「有動過」
+    (f.price.size === DEFAULT_FILTERS.price.size && [...f.price].every((v) => DEFAULT_FILTERS.price.has(v)) ? 0 : 1) +
     f.service.size +
     (f.minScore ? 1 : 0) +
     (f.hideUnrated ? 1 : 0) +
