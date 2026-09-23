@@ -5687,7 +5687,7 @@
       "hoursSource": "Google 地圖（2026-09-09 查，僅找到「台北真來香烤鴨莊」建國三路228號,非同一家,無法確認）",
       "needsReview": true,
       "cuisine": "中式",
-      "addr": "高雄市苓雅區永平路36號"
+      "addr": "高雄市苓雅區永平路永平攤販集中場36號（商業登記名稱：香利盈烤鴨店）"
     },
     {
       "id": "f235",
@@ -12849,23 +12849,59 @@
         "dine_in"
       ],
       "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
+        "mon": [
+          [
+            "09:30",
+            "19:30"
+          ]
+        ],
+        "tue": [
+          [
+            "09:30",
+            "19:30"
+          ]
+        ],
+        "wed": [
+          [
+            "09:30",
+            "19:30"
+          ]
+        ],
+        "thu": [
+          [
+            "09:30",
+            "19:30"
+          ]
+        ],
+        "fri": [
+          [
+            "09:30",
+            "19:30"
+          ]
+        ],
+        "sat": [
+          [
+            "09:30",
+            "19:30"
+          ]
+        ],
+        "sun": [
+          [
+            "09:30",
+            "19:30"
+          ]
+        ]
       },
       "addr": "高雄市鹽埕區大仁路156巷6號",
       "phone": null,
-      "note": "",
-      "hoursSource": "網路查證(2026-09-18,https://inmap.tw/archives/47957)",
+      "note": "營業時間來源是 2017 年食記,可能已變動,建議電話確認 07-532-8436。",
+      "hoursSource": "網路查證(2026-09-23,https://nellydyu.tw/blog/post/45209247;信心 low)",
       "googleRating": null,
       "googleReviews": null,
       "cuisine": "台式",
-      "hoursUnknown": true,
-      "needsReview": true
+      "hoursUnknown": false,
+      "needsReview": false,
+      "hoursRaw": "09:30-19:30（公休日未查到）"
     },
     {
       "id": "f334",
@@ -14994,23 +15030,87 @@
         "dine_in"
       ],
       "hours": {
-        "mon": [],
-        "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
+        "mon": [
+          [
+            "11:00",
+            "14:00"
+          ],
+          [
+            "17:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "11:00",
+            "14:00"
+          ],
+          [
+            "17:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "11:00",
+            "14:00"
+          ],
+          [
+            "17:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "14:00"
+          ],
+          [
+            "17:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "14:00"
+          ],
+          [
+            "17:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "14:00"
+          ],
+          [
+            "17:00",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "14:00"
+          ],
+          [
+            "17:00",
+            "21:00"
+          ]
+        ]
       },
       "addr": "高雄市前金區大同一路208號",
       "phone": null,
       "note": "",
-      "hoursSource": "網路查證(2026-09-18,https://ifoodie.tw/explore/%E9%AB%98%E9%9B%84%E5%B8%82/list/%E5%89%8D%)",
+      "hoursSource": "網路查證(2026-09-23,https://nellydyu.tw/blog/post/szechuan;信心 medium)",
       "googleRating": 4.5,
       "googleReviews": 14,
       "cuisine": "川菜",
-      "hoursUnknown": true,
-      "needsReview": true
+      "hoursUnknown": false,
+      "needsReview": false,
+      "hoursRaw": "11:00-14:00、17:00-21:00（公休日未查到）"
     },
     {
       "id": "f365",
@@ -15158,21 +15258,67 @@
       "hours": {
         "mon": [],
         "tue": [],
-        "wed": [],
-        "thu": [],
-        "fri": [],
-        "sat": [],
-        "sun": []
+        "wed": [
+          [
+            "11:00",
+            "14:00"
+          ],
+          [
+            "17:00",
+            "20:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "14:00"
+          ],
+          [
+            "17:00",
+            "20:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "14:00"
+          ],
+          [
+            "17:00",
+            "20:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "14:00"
+          ],
+          [
+            "17:00",
+            "20:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "14:00"
+          ],
+          [
+            "17:00",
+            "20:00"
+          ]
+        ]
       },
       "addr": "高雄市前金區中華四路352號",
       "phone": null,
       "note": "",
-      "hoursSource": "網路查證(2026-09-18,https://sweetday.tw/%E5%89%8D%E9%87%91%E5%8D%80%E7%BE%8E%E9%A3%9F/)",
+      "hoursSource": "網路查證(2026-09-23,https://nigi33.tw/pengxinlobo/;信心 medium)",
       "googleRating": null,
       "googleReviews": null,
       "cuisine": "日式",
-      "hoursUnknown": true,
-      "needsReview": true
+      "hoursUnknown": false,
+      "needsReview": false,
+      "hoursRaw": "11:00-14:00、17:00-20:00，週一、二公休"
     },
     {
       "id": "f370",
