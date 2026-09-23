@@ -37,6 +37,10 @@ for s in d['shops']:
         problems.append(f'{where}: 標了 hoursUnknown 卻有營業時段')
     if not s.get('hoursUnknown') and not any(s['hours'].values()):
         problems.append(f'{where}: 沒有任何營業時段,卻沒標 hoursUnknown')
+    # needsReview 是 OSM 匯入時「時段抓不到」留下的旗標,卡片上顯示「待確認」。
+    # 補完時段後若沒清掉,就會像 Pizza Rock 那樣明明查證過卻一直掛著待確認。
+    if bool(s.get('needsReview')) != bool(s.get('hoursUnknown')):
+        problems.append(f"{where}: needsReview={s.get('needsReview')} 與 hoursUnknown={s.get('hoursUnknown')} 不一致(待確認標記過期)")
 
 def dm(a, b, c, e):
     R = 6371000; p = math.pi / 180

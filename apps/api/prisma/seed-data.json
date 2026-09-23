@@ -120,7 +120,8 @@
       "hoursSource": "部落格食記／店家資訊,地址電話與 OSM 相符（2026-08 查）",
       "googleRating": 4.6,
       "googleReviews": 1389,
-      "cuisine": "西式"
+      "cuisine": "西式",
+      "needsReview": false
     },
     {
       "id": "f04",
@@ -203,7 +204,8 @@
       "googleRating": 4.7,
       "googleReviews": 491,
       "cuisine": "義式",
-      "addr": "高雄市鼓山區鼓山一路10-1號"
+      "addr": "高雄市鼓山區鼓山一路10-1號",
+      "needsReview": false
     },
     {
       "id": "f05",
@@ -282,7 +284,8 @@
       },
       "addr": "高雄市鼓山區臨海二路69號",
       "note": "⚠️ 待確認：搜「韓珍饌」找不到，該地址（鼓山一路10號）現在是「理寶行」，而資料裡的 10-1 號是義狗倆狗。可能已歇業或改名 —— 路過看一眼。（Google 地圖 2026-08-25 查） 地址更正為臨海二路69號(原鼓山一路10-1號有誤),韓式石鍋拌飯。",
-      "cuisine": "韓式"
+      "cuisine": "韓式",
+      "needsReview": false
     },
     {
       "id": "f07",
@@ -373,7 +376,8 @@
       "googleRating": 4,
       "googleReviews": 745,
       "cuisine": "台式",
-      "addr": "高雄市鼓山區臨海三路14號"
+      "addr": "高雄市鼓山區臨海三路14號",
+      "needsReview": false
     },
     {
       "id": "f16",
@@ -433,7 +437,8 @@
       "hoursSource": "丹丹漢堡分店整理（西子灣店・臨海二路24號,與 OSM 地址電話相符,2026-08 查）",
       "googleRating": 4.3,
       "googleReviews": 7249,
-      "cuisine": "美式"
+      "cuisine": "美式",
+      "needsReview": false
     },
     {
       "id": "f19",
@@ -491,7 +496,8 @@
       "addr": "高雄市鹽埕區新化里8鄰大勇路5號",
       "note": "",
       "hoursSource": "部落格食記＋駁二官網店家頁（2026-08 查）。週一公休為文中僅列週二~週日之推論",
-      "cuisine": "義式"
+      "cuisine": "義式",
+      "needsReview": false
     },
     {
       "id": "f21",
@@ -573,7 +579,8 @@
       "googleRating": 4,
       "googleReviews": 625,
       "cuisine": "日式",
-      "addr": "高雄市鼓山區臨海二路32號"
+      "addr": "高雄市鼓山區臨海二路32號",
+      "needsReview": false
     },
     {
       "id": "f22",
@@ -682,7 +689,8 @@
       "googleRating": 4.1,
       "googleReviews": 1683,
       "cuisine": "韓式",
-      "addr": "高雄市鼓山區濱海一路57號"
+      "addr": "高雄市鼓山區濱海一路57號",
+      "needsReview": false
     },
     {
       "id": "f30",
@@ -743,7 +751,8 @@
       "addr": "高雄市鼓山區登山街34-1號",
       "phone": "+886 989 200 057",
       "note": "",
-      "cuisine": null
+      "cuisine": null,
+      "needsReview": false
     },
     {
       "id": "f32",
@@ -821,7 +830,8 @@
       "googleRating": 4.1,
       "googleReviews": 53,
       "cuisine": "台式",
-      "addr": "高雄市鹽埕區瀨南街111號"
+      "addr": "高雄市鹽埕區瀨南街111號",
+      "needsReview": false
     },
     {
       "id": "f33",
@@ -878,7 +888,7 @@
       },
       "note": "",
       "hoursSource": "網路查證(2026-09-18,https://inmap.tw/archives/71799)",
-      "needsReview": true,
+      "needsReview": false,
       "cuisine": "台式",
       "addr": "高雄市鼓山區濱海一路64號",
       "hoursRaw": "11:00–18:30（週一公休）"
@@ -972,7 +982,8 @@
       "googleRating": 3.8,
       "googleReviews": 552,
       "cuisine": "台式",
-      "addr": "高雄市鼓山區鼓波街27-16號"
+      "addr": "高雄市鼓山區鼓波街27-16號",
+      "needsReview": false
     },
     {
       "id": "f36",
@@ -1028,7 +1039,8 @@
       "addr": "高雄市鼓山區濱海一路73號",
       "phone": "+886 7 531 7337",
       "note": "",
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f37",
@@ -1087,7 +1099,8 @@
       "googleReviews": 11579,
       "addr": "高雄市鹽埕區五福四路258號",
       "hoursSource": "Google 地圖（2026-09-10 查，總店五福四路258號,與大公店為不同分店）",
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f40",
@@ -1150,7 +1163,8 @@
       "googleRating": 3.8,
       "googleReviews": 619,
       "cuisine": "台式",
-      "addr": "高雄市鼓山區鼓波街27-7號"
+      "addr": "高雄市鼓山區鼓波街27-7號",
+      "needsReview": false
     },
     {
       "id": "f46",
@@ -1196,7 +1210,8 @@
       "addr": "803高雄市鹽埕區瀨南街141之7號",
       "phone": "+886 933486259",
       "note": "2026 米其林入選純植物料理,四道式套餐;只開週四~日 16:30-21:00,午餐吃不到。",
-      "cuisine": "素食"
+      "cuisine": "素食",
+      "needsReview": false
     },
     {
       "id": "f47",
@@ -1254,7 +1269,8 @@
       "hoursSource": "Google 地圖（2026-08-21 查，Google 上作「小李山西刀削麵 本店」，鼓山一路86號與資料地址相同）",
       "googleRating": 4,
       "googleReviews": 1461,
-      "cuisine": "中式"
+      "cuisine": "中式",
+      "needsReview": false
     },
     {
       "id": "f49",
@@ -1317,7 +1333,8 @@
       "googleRating": 4.3,
       "addr": "高雄市鹽埕區大公路55號",
       "hoursSource": "Google 地圖（2026-09-10 查，大公店大公路55號,Google 上另有總店在五福四路258號,兩家皆 4.3 分,並非重複）",
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f51",
@@ -1399,7 +1416,8 @@
       "googleRating": 4.2,
       "googleReviews": 369,
       "cuisine": "中式",
-      "addr": "高雄市鹽埕區瀨南街142號"
+      "addr": "高雄市鹽埕區瀨南街142號",
+      "needsReview": false
     },
     {
       "id": "f52",
@@ -1462,7 +1480,8 @@
       "googleRating": 4.8,
       "googleReviews": 225,
       "cuisine": "中式",
-      "addr": "高雄市鼓山區濱海一路105號"
+      "addr": "高雄市鼓山區濱海一路105號",
+      "needsReview": false
     },
     {
       "id": "f53",
@@ -1523,7 +1542,8 @@
       "note": "",
       "hoursSource": "mable.tw 鹽埕老店小吃整理（2026-08 查）",
       "cuisine": "台式",
-      "addr": "高雄市鹽埕區新樂街229號"
+      "addr": "高雄市鹽埕區新樂街229號",
+      "needsReview": false
     },
     {
       "id": "f54",
@@ -1603,7 +1623,8 @@
       },
       "note": "",
       "cuisine": "西式",
-      "addr": "高雄市鹽埕區新樂街255號"
+      "addr": "高雄市鹽埕區新樂街255號",
+      "needsReview": false
     },
     {
       "id": "f56",
@@ -1661,7 +1682,8 @@
       "googleRating": 4.7,
       "googleReviews": 160,
       "cuisine": "台式",
-      "addr": "高雄市鼓山區鼓元街112號"
+      "addr": "高雄市鼓山區鼓元街112號",
+      "needsReview": false
     },
     {
       "id": "f57",
@@ -1687,7 +1709,8 @@
       },
       "note": "",
       "hoursSource": "Google 地圖（2026-09-09 查，壽山街,Google 上有此地標但沒有任何營業資訊）",
-      "cuisine": "日式"
+      "cuisine": "日式",
+      "needsReview": true
     },
     {
       "id": "f58",
@@ -1749,7 +1772,8 @@
       "googleRating": 4.2,
       "googleReviews": 3676,
       "cuisine": "台式",
-      "addr": "高雄市鹽埕區瀨南街148號"
+      "addr": "高雄市鹽埕區瀨南街148號",
+      "needsReview": false
     },
     {
       "id": "f60",
@@ -1809,7 +1833,8 @@
       "cuisine": "港式",
       "addr": "高雄市鹽埕區七賢三路108號",
       "hoursRaw": "10:00-20:00，週六公休",
-      "hoursUnknown": false
+      "hoursUnknown": false,
+      "needsReview": false
     },
     {
       "id": "f61",
@@ -1882,7 +1907,8 @@
       "googleRating": 4.1,
       "googleReviews": 981,
       "cuisine": "台式",
-      "addr": "高雄市鹽埕區新興街77號"
+      "addr": "高雄市鹽埕區新興街77號",
+      "needsReview": false
     },
     {
       "id": "f62",
@@ -1963,7 +1989,7 @@
       },
       "note": "",
       "hoursSource": "網路查證(2026-09-18,多篇痞客邦食記一致記載:鼓波洋樓(HARBOR VILLA,泰式/亞洲料理,AMY'S 餐飲集團),鼓山區濱海二路12號,電話 07-969)",
-      "needsReview": true,
+      "needsReview": false,
       "cuisine": "泰式",
       "hoursRaw": "平日 11:00-14:00、17:00-01:00;週六日及例假日 11:00-01:00,無固定公休",
       "addr": "高雄市鼓山區濱海二路12號"
@@ -2029,7 +2055,8 @@
       "googleRating": 4.1,
       "googleReviews": 592,
       "cuisine": "美式",
-      "addr": "高雄市鼓山區蓬萊路6之8號（大港倉410倉8）"
+      "addr": "高雄市鼓山區蓬萊路6之8號（大港倉410倉8）",
+      "needsReview": false
     },
     {
       "id": "f68",
@@ -2085,7 +2112,8 @@
       "note": "",
       "hoursSource": "Google 地圖（2026-08-25 查，Google 上作「東京小城(五福店)」，五福四路145號）",
       "cuisine": "台式",
-      "addr": "高雄市鹽埕區五福四路143號"
+      "addr": "高雄市鹽埕區五福四路143號",
+      "needsReview": false
     },
     {
       "id": "f71",
@@ -2146,7 +2174,8 @@
       "note": "",
       "hoursSource": "Google 地圖（2026-09-10 查，新樂街163巷1號,Google 上作「金溫州餛飩大王」—— 平日 14:00 才開、週末 11:30 開,與資料完全吻合,已確認）",
       "cuisine": "中式",
-      "addr": "高雄市鹽埕區新樂街163巷1號"
+      "addr": "高雄市鹽埕區新樂街163巷1號",
+      "needsReview": false
     },
     {
       "id": "f72",
@@ -2227,7 +2256,8 @@
       "addr": "高雄市鹽埕區大勇路78號",
       "phone": "+886 7 531 1829",
       "note": "",
-      "cuisine": "美式"
+      "cuisine": "美式",
+      "needsReview": false
     },
     {
       "id": "f74",
@@ -2301,7 +2331,8 @@
       "hoursRaw": "平日 11:00–15:00、17:30–22:00;週末 11:30–15:30、17:30–22:00（週二、三休）",
       "hoursSource": "Google 地圖（2026-09-09 查，五福四路129之1號 —— ⚠ Google 上名稱為「泰法客泰味小食光」,音譯自 Thai Funk,座標同區,研判為同一家,請自行確認）",
       "cuisine": "泰式",
-      "addr": "高雄市鹽埕區五福四路129-1號"
+      "addr": "高雄市鹽埕區五福四路129-1號",
+      "needsReview": false
     },
     {
       "id": "f75",
@@ -2366,7 +2397,8 @@
       "hoursSource": "Google 地圖（2026-08-21 查，五福四路150號與資料地址相同）",
       "googleRating": 4.7,
       "googleReviews": 612,
-      "cuisine": "西式"
+      "cuisine": "西式",
+      "needsReview": false
     },
     {
       "id": "f76",
@@ -2431,7 +2463,8 @@
       "note": "",
       "googleRating": 4.3,
       "googleReviews": 3250,
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f77",
@@ -2519,7 +2552,8 @@
       },
       "addr": "803高雄市鹽埕區大勇路8號",
       "note": "",
-      "cuisine": "中式"
+      "cuisine": "中式",
+      "needsReview": false
     },
     {
       "id": "f78",
@@ -2602,7 +2636,8 @@
       "hoursSource": "Google 地圖（2026-08-21 查，Google 上作「MARS Cafe 麻森咖啡義式餐廳-鹽埕場」，大勇路80號與資料地址相同）",
       "googleRating": 4,
       "googleReviews": 1032,
-      "cuisine": "義式"
+      "cuisine": "義式",
+      "needsReview": false
     },
     {
       "id": "f79",
@@ -2659,7 +2694,8 @@
       "note": "",
       "hoursSource": "Google 地圖（2026-09-10 查，大仁路30號,中式麵食店 —— 補上部落格漏掉的週四公休,打烊延至 00:00）",
       "hoursRaw": "16:30–00:00(週四休)",
-      "cuisine": "中式"
+      "cuisine": "中式",
+      "needsReview": false
     },
     {
       "id": "f80",
@@ -2716,7 +2752,7 @@
       },
       "note": "新樂街152號,小農食材早午餐與簡餐。",
       "hoursSource": "網路查證(2026-09-18,塩埕地家 Di Jia,鹽埕區新樂街152號,電話 07-551-5023,09:00-21:00、週二公休。來源:愛食記 https://)",
-      "needsReview": true,
+      "needsReview": false,
       "cuisine": "西式",
       "hoursRaw": "09:00-21:00,週二公休",
       "addr": "高雄市鹽埕區新樂街152號"
@@ -2782,7 +2818,8 @@
       "note": "",
       "googleRating": 4.3,
       "googleReviews": 1454,
-      "cuisine": "西式"
+      "cuisine": "西式",
+      "needsReview": false
     },
     {
       "id": "f83",
@@ -2828,7 +2865,8 @@
       },
       "note": "",
       "cuisine": null,
-      "addr": "高雄市鹽埕區鹽埕街36巷3號"
+      "addr": "高雄市鹽埕區鹽埕街36巷3號",
+      "needsReview": false
     },
     {
       "id": "f84",
@@ -2911,7 +2949,8 @@
       "googleRating": 4.3,
       "googleReviews": 2195,
       "cuisine": "義式",
-      "addr": "高雄市鹽埕區大義街2號（駁二C6-11倉庫）"
+      "addr": "高雄市鹽埕區大義街2號（駁二C6-11倉庫）",
+      "needsReview": false
     },
     {
       "id": "f85",
@@ -2973,7 +3012,8 @@
       "googleRating": 3.5,
       "googleReviews": 1121,
       "cuisine": "台式",
-      "addr": "高雄市鹽埕區五福四路146號"
+      "addr": "高雄市鹽埕區五福四路146號",
+      "needsReview": false
     },
     {
       "id": "f89",
@@ -3029,7 +3069,8 @@
       },
       "note": "",
       "cuisine": "美式",
-      "addr": "高雄市鼓山區哨船街51號"
+      "addr": "高雄市鼓山區哨船街51號",
+      "needsReview": false
     },
     {
       "id": "f92",
@@ -3121,7 +3162,8 @@
       "googleRating": 4,
       "googleReviews": 1815,
       "cuisine": "台式",
-      "addr": "高雄市鹽埕區鹽埕街43號"
+      "addr": "高雄市鹽埕區鹽埕街43號",
+      "needsReview": false
     },
     {
       "id": "f93",
@@ -3174,7 +3216,8 @@
       "hoursRaw": "10:30–21:30（週一、二休）",
       "hoursSource": "Google 地圖（2026-09-09 查，大義街2-1號駁二大義C7倉庫）",
       "cuisine": "西式",
-      "addr": "高雄市鹽埕區大義街2-1號（大義倉庫C7-5）"
+      "addr": "高雄市鹽埕區大義街2-1號（大義倉庫C7-5）",
+      "needsReview": false
     },
     {
       "id": "f94",
@@ -3249,7 +3292,8 @@
       "hoursRaw": "平日 11:00–14:00、17:00–19:30（週末休）",
       "hoursSource": "Google 地圖（2026-09-09 查，新樂街141號）",
       "cuisine": "義式",
-      "addr": "高雄市鹽埕區新樂街141號"
+      "addr": "高雄市鹽埕區新樂街141號",
+      "needsReview": false
     },
     {
       "id": "f95",
@@ -3310,7 +3354,7 @@
       },
       "note": "",
       "hoursSource": "網路查證(2026-09-18,https://nellydyu.tw/blog/post/lamianwu)",
-      "needsReview": true,
+      "needsReview": false,
       "cuisine": "日式",
       "addr": "高雄市鼓山區濱海一路2號",
       "hoursRaw": "16:00–23:00"
@@ -3386,7 +3430,7 @@
       },
       "note": "素食餐廳。",
       "hoursSource": "網路查證(2026-09-18,品果品果蔬食早午晚餐,鹽埕區大仁路136號,電話 07-5315989。來源:OpenRice 台灣 https://tw.openrice)",
-      "needsReview": true,
+      "needsReview": false,
       "cuisine": "素食",
       "hoursRaw": "週二至週五 07:30-14:00、17:00-19:30;週六日 07:30-19:30;週一公休",
       "addr": "高雄市鹽埕區大仁路136號"
@@ -3447,7 +3491,8 @@
       "note": "義大利麵/燉飯,店名標示「中午不休息」。",
       "hoursRaw": "11:00–19:00（週二休）",
       "hoursSource": "Google 地圖（2026-09-09 查，新樂街122號 —— 資料原記莒光街122號，店名相符，以 Google 為準）",
-      "cuisine": "義式"
+      "cuisine": "義式",
+      "needsReview": false
     },
     {
       "id": "f105",
@@ -3485,7 +3530,8 @@
       "hoursSource": "Google 地圖（2026-09-10 查，新樂街117號 —— 更正:平日全休,只開週末,原資料的週三至五晚上已過期）",
       "hoursUnknown": false,
       "hoursRaw": "週六 11:00–22:00、週日 12:00–22:00(平日休)",
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f107",
@@ -3563,7 +3609,8 @@
       "googleRating": 4.1,
       "googleReviews": 165,
       "cuisine": "港式",
-      "addr": "高雄市鹽埕區莒光街184號1樓"
+      "addr": "高雄市鹽埕區莒光街184號1樓",
+      "needsReview": false
     },
     {
       "id": "f108",
@@ -3626,7 +3673,8 @@
       "googleRating": 3.7,
       "googleReviews": 2400,
       "cuisine": "台式",
-      "addr": "高雄市鹽埕區大仁路107號"
+      "addr": "高雄市鹽埕區大仁路107號",
+      "needsReview": false
     },
     {
       "id": "f113",
@@ -3689,7 +3737,8 @@
       "googleRating": 4.1,
       "googleReviews": 381,
       "cuisine": "台式",
-      "addr": "高雄市鼓山區哨船街29號"
+      "addr": "高雄市鼓山區哨船街29號",
+      "needsReview": false
     },
     {
       "id": "f117",
@@ -3753,7 +3802,8 @@
       "googleRating": 4.3,
       "googleReviews": 245,
       "cuisine": "台式",
-      "addr": "高雄市鹽埕區鹽埕街61號"
+      "addr": "高雄市鹽埕區鹽埕街61號",
+      "needsReview": false
     },
     {
       "id": "f120",
@@ -3811,7 +3861,8 @@
       "note": "",
       "googleRating": 4.2,
       "googleReviews": 1379,
-      "cuisine": "日式"
+      "cuisine": "日式",
+      "needsReview": false
     },
     {
       "id": "f122",
@@ -3872,7 +3923,7 @@
       },
       "note": "",
       "hoursSource": "網路查證(2026-09-18,Pizza Rock 搖滾披薩 高雄鹽埕店官網,鹽埕區五福四路96號,電話 07-5333252,11:30-21:00(L.O. 20:3)",
-      "needsReview": true,
+      "needsReview": false,
       "cuisine": "義式",
       "hoursRaw": "11:30-21:00(最後點餐 20:30),無公休",
       "addr": "高雄市鹽埕區五福四路96號"
@@ -4020,7 +4071,8 @@
       "note": "",
       "hoursRaw": "11:00–14:00、17:30–20:30（週末晚間 17:00 開始）",
       "hoursSource": "Google 地圖（2026-09-09 查，五福四路65號地址相符）",
-      "cuisine": "日式"
+      "cuisine": "日式",
+      "needsReview": false
     },
     {
       "id": "f128",
@@ -4079,7 +4131,8 @@
       "hoursRaw": "11:00–21:00（週四休）",
       "hoursSource": "Google 地圖（2026-09-09 查，大義街108號）",
       "cuisine": "台式",
-      "addr": "高雄市鹽埕區大義街108號"
+      "addr": "高雄市鹽埕區大義街108號",
+      "needsReview": false
     },
     {
       "id": "f130",
@@ -4141,7 +4194,8 @@
       },
       "note": "",
       "cuisine": "台式",
-      "addr": "高雄市鹽埕區大義街110號"
+      "addr": "高雄市鹽埕區大義街110號",
+      "needsReview": false
     },
     {
       "id": "f131",
@@ -4233,7 +4287,8 @@
       "hoursSource": "mable.tw 鹽埕老店小吃整理（2026-08 查）",
       "googleRating": 3.9,
       "googleReviews": 111,
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f132",
@@ -4297,7 +4352,8 @@
       "hoursRaw": "每日 11:00–21:00",
       "hoursSource": "Google 地圖（2026-09-09 查，大義街123-1號）",
       "cuisine": "閩菜",
-      "addr": "高雄市鹽埕區大義街123-1號"
+      "addr": "高雄市鹽埕區大義街123-1號",
+      "needsReview": false
     },
     {
       "id": "f133",
@@ -4347,7 +4403,8 @@
       },
       "note": "",
       "cuisine": "台式",
-      "addr": "高雄市鹽埕區大智路139號"
+      "addr": "高雄市鹽埕區大智路139號",
+      "needsReview": false
     },
     {
       "id": "f134",
@@ -4410,7 +4467,8 @@
       "note": "",
       "googleRating": 4.1,
       "googleReviews": 754,
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f135",
@@ -4492,7 +4550,8 @@
       "hoursSource": "mable.tw 鹽埕老店小吃整理（2026-08 查）",
       "googleRating": 3.9,
       "googleReviews": 1608,
-      "cuisine": null
+      "cuisine": null,
+      "needsReview": false
     },
     {
       "id": "f139",
@@ -4553,7 +4612,7 @@
       },
       "note": "",
       "hoursSource": "網路查證(2026-09-18,木屋家常料理,鹽埕區大智路151號,電話 07-561-3591,每天只賣 17:00-21:00 五小時(「一天只賣五小時」為該店招牌特色)",
-      "needsReview": true,
+      "needsReview": false,
       "cuisine": "台式",
       "hoursRaw": "17:00-21:00,週一至週日皆同,不定期公休(中午不營業)",
       "addr": "高雄市鹽埕區大智路151號"
@@ -4619,7 +4678,8 @@
       "note": "",
       "googleRating": 4.2,
       "googleReviews": 9744,
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f143",
@@ -4684,7 +4744,8 @@
       "hoursSource": "mable.tw 鹽埕老店小吃整理（2026-08 查）",
       "googleRating": 4.1,
       "googleReviews": 2640,
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f144",
@@ -4746,7 +4807,8 @@
       "phone": "+886 7 551 4988",
       "note": "",
       "hoursSource": "mable.tw 鹽埕老店小吃整理（2026-08 查）",
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f145",
@@ -4837,7 +4899,8 @@
       "hoursRaw": "每日 11:30–14:00、17:30–21:00",
       "hoursSource": "Google 地圖（2026-09-09 查，七賢三路165號1樓）",
       "cuisine": "川菜",
-      "addr": "高雄市鹽埕區七賢三路165號"
+      "addr": "高雄市鹽埕區七賢三路165號",
+      "needsReview": false
     },
     {
       "id": "f147",
@@ -4930,7 +4993,8 @@
       "note": "居酒屋,平日只有晚餐時段,週末才有午餐。",
       "hoursRaw": "平日 17:00–22:00（週四休）,週末加開 11:00–14:00",
       "hoursSource": "Google 地圖（2026-09-09 查，五福四路30號地址相符）",
-      "cuisine": "日式"
+      "cuisine": "日式",
+      "needsReview": false
     },
     {
       "id": "f154",
@@ -5008,7 +5072,8 @@
       "hoursSource": "Google 地圖（2026-09-10 查，麵店 —— 更正原部落格的 15:00–23:00,實際有午餐時段）",
       "hoursUnknown": false,
       "hoursRaw": "平日 11:30–14:00、16:30–21:00;週六 11:30–21:00(週日休)",
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f189",
@@ -5071,7 +5136,8 @@
       "note": "",
       "googleRating": 3.7,
       "googleReviews": 133,
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f202",
@@ -5131,7 +5197,8 @@
       },
       "addr": "高雄市苓雅區海邊路75號",
       "note": "",
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f205",
@@ -5185,7 +5252,8 @@
       "hoursRaw": "平日 10:30–13:00（週末休）",
       "hoursSource": "Google 地圖（2026-09-09 查，五福三路128號,Google 上作「勝黑店」）",
       "cuisine": "台式",
-      "addr": "高雄市前金區五福三路128-1號"
+      "addr": "高雄市前金區五福三路128-1號",
+      "needsReview": false
     },
     {
       "id": "f207",
@@ -5240,7 +5308,7 @@
       },
       "note": "",
       "hoursSource": "網路查證(2026-09-18,中山大學總務處資產經營管理組「校內商家(餐飲類)」官方頁面:山海樓饗食廣場,活動中心二樓,11:00-19:00,例假日及國定假日公休。ht)",
-      "needsReview": true,
+      "needsReview": false,
       "cuisine": "台式",
       "hoursRaw": "11:00-19:00,例假日及國定假日公休(即週六日不營業)",
       "addr": "高雄市鼓山區蓮海路70號（國立中山大學學生活動中心2樓）"
@@ -5327,7 +5395,8 @@
       "note": "",
       "hoursRaw": "平日 11:00–14:00、17:00–22:00;週末 11:00–22:00",
       "hoursSource": "Google 地圖（2026-09-09 查，五福三路124號地址相符）",
-      "cuisine": "泰式"
+      "cuisine": "泰式",
+      "needsReview": false
     },
     {
       "id": "f221",
@@ -5436,7 +5505,8 @@
       "hoursRaw": "11:00–14:00、16:30–20:00（週六休）",
       "hoursSource": "Google 地圖（2026-09-09 查，蓮海路70號中山大學武嶺男生宿舍）",
       "cuisine": "素食",
-      "addr": "高雄市鼓山區蓮海路70號（國立中山大學武嶺宿舍區，武嶺一村正前方）"
+      "addr": "高雄市鼓山區蓮海路70號（國立中山大學武嶺宿舍區，武嶺一村正前方）",
+      "needsReview": false
     },
     {
       "id": "f227",
@@ -5494,7 +5564,8 @@
       "hoursRaw": "11:00–21:00（週二休）",
       "hoursSource": "Google 地圖（2026-09-09 查，五福三路117號）",
       "cuisine": "日式",
-      "addr": "高雄市苓雅區五福三路117號"
+      "addr": "高雄市苓雅區五福三路117號",
+      "needsReview": false
     },
     {
       "id": "f229",
@@ -5556,7 +5627,8 @@
       "note": "日式定食/便當外帶專門店。",
       "hoursRaw": "每日 11:00–21:00",
       "hoursSource": "Google 地圖（2026-09-09 查，河東路356號1F）",
-      "cuisine": "日式"
+      "cuisine": "日式",
+      "needsReview": false
     },
     {
       "id": "f230",
@@ -5585,7 +5657,8 @@
       "googleRating": 3.5,
       "googleReviews": 129,
       "hoursSource": "Google 地圖（2026-09-09 查，成功一路408號地址相符,但 Google 上沒有營業時間資料）",
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": true
     },
     {
       "id": "f232",
@@ -5702,7 +5775,8 @@
       },
       "note": "",
       "cuisine": "日式",
-      "addr": "高雄市苓雅區永平路40號"
+      "addr": "高雄市苓雅區永平路40號",
+      "needsReview": false
     },
     {
       "id": "f236",
@@ -5794,7 +5868,8 @@
       "hoursSource": "部落格食記(nigi33.tw、bigfang.tw)與店家 Threads 公告(2026-09-16 查,11:00–14:00 / 17:00–00:00;另一說 11:00–23:00 全日)",
       "googleRating": null,
       "googleReviews": null,
-      "cuisine": "中式"
+      "cuisine": "中式",
+      "needsReview": false
     },
     {
       "id": "f237",
@@ -5860,7 +5935,8 @@
       "hoursSource": "部落格食記(nigi33.tw、bigfang.tw、tiffany0118.com,2026-09-16 查,每日 08:30–20:00)",
       "googleRating": 4.1,
       "googleReviews": 3300,
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f238",
@@ -5946,7 +6022,8 @@
       "googleRating": null,
       "googleReviews": null,
       "cuisine": "台式",
-      "hoursRaw": "11:00–14:00、16:30–19:30,週日公休"
+      "hoursRaw": "11:00–14:00、16:30–19:30,週日公休",
+      "needsReview": false
     },
     {
       "id": "f239",
@@ -6012,7 +6089,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f240",
@@ -6073,7 +6151,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f241",
@@ -6157,7 +6236,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "印度"
+      "cuisine": "印度",
+      "needsReview": false
     },
     {
       "id": "f242",
@@ -6217,7 +6297,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "西式"
+      "cuisine": "西式",
+      "needsReview": false
     },
     {
       "id": "f243",
@@ -6277,7 +6358,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f244",
@@ -6337,7 +6419,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "中式"
+      "cuisine": "中式",
+      "needsReview": false
     },
     {
       "id": "f245",
@@ -6398,7 +6481,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f246",
@@ -6459,7 +6543,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f247",
@@ -6510,7 +6595,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f248",
@@ -6594,7 +6680,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "日式"
+      "cuisine": "日式",
+      "needsReview": false
     },
     {
       "id": "f249",
@@ -6659,7 +6746,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f250",
@@ -6725,7 +6813,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f251",
@@ -6834,7 +6923,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f252",
@@ -6918,7 +7008,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f253",
@@ -6974,7 +7065,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f254",
@@ -7029,7 +7121,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f255",
@@ -7094,7 +7187,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f256",
@@ -7160,7 +7254,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f257",
@@ -7225,7 +7320,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f258",
@@ -7280,7 +7376,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f259",
@@ -7346,7 +7443,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "義式"
+      "cuisine": "義式",
+      "needsReview": false
     },
     {
       "id": "f260",
@@ -7392,7 +7490,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f261",
@@ -7457,7 +7556,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f262",
@@ -7518,7 +7618,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f263",
@@ -7578,7 +7679,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f264",
@@ -7728,7 +7830,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "中式"
+      "cuisine": "中式",
+      "needsReview": false
     },
     {
       "id": "f265",
@@ -7794,7 +7897,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f266",
@@ -7860,7 +7964,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f267",
@@ -7926,7 +8031,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f268",
@@ -7991,7 +8097,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f269",
@@ -8051,7 +8158,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f270",
@@ -8136,7 +8244,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "泰式"
+      "cuisine": "泰式",
+      "needsReview": false
     },
     {
       "id": "f271",
@@ -8220,7 +8329,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "中式"
+      "cuisine": "中式",
+      "needsReview": false
     },
     {
       "id": "f272",
@@ -8305,7 +8415,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "中式"
+      "cuisine": "中式",
+      "needsReview": false
     },
     {
       "id": "f273",
@@ -8366,7 +8477,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f274",
@@ -8432,7 +8544,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "素食"
+      "cuisine": "素食",
+      "needsReview": false
     },
     {
       "id": "f275",
@@ -8497,7 +8610,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f276",
@@ -8563,7 +8677,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f277",
@@ -8628,7 +8743,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "日式"
+      "cuisine": "日式",
+      "needsReview": false
     },
     {
       "id": "f279",
@@ -8721,7 +8837,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "義式"
+      "cuisine": "義式",
+      "needsReview": false
     },
     {
       "id": "f280",
@@ -8805,7 +8922,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "美式"
+      "cuisine": "美式",
+      "needsReview": false
     },
     {
       "id": "f281",
@@ -8870,7 +8988,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "川菜"
+      "cuisine": "川菜",
+      "needsReview": false
     },
     {
       "id": "f282",
@@ -8935,7 +9054,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "義式"
+      "cuisine": "義式",
+      "needsReview": false
     },
     {
       "id": "f283",
@@ -8995,7 +9115,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "義式"
+      "cuisine": "義式",
+      "needsReview": false
     },
     {
       "id": "f284",
@@ -9089,7 +9210,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f285",
@@ -9183,7 +9305,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f286",
@@ -9276,7 +9399,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "義式"
+      "cuisine": "義式",
+      "needsReview": false
     },
     {
       "id": "f287",
@@ -9341,7 +9465,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f288",
@@ -9435,7 +9560,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "日式"
+      "cuisine": "日式",
+      "needsReview": false
     },
     {
       "id": "f289",
@@ -9529,7 +9655,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f290",
@@ -9622,7 +9749,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f291",
@@ -9716,7 +9844,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f292",
@@ -9810,7 +9939,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "義式"
+      "cuisine": "義式",
+      "needsReview": false
     },
     {
       "id": "f293",
@@ -9895,7 +10025,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f294",
@@ -9946,7 +10077,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f295",
@@ -10007,7 +10139,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f296",
@@ -10067,7 +10200,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f297",
@@ -10133,7 +10267,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f298",
@@ -10198,7 +10333,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f299",
@@ -10263,7 +10399,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f300",
@@ -10323,7 +10460,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f301",
@@ -10398,7 +10536,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f302",
@@ -10459,7 +10598,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f303",
@@ -10543,7 +10683,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f304",
@@ -10598,7 +10739,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f305",
@@ -10747,7 +10889,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "日式"
+      "cuisine": "日式",
+      "needsReview": false
     },
     {
       "id": "f306",
@@ -10808,7 +10951,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f307",
@@ -10893,7 +11037,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f308",
@@ -10953,7 +11098,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f309",
@@ -11038,7 +11184,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f310",
@@ -11104,7 +11251,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f311",
@@ -11188,7 +11336,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f312",
@@ -11254,7 +11403,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f313",
@@ -11309,7 +11459,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "中式"
+      "cuisine": "中式",
+      "needsReview": false
     },
     {
       "id": "f314",
@@ -11430,7 +11581,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f315",
@@ -11490,7 +11642,8 @@
       "service": [
         "dine_in"
       ],
-      "cuisine": "台式"
+      "cuisine": "台式",
+      "needsReview": false
     },
     {
       "id": "f317",
@@ -11575,7 +11728,8 @@
       "googleReviews": 141,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "11:30-13:30、17:00-23:30，週四公休"
+      "hoursRaw": "11:30-13:30、17:00-23:30，週四公休",
+      "needsReview": false
     },
     {
       "id": "f318",
@@ -11669,7 +11823,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "11:00-14:00、17:00-00:00"
+      "hoursRaw": "11:00-14:00、17:00-00:00",
+      "needsReview": false
     },
     {
       "id": "f319",
@@ -11735,7 +11890,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "12:00-22:30，無公休"
+      "hoursRaw": "12:00-22:30，無公休",
+      "needsReview": false
     },
     {
       "id": "f320",
@@ -11829,7 +11985,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "11:30-14:30、17:30-21:30，全年無休"
+      "hoursRaw": "11:30-14:30、17:30-21:30，全年無休",
+      "needsReview": false
     },
     {
       "id": "f321",
@@ -11923,7 +12080,8 @@
       "googleReviews": 23,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "11:00-14:00、17:00-22:00"
+      "hoursRaw": "11:00-14:00、17:00-22:00",
+      "needsReview": false
     },
     {
       "id": "f322",
@@ -11984,7 +12142,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "10:30-21:00，週四公休"
+      "hoursRaw": "10:30-21:00，週四公休",
+      "needsReview": false
     },
     {
       "id": "f323",
@@ -12050,7 +12209,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "11:00-21:00，不定時公休"
+      "hoursRaw": "11:00-21:00，不定時公休",
+      "needsReview": false
     },
     {
       "id": "f324",
@@ -12111,7 +12271,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "10:30-19:30，週日公休"
+      "hoursRaw": "10:30-19:30，週日公休",
+      "needsReview": false
     },
     {
       "id": "f325",
@@ -12177,7 +12338,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "12:00-18:00"
+      "hoursRaw": "12:00-18:00",
+      "needsReview": false
     },
     {
       "id": "f326",
@@ -12271,7 +12433,8 @@
       "googleReviews": null,
       "cuisine": "義式",
       "hoursUnknown": false,
-      "hoursRaw": "11:30-15:30、17:30-21:30"
+      "hoursRaw": "11:30-15:30、17:30-21:30",
+      "needsReview": false
     },
     {
       "id": "f327",
@@ -12348,7 +12511,8 @@
       "googleReviews": null,
       "cuisine": "中式",
       "hoursUnknown": false,
-      "hoursRaw": "11:00-15:00、17:00-20:00，週六日公休"
+      "hoursRaw": "11:00-15:00、17:00-20:00，週六日公休",
+      "needsReview": false
     },
     {
       "id": "f328",
@@ -12410,7 +12574,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "06:30-14:30，週一公休"
+      "hoursRaw": "06:30-14:30，週一公休",
+      "needsReview": false
     },
     {
       "id": "f329",
@@ -12471,7 +12636,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "10:30-19:30（週六日至20:00），週二公休"
+      "hoursRaw": "10:30-19:30（週六日至20:00），週二公休",
+      "needsReview": false
     },
     {
       "id": "f330",
@@ -12533,7 +12699,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "07:00-14:00，週四公休"
+      "hoursRaw": "07:00-14:00，週四公休",
+      "needsReview": false
     },
     {
       "id": "f331",
@@ -12599,7 +12766,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "09:00-20:00"
+      "hoursRaw": "09:00-20:00",
+      "needsReview": false
     },
     {
       "id": "f332",
@@ -12665,7 +12833,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "09:30-18:00"
+      "hoursRaw": "09:30-18:00",
+      "needsReview": false
     },
     {
       "id": "f333",
@@ -12695,7 +12864,8 @@
       "googleRating": null,
       "googleReviews": null,
       "cuisine": "台式",
-      "hoursUnknown": true
+      "hoursUnknown": true,
+      "needsReview": true
     },
     {
       "id": "f334",
@@ -12780,7 +12950,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "10:30-14:00、16:00-19:30，週日公休"
+      "hoursRaw": "10:30-14:00、16:00-19:30，週日公休",
+      "needsReview": false
     },
     {
       "id": "f335",
@@ -12856,7 +13027,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "11:00-14:00、17:00-20:00，週二、三公休"
+      "hoursRaw": "11:00-14:00、17:00-20:00，週二、三公休",
+      "needsReview": false
     },
     {
       "id": "f336",
@@ -12950,7 +13122,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "10:30-14:00、16:30-20:30"
+      "hoursRaw": "10:30-14:00、16:30-20:30",
+      "needsReview": false
     },
     {
       "id": "f337",
@@ -13011,7 +13184,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "10:00-16:00（週日公休）"
+      "hoursRaw": "10:00-16:00（週日公休）",
+      "needsReview": false
     },
     {
       "id": "f338",
@@ -13077,7 +13251,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "11:00-00:00"
+      "hoursRaw": "11:00-00:00",
+      "needsReview": false
     },
     {
       "id": "f339",
@@ -13162,7 +13337,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "11:00-14:00、17:00-20:00（週六公休）"
+      "hoursRaw": "11:00-14:00、17:00-20:00（週六公休）",
+      "needsReview": false
     },
     {
       "id": "f340",
@@ -13228,7 +13404,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "12:00-21:30"
+      "hoursRaw": "12:00-21:30",
+      "needsReview": false
     },
     {
       "id": "f341",
@@ -13304,7 +13481,8 @@
       "googleReviews": null,
       "cuisine": "泰式",
       "hoursUnknown": false,
-      "hoursRaw": "11:00-15:00、17:00-20:30（週一、二公休）"
+      "hoursRaw": "11:00-15:00、17:00-20:30（週一、二公休）",
+      "needsReview": false
     },
     {
       "id": "f342",
@@ -13398,7 +13576,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "11:00-14:00、17:00-20:00"
+      "hoursRaw": "11:00-14:00、17:00-20:00",
+      "needsReview": false
     },
     {
       "id": "f343",
@@ -13459,7 +13638,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "10:00-20:00（週五公休）"
+      "hoursRaw": "10:00-20:00（週五公休）",
+      "needsReview": false
     },
     {
       "id": "f344",
@@ -13545,7 +13725,8 @@
       "googleReviews": null,
       "cuisine": "日式",
       "hoursUnknown": false,
-      "hoursRaw": "11:00-14:00、16:30-20:30（週一公休）"
+      "hoursRaw": "11:00-14:00、16:30-20:30（週一公休）",
+      "needsReview": false
     },
     {
       "id": "f345",
@@ -13601,7 +13782,8 @@
       "googleReviews": null,
       "cuisine": "義式",
       "hoursUnknown": false,
-      "hoursRaw": "10:00-17:00（週四、週日公休）"
+      "hoursRaw": "10:00-17:00（週四、週日公休）",
+      "needsReview": false
     },
     {
       "id": "f346",
@@ -13667,7 +13849,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "06:00-13:30"
+      "hoursRaw": "06:00-13:30",
+      "needsReview": false
     },
     {
       "id": "f348",
@@ -13753,7 +13936,8 @@
       "googleReviews": null,
       "cuisine": "美式",
       "hoursUnknown": false,
-      "hoursRaw": "週一至週五 06:00-14:00、17:00-20:00（週六日僅早餐）"
+      "hoursRaw": "週一至週五 06:00-14:00、17:00-20:00（週六日僅早餐）",
+      "needsReview": false
     },
     {
       "id": "f349",
@@ -13819,7 +14003,8 @@
       "googleReviews": null,
       "cuisine": "日式",
       "hoursUnknown": false,
-      "hoursRaw": "11:30-22:00"
+      "hoursRaw": "11:30-22:00",
+      "needsReview": false
     },
     {
       "id": "f350",
@@ -13886,7 +14071,8 @@
       "googleReviews": null,
       "cuisine": "日式",
       "hoursUnknown": false,
-      "hoursRaw": "11:30-22:00"
+      "hoursRaw": "11:30-22:00",
+      "needsReview": false
     },
     {
       "id": "f351",
@@ -13952,7 +14138,8 @@
       "googleReviews": null,
       "cuisine": "日式",
       "hoursUnknown": false,
-      "hoursRaw": "11:30-22:00"
+      "hoursRaw": "11:30-22:00",
+      "needsReview": false
     },
     {
       "id": "f352",
@@ -14018,7 +14205,8 @@
       "googleReviews": null,
       "cuisine": "韓式",
       "hoursUnknown": false,
-      "hoursRaw": "11:30-22:00"
+      "hoursRaw": "11:30-22:00",
+      "needsReview": false
     },
     {
       "id": "f353",
@@ -14085,7 +14273,8 @@
       "googleReviews": null,
       "cuisine": "日式",
       "hoursUnknown": false,
-      "hoursRaw": "11:30-22:00"
+      "hoursRaw": "11:30-22:00",
+      "needsReview": false
     },
     {
       "id": "f354",
@@ -14151,7 +14340,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "11:30-22:00"
+      "hoursRaw": "11:30-22:00",
+      "needsReview": false
     },
     {
       "id": "f355",
@@ -14217,7 +14407,8 @@
       "googleReviews": null,
       "cuisine": "日式",
       "hoursUnknown": false,
-      "hoursRaw": "11:30-22:00"
+      "hoursRaw": "11:30-22:00",
+      "needsReview": false
     },
     {
       "id": "f356",
@@ -14283,7 +14474,8 @@
       "googleReviews": null,
       "cuisine": "川菜",
       "hoursUnknown": false,
-      "hoursRaw": "11:30-22:00"
+      "hoursRaw": "11:30-22:00",
+      "needsReview": false
     },
     {
       "id": "f357",
@@ -14349,7 +14541,8 @@
       "googleReviews": null,
       "cuisine": "日式",
       "hoursUnknown": false,
-      "hoursRaw": "11:30-22:00"
+      "hoursRaw": "11:30-22:00",
+      "needsReview": false
     },
     {
       "id": "f358",
@@ -14405,7 +14598,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "11:00-20:00，週六、週日公休"
+      "hoursRaw": "11:00-20:00，週六、週日公休",
+      "needsReview": false
     },
     {
       "id": "f359",
@@ -14490,7 +14684,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "11:00-15:00、17:00-21:00，週六公休"
+      "hoursRaw": "11:00-15:00、17:00-21:00，週六公休",
+      "needsReview": false
     },
     {
       "id": "f360",
@@ -14552,7 +14747,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "07:00-16:00（週六至15:30），週日公休"
+      "hoursRaw": "07:00-16:00（週六至15:30），週日公休",
+      "needsReview": false
     },
     {
       "id": "f361",
@@ -14619,7 +14815,8 @@
       "googleReviews": 14,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "10:00-20:00"
+      "hoursRaw": "10:00-20:00",
+      "needsReview": false
     },
     {
       "id": "f362",
@@ -14686,7 +14883,8 @@
       "googleReviews": 20,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "約09:00-20:00（各來源略有出入，售完為止）"
+      "hoursRaw": "約09:00-20:00（各來源略有出入，售完為止）",
+      "needsReview": false
     },
     {
       "id": "f363",
@@ -14780,7 +14978,8 @@
       "googleReviews": 11,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "11:30-14:30、17:30-21:30（需預約、只收現金）"
+      "hoursRaw": "11:30-14:30、17:30-21:30（需預約、只收現金）",
+      "needsReview": false
     },
     {
       "id": "f364",
@@ -14810,7 +15009,8 @@
       "googleRating": 4.5,
       "googleReviews": 14,
       "cuisine": "川菜",
-      "hoursUnknown": true
+      "hoursUnknown": true,
+      "needsReview": true
     },
     {
       "id": "f365",
@@ -14872,7 +15072,8 @@
       "googleReviews": null,
       "cuisine": "港式",
       "hoursUnknown": false,
-      "hoursRaw": "11:00-20:00，週二公休"
+      "hoursRaw": "11:00-20:00，週二公休",
+      "needsReview": false
     },
     {
       "id": "f366",
@@ -14938,7 +15139,8 @@
       "googleReviews": null,
       "cuisine": "日式",
       "hoursUnknown": false,
-      "hoursRaw": "11:00-18:00（下午不休息）"
+      "hoursRaw": "11:00-18:00（下午不休息）",
+      "needsReview": false
     },
     {
       "id": "f367",
@@ -14969,140 +15171,8 @@
       "googleRating": null,
       "googleReviews": null,
       "cuisine": "日式",
-      "hoursUnknown": true
-    },
-    {
-      "id": "f368",
-      "name": "大城老船麵 大立旗艦店",
-      "lat": 22.621543,
-      "lng": 120.298346,
-      "category": [
-        "麵"
-      ],
-      "price": 2,
-      "service": [
-        "dine_in"
-      ],
-      "hours": {
-        "mon": [
-          [
-            "11:00",
-            "21:30"
-          ]
-        ],
-        "tue": [
-          [
-            "11:00",
-            "21:30"
-          ]
-        ],
-        "wed": [
-          [
-            "11:00",
-            "21:30"
-          ]
-        ],
-        "thu": [
-          [
-            "11:00",
-            "21:30"
-          ]
-        ],
-        "fri": [
-          [
-            "11:00",
-            "21:30"
-          ]
-        ],
-        "sat": [
-          [
-            "11:00",
-            "21:30"
-          ]
-        ],
-        "sun": [
-          [
-            "11:00",
-            "21:30"
-          ]
-        ]
-      },
-      "addr": "高雄市前金區五福三路57號9樓",
-      "phone": null,
-      "note": "",
-      "hoursSource": "網路查證(2026-09-18,https://sweetday.tw/%E5%89%8D%E9%87%91%E5%8D%80%E7%BE%8E%E9%A3%9F/)",
-      "googleRating": 4.7,
-      "googleReviews": null,
-      "cuisine": "泰式",
-      "hoursUnknown": false,
-      "hoursRaw": "百貨營業時間，約11:00-21:30"
-    },
-    {
-      "id": "f369",
-      "name": "明水然",
-      "lat": 22.621543,
-      "lng": 120.298346,
-      "category": [
-        "牛排",
-        "其他"
-      ],
-      "price": 4,
-      "service": [
-        "dine_in"
-      ],
-      "hours": {
-        "mon": [
-          [
-            "11:00",
-            "21:30"
-          ]
-        ],
-        "tue": [
-          [
-            "11:00",
-            "21:30"
-          ]
-        ],
-        "wed": [
-          [
-            "11:00",
-            "21:30"
-          ]
-        ],
-        "thu": [
-          [
-            "11:00",
-            "21:30"
-          ]
-        ],
-        "fri": [
-          [
-            "11:00",
-            "21:30"
-          ]
-        ],
-        "sat": [
-          [
-            "11:00",
-            "21:30"
-          ]
-        ],
-        "sun": [
-          [
-            "11:00",
-            "21:30"
-          ]
-        ]
-      },
-      "addr": "高雄市前金區五福三路57號A館8樓",
-      "phone": null,
-      "note": "",
-      "hoursSource": "網路查證(2026-09-18,https://sweetday.tw/%E5%89%8D%E9%87%91%E5%8D%80%E7%BE%8E%E9%A3%9F/)",
-      "googleRating": null,
-      "googleReviews": null,
-      "cuisine": "日式",
-      "hoursUnknown": false,
-      "hoursRaw": "百貨營業時間，約11:00-21:30"
+      "hoursUnknown": true,
+      "needsReview": true
     },
     {
       "id": "f370",
@@ -15169,7 +15239,8 @@
       "googleReviews": null,
       "cuisine": "韓式",
       "hoursUnknown": false,
-      "hoursRaw": "漢神百貨營業時間，約11:00-22:00"
+      "hoursRaw": "漢神百貨營業時間，約11:00-22:00",
+      "needsReview": false
     },
     {
       "id": "f371",
@@ -15235,7 +15306,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "06:30-18:30"
+      "hoursRaw": "06:30-18:30",
+      "needsReview": false
     },
     {
       "id": "f372",
@@ -15329,7 +15401,8 @@
       "googleReviews": null,
       "cuisine": "台式",
       "hoursUnknown": false,
-      "hoursRaw": "10:00-13:30、16:00-20:00"
+      "hoursRaw": "10:00-13:30、16:00-20:00",
+      "needsReview": false
     },
     {
       "id": "f373",
@@ -15391,7 +15464,8 @@
       "googleRating": null,
       "googleReviews": null,
       "cuisine": "台式",
-      "hoursUnknown": false
+      "hoursUnknown": false,
+      "needsReview": false
     }
   ],
   "drinks": [
