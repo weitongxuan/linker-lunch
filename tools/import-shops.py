@@ -1,4 +1,9 @@
-"""把子代理查到的新店匯入 seed-data.json:地址轉座標、去重、範圍與行政區檢查。"""
+"""把子代理查到的新店匯入 seed-data.json:地址轉座標、去重、範圍與行政區檢查。
+
+用法:
+  python3 tools/import-shops.py <json>...            # 餐廳
+  python3 tools/import-shops.py --drinks <json>...   # 飲料店(AfterPlace 形狀,沒有 category/service)
+"""
 import json, math, pathlib, re, subprocess, sys, time, urllib.parse
 
 UA = 'linker-lunch-map/1.0 (momoyu@linkervision.com)'
@@ -57,13 +62,18 @@ def norm_name(n):
 
 
 def main():
+    args = sys.argv[1:]
+    drinks_mode = '--drinks' in args
+    args = [a for a in args if a != '--drinks']
     data = json.loads(SEED.read_text(encoding='utf-8'))
     office = data['config']['office']
     have = {norm_name(s['name']) for s in data['shops']} | {norm_name(s['name']) for s in data['drinks']}
-    next_id = max(int(re.sub(r'\D', '', s['id']) or 0) for s in data['shops']) + 1
+    target = data['drinks'] if drinks_mode else data['shops']
+    prefix = 'd' if drinks_mode else 'f'
+    next_id = max(int(re.sub(r'\D', '', s['id']) or 0) for s in target) + 1
     added, skipped = [], []
 
-    for path in sys.argv[1:]:
+    for path in args:
         for r in json.loads(pathlib.Path(path).read_text(encoding='utf-8')):
             name = r['name'].strip()
             if norm_name(name) in have:
@@ -86,19 +96,23 @@ def main():
             hours = r.get('hours') or {k: [] for k in DAYS}
             hours = {k: hours.get(k) or [] for k in DAYS}
             unknown = not any(hours.values())
-            shop = {
-                'id': f'f{next_id}', 'name': name, 'lat': coord[0], 'lng': coord[1],
-                'category': cats,
-                'price': r.get('price'), 'service': ['dine_in'],
-                'hours': hours, 'addr': r['addr'], 'phone': None,
+            common = {
+                'id': f'{prefix}{next_id:02d}' if drinks_mode else f'{prefix}{next_id}',
+                'name': name, 'lat': coord[0], 'lng': coord[1],
+                'price': r.get('price'), 'hours': hours, 'addr': r['addr'],
                 'note': r.get('note') or '',
-                'hoursSource': f"網路查證(2026-09-18,{(r.get('source') or '')[:70]})",
+                'hoursSource': f"網路查證({time.strftime('%Y-%m-%d')},{(r.get('source') or '')[:70]})",
                 'googleRating': r.get('googleRating'), 'googleReviews': r.get('googleReviews'),
-                'cuisine': cuisine, 'hoursUnknown': unknown,
+                'hoursUnknown': unknown,
             }
+            if drinks_mode:
+                # AfterPlace:沒有 category/service/cuisine,多一個 kind
+                shop = {**common, 'kind': '飲料', 'phone': r.get('phone')}
+            else:
+                shop = {**common, 'category': cats, 'service': ['dine_in'], 'phone': None, 'cuisine': cuisine}
             if r.get('hoursRaw'):
                 shop['hoursRaw'] = r['hoursRaw']
-            data['shops'].append(shop); have.add(norm_name(name))
+            target.append(shop); have.add(norm_name(name))
             added.append((shop['id'], name, round(d), '(時間未知)' if unknown else ''))
             next_id += 1
 
