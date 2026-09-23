@@ -10,7 +10,6 @@ interface RatingMap {
 }
 
 interface Props {
-  title: string;
   items: AfterPlace[];
   config: Config;
   parkings: Parking[];
@@ -19,7 +18,7 @@ interface Props {
   ratings: RatingMap;
 }
 
-export function AfterSection({ title, items, config, parkings, day, nowMinute, ratings }: Props) {
+export function AfterSection({ items, config, parkings, day, nowMinute, ratings }: Props) {
   const { state, dispatch } = useFilters();
   const [me] = useMe();
   const rateMut = useRateMutation('drink');
@@ -52,7 +51,6 @@ export function AfterSection({ title, items, config, parkings, day, nowMinute, r
   return (
     <div>
       <div className="dhead">
-        <span className="dtitle">{title}</span>
         <span className="dsub">
           現在有開 <b>{openCount}</b>/{rows.length} 家
         </span>

@@ -137,7 +137,6 @@ export function App() {
             />
           ) : (
             <AfterSection
-              title="吃飽再買(飲料)"
               items={data.drinks}
               config={config}
               parkings={data.parkings}

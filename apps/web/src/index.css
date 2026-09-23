@@ -269,7 +269,7 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
 .msginput{flex:1;min-width:120px;border:1px solid var(--line);background:var(--soft);
           border-radius:8px;padding:8px 10px;font-size:12px}
 
-/* ---------------- 吃飽再買(飲料 / 咖啡)---------------- */
+/* ---------------- 飲料分頁 ---------------- */
 .dhead.sel-divider{background:var(--drinkbg);border-radius:12px;padding:10px 14px;margin-top:26px}
 .dhead.sel-divider .dtitle{color:var(--drink)}
 .dhead.sel-divider .dtitle::before{content:'🥤 ';margin-right:1px}
