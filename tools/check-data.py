@@ -52,8 +52,10 @@ for s in d['shops']:
 
 office = d['config']['office']
 for s in d['shops'] + d['drinks']:
-    if dm(office['lat'], office['lng'], s['lat'], s['lng']) > 3000:
-        problems.append(f"{s['id']} {s['name']}: 距離超過 3 公里,座標可能有誤")
+    # 這條是抓地理編碼對到別的行政區(路竹、岡山都在 20 公里外),不是距離政策。
+    # 六合路一帶是使用者指定收的,約 3.4 公里,所以門檻放 4 公里。
+    if dm(office['lat'], office['lng'], s['lat'], s['lng']) > 4000:
+        problems.append(f"{s['id']} {s['name']}: 距離超過 4 公里,座標可能對到別的行政區")
 
 print(f"餐廳 {len(d['shops'])} / 飲料 {len(d['drinks'])}")
 print('類別:', dict(Counter(c for s in d['shops'] for c in s['category']).most_common()))

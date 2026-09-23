@@ -3,6 +3,7 @@
 用法:
   python3 tools/import-shops.py <json>...            # 餐廳
   python3 tools/import-shops.py --drinks <json>...   # 飲料店(AfterPlace 形狀,沒有 category/service)
+  python3 tools/import-shops.py --max-m 3500 <json>  # 放寬距離上限(預設 2500,午餐來回的合理範圍)
 """
 import json, math, pathlib, re, subprocess, sys, time, urllib.parse
 
@@ -64,6 +65,9 @@ def norm_name(n):
 def main():
     args = sys.argv[1:]
     drinks_mode = '--drinks' in args
+    max_m = MAX_M
+    if '--max-m' in args:
+        i = args.index('--max-m'); max_m = int(args[i + 1]); del args[i:i + 2]
     args = [a for a in args if a != '--drinks']
     data = json.loads(SEED.read_text(encoding='utf-8'))
     office = data['config']['office']
@@ -87,8 +91,8 @@ def main():
             if not coord:
                 skipped.append((name, why)); continue
             d = dist_m(office['lat'], office['lng'], *coord)
-            if d > MAX_M:
-                skipped.append((name, f'距離 {d:.0f}m 超出範圍')); continue
+            if d > max_m:
+                skipped.append((name, f'距離 {d:.0f}m 超出範圍 {max_m}m')); continue
             cats = [c for c in (r.get('category') or []) if c in OK_CATEGORIES]
             if not cats:
                 cats = ['其他']
