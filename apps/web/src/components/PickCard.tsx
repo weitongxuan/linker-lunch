@@ -45,7 +45,7 @@ export function PickCard({ rows, onPickAgain, onViewOnMap }: Props) {
         </div>
         <span className="seg">
           {(['walk', 'drive'] as TravelMode[]).map((m) => (
-            <button key={m} className={state.mode === m ? 'on' : ''} onClick={() => { dispatch({ type: 'SET_MODE', mode: m }); onPickAgain(); }}>
+            <button key={m} className={state.mode === m ? 'on' : ''} onClick={() => dispatch({ type: 'SET_MODE', mode: m, repick: true })}>
               {m === 'walk' ? '走路' : '開車'}
             </button>
           ))}

@@ -34,6 +34,7 @@ export function useVoteMutation(placeType: PlaceType) {
     mutationFn: ({ placeId, person, value }: { placeId: string; person: string; value: number }) =>
       places.setVote(placeType, placeId, person, value),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['votes', placeType] }),
+    onError: () => toast('投票沒存上,再試一次'),
   });
 }
 

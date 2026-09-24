@@ -86,7 +86,8 @@ export type SetFilterKey = 'tier' | 'cat' | 'excludeCat' | 'cuisine' | 'excludeC
 
 export type Action =
   | { type: 'SET_DAY'; day: DayKey }
-  | { type: 'SET_MODE'; mode: TravelMode }
+  /** repick:true 讓 App.tsx 的 pendingPick effect 在 visibleRows 依新模式重算完後才重抽,避免用到舊模式的候選清單 */
+  | { type: 'SET_MODE'; mode: TravelMode; repick?: boolean }
   | { type: 'SET_VIEW'; view: ViewMode }
   | { type: 'SET_LIST_TAB'; tab: ListTab }
   | { type: 'SET_SORT'; sort: SortKey }
@@ -125,7 +126,14 @@ export function reducer(state: UiState, action: Action): UiState {
     case 'SET_DAY':
       return { ...state, ...NO_INTENT, day: action.day, pickShopId: null, pickWeights: null };
     case 'SET_MODE':
-      return { ...state, mode: action.mode, pickShopId: null, pickWeights: null };
+      return {
+        ...state,
+        ...NO_INTENT,
+        mode: action.mode,
+        pickShopId: null,
+        pickWeights: null,
+        pendingPick: action.repick ? true : state.pendingPick,
+      };
     case 'SET_VIEW':
       return { ...state, view: action.view };
     case 'SET_LIST_TAB':
