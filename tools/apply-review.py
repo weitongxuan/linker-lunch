@@ -49,11 +49,17 @@ def main():
             continue
         f, v = p['field'], p['proposed']
         if f == 'menu':
+            # 菜單寫進 seed(seedDatabase 會灌進 Menu 表),同事重灌才拿得到;API 有開就順便即時更新
+            if p['type'] != 'shop':
+                skipped.append(f"{p['id']} menu:飲料沒有菜單欄位")
+                continue
+            d.setdefault('menus', {})[p['id']] = v
+            seed_changed = True
             try:
                 put_menu(p['type'], p['id'], v)
-                applied.append(f"{p['id']} menu → API")
-            except (urllib.error.URLError, OSError) as e:
-                skipped.append(f"{p['id']} menu:API 沒開({e})")
+                applied.append(f"{p['id']} menu → seed + API")
+            except (urllib.error.URLError, OSError):
+                applied.append(f"{p['id']} menu → seed(API 沒開,reseed 後生效)")
             continue
         if f == 'googleRating':
             s['googleRating'], s['googleReviews'] = v['googleRating'], v['googleReviews']

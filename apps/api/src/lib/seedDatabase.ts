@@ -17,6 +17,8 @@ interface SeedData {
   drinks: AfterPlace[];
   parkings: Parking[];
   market: Market;
+  /** 餐廳 id → 菜單文字(一行一項,【分類】行是標題);核對過才進來 */
+  menus?: Record<string, string>;
 }
 
 /**
@@ -72,6 +74,16 @@ export async function seedDatabase(prisma: PrismaClient, opts: { ifEmpty?: boole
   }
   for (const parking of data.parkings) {
     await prisma.parking.create({ data: parking });
+  }
+  // 菜單表不跟店家一起清空:同事在 app 裡自己打的菜單,只要 seed 沒有同一家就保留
+  const shopIds = new Set(data.shops.map((s) => s.id));
+  for (const [placeId, text] of Object.entries(data.menus ?? {})) {
+    if (!shopIds.has(placeId) || !text.trim()) continue;
+    await prisma.menu.upsert({
+      where: { placeId_placeType: { placeId, placeType: 'shop' } },
+      update: { text },
+      create: { placeId, placeType: 'shop', text },
+    });
   }
 
   await prisma.market.create({

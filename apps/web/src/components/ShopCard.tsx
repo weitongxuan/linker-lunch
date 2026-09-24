@@ -54,7 +54,8 @@ export function ShopCard({ row, config, menuText, onSelectOnMap, className }: Pr
   const rateMut = useRateMutation('shop');
   const voteMut = useVoteMutation('shop');
 
-  const menuLines = menuText ? menuText.split('\n').map((l) => l.trim()).filter(Boolean) : [];
+  // 【主食類】這種分類標題不算一項
+  const menuLines = menuText ? menuText.split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('【')) : [];
   const myScore = sc.who?.[me] ?? 0;
   const votesInfo = row.votes;
 
