@@ -361,6 +361,8 @@ a.btn{text-decoration:none;display:inline-flex;align-items:center}
   html,body{height:auto}
   body{display:block}
   main{display:block}
+  /* main 不再是 grid,#map 又是 absolute:「地圖」分頁的容器要自己給高度,不然是 0 */
+  main.map-only #mapwrap{height:70vh;height:70dvh;min-height:420px}
   /* 手指點得到:📍 撐到 36px 見方的點擊區,視覺大小不變太多 */
   .gmap{display:inline-flex;align-items:center;justify-content:center;min-width:36px;min-height:36px;margin:-10px -6px -10px 0;font-size:16px;opacity:.8}
   #listwrap{overflow:visible;min-height:0;padding:12px 14px 64px;max-width:none}

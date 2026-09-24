@@ -41,6 +41,10 @@ export function MapPane({ config, parkings, rows, afterRows, selectedShopId, onS
   const parkLayerRef = useRef<L.LayerGroup | null>(null);
   const routeLayerRef = useRef<L.LayerGroup | null>(null);
   const markersRef = useRef<Record<string, L.CircleMarker>>({});
+  // 標記的點擊處理只綁一次、透過 ref 呼叫最新的 onSelectShop:
+  // 用 off('click') 重綁會連 Leaflet 自己為 popup 綁的 click 一起拆掉
+  const onSelectShopRef = useRef(onSelectShop);
+  onSelectShopRef.current = onSelectShop;
   const { state } = useFilters();
 
   const selectedRow = selectedShopId ? rows.find((r) => r.sh.id === selectedShopId) ?? null : null;
@@ -125,7 +129,6 @@ export function MapPane({ config, parkings, rows, afterRows, selectedShopId, onS
           existing.setTooltipContent(info);
           existing.setPopupContent(info);
         }
-        existing.off('click').on('click', () => onSelectShop(r.sh.id));
         continue;
       }
       const marker = L.circleMarker([r.sh.lat, r.sh.lng], {
@@ -138,7 +141,7 @@ export function MapPane({ config, parkings, rows, afterRows, selectedShopId, onS
       });
       marker.bindTooltip(info, { direction: 'top', sticky: true, opacity: 0.95 });
       marker.bindPopup(info);
-      marker.on('click', () => onSelectShop(r.sh.id));
+      marker.on('click', () => onSelectShopRef.current(r.sh.id));
       marker.addTo(layer);
       markersRef.current[r.sh.id] = marker;
     }
@@ -147,7 +150,7 @@ export function MapPane({ config, parkings, rows, afterRows, selectedShopId, onS
       layer.removeLayer(marker);
       delete markersRef.current[id];
     }
-  }, [rows, selectedRow, onSelectShop]);
+  }, [rows, selectedRow]);
 
   // 飲料店標記獨立一層:清單篩選不會動到它,只有飲料資料或選定餐廳改變才重畫。
   useEffect(() => {
