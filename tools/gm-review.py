@@ -115,8 +115,12 @@ def main():
 
         if r.get('hours'):
             theirs = norm_hours(r['hours'])
+            ours = norm_hours(s.get('hours'))
+            # 查詢那週的週五是中秋節,Google 顯示的是節日時段:我們有週五資料就保留,不拿節日時段覆蓋
+            holiday_fri = any('中秋' in x for x in (r.get('hoursRaw') or []) if x.startswith('星期五')) or '中秋' in (r.get('notes') or '')
+            if holiday_fri and any(ours.values()):
+                theirs['fri'] = ours['fri']
             if any(theirs.values()):
-                ours = norm_hours(s.get('hours'))
                 if s.get('hoursUnknown') or not any(ours.values()):
                     propose(ptype, s, 'hours', None, theirs, conf, src + ' / ' + ' | '.join(r.get('hoursRaw') or [])); changed = True
                 elif ours != theirs:
