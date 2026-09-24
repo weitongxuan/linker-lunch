@@ -56,6 +56,7 @@ export async function seedDatabase(prisma: PrismaClient, opts: { ifEmpty?: boole
     streetSearch: data.config.streetSearch,
     driveWorthIt: data.config.driveWorthIt,
     maxDriveMin: data.config.maxDriveMin,
+    maxDrinkDriveMin: data.config.maxDrinkDriveMin,
   };
   await prisma.config.upsert({
     where: { id: 1 },

@@ -3,6 +3,7 @@ import { openNowState, passScore, tierOf, travelOf } from '@lunch-map/shared';
 import type { AfterPlace, Config, DayKey, Parking } from '@lunch-map/shared';
 import { useMe } from '../hooks/useMe.js';
 import { useDeleteDrinkMutation, useRateMutation } from '../hooks/useMutations.js';
+import { googleMapsUrl } from '../lib/maps.js';
 import { useFilters } from '../state/filtersStore.js';
 
 interface RatingMap {
@@ -29,7 +30,7 @@ export function AfterSection({ items, config, parkings, day, nowMinute, ratings 
     return items
       .map((d) => {
         const t = travelOf(d, parkings, config);
-        const tier = tierOf(t, config);
+        const tier = tierOf(t, config, config.maxDrinkDriveMin);
         const open = openNowState(d, day, nowMinute);
         const sc = ratings[d.id] ?? { avg: 0, n: 0 };
         return { d, t, tier, open, sc };
@@ -60,7 +61,19 @@ export function AfterSection({ items, config, parkings, day, nowMinute, ratings 
       </div>
       {(isOpen ? rows : []).map((r) => (
         <div key={r.d.id} className={`drow${r.open.code === 'closed' ? ' dim' : ''}`}>
-          <span className="dn">{r.d.name}</span>
+          <span className="dn">
+            {r.d.name}
+            <a
+              className="gmap"
+              href={googleMapsUrl(r.d)}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="在 Google Map 開啟"
+              onClick={(e) => e.stopPropagation()}
+            >
+              📍
+            </a>
+          </span>
           <span className={`dst ${r.open.code}`}>{r.open.note || r.open.label}</span>
           <span className="dmeta">
             走路 {r.t.walk} 分 · {r.d.kind}

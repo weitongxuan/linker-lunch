@@ -77,10 +77,10 @@ export function travelOf(shop: TravelSubject, parks: Parking[], cfg: Config): Tr
   return { ...d, meters, walk, ownParking: shop.ownParking };
 }
 
-export function tierOf(t: Travel, cfg: Config): Tier {
+export function tierOf(t: Travel, cfg: Config, maxDriveMin: number = cfg.maxDriveMin): Tier {
   if (t.walk <= 5) return 'w5';
   if (t.walk <= cfg.maxWalkMin) return 'w10';
-  if (t.drive <= cfg.maxDriveMin) return 'd10';
+  if (t.drive <= maxDriveMin) return 'd10';
   return 'far';
 }
 
