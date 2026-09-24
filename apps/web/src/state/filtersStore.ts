@@ -110,6 +110,10 @@ export type Action =
   | { type: 'APPLY_INTENT'; actions: IntentActions; label: string; reply: string }
   | { type: 'CLEAR_PENDING_PICK' };
 
+const OPPOSITE_SET: Partial<Record<SetFilterKey, SetFilterKey>> = {
+  cat: 'excludeCat', excludeCat: 'cat', cuisine: 'excludeCuisine', excludeCuisine: 'cuisine',
+};
+
 function toggleInSet<T>(set: Set<T>, value: T): Set<T> {
   const next = new Set(set);
   if (next.has(value)) next.delete(value);
@@ -135,6 +139,13 @@ export function reducer(state: UiState, action: Action): UiState {
     case 'TOGGLE_SET_FILTER': {
       const current = state.filters[action.key] as Set<string>;
       const nextFilters: FilterState = { ...state.filters, [action.key]: toggleInSet(current, action.value) };
+      // 想吃/不吃同一項互斥:抽屜點「想吃 日式」時把它從不吃裡拿掉,反之亦然(跟 APPLY_INTENT 一致)
+      const opposite = OPPOSITE_SET[action.key];
+      if (opposite && !current.has(action.value)) {
+        const other = new Set(state.filters[opposite]);
+        other.delete(action.value);
+        (nextFilters as Record<SetFilterKey, Set<string>>)[opposite] = other;
+      }
       return { ...state, ...NO_INTENT, filters: nextFilters, pickShopId: null, pickWeights: null };
     }
     case 'SET_SET_FILTER': {

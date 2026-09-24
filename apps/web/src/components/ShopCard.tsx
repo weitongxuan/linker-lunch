@@ -5,6 +5,7 @@ import type { Row } from '../hooks/useComputedRows.js';
 import { useFilters } from '../state/filtersStore.js';
 import { useMe } from '../hooks/useMe.js';
 import * as places from '../api/places.js';
+import { googleMapsUrl } from '../lib/maps.js';
 import {
   useAddMessageMutation,
   useDeleteShopMutation,
@@ -33,8 +34,8 @@ function travelText(row: Row): string {
   return `開車 ${row.t.drive} 分(${parkTxt})`;
 }
 
-function isDoDoHome(park: Row['t']['park']): boolean {
-  return park?.kind === '嘟嘟房';
+function isPaid(park: Row['t']['park']): boolean {
+  return !!park?.rate;
 }
 
 interface Props {
@@ -81,6 +82,16 @@ export function ShopCard({ row, config, menuText, onSelectOnMap, className }: Pr
       <div className="top">
         <div className="nm">
           {sh.name}
+          <a
+            className="gmap"
+            href={googleMapsUrl(sh)}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="在 Google Map 開啟"
+            onClick={(e) => e.stopPropagation()}
+          >
+            📍
+          </a>
           {sh.needsReview && <span className="sp">待確認</span>}
         </div>
         <span className={`st ${STCLS[f.code] ?? 'no'}`}>{f.label}</span>
@@ -118,7 +129,7 @@ export function ShopCard({ row, config, menuText, onSelectOnMap, className }: Pr
         )}
         <span className="tgs">
           {row.by === 'drive' && row.t.park && <span className="tag pk">🅿 {row.t.park.name}</span>}
-          {row.by === 'drive' && isDoDoHome(row.t.park) && <span className="tag dodo">💰 嘟嘟房付費停車場</span>}
+          {row.by === 'drive' && isPaid(row.t.park) && <span className="tag dodo">💰 付費停車場</span>}
           {sh.peak && <span className="tag peak">⚠ {sh.peak.note || `尖峰 ${sh.peak.from}-${sh.peak.to}`}</span>}
           {(sh.service || []).filter((s) => s !== 'dine_in').map((s) => (
             <span key={s} className="tag">{SERVICE_LABEL[s]}</span>
@@ -219,7 +230,7 @@ function DetailPanel({
 
       <div className="why">
         {t.park
-          ? `開車:到 ${t.park.name}(約 ${t.parkWalk} 分走到店),含找車位約 ${t.searchMin ?? 3} 分。${isDoDoHome(t.park) ? '嘟嘟房是付費智慧停車場,收費以現場為準。' : ''}`
+          ? `開車:到 ${t.park.name}(約 ${t.parkWalk} 分走到店),含找車位約 ${t.searchMin ?? 3} 分。${isPaid(t.park) ? `${t.park.name} 為付費停車場(${t.park.rate}),收費以現場為準。` : ''}`
           : t.street
             ? `開車:路邊找位,抓 ${t.searchMin} 分。`
             : ''}

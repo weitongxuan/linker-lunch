@@ -39,7 +39,44 @@ export function FilterDrawer({ config, shops, ratings, onCopyList }: Props) {
     return `${rated}/${total} 家有人評分`;
   }, [shops, ratings]);
 
+  // 類別與菜系都從資料長出來,跟問問看用同一份詞彙;問問看套了什麼,這裡就亮什麼
+  const vocab = useMemo(() => {
+    const catCount = new Map<string, number>();
+    const cuiCount = new Map<string, number>();
+    for (const s of shops) {
+      for (const c of s.category) catCount.set(c, (catCount.get(c) ?? 0) + 1);
+      if (s.cuisine) cuiCount.set(s.cuisine, (cuiCount.get(s.cuisine) ?? 0) + 1);
+    }
+    const byCount = (m: Map<string, number>) => [...m.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'zh-Hant')).map(([k]) => k);
+    return { cats: byCount(catCount), cuisines: byCount(cuiCount) };
+  }, [shops]);
+
   if (!state.filterDrawerOpen) return null;
+
+  const wantRow = (label: string, catKey: 'cat' | 'excludeCat', cuiKey: 'cuisine' | 'excludeCuisine', onCls: string) => (
+    <div className="crow">
+      <span className="lbl">{label}</span>
+      {vocab.cats.map((c) => (
+        <button
+          key={c}
+          className={`chip${f[catKey].has(c) ? ` on ${onCls}` : ''}`}
+          onClick={() => dispatch({ type: 'TOGGLE_SET_FILTER', key: catKey, value: c })}
+        >
+          {c}
+        </button>
+      ))}
+      {vocab.cuisines.length > 0 && <span className="lbl auto">菜系</span>}
+      {vocab.cuisines.map((c) => (
+        <button
+          key={c}
+          className={`chip${f[cuiKey].has(c) ? ` on ${onCls}` : ''}`}
+          onClick={() => dispatch({ type: 'TOGGLE_SET_FILTER', key: cuiKey, value: c })}
+        >
+          {c}
+        </button>
+      ))}
+    </div>
+  );
 
   return (
     <div className="drawer">
@@ -123,6 +160,9 @@ export function FilterDrawer({ config, shops, ratings, onCopyList }: Props) {
           </button>
         ))}
       </div>
+
+      {wantRow('想吃', 'cat', 'cuisine', 'want')}
+      {wantRow('不吃', 'excludeCat', 'excludeCuisine', 'avoid')}
 
       <div className="crow">
         <span className="lbl">行情</span>
