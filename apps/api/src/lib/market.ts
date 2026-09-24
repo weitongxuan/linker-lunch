@@ -7,7 +7,13 @@ const YAHOO_CHART_URL = 'https://query1.finance.yahoo.com/v8/finance/chart/%5ETW
  * 伺服器端呼叫沒有瀏覽器 CORS 的問題,所以不用再靠離線腳本產生 market.js 內嵌資料。
  */
 export async function fetchAndStoreMarket() {
-  const res = await fetch(YAHOO_CHART_URL);
+  let res: Response;
+  try {
+    res = await fetch(YAHOO_CHART_URL, { signal: AbortSignal.timeout(20_000) });
+  } catch (err) {
+    if (err instanceof Error && err.name === 'TimeoutError') throw new Error('Yahoo Finance 20 秒沒回應,稍後再試');
+    throw err;
+  }
   if (!res.ok) throw new Error(`Yahoo Finance 回應 ${res.status}`);
   const json = (await res.json()) as {
     chart: { result: [{ meta: { regularMarketPrice: number; previousClose?: number; chartPreviousClose?: number; regularMarketTime: number } }] };
