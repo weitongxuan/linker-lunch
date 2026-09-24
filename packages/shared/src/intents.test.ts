@@ -77,6 +77,9 @@ test('新意圖:外送 / 吃辣 / 不吃辣 / 請客 / 高評價', () => {
   assert.deepEqual(t.actions.service, ['dine_in']);
   assert.equal(m('最好吃的').actions.minGoogle, 4.3);
   assert.equal(m('最好吃的').label, 'Google 4.3 以上');
+  const g = m('4.5以上又便宜的'); // 小數點不能把句子切開
+  assert.equal(g.actions.minGoogle, 4.3);
+  assert.equal(g.actions.mood, 'down');
 });
 test('別名:牛肉麵→麵、鹹酥雞→小吃、麥當勞→速食、小籠包→水餃', () => {
   assert.deepEqual(m('想吃牛肉麵').actions.cat, ['麵']);

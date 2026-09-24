@@ -18,9 +18,10 @@
   </dict>
   <key>RunAtLoad</key>
   <false/>
+  <!-- 放 ~/Library/Logs:launchd 不會自己建中間目錄,repo 內的 tools/nightly-review/ 在第一次跑之前不存在 -->
   <key>StandardOutPath</key>
-  <string>/Users/momo/code/linker-lunch/tools/nightly-review/logs/launchd.out</string>
+  <string>/Users/momo/Library/Logs/linkerlunch-nightly.out</string>
   <key>StandardErrorPath</key>
-  <string>/Users/momo/code/linker-lunch/tools/nightly-review/logs/launchd.err</string>
+  <string>/Users/momo/Library/Logs/linkerlunch-nightly.err</string>
 </dict>
 </plist>

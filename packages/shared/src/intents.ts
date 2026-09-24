@@ -33,7 +33,8 @@ const NEGATE = ['不想吃', '不要吃', '不吃', '不要', '不想', '別吃'
 const NEGATE_PREFIX = ['不想吃', '不要吃', '不吃', '不要', '不想', '別吃', '別再', '拒絕', '除了', '不愛', '討厭', '不太想', '避開', '不敢吃', '不能吃'];
 /** 子句分隔:標點與轉折連接詞 */
 const CONNECTIVES = ['但是', '不過', '然後', '還有', '以及', '另外', '順便', '而且', '但'];
-const SEPARATORS = /[,，、;；。.!！?？~～]/g;
+/** 半形句點只在後面不是數字時才算分隔:「4.5以上」要留成一句,關鍵字 '4.5' 才對得到 */
+const SEPARATORS = /[,，、;；。!！?？~～]|\.(?!\d)/g;
 /** 長的先切,否則「但是」會被「但」先切開 */
 const CONNECTIVES_BY_LEN = [...CONNECTIVES].sort((a, b) => b.length - a.length);
 const NEGATE_PREFIX_BY_LEN = [...NEGATE_PREFIX].sort((a, b) => b.length - a.length);
