@@ -10,7 +10,7 @@ interface Props {
 
 type Step =
   | { kind: 'input' }
-  | { kind: 'clarify'; asked: string; candidates: IntentCandidate[] }
+  | { kind: 'clarify'; asked: string; candidates: IntentCandidate[]; unsure?: boolean }
   | { kind: 'pickCat'; asked: string };
 
 /**
@@ -57,7 +57,7 @@ export function IntentBox({ categories, cuisines }: Props) {
     if (!raw) return;
     const r = parseIntent(raw, categories, cuisines);
     if (r.kind === 'matched') apply(r.label, r.reply, r.actions);
-    else setStep({ kind: 'clarify', asked: raw, candidates: r.candidates });
+    else setStep({ kind: 'clarify', asked: raw, candidates: r.candidates, unsure: r.kind === 'ambiguous' });
   };
 
   const backToInput = () => {
@@ -88,7 +88,7 @@ export function IntentBox({ categories, cuisines }: Props) {
 
           {step.kind === 'clarify' && (
             <>
-              <div className="intentAsk">「{step.asked}」我不太懂,你是想…?</div>
+              <div className="intentAsk">「{step.asked}」{step.unsure ? '我不太確定' : '我不太懂'},你是想…?</div>
               <div className="intentOpts">
                 {step.candidates.map((c) => (
                   <button key={c.id} className="chip" onClick={() => apply(c.label, c.reply, c.actions)}>

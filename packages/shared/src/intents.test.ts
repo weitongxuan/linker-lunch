@@ -45,3 +45,23 @@ test('聽不懂 → unknown 帶 3 候選', () => {
   if (r.kind === 'unknown') assert.equal(r.candidates.length, 3);
 });
 test('有動詞但對不到 → 不亂猜', () => assert.equal(parseIntent('不想吃西班牙菜', CATS, CUIS).kind, 'unknown'));
+
+// 第三層(相似度)的領先差距:兩個意圖一樣像就不猜,改反問
+test('第三層分數接近 → ambiguous,候選含那兩個意圖', () => {
+  const r = parseIntent('來個一點的', CATS, CUIS); // 走路 0.57 vs 趕時間 0.57
+  assert.equal(r.kind, 'ambiguous');
+  if (r.kind === 'ambiguous') {
+    const ids = r.candidates.map((c) => c.id);
+    assert.ok(ids.includes('walk') && ids.includes('quick'), ids.join(','));
+    assert.ok(r.candidates.length <= 3);
+  }
+  const r2 = parseIntent('今天吃太貴', CATS, CUIS); // any 0.50 vs fancy 0.44,差 0.06 < 0.08
+  assert.equal(r2.kind, 'ambiguous');
+  if (r2.kind === 'ambiguous') assert.ok(r2.candidates.map((c) => c.id).includes('fancy'));
+});
+test('第三層明確領先 → 仍直接命中', () => {
+  assert.equal(m('這家不喜歡').label, '換一家'); // again 0.75,第二名 0
+  assert.equal(m('太貴的不要').actions.mood, 'down'); // cheap 0.57 vs good 0.29
+  assert.equal(m('不想走遠').actions.mode, 'walk'); // walk 0.57 vs takeout 0.25
+});
+test('第三層最高分不到門檻 → 仍是 unknown,不是 ambiguous', () => assert.equal(parseIntent('近的就好', CATS, CUIS).kind, 'unknown'));

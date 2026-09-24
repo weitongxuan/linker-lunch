@@ -1,7 +1,7 @@
-import { CATALOGUE, SLOT_TEMPLATES, UNKNOWN_REPLY } from './intentCatalogue.js';
-import type { IntentActions } from './intentCatalogue.js';
+import { AMBIGUOUS_REPLY, CATALOGUE, SLOT_TEMPLATES, UNKNOWN_REPLY } from './intentCatalogue.js';
+import type { CatalogueEntry, IntentActions } from './intentCatalogue.js';
 
-export { CATALOGUE, SLOT_TEMPLATES, UNKNOWN_REPLY } from './intentCatalogue.js';
+export { AMBIGUOUS_REPLY, CATALOGUE, SLOT_TEMPLATES, UNKNOWN_REPLY } from './intentCatalogue.js';
 export type { IntentActions, CatalogueEntry } from './intentCatalogue.js';
 
 export interface IntentCandidate {
@@ -14,6 +14,8 @@ export interface IntentCandidate {
 
 export type Intent =
   | { kind: 'matched'; label: string; reply: string; actions: IntentActions }
+  /** 第三層兩個意圖一樣像,不猜,反問;candidates 前幾個就是分數接近的那些 */
+  | { kind: 'ambiguous'; reply: string; suggestions: string[]; candidates: IntentCandidate[] }
   | { kind: 'unknown'; reply: string; suggestions: string[]; candidates: IntentCandidate[] };
 
 export const EXAMPLE_QUESTIONS = ['我今天不想吃便當', '想吃日式但不要拉麵', ...CATALOGUE.map((e) => e.examples[0])];
@@ -98,14 +100,24 @@ const NORMALIZED_EXAMPLES: { entry: (typeof CATALOGUE)[number]; texts: string[] 
 }));
 
 const SIMILARITY_THRESHOLD = 0.5;
+/** 第三層第一名要領先第二名這麼多才敢直接採用,否則反問(校準見 HANDOFF 問問看章節) */
+export const SIMILARITY_MARGIN = 0.08;
 const DEFAULT_CANDIDATE_IDS = ['any', 'cheap', 'walk'];
 
+/** 每個意圖取「它所有例句中的最高分」,由高到低 */
+export function scoreByIntent(text: string): { entry: CatalogueEntry; score: number }[] {
+  return NORMALIZED_EXAMPLES.map(({ entry, texts }) => ({ entry, score: Math.max(...texts.map((t) => similarity(text, t))) }))
+    .sort((a, b) => b.score - a.score);
+}
+
+function toCandidate(e: CatalogueEntry): IntentCandidate {
+  return { id: e.id, question: e.question, label: e.label, reply: e.reply, actions: e.actions };
+}
+
 export function rankCandidates(text: string, limit = 3): IntentCandidate[] {
-  const scored = NORMALIZED_EXAMPLES.map(({ entry, texts }) => ({ e: entry, s: Math.max(...texts.map((t) => similarity(text, t))) }))
-    .sort((a, b) => b.s - a.s);
-  const meaningful = scored.filter((x) => x.s >= 0.2).slice(0, limit);
-  const picked = meaningful.length ? meaningful.map((x) => x.e) : DEFAULT_CANDIDATE_IDS.map((id) => CATALOGUE.find((e) => e.id === id)!);
-  return picked.map((e) => ({ id: e.id, question: e.question, label: e.label, reply: e.reply, actions: e.actions }));
+  const meaningful = scoreByIntent(text).filter((x) => x.score >= 0.2).slice(0, limit);
+  const picked = meaningful.length ? meaningful.map((x) => x.entry) : DEFAULT_CANDIDATE_IDS.map((id) => CATALOGUE.find((e) => e.id === id)!);
+  return picked.map(toCandidate);
 }
 
 /**
@@ -210,20 +222,18 @@ export function parseIntent(input: string, categories: string[], cuisines: strin
     }
   }
 
-  // 3. 都沒中才用相似度兜底
+  // 3. 都沒中才用相似度兜底:第一名要過門檻,而且要明顯領先第二名;兩個一樣像就是在猜,改反問
   if (!labels.length) {
-    let best: { e: (typeof CATALOGUE)[number]; s: number } | null = null;
-    for (const { entry, texts } of NORMALIZED_EXAMPLES) for (const t of texts) {
-      const s = similarity(whole, t);
-      if (!best || s > best.s) best = { e: entry, s };
+    const ranked = scoreByIntent(whole);
+    const [first, second] = ranked;
+    if (!first || first.score < SIMILARITY_THRESHOLD) return unknown(whole);
+    if (second && first.score - second.score < SIMILARITY_MARGIN) {
+      return { kind: 'ambiguous', reply: AMBIGUOUS_REPLY, suggestions: EXAMPLE_QUESTIONS, candidates: ranked.slice(0, 3).map((r) => toCandidate(r.entry)) };
     }
-    if (best && best.s >= SIMILARITY_THRESHOLD) {
-      Object.assign(actions, best.e.actions);
-      labels.push(best.e.label);
-      lastReply = best.e.reply;
-    }
+    Object.assign(actions, first.entry.actions);
+    labels.push(first.entry.label);
+    lastReply = first.entry.reply;
   }
-  if (!labels.length) return unknown(whole);
 
   // 4. 回答句:有槽位就組句,否則用目錄那句
   let reply: string;

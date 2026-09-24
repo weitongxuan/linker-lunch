@@ -184,3 +184,4 @@ export const SLOT_TEMPLATES = {
 };
 
 export const UNKNOWN_REPLY = '這句我還不太懂,可以像這樣問我:';
+export const AMBIGUOUS_REPLY = '這句我不太確定,你是想…?';
