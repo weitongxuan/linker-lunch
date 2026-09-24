@@ -55,7 +55,7 @@ test('第三層分數接近 → ambiguous,候選含那兩個意圖', () => {
     assert.ok(ids.includes('walk') && ids.includes('quick'), ids.join(','));
     assert.ok(r.candidates.length <= 3);
   }
-  const r2 = parseIntent('今天吃太貴', CATS, CUIS); // any 0.50 vs fancy 0.44,差 0.06 < 0.08
+  const r2 = parseIntent('來個大一點的', CATS, CUIS); // fancy 0.50 vs walk 0.50
   assert.equal(r2.kind, 'ambiguous');
   if (r2.kind === 'ambiguous') assert.ok(r2.candidates.map((c) => c.id).includes('fancy'));
 });
@@ -64,4 +64,33 @@ test('第三層明確領先 → 仍直接命中', () => {
   assert.equal(m('太貴的不要').actions.mood, 'down'); // cheap 0.57 vs good 0.29
   assert.equal(m('不想走遠').actions.mode, 'walk'); // walk 0.57 vs takeout 0.25
 });
-test('第三層最高分不到門檻 → 仍是 unknown,不是 ambiguous', () => assert.equal(parseIntent('近的就好', CATS, CUIS).kind, 'unknown'));
+test('第三層最高分不到門檻 → 仍是 unknown,不是 ambiguous', () => assert.equal(parseIntent('肚子餓了', CATS, CUIS).kind, 'unknown'));
+
+// 擴充後的意圖與別名
+test('新意圖:外送 / 吃辣 / 不吃辣 / 請客 / 高評價', () => {
+  assert.deepEqual(m('下雨不想出門').actions.service, ['delivery']);
+  assert.deepEqual(m('想吃辣的').actions.cuisine, ['川菜', '泰式', '韓式']);
+  assert.deepEqual(m('怕辣').actions.excludeCuisine, ['川菜']);
+  assert.equal(m('不要辣的').actions.cuisine, undefined);
+  const t = m('主管請客');
+  assert.equal(t.actions.mood, 'up');
+  assert.deepEqual(t.actions.service, ['dine_in']);
+  assert.equal(m('最好吃的').actions.minGoogle, 4.3);
+  assert.equal(m('最好吃的').label, 'Google 4.3 以上');
+});
+test('別名:牛肉麵→麵、鹹酥雞→小吃、麥當勞→速食、小籠包→水餃', () => {
+  assert.deepEqual(m('想吃牛肉麵').actions.cat, ['麵']);
+  assert.deepEqual(m('不想吃鹹酥雞').actions.excludeCat, ['小吃']);
+  assert.deepEqual(m('麥當勞').actions.cat, ['速食']);
+  assert.deepEqual(m('想吃小籠包').actions.cat, ['水餃']);
+});
+test('新否定詞:不愛吃 / 就不用了 / 討厭', () => {
+  assert.deepEqual(m('不愛吃便當').actions.excludeCat, ['便當']);
+  assert.deepEqual(m('便當就不用了').actions.excludeCat, ['便當']);
+  assert.deepEqual(m('討厭火鍋').actions.excludeCat, ['火鍋']);
+});
+test('吃素只算一次(槽位接住,不重複標籤)', () => {
+  const r = m('今天吃素');
+  assert.deepEqual(r.actions.cuisine, ['素食']);
+  assert.equal(r.label, '想吃素食');
+});
