@@ -55,17 +55,6 @@ export function ShopCard({ row, config, menuText, onSelectOnMap, className }: Pr
   const rateMut = useRateMutation('shop');
   const voteMut = useVoteMutation('shop');
 
-  const photosQ = useQuery({
-    queryKey: ['photos', 'shop', sh.id],
-    queryFn: () => places.getPhotos('shop', sh.id),
-    enabled: isOpenDetail,
-  });
-  const messagesQ = useQuery({
-    queryKey: ['messages', 'shop', sh.id],
-    queryFn: () => places.getMessages('shop', sh.id),
-    enabled: isOpenDetail,
-  });
-
   const menuLines = menuText ? menuText.split('\n').map((l) => l.trim()).filter(Boolean) : [];
   const myScore = sc.who?.[me] ?? 0;
   const votesInfo = row.votes;
@@ -171,34 +160,21 @@ export function ShopCard({ row, config, menuText, onSelectOnMap, className }: Pr
 
       {isOpenDetail && (
         <div onClick={(e) => e.stopPropagation()}>
-          <DetailPanel
-            row={row}
-            menuText={menuText}
-            photos={photosQ.data ?? []}
-            messages={messagesQ.data ?? []}
-            me={me}
-          />
+          <DetailPanel row={row} menuText={menuText} me={me} />
         </div>
       )}
     </div>
   );
 }
 
-function DetailPanel({
-  row,
-  menuText,
-  photos,
-  messages,
-  me,
-}: {
-  row: Row;
-  menuText: string;
-  photos: Photo[];
-  messages: Message[];
-  me: string;
-}) {
+// 照片與留言只有展開詳情才需要:查詢放在這裡,幾百張收合的卡片就不會各自掛著訂閱
+function DetailPanel({ row, menuText, me }: { row: Row; menuText: string; me: string }) {
   const { sh, sc, t } = row;
   const { state, dispatch } = useFilters();
+  const photosQ = useQuery({ queryKey: ['photos', 'shop', sh.id], queryFn: () => places.getPhotos('shop', sh.id) });
+  const messagesQ = useQuery({ queryKey: ['messages', 'shop', sh.id], queryFn: () => places.getMessages('shop', sh.id) });
+  const photos: Photo[] = photosQ.data ?? [];
+  const messages: Message[] = messagesQ.data ?? [];
   const deleteMut = useDeleteShopMutation();
   const setMenuMut = useSetMenuMutation('shop');
   const uploadPhotoMut = useUploadPhotoMutation('shop', sh.id);

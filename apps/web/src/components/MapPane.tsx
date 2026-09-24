@@ -37,6 +37,7 @@ export function MapPane({ config, parkings, rows, afterRows, selectedShopId, onS
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const layerRef = useRef<L.LayerGroup | null>(null);
+  const drinkLayerRef = useRef<L.LayerGroup | null>(null);
   const parkLayerRef = useRef<L.LayerGroup | null>(null);
   const routeLayerRef = useRef<L.LayerGroup | null>(null);
   const markersRef = useRef<Record<string, L.CircleMarker>>({});
@@ -59,6 +60,7 @@ export function MapPane({ config, parkings, rows, afterRows, selectedShopId, onS
     L.circle([config.office.lat, config.office.lng], { radius: walk10Radius, color: cssVar('--dim'), dashArray: '4 4', fill: false }).addTo(map);
 
     layerRef.current = L.layerGroup().addTo(map);
+    drinkLayerRef.current = L.layerGroup().addTo(map);
     parkLayerRef.current = L.layerGroup().addTo(map);
     routeLayerRef.current = L.layerGroup().addTo(map);
     mapRef.current = map;
@@ -100,17 +102,32 @@ export function MapPane({ config, parkings, rows, afterRows, selectedShopId, onS
     }
   }, [selectedRow, config]);
 
+  // 餐廳標記依 id 差異更新:篩選一動就清掉幾百個標記重建,在大清單上每點一下都會凍住;
+  // 留下的只改顏色與說明文字,消失的才移除,新出現的才建。
   useEffect(() => {
     const map = mapRef.current;
     const layer = layerRef.current;
     if (!map || !layer) return;
-    layer.clearLayers();
-    markersRef.current = {};
 
     // 選定餐廳後只畫這一間,其餘餐廳隱藏。
     const shopsToShow = selectedRow ? [selectedRow] : rows;
+    const keep = new Set<string>();
     for (const r of shopsToShow) {
+      keep.add(r.sh.id);
       const fillColor = cssVar(r.f.code === 'unknown' ? '--map-shop-noinfo' : '--map-shop');
+      const scoreTxt = r.sc.n ? `★ ${r.sc.avg.toFixed(1)} (${r.sc.n} 人)` : '尚無評分';
+      const info = `<b>${r.sh.name}</b><br>${r.f.label} · ${r.sh.category.join('、')}<br>${scoreTxt}<br><span style="color:var(--dim)">${r.f.note ?? ''}</span>`;
+      const existing = markersRef.current[r.sh.id];
+      if (existing) {
+        existing.setLatLng([r.sh.lat, r.sh.lng]);
+        if (existing.options.fillColor !== fillColor) existing.setStyle({ fillColor });
+        if (existing.getTooltip()?.getContent() !== info) {
+          existing.setTooltipContent(info);
+          existing.setPopupContent(info);
+        }
+        existing.off('click').on('click', () => onSelectShop(r.sh.id));
+        continue;
+      }
       const marker = L.circleMarker([r.sh.lat, r.sh.lng], {
         radius: 8,
         color: '#000000',
@@ -119,27 +136,35 @@ export function MapPane({ config, parkings, rows, afterRows, selectedShopId, onS
         weight: 2,
         bubblingMouseEvents: false,
       });
-      const scoreTxt = r.sc.n ? `★ ${r.sc.avg.toFixed(1)} (${r.sc.n} 人)` : '尚無評分';
-      const info = `<b>${r.sh.name}</b><br>${r.f.label} · ${r.sh.category.join('、')}<br>${scoreTxt}<br><span style="color:var(--dim)">${r.f.note ?? ''}</span>`;
       marker.bindTooltip(info, { direction: 'top', sticky: true, opacity: 0.95 });
       marker.bindPopup(info);
       marker.on('click', () => onSelectShop(r.sh.id));
       marker.addTo(layer);
       markersRef.current[r.sh.id] = marker;
     }
+    for (const [id, marker] of Object.entries(markersRef.current)) {
+      if (keep.has(id)) continue;
+      layer.removeLayer(marker);
+      delete markersRef.current[id];
+    }
+  }, [rows, selectedRow, onSelectShop]);
 
+  // 飲料店標記獨立一層:清單篩選不會動到它,只有飲料資料或選定餐廳改變才重畫。
+  useEffect(() => {
+    const layer = drinkLayerRef.current;
+    if (!layer) return;
+    layer.clearLayers();
     // 選定餐廳後,飲料店只保留離它最近的幾間。
     const afterRowsToShow = selectedRow
       ? nearestFirst(selectedRow.sh, afterRows).slice(0, NEAR_LIMIT)
       : afterRows;
-
     const drinkColor = cssVar('--map-drink');
     for (const a of afterRowsToShow) {
       L.circleMarker([a.lat, a.lng], { radius: 7, color: '#000000', fillColor: drinkColor, fillOpacity: 0.8, weight: 1.5, bubblingMouseEvents: false })
         .bindPopup(`<b>${a.d.name}</b><br>${a.d.kind}`)
         .addTo(layer);
     }
-  }, [rows, afterRows, selectedRow, onSelectShop]);
+  }, [afterRows, selectedRow]);
 
   // 選定餐廳時,沿實際道路從辦公室畫一條路徑導航過去。
   useEffect(() => {

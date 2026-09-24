@@ -110,6 +110,7 @@ h1{font-family:"Noto Serif TC",serif;font-size:22px;margin:0;font-weight:700;
 .btn.pri{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
 .btn.pri:hover{filter:brightness(1.06);color:#fff}
 .btn.ghost{border-color:transparent;background:transparent;color:var(--dim);padding:4px 7px}
+#list .btn.more{display:block;width:100%;margin:6px 0 14px;padding:10px;color:var(--ink2)}
 .searchInput{border:1px solid var(--line);background:var(--soft);border-radius:11px;
      padding:6px 13px;font-size:12.5px;color:var(--ink);width:160px}
 .searchInput::placeholder{color:var(--dim)}

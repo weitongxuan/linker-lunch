@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { currentMood, nowMin, randomPick } from '@lunch-map/shared';
 import { useLunchData } from './hooks/useLunchData.js';
 import { useMyLocation } from './hooks/useMyLocation.js';
@@ -72,6 +72,9 @@ export function App() {
     dispatch({ type: 'CLEAR_PENDING_PICK' });
     // eslint-disable-next-line react-hooks/exhaustive-deps -- 只在旗標立起且 rows 重算後跑一次
   }, [state.pendingPick, visibleRows]);
+
+  // 地圖的標記 effect 依賴這個函式;每次 render 都給新的會讓幾百個標記白白重綁
+  const handleSelectShop = useCallback((id: string | null) => dispatch({ type: 'SET_SEL', id }), [dispatch]);
 
   const handleSelectOnMap = (shopId: string) => {
     dispatch({ type: 'SET_SEL', id: shopId });
@@ -152,7 +155,7 @@ export function App() {
           rows={visibleRows}
           afterRows={afterRows}
           selectedShopId={state.sel}
-          onSelectShop={(id) => dispatch({ type: 'SET_SEL', id })}
+          onSelectShop={handleSelectShop}
         />
       </main>
       {addShopOpen && <AddShopModal config={config} shops={data.shops} drinks={data.drinks} onClose={() => setAddShopOpen(false)} />}
