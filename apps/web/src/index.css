@@ -229,6 +229,8 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
         margin-left:7px;vertical-align:2px;letter-spacing:.04em;white-space:nowrap}
 .gmap{font-size:13px;margin-left:6px;text-decoration:none;opacity:.55;vertical-align:1px;transition:opacity .15s}
 .gmap:hover{opacity:1}
+a.btn{text-decoration:none;display:inline-flex;align-items:center}
+.btn.nav{border-color:var(--goldline);color:var(--ink)}
 .st{font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;white-space:nowrap;flex:0 0 auto}
 .st.ok{color:var(--ok);background:var(--okbg)}
 .st.tight{color:var(--tight);background:var(--tightbg)}
@@ -359,6 +361,8 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
   html,body{height:auto}
   body{display:block}
   main{display:block}
+  /* 手指點得到:📍 撐到 36px 見方的點擊區,視覺大小不變太多 */
+  .gmap{display:inline-flex;align-items:center;justify-content:center;min-width:36px;min-height:36px;margin:-10px -6px -10px 0;font-size:16px;opacity:.8}
   #listwrap{overflow:visible;min-height:0;padding:12px 14px 64px;max-width:none}
 
   header{padding:12px 14px 0}

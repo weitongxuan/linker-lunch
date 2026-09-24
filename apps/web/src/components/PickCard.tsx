@@ -1,4 +1,5 @@
 import type { Row } from '../hooks/useComputedRows.js';
+import { googleDirectionsUrl } from '../lib/maps.js';
 import { useFilters, type TravelMode } from '../state/filtersStore.js';
 
 interface Props {
@@ -59,6 +60,9 @@ export function PickCard({ rows, onPickAgain, onViewOnMap }: Props) {
         <button className="btn" onClick={() => onViewOnMap(row.sh.id)}>
           在地圖上看
         </button>
+        <a className="btn nav" href={googleDirectionsUrl(row.sh, row.by)} target="_blank" rel="noopener noreferrer">
+          🧭 Google 導航
+        </a>
       </div>
     </div>
   );

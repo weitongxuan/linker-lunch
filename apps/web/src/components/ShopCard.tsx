@@ -5,7 +5,7 @@ import type { Row } from '../hooks/useComputedRows.js';
 import { useFilters } from '../state/filtersStore.js';
 import { useMe } from '../hooks/useMe.js';
 import * as places from '../api/places.js';
-import { googleMapsUrl } from '../lib/maps.js';
+import { googleDirectionsUrl, googleMapsUrl } from '../lib/maps.js';
 import {
   useAddMessageMutation,
   useDeleteShopMutation,
@@ -284,6 +284,9 @@ function DetailPanel({ row, menuText, me }: { row: Row; menuText: string; me: st
       </div>
 
       <div className="crow admin">
+        <a className="btn nav" href={googleDirectionsUrl(sh, row.by)} target="_blank" rel="noopener noreferrer">
+          🧭 Google 導航
+        </a>
         <button className="btn ghost" onClick={() => dispatch({ type: 'SET_EDIT_SHOP', id: sh.id })}>
           ✏️ 修改店家資料
         </button>
