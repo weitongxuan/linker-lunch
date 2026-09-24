@@ -22,6 +22,7 @@ model Shop {
   lat           Float
   lng           Float
   category      String
+  cuisine       String?
   price         Int?
   service       String // JSON string[]:"dine_in"/"takeout"/"delivery"
   hours         String // JSON WeeklyHours

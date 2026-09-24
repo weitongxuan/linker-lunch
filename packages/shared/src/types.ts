@@ -12,7 +12,7 @@ export type HourRange = [string, string];
 
 export type WeeklyHours = Record<DayKey, HourRange[]>;
 
-export type PlaceType = 'shop' | 'drink' | 'dessert';
+export type PlaceType = 'shop' | 'drink';
 
 export type Service = 'dine_in' | 'takeout' | 'delivery';
 
@@ -31,6 +31,8 @@ export interface Shop extends LatLng {
   id: string;
   name: string;
   category: string[];
+  /** 菜系(台式/日式/港式…),甜點類不給;不確定就留空,不猜 */
+  cuisine?: string;
   price: 1 | 2 | 3 | 4 | null;
   service: Service[];
   hours: WeeklyHours;
@@ -51,7 +53,7 @@ export interface Shop extends LatLng {
   needsReview?: boolean;
 }
 
-/** drinks / desserts 共用的簡化店家形狀(沒有 category/service/交通覆寫/peak) */
+/** drinks 用的簡化店家形狀(沒有 category/service/交通覆寫/peak) */
 export interface AfterPlace extends LatLng {
   id: string;
   name: string;

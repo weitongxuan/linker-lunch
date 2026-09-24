@@ -1,5 +1,7 @@
 /* ==========================================================================
-   午餐地圖 — 設計系統(明亮簡約)
+   Linker Vision Lunch Map — 設計系統(明亮簡約,獵人風配色)
+
+   重點色走深獵綠 + 證照金的雙色調(原創配色,非官方素材)。
 
    主角還是每張卡片上的午休時間軸,只是把周邊的裝飾降到最低:
    大量留白、極細的分隔線取代陰影、單一重點色只用在真正需要
@@ -11,13 +13,14 @@
 :root{
   --bg:#ffffff; --card:#ffffff; --soft:#faf9f6; --line:#e8e6e0; --line2:#efeee8;
   --ink:#17171a; --ink2:#55555c; --dim:#9c9a92;
-  --tagbg:#f3f2ec; --noteBg:#faf6ee; --trackbg:#efede6; --openband:#ffdca8;
-  --accent:#ff4a34; --accentbg:#fff0ec; --accentline:#ffc7ba; --pickbg:#fff8f6;
+  --tagbg:#f3f2ec; --noteBg:#faf6ee;   --accent:#14663c; --accentbg:#e9f5ee; --accentline:#9fcfb4; --pickbg:#f3faf6;
+  --gold:#c9a227; --goldline:#e3c77a;
+  --licence:#123c28; --licence-ink:#f6f2e4; --licence-dim:#a9bfae;
   --ok:#0f7d4e;    --okbg:#e8f8ee;   --okbar:#2fc37e;
   --tight:#b3790f; --tightbg:#fff5df; --tightbar:#f2ab3d;
   --no:#9c9a92;    --nobg:#f2f1ea;   --nobar:#cac7ba;
   --closed:#d1382b;--closedbg:#fdeceb;--closedbar:#e8574a;
-  --park:#7c4fc4;  --parkbg:#f4eefb;  --drink:#0f8f86; --dessert:#d43574;
+  --park:#7c4fc4;  --parkbg:#f4eefb;  --drink:#0f8f86; --drinkbg:#eaf7f5;
   --map-drink:#f2a7a3;
   --map-shop:#2f6fed; --map-shop-noinfo:#a9c4f5;
   --warnbg:#fff8e3; --warnink:#93600a; --warnline:#f3dfa4;
@@ -41,39 +44,53 @@ body{
 button,select,input,textarea{font:inherit;color:inherit;font-variant-numeric:tabular-nums}
 button{cursor:pointer}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
-.mono,.clock,.plan,.hrs,.sv,.track-cap,.votebox b,.sum b{
-  font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace}
-code{font:12px "IBM Plex Mono",ui-monospace,Consolas,monospace;
-     background:var(--tagbg);padding:1px 5px;border-radius:4px}
+.mono,.clock,.hrs,.sv,.votebox b,code{font:12px "IBM Plex Mono",ui-monospace,Consolas,monospace}
+code{background:var(--tagbg);padding:1px 5px;border-radius:4px}
+.hrs{background:var(--tagbg);padding:8px 10px;border-radius:8px}
 
-/* ---------------- 頂部 ---------------- */
-header{background:var(--card);border-bottom:1px solid var(--line);padding:18px 24px 0;flex:0 0 auto}
-.hrow{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+/* ---------------- 頂部:做成一張「獵人執照卡」 ---------------- */
+header{background:var(--licence);border-bottom:2px solid var(--gold);
+       padding:14px 24px 0;flex:0 0 auto;position:relative}
+/* 卡片右上角的金色截角 */
+header::after{content:'';position:absolute;top:0;right:0;width:26px;height:26px;
+              background:linear-gradient(225deg,var(--gold) 0 50%,transparent 50%)}
+/* 證件底紋:同心圓 + 斜線的極淡金色浮水印,原創幾何,不干擾閱讀 */
+header::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.16;
+  background-image:
+    repeating-radial-gradient(circle at 88% 130%,
+      transparent 0 13px,var(--gold) 13px 14px,transparent 14px 27px),
+    repeating-linear-gradient(115deg,
+      transparent 0 9px,var(--gold) 9px 10px,transparent 10px 22px);
+  background-repeat:no-repeat,repeat;
+  background-size:420px 420px,100% 100%}
+.hrow{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;position:relative}
 h1{font-family:"Noto Serif TC",serif;font-size:22px;margin:0;font-weight:700;
-   letter-spacing:-.01em;text-wrap:balance}
-.where{font-size:11px;color:var(--dim);letter-spacing:.06em}
-.clock{font-size:11.5px;color:var(--dim);margin-left:auto}
-.me{font-size:11px;color:var(--dim);display:flex;align-items:center;gap:6px}
-.me input{border:1px solid var(--line);background:var(--soft);border-radius:9px;
+   letter-spacing:.01em;text-wrap:balance;color:var(--licence-ink);
+   padding-bottom:4px;border-bottom:2px solid var(--gold);
+   display:inline-flex;align-items:center;gap:9px}
+.emblem{color:var(--gold);flex:0 0 auto;align-self:center}
+.where{font-size:11px;color:var(--licence-dim);letter-spacing:.06em}
+.clock{font-size:11.5px;color:var(--licence-dim);margin-left:auto}
+.me{font-size:11px;color:var(--licence-dim);display:flex;align-items:center;gap:6px}
+.me input{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);
+          border-radius:9px;color:var(--licence-ink);
           padding:4px 9px;width:88px;font-size:12px}
-.me input:hover{border-color:var(--dim)}
+.me input::placeholder{color:var(--licence-dim)}
+.me input:hover,.me input:focus{border-color:var(--gold);outline:none}
 
 .tabs{display:flex;gap:2px}
 .tab{border:none;background:transparent;
-     padding:9px 2px;font-size:13px;color:var(--dim);
+     padding:9px 2px;font-size:13px;color:var(--licence-dim);
      flex:1 1 0;min-width:0;position:relative;font-weight:600}
 .tab::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;
             background:transparent;border-radius:2px 2px 0 0}
-.tab.on{color:var(--ink)}
-.tab.on::after{background:var(--accent)}
-.tab .td{display:block;font-size:9px;color:var(--accent);font-weight:700;letter-spacing:.12em;margin-top:1px}
+.tab:hover{color:var(--licence-ink)}
+.tab.on{color:var(--gold)}
+.tab.on::after{background:var(--gold)}
 
 /* ---------------- 主工具列 ---------------- */
 .bar1{background:var(--card);border-bottom:1px solid var(--line);padding:13px 24px;
       display:flex;gap:8px;align-items:center;flex-wrap:wrap;flex:0 0 auto}
-.plan{font-size:11px;color:var(--ink2);background:var(--soft);
-      padding:4px 10px;border-radius:99px;font-weight:500;white-space:nowrap;
-      border:1px solid var(--line)}
 .spacer{flex:1}
 .mkt{font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px;white-space:nowrap;
      border:1px solid transparent;cursor:help}
@@ -97,6 +114,18 @@ h1{font-family:"Noto Serif TC",serif;font-size:22px;margin:0;font-weight:700;
      padding:6px 13px;font-size:12.5px;color:var(--ink);width:160px}
 .searchInput::placeholder{color:var(--dim)}
 .searchInput:focus{outline:none;border-color:var(--accent)}
+.intentWrap{position:relative;display:inline-flex}
+.intentPanel{position:absolute;top:calc(100% + 8px);left:0;z-index:40;width:320px;padding:8px;
+  background:var(--card);border:1px solid var(--goldline);border-radius:14px;
+  box-shadow:0 1px 2px rgba(23,20,16,.06),0 18px 40px -16px rgba(23,20,16,.28)}
+.intentInput{width:100%;border:1px solid var(--line);background:var(--soft);border-radius:10px;padding:9px 12px;font-size:13px;color:var(--ink)}
+.intentInput::placeholder{color:var(--dim)}
+.intentInput:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,.15)}
+.intentAsk{font-size:13px;color:var(--ink);margin:2px 2px 8px;line-height:1.5}
+.intentOpts{display:flex;flex-wrap:wrap;gap:6px}
+.intentOpts .chip{font-size:12px}
+.intentOpts .chip.ghost{border-style:dashed;color:var(--dim)}
+.pickcard .reply{font-size:13.5px;color:var(--ink2);margin:2px 0 4px}
 .btn.ghost:hover{background:var(--tagbg);border-color:transparent;color:var(--ink2)}
 #fcount:empty{display:none}
 #fcount{display:inline-block;min-width:16px;margin-left:5px;padding:0 4px;border-radius:99px;
@@ -114,16 +143,14 @@ h1{font-family:"Noto Serif TC",serif;font-size:22px;margin:0;font-weight:700;
       padding:5px 12px;font-size:12.5px;color:var(--ink2);font-weight:500;transition:border-color .12s,background .12s}
 .chip:hover{border-color:var(--dim)}
 .chip.on{background:var(--ink);border-color:var(--ink);color:var(--bg);font-weight:600}
+.listTabs{display:flex;margin:14px 0 4px;font-size:13px}
+.listTabs button{flex:1 1 0;padding:9px 14px;font-weight:600}
 .hint{font-size:11.5px;color:var(--dim)}
 
 /* ---------------- 提示條 ---------------- */
 .banner{margin:0;padding:10px 24px;font-size:12px;line-height:1.6;
         border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
 .banner .bx{flex:1}
-.banner .bclose{border:none;background:transparent;color:inherit;opacity:.5;
-                font-size:15px;line-height:1;padding:0 2px;flex:0 0 auto}
-.banner .bclose:hover{opacity:1}
-.banner.sample{background:var(--warnbg);color:var(--warnink)}
 .banner.err{background:var(--closedbg);color:var(--closed)}
 
 /* ---------------- 隨機推薦 ---------------- */
@@ -139,7 +166,8 @@ h1{font-family:"Noto Serif TC",serif;font-size:22px;margin:0;font-weight:700;
 main{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:minmax(390px,1fr) 1fr}
 #listwrap{overflow-y:auto;padding:18px 24px 56px;min-height:0}
 main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
-#mapwrap{position:relative;border-left:1px solid var(--line);min-height:0}
+/* isolation 讓 Leaflet 的 400–1000 層留在地圖內,浮層才不用一路往上疊 */
+#mapwrap{position:relative;isolation:isolate;border-left:1px solid var(--line);min-height:0}
 #map{position:absolute;inset:0;background:var(--bg)}
 .map-clear-btn{position:absolute;top:12px;right:12px;z-index:1000;background:var(--card);box-shadow:var(--shadow-sm)}
 @media(max-width:880px){
@@ -150,28 +178,24 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
 }
 
 /* ---------------- 摘要 ---------------- */
-.sum{font-size:12px;color:var(--dim);margin:0 0 14px;display:flex;gap:9px;
-     align-items:baseline;flex-wrap:wrap}
-.sum b{color:var(--ink);font-weight:700}
 .sum .dot{opacity:.35}
-.sum .warn{color:var(--tight)}
 
 /* ---------------- 店家卡 ---------------- */
-.shop{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-m);
-      padding:14px 16px 14px 19px;margin-bottom:10px;position:relative;max-height:600px;overflow:hidden;
-      box-shadow:var(--shadow-sm);
+.shop{background:var(--card);border:1px solid var(--line2);border-radius:var(--radius-m);
+      padding:18px 20px 16px 22px;margin-bottom:12px;position:relative;max-height:600px;overflow:hidden;
+      box-shadow:none;
       transition:border-color .14s,box-shadow .14s,transform .14s,
                  opacity .3s ease,max-height .3s ease,margin .3s ease,padding .3s ease;cursor:pointer}
-.shop:hover{box-shadow:var(--shadow);transform:translateY(-1px)}
+.shop:hover{border-color:var(--line);box-shadow:var(--shadow-sm)}
 .shop.dim{opacity:.65;box-shadow:none;background:var(--soft)}
 .shop.dim:hover{transform:none;box-shadow:none}
 .shop.sel{border-color:var(--accent);box-shadow:0 0 0 3px var(--accentbg)}
 .shop.fadeout{opacity:0;max-height:0;margin-bottom:0;padding-top:0;padding-bottom:0;
               border-width:0;box-shadow:none;pointer-events:none}
-.shop .bar{position:absolute;left:0;top:12px;bottom:12px;width:3px;
-           border-radius:99px}
+.shop .bar{position:absolute;left:0;top:16px;bottom:16px;width:2px;
+           border-radius:99px;opacity:.9}
 .shop .top{display:flex;gap:10px;align-items:baseline}
-.nm{font-family:"Noto Serif TC",serif;font-size:16.5px;font-weight:700;flex:1;min-width:0;
+.nm{font-family:"Noto Serif TC",serif;font-size:17.5px;font-weight:700;flex:1;min-width:0;
     letter-spacing:-.005em;line-height:1.35;text-wrap:balance}
 .nm .sp{font-family:"Noto Sans TC",sans-serif;font-size:9.5px;font-weight:700;color:var(--warnink);background:var(--warnbg);
         border:1px solid var(--warnline);border-radius:4px;padding:1px 5px;
@@ -185,8 +209,8 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
 .st.unk{color:var(--dim);background:transparent;border:1px dashed var(--line);padding:2px 9px}
 
 /* 骨幹:一行講完交通、類別、價位、評分 */
-.spine{display:flex;gap:7px;align-items:baseline;flex-wrap:wrap;margin-top:5px;
-       font-size:12px;color:var(--dim)}
+.spine{display:flex;gap:7px;align-items:baseline;flex-wrap:wrap;margin-top:7px;
+       font-size:12px;color:var(--dim);line-height:1.7}
 .spine .sv{color:var(--accent);font-weight:600;font-size:12px}
 .spine .sc{color:var(--star);font-weight:700}
 .mthumb{width:44px;height:44px;object-fit:cover;border-radius:10px;cursor:pointer;
@@ -203,41 +227,20 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
            padding:1px 6px;font-size:11px;font-weight:600;cursor:help}
 .spine .dot{opacity:.35}
 
-/* 午休時間軸 —— 這張卡片的主角。用扁平色塊取代花紋,讀起來更乾淨。 */
-.tl{display:flex;align-items:center;gap:8px;margin-top:10px}
-.track-cap{font-size:9.5px;color:var(--dim);flex:0 0 auto;letter-spacing:.02em}
-.track{position:relative;flex:1 1 auto;height:9px;border-radius:99px;
-       background:var(--trackbg);overflow:hidden}
-.track i{position:absolute;top:0;bottom:0;display:block}
-.tb-open{background:var(--openband)}
-.tb-unknown{background:repeating-linear-gradient(90deg,
-            var(--openband) 0 3px,transparent 3px 8px)}
-.tb-go,.tb-back{background:var(--dim);opacity:.28}
-.tb-wait{background:var(--tightbar);opacity:.5}
-.tb-eat{border-radius:99px}
-.tb-peak{background:var(--warnink);opacity:.32}
-.track u{position:absolute;top:0;bottom:0;width:1px;background:var(--card);opacity:.7}
 
 .why{font-size:12.5px;color:var(--ink2);margin-top:8px;line-height:1.55}
 .why b{color:var(--ink);font-weight:700;font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace}
-.why .mono{font-weight:700}
-.why .flag{color:var(--tight)}
 
 .spine .tgs{display:inline-flex;gap:4px;flex-wrap:wrap;margin-left:3px}
-.meta{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
 .tag{font-size:10.5px;color:var(--dim);background:var(--tagbg);border-radius:5px;
      padding:2px 7px;letter-spacing:.01em}
-.tag.pk{color:var(--park);background:var(--parkbg)}
+.tag.pk{color:var(--ink2);background:var(--tagbg)}
 .tag.peak{color:var(--warnink);background:var(--warnbg)}
-#rcount:empty{display:none}
-#rcount{display:inline-block;min-width:16px;margin-left:5px;padding:0 4px;border-radius:99px;
-        background:var(--closed);color:var(--card);font-size:10px;font-weight:700;text-align:center}
-.mynote{font-size:12px;margin-top:8px;padding:7px 10px;background:var(--noteBg);
-        border-left:2px solid var(--accentline);border-radius:0 6px 6px 0;
-        white-space:pre-wrap;color:var(--ink2)}
+.tag.dodo{color:var(--warnink);background:transparent;border:1px solid var(--goldline)}
 
-.acts{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px;align-items:center;
-      padding-top:9px;border-top:1px solid var(--line2)}
+.acts{display:flex;gap:5px;flex-wrap:wrap;margin-top:12px;align-items:center;
+      padding-top:10px;border-top:1px solid var(--line2)}
+.detail .admin{margin-top:14px;padding-top:10px;border-top:1px solid var(--line2);justify-content:flex-end}
 .acts .btn{padding:4px 10px;font-size:11.5px}
 .stars{display:inline-flex;gap:1px;margin-right:4px}
 .stars b{cursor:pointer;color:var(--stardim);font-size:15px;line-height:1;
@@ -266,7 +269,10 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
 .msginput{flex:1;min-width:120px;border:1px solid var(--line);background:var(--soft);
           border-radius:8px;padding:8px 10px;font-size:12px}
 
-/* ---------------- 吃飽再買(飲料 / 咖啡)---------------- */
+/* ---------------- 飲料分頁 ---------------- */
+.dhead.sel-divider{background:var(--drinkbg);border-radius:12px;padding:10px 14px;margin-top:26px}
+.dhead.sel-divider .dtitle{color:var(--drink)}
+.dhead.sel-divider .dtitle::before{content:'🥤 ';margin-right:1px}
 .dhead{display:flex;align-items:baseline;gap:10px;margin:22px 0 10px;
        padding-top:18px;border-top:1px solid var(--line)}
 .dtitle{font-family:"Noto Serif TC",serif;font-size:15px;font-weight:700;letter-spacing:-.01em}
@@ -328,7 +334,7 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
 
   header{padding:12px 14px 0}
   header{position:sticky;z-index:20}
-  .tabs{margin-top:12px;background:var(--card)}
+  .tabs{margin-top:12px}
   h1{font-size:19px}
   .clock{font-size:10.5px}
   .hrow{gap:8px}
@@ -338,10 +344,9 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
            text-align:center;font-size:25px;padding:0}
   .acts{gap:6px}
   .acts .btn{min-height:42px;padding:9px 13px;font-size:12.5px}
-  .bar1{padding:10px 14px;gap:7px;flex-wrap:nowrap;overflow-x:auto;
-        scrollbar-width:none;-webkit-overflow-scrolling:touch}
-  .bar1::-webkit-scrollbar{display:none}
-  .bar1>*{flex:0 0 auto}
+  .bar1{padding:10px 14px;gap:7px;flex-wrap:wrap}
+  .intentWrap{position:static}
+  .intentPanel{position:fixed;left:14px;right:14px;top:var(--intent-top,22vh);width:auto}
   .bar1 .spacer{display:none}
   .bar1 .btn,.drawer .btn,.chip{min-height:42px;padding:9px 13px}
   .seg button{min-height:42px;padding:9px 13px}
@@ -355,13 +360,6 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
   select.btn{font-size:16px}
   .modal textarea{font-size:13px}
 
-  .banner{max-height:calc(1.6em + 20px);overflow:hidden;cursor:pointer;
-          position:relative;padding-right:52px}
-  .banner.exp{max-height:none}
-  .banner.clip::after{content:'⌄ 點開';position:absolute;right:10px;bottom:3px;
-          font-size:10px;font-weight:700;opacity:.7;
-          background:inherit;padding-left:8px}
-  .banner.exp.clip::after{content:'⌃ 收起'}
 
   .mask{padding:8px}
   .modal{padding:16px;border-radius:16px;max-height:92vh}
@@ -392,3 +390,17 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
        box-shadow:var(--shadow);
        transition:opacity .18s,transform .18s;z-index:10000;white-space:nowrap}
 #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---------------- 致命錯誤畫面(ErrorBoundary) ---------------- */
+.fatal{max-width:520px;margin:12vh auto;padding:28px;background:var(--card);border:1px solid var(--line);border-radius:16px;text-align:center}
+.fatal-title{font-family:"Noto Serif TC",serif;font-size:22px;font-weight:700;margin-bottom:8px}
+.fatal-sub{font-size:13px;color:var(--ink2);line-height:1.6;margin-bottom:12px}
+.fatal-msg{display:block;text-align:left;white-space:pre-wrap;word-break:break-all;margin-bottom:16px;padding:8px 10px}
+
+/* ---------------- 目前條件 chip 列 ---------------- */
+.conds{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px 24px;background:var(--soft);border-bottom:1px solid var(--line)}
+.conds-lbl{font-size:10px;color:var(--dim);font-weight:700;letter-spacing:.12em;margin-right:4px}
+.conds .chip{display:inline-flex;align-items:center;gap:6px;padding-right:6px}
+.conds-x{border:none;background:transparent;color:inherit;opacity:.7;font-size:14px;line-height:1;padding:0 2px;cursor:pointer}
+.conds-x:hover{opacity:1}
+@media(max-width:600px){.conds{padding:8px 14px}}

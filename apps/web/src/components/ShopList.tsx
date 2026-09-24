@@ -2,11 +2,10 @@ import { useMemo } from 'react';
 import { haversine, openNowState, walkMinFor } from '@lunch-map/shared';
 import type { AfterPlace, Config, DayKey } from '@lunch-map/shared';
 import type { Row } from '../hooks/useComputedRows.js';
-import { useFilters } from '../state/FiltersContext.js';
+import { useFilters } from '../state/filtersStore.js';
 import { ShopCard } from './ShopCard.js';
 
 interface Props {
-  allRows: Row[];
   visibleRows: Row[];
   config: Config;
   menus: Record<string, string>;
@@ -16,13 +15,8 @@ interface Props {
   onSelectOnMap: (shopId: string) => void;
 }
 
-export function ShopList({ allRows, visibleRows, config, menus, drinks, day, nowMinute, onSelectOnMap }: Props) {
+export function ShopList({ visibleRows, config, menus, drinks, day, nowMinute, onSelectOnMap }: Props) {
   const { state } = useFilters();
-
-  const openCount = allRows.filter((r) => r.f.code === 'open').length;
-  const unknownCount = allRows.filter((r) => r.f.code === 'unknown').length;
-  const notAvailableCount = allRows.filter((r) => r.f.code === 'later' || r.f.code === 'closed').length;
-  const outOfRangeCount = allRows.filter((r) => r.f.code === 'out_of_range' || r.tier === 'far').length;
 
   const selectedRow = state.sel ? (visibleRows.find((r) => r.sh.id === state.sel) ?? null) : null;
 
@@ -39,31 +33,6 @@ export function ShopList({ allRows, visibleRows, config, menus, drinks, day, now
 
   return (
     <>
-      <div className="sum" id="count">
-        <b>{openCount}</b> 家吃得到
-        {unknownCount > 0 && (
-          <>
-            <span className="dot">·</span>
-            <span className="warn">
-              <b>{unknownCount}</b> 家時間未知
-            </span>
-          </>
-        )}
-        {notAvailableCount > 0 && (
-          <>
-            <span className="dot">·</span>
-            <b>{notAvailableCount}</b> 家今天不行
-          </>
-        )}
-        {outOfRangeCount > 0 && (
-          <>
-            <span className="dot">·</span>
-            <span className="warn">
-              <b>{outOfRangeCount}</b> 家超出範圍
-            </span>
-          </>
-        )}
-      </div>
       <div id="list">
         {visibleRows.length === 0 && <div className="hint">目前的篩選條件下沒有店家 —— 試試看放寬篩選。</div>}
         {orderedRows.map((row) => (

@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import { haversine } from '@lunch-map/shared';
 import type { AfterPlace, Config, Parking } from '@lunch-map/shared';
 import type { Row } from '../hooks/useComputedRows.js';
-import { useFilters } from '../state/FiltersContext.js';
+import { useFilters } from '../state/filtersStore.js';
 
 /** 選定一間餐廳後,只保留離它最近的這麼多個停車場/飲料店。 */
 const NEAR_LIMIT = 5;
@@ -22,8 +22,6 @@ interface AfterRow {
   d: AfterPlace;
   lat: number;
   lng: number;
-  openCode: string;
-  kind: 'drink' | 'dessert';
 }
 
 interface Props {
@@ -130,22 +128,14 @@ export function MapPane({ config, parkings, rows, afterRows, selectedShopId, onS
       markersRef.current[r.sh.id] = marker;
     }
 
-    // 選定餐廳後,飲料店只保留離它最近的幾間(甜點不算,依需求只留飲料店)。
+    // 選定餐廳後,飲料店只保留離它最近的幾間。
     const afterRowsToShow = selectedRow
-      ? nearestFirst(selectedRow.sh, afterRows.filter((a) => a.kind === 'drink')).slice(0, NEAR_LIMIT)
+      ? nearestFirst(selectedRow.sh, afterRows).slice(0, NEAR_LIMIT)
       : afterRows;
 
+    const drinkColor = cssVar('--map-drink');
     for (const a of afterRowsToShow) {
-      const isDrink = a.kind === 'drink';
-      const fillColor = isDrink
-        ? cssVar('--map-drink')
-        : a.openCode === 'open'
-          ? cssVar('--ok')
-          : a.openCode === 'later'
-            ? cssVar('--tight')
-            : cssVar('--no');
-      const color = isDrink ? '#000000' : fillColor;
-      L.circleMarker([a.lat, a.lng], { radius: 7, color, fillColor, fillOpacity: 0.8, weight: isDrink ? 1.5 : 1, bubblingMouseEvents: false })
+      L.circleMarker([a.lat, a.lng], { radius: 7, color: '#000000', fillColor: drinkColor, fillOpacity: 0.8, weight: 1.5, bubblingMouseEvents: false })
         .bindPopup(`<b>${a.d.name}</b><br>${a.d.kind}`)
         .addTo(layer);
     }

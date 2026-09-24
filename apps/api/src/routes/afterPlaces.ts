@@ -6,7 +6,7 @@ import { fromAfterPlace, toAfterPlace } from '../lib/serialize.js';
 
 const EMPTY_HOURS: WeeklyHours = { mon: [], tue: [], wed: [], thu: [], fri: [], sat: [], sun: [] };
 
-function afterPlaceRouter(placeType: 'drink' | 'dessert') {
+function afterPlaceRouter(placeType: 'drink') {
   const router = Router();
   router.get('/', async (_req, res) => {
     const rows = await prisma.afterPlace.findMany({ where: { placeType }, orderBy: { name: 'asc' } });
@@ -106,4 +106,3 @@ function afterPlaceRouter(placeType: 'drink' | 'dessert') {
 }
 
 export const drinksRouter = afterPlaceRouter('drink');
-export const dessertsRouter = afterPlaceRouter('dessert');

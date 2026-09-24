@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { openNowState, passFilter, pickTravel, sortRows, tierOf, travelOf } from '@lunch-map/shared';
 import type { Config, OpenNowState, Parking, Shop } from '@lunch-map/shared';
 import type { ComputedRow } from '@lunch-map/shared';
-import { useFilters } from '../state/FiltersContext.js';
+import { useFilters } from '../state/filtersStore.js';
 
 export type Row = ComputedRow;
 

@@ -14,7 +14,6 @@ const SEED_DATA_FILE = path.resolve(__dirname, '../../prisma/seed-data.json');
 interface SeedData {
   config: Config;
   shops: Shop[];
-  desserts: AfterPlace[];
   drinks: AfterPlace[];
   parkings: Parking[];
   market: Market;
@@ -69,9 +68,6 @@ export async function seedDatabase(prisma: PrismaClient, opts: { ifEmpty?: boole
   }
   for (const drink of data.drinks) {
     await prisma.afterPlace.create({ data: fromAfterPlace({ ...drink, note: drink.note ?? '' }, 'drink') });
-  }
-  for (const dessert of data.desserts) {
-    await prisma.afterPlace.create({ data: fromAfterPlace({ ...dessert, note: dessert.note ?? '' }, 'dessert') });
   }
   for (const parking of data.parkings) {
     await prisma.parking.create({ data: parking });

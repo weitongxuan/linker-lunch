@@ -16,5 +16,12 @@
   "devDependencies": {
     "typescript": "^5.6.3",
     "@types/node": "^22.9.0"
+  },
+  "allowScripts": {
+    "@prisma/client@5.22.0": true,
+    "@prisma/engines@5.22.0": true,
+    "esbuild@0.28.2": true,
+    "fsevents@2.3.3": true,
+    "prisma@5.22.0": true
   }
 }

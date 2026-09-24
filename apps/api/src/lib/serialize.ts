@@ -1,7 +1,7 @@
 import type { AfterPlace, Config, Market, Parking, PriceBand, Service, Shop, WeeklyHours } from '@lunch-map/shared';
 
 type ShopRow = {
-  id: string; name: string; lat: number; lng: number; category: string; price: number | null;
+  id: string; name: string; lat: number; lng: number; category: string; cuisine: string | null; price: number | null;
   service: string; hours: string; hoursUnknown: boolean; addr: string | null; phone: string | null;
   note: string; hoursSource: string | null; hoursRaw: string | null; googleRating: number | null;
   googleReviews: number | null; walkMin: number | null; driveMin: number | null; ownParking: boolean | null;
@@ -26,6 +26,7 @@ export function toShop(row: ShopRow): Shop {
     lat: row.lat,
     lng: row.lng,
     category: parseCategory(row.category),
+    cuisine: row.cuisine ?? undefined,
     price: (row.price as Shop['price']) ?? null,
     service: JSON.parse(row.service) as Service[],
     hours: JSON.parse(row.hours) as WeeklyHours,
@@ -53,6 +54,7 @@ export function fromShop(shop: Shop) {
     lat: shop.lat,
     lng: shop.lng,
     category: JSON.stringify(shop.category),
+    cuisine: shop.cuisine ?? null,
     price: shop.price,
     service: JSON.stringify(shop.service),
     hours: JSON.stringify(shop.hours),
@@ -101,7 +103,7 @@ export function toAfterPlace(row: AfterPlaceRow): AfterPlace {
   };
 }
 
-export function fromAfterPlace(place: AfterPlace, placeType: 'drink' | 'dessert') {
+export function fromAfterPlace(place: AfterPlace, placeType: 'drink') {
   return {
     id: place.id,
     placeType,

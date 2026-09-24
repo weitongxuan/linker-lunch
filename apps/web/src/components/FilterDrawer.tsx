@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import type { Config, Service, Shop, Tier } from '@lunch-map/shared';
-import { useFilters, type SortKey } from '../state/FiltersContext.js';
+import { useFilters, type SortKey } from '../state/filtersStore.js';
 import { useImportOsmParkingsMutation, useImportOsmShopsMutation, useRefreshMarketMutation } from '../hooks/useMutations.js';
 
 interface RatingMap {
@@ -32,11 +32,6 @@ export function FilterDrawer({ config, shops, ratings, onCopyList }: Props) {
   const importShops = useImportOsmShopsMutation();
   const importParkings = useImportOsmParkingsMutation();
   const refreshMarketMut = useRefreshMarketMutation();
-
-  const categories = useMemo(() => {
-    const set = new Set(shops.flatMap((s) => (s.category.length ? s.category : ['其他'])));
-    return [...set].sort((a, b) => a.localeCompare(b, 'zh-Hant'));
-  }, [shops]);
 
   const ratedInfo = useMemo(() => {
     const total = shops.length;
@@ -107,19 +102,6 @@ export function FilterDrawer({ config, shops, ratings, onCopyList }: Props) {
       </div>
 
       <div className="crow">
-        <span className="lbl">類別</span>
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            className={`chip${f.cat.has(cat) ? ' on' : ''}`}
-            onClick={() => dispatch({ type: 'TOGGLE_SET_FILTER', key: 'cat', value: cat })}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-
-      <div className="crow">
         <span className="lbl">價位</span>
         {(config?.priceBands ?? []).map((band) => (
           <button
@@ -164,9 +146,6 @@ export function FilterDrawer({ config, shops, ratings, onCopyList }: Props) {
           <option value="score">大家的評分</option>
           <option value="votes">票數</option>
         </select>
-        <button className="btn" onClick={() => dispatch({ type: 'TOGGLE_VOTE_MODE' })}>
-          👥 多人投票
-        </button>
         <button className="btn" onClick={onCopyList}>
           📋 複製候選清單
         </button>

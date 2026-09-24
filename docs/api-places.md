@@ -1,6 +1,6 @@
 # 新增 / 修改店家資訊 API
 
-適用範圍:餐廳(shops)、飲料店與甜點店(drinks / desserts)。
+適用範圍:餐廳(shops)與飲料店(drinks)。甜點店這個類型已移除(2026-09-16)。
 
 - Base URL: https://lunch-map.betoolman.com/
 - 所有請求 / 回應皆為 `application/json`
@@ -20,12 +20,8 @@
 | 新增飲料店 | POST | `/api/drinks` |
 | 修改飲料店 | PUT | `/api/drinks/:id` |
 | 刪除飲料店 | DELETE | `/api/drinks/:id` |
-| 列出所有甜點店 | GET | `/api/desserts` |
-| 新增甜點店 | POST | `/api/desserts` |
-| 修改甜點店 | PUT | `/api/desserts/:id` |
-| 刪除甜點店 | DELETE | `/api/desserts/:id` |
 
-drinks / desserts 的欄位結構完全一樣(共用 `AfterPlace` 型別),只是分開的兩張表,用路徑區分。
+飲料店用 `AfterPlace` 型別(比餐廳少 category/service 等欄位)。
 
 ## 餐廳(shops)
 
@@ -120,7 +116,7 @@ curl -X DELETE http://localhost:4000/api/shops/manual-4b1e5e9a-...
 
 刪除是直接從資料庫移除,沒有回收機制,呼叫前務必跟使用者確認清楚要刪的是哪一筆。
 
-## 飲料店 / 甜點店(drinks / desserts)
+## 飲料店(drinks)
 
 ### 欄位
 
@@ -135,7 +131,7 @@ curl -X DELETE http://localhost:4000/api/shops/manual-4b1e5e9a-...
 
 沒有 `category`、`service`,這是跟餐廳的差異。
 
-### 新增:`POST /api/drinks`(或 `/api/desserts`)
+### 新增:`POST /api/drinks`
 
 ```bash
 curl -X POST http://localhost:4000/api/drinks \
@@ -151,7 +147,7 @@ curl -X POST http://localhost:4000/api/drinks \
 
 回應同樣是 `201` + 完整物件,`id` 一樣是 `manual-<uuid>`。
 
-### 修改:`PUT /api/drinks/:id`(或 `/api/desserts/:id`)
+### 修改:`PUT /api/drinks/:id`
 
 跟餐廳一樣是部分更新:
 
@@ -161,15 +157,15 @@ curl -X PUT http://localhost:4000/api/drinks/manual-xxxx \
   -d '{ "price": 2, "note": "假日常常大排長龍" }'
 ```
 
-`/api/drinks/:id` 只能改到 `placeType = "drink"` 的資料,`/api/desserts/:id` 只能改 `"dessert"` 的;id 對到另一種類型會回 `404`。
+`/api/drinks/:id` 只能改到 `placeType = "drink"` 的資料;id 不存在會回 `404`。
 
-### 刪除:`DELETE /api/drinks/:id`(或 `/api/desserts/:id`)
+### 刪除:`DELETE /api/drinks/:id`
 
 ```bash
 curl -X DELETE http://localhost:4000/api/drinks/manual-xxxx
 ```
 
-成功回應(`200`):`{"ok":true}`。跟修改一樣有 `placeType` 限制:`/api/drinks/:id` 只能刪 `"drink"`,`/api/desserts/:id` 只能刪 `"dessert"`,型別不符或 id 不存在都回 `404 {"error":"找不到這間店"}`。
+成功回應(`200`):`{"ok":true}`。id 不存在回 `404 {"error":"找不到這間店"}`。
 
 ## 營業時間格式(`WeeklyHours`)
 
@@ -219,8 +215,8 @@ type WeeklyHours = {
 
 ## Agent 使用建議
 
-1. **判斷是新增還是修改**:先呼叫對應的 `GET /api/shops`、`GET /api/drinks`、`GET /api/desserts` 看該店名是否已存在(依 `name` 模糊比對),避免重複建立同一間店。
+1. **判斷是新增還是修改**:先呼叫對應的 `GET /api/shops`、`GET /api/drinks` 看該店名是否已存在(依 `name` 模糊比對),避免重複建立同一間店。
 2. **修改時只送有變動的欄位**,不要整包帶入(尤其別把讀到的 `id`、`needsReview` 等系統欄位原封不動送回去當作要更新的資料 — 端點本來就不處理這些欄位,多送也沒作用)。
 3. **一定要驗證 `lat`/`lng` 是數字**且落在合理範圍(附近沒有座標書寫錯誤,例如經緯度顛倒),送出前可以先用 `Number.isFinite()` 檢查。
-4. **錯誤處理**:留意 `400`(輸入格式錯誤)與 `404`(id 不存在或型別不符,例如把飲料店 id 拿去打 `/api/desserts/:id`),回覆使用者具體原因而不是整包重試。
+4. **錯誤處理**:留意 `400`(輸入格式錯誤)與 `404`(id 不存在或型別不符,例如把飲料店 id 拿去打 `/api/places/shop/:id/...`),回覆使用者具體原因而不是整包重試。
 5. **刪除前務必再次確認**:`DELETE` 沒有回收機制,執行前跟使用者複述店名 + id 確認,避免刪錯或把「修改」誤植成「刪除」。

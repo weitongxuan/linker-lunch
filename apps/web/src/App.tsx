@@ -1,11 +1,13 @@
-import { useMemo, useState } from 'react';
-import { currentMood, nowMin, openNowState, randomPick } from '@lunch-map/shared';
+import { useEffect, useMemo, useState } from 'react';
+import { currentMood, nowMin, randomPick } from '@lunch-map/shared';
 import { useLunchData } from './hooks/useLunchData.js';
+import { useMyLocation } from './hooks/useMyLocation.js';
 import { useComputedRows, useVisibleRows } from './hooks/useComputedRows.js';
-import { useFilters } from './state/FiltersContext.js';
+import { useFilters } from './state/filtersStore.js';
 import { Header } from './components/Header.js';
 import { Toolbar } from './components/Toolbar.js';
 import { FilterDrawer } from './components/FilterDrawer.js';
+import { ActiveConditions } from './components/ActiveConditions.js';
 import { Banners } from './components/Banners.js';
 import { PickCard } from './components/PickCard.js';
 import { ShopList } from './components/ShopList.js';
@@ -23,9 +25,16 @@ export function App() {
   const editingDrink = state.editDrinkId ? (data.drinks.find((d) => d.id === state.editDrinkId) ?? null) : null;
 
   const nowMinute = nowMin();
+  const myLocation = useMyLocation();
+
+  /** 定位成功就用我的位置當距離原點,否則沿用辦公室座標 */
+  const config = useMemo(() => {
+    if (!data.config || !myLocation.coords) return data.config;
+    return { ...data.config, office: { ...myLocation.coords, name: '我的位置' } };
+  }, [data.config, myLocation.coords]);
 
   const allRows = useComputedRows({
-    config: data.config,
+    config,
     shops: data.shops,
     parkings: data.parkings,
     ratings: data.shopRatings,
@@ -33,12 +42,12 @@ export function App() {
     nowMinute,
   });
   const visibleRows = useVisibleRows(allRows);
+  const categories = useMemo(() => [...new Set(data.shops.flatMap((s) => (s.category.length ? s.category : ['其他'])))], [data.shops]);
+  const cuisines = useMemo(() => [...new Set(data.shops.map((s) => s.cuisine).filter((c): c is string => !!c))].sort(), [data.shops]);
 
   const afterRows = useMemo(() => {
-    const desserts = data.desserts.map((d) => ({ d, lat: d.lat, lng: d.lng, openCode: openNowState(d, state.day, nowMinute).code, kind: 'dessert' as const }));
-    const drinks = data.drinks.map((d) => ({ d, lat: d.lat, lng: d.lng, openCode: openNowState(d, state.day, nowMinute).code, kind: 'drink' as const }));
-    return [...desserts, ...drinks];
-  }, [data.desserts, data.drinks, state.day, nowMinute]);
+    return data.drinks.map((d) => ({ d, lat: d.lat, lng: d.lng }));
+  }, [data.drinks]);
 
   const handleRandomPick = () => {
     const pool = visibleRows.filter((r) => r.feasible);
@@ -56,6 +65,14 @@ export function App() {
     }
   };
 
+  // 意圖套用後 filters 已變,但 visibleRows/visibleRows 要下一輪才重算;等它們更新再抽
+  useEffect(() => {
+    if (!state.pendingPick) return;
+    handleRandomPick();
+    dispatch({ type: 'CLEAR_PENDING_PICK' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- 只在旗標立起且 rows 重算後跑一次
+  }, [state.pendingPick, visibleRows]);
+
   const handleSelectOnMap = (shopId: string) => {
     dispatch({ type: 'SET_SEL', id: shopId });
     dispatch({ type: 'SET_VIEW', view: 'map' });
@@ -63,69 +80,74 @@ export function App() {
 
   const handleCopyList = () => {
     const feasible = visibleRows.filter((r) => r.feasible);
-    const lines = feasible.map((r, i) => {
+    const lines = feasible.map((r) => {
       const travel = r.by === 'walk' ? `走路 ${r.t.walk} 分` : r.by === 'drive' ? `開車 ${r.t.drive} 分` : '';
       const scoreTxt = r.sc.n ? `★${r.sc.avg.toFixed(1)} (${r.sc.n}人)` : '尚無評分';
-      return `${i + 1}. ${r.sh.name} — ${travel} / ${r.sh.category.join('、')} / ${scoreTxt}`;
+      return `• ${r.sh.name} — ${travel} / ${r.sh.category.join('、')} / ${scoreTxt}`;
     });
-    const header = data.config ? `${state.day}\n` : '';
-    const text = header + lines.join('\n') + '\n\n投票請回覆編號';
+    const header = config ? `${state.day}\n` : '';
+    const text = header + lines.join('\n') + '\n\n投票請回覆店名';
     navigator.clipboard?.writeText(text).then(
       () => toast('已複製候選清單'),
       () => toast('複製失敗'),
     );
   };
 
-  if (data.isLoading || !data.config) {
+  if (data.isLoading || !config) {
     return <div style={{ padding: 24 }}>載入中…</div>;
   }
 
   return (
     <>
-      <Header config={data.config} />
+      <Header config={config} />
       <Toolbar
         market={data.market}
         onRandomPick={handleRandomPick}
         onOpenAddShop={() => setAddShopOpen(true)}
+        categories={categories}
+        cuisines={cuisines}
+        myLocation={myLocation}
       />
-      <FilterDrawer config={data.config} shops={data.shops} ratings={data.shopRatings} onCopyList={handleCopyList} />
+      <FilterDrawer config={config} shops={data.shops} ratings={data.shopRatings} onCopyList={handleCopyList} />
+      <ActiveConditions />
       <Banners shops={data.shops} />
       <PickCard rows={allRows} onPickAgain={handleRandomPick} onViewOnMap={handleSelectOnMap} />
       <main className={state.view === 'list' ? 'list-only' : state.view === 'map' ? 'map-only' : ''}>
         <div id="listwrap">
-          <ShopList
-            allRows={allRows}
-            visibleRows={visibleRows}
-            config={data.config}
-            menus={data.menus}
-            drinks={data.drinks}
-            day={state.day}
-            nowMinute={nowMinute}
-            onSelectOnMap={handleSelectOnMap}
-          />
-          <AfterSection
-            sectionKey="desserts"
-            title="吃飽再吃(甜點)"
-            items={data.desserts}
-            config={data.config}
-            parkings={data.parkings}
-            day={state.day}
-            nowMinute={nowMinute}
-            ratings={data.dessertRatings}
-          />
-          <AfterSection
-            sectionKey="drinks"
-            title="吃飽再買(飲料)"
-            items={data.drinks}
-            config={data.config}
-            parkings={data.parkings}
-            day={state.day}
-            nowMinute={nowMinute}
-            ratings={data.drinkRatings}
-          />
+          <span className="seg listTabs">
+            {(['shops', 'drinks'] as const).map((tab) => (
+              <button
+                key={tab}
+                className={state.listTab === tab ? 'on' : ''}
+                onClick={() => dispatch({ type: 'SET_LIST_TAB', tab })}
+              >
+                {tab === 'shops' ? '餐廳' : '飲料'}
+              </button>
+            ))}
+          </span>
+          {state.listTab !== 'drinks' ? (
+            <ShopList
+              visibleRows={visibleRows}
+              config={config}
+              menus={data.menus}
+              drinks={data.drinks}
+              day={state.day}
+              nowMinute={nowMinute}
+              onSelectOnMap={handleSelectOnMap}
+            />
+          ) : (
+            <AfterSection
+              items={data.drinks}
+              config={config}
+              parkings={data.parkings}
+              day={state.day}
+              nowMinute={nowMinute}
+              ratings={data.drinkRatings}
+            />
+          )}
         </div>
         <MapPane
-          config={data.config}
+          config={config}
           parkings={data.parkings}
           rows={visibleRows}
           afterRows={afterRows}
@@ -133,11 +155,11 @@ export function App() {
           onSelectShop={(id) => dispatch({ type: 'SET_SEL', id })}
         />
       </main>
-      {addShopOpen && <AddShopModal config={data.config} shops={data.shops} drinks={data.drinks} onClose={() => setAddShopOpen(false)} />}
+      {addShopOpen && <AddShopModal config={config} shops={data.shops} drinks={data.drinks} onClose={() => setAddShopOpen(false)} />}
       {editingShop && (
         <AddShopModal
           key={editingShop.id}
-          config={data.config}
+          config={config}
           shops={data.shops}
           drinks={data.drinks}
           shop={editingShop}
@@ -147,7 +169,7 @@ export function App() {
       {editingDrink && (
         <AddShopModal
           key={editingDrink.id}
-          config={data.config}
+          config={config}
           shops={data.shops}
           drinks={data.drinks}
           drink={editingDrink}

@@ -45,6 +45,7 @@ shopsRouter.post('/', async (req, res) => {
       hoursUnknown,
       addr: body.addr ? String(body.addr).trim() : undefined,
       note: body.note ? String(body.note).trim() : '',
+      cuisine: body.cuisine ? String(body.cuisine).trim() : undefined,
       needsReview: false,
     }),
   });
@@ -92,9 +93,12 @@ shopsRouter.put('/:id', async (req, res) => {
       service,
       hours,
       hoursUnknown,
+      // 「待確認」就是「時段待確認」:時段一補上就清掉,不然 ...current 會把舊旗標帶回來
+      needsReview: hoursUnknown,
       addr: body.addr !== undefined ? (body.addr ? String(body.addr).trim() : undefined) : current.addr,
       phone: body.phone !== undefined ? (body.phone ? String(body.phone).trim() : undefined) : current.phone,
       note: body.note !== undefined ? String(body.note).trim() : current.note,
+      cuisine: body.cuisine !== undefined ? (body.cuisine ? String(body.cuisine).trim() : undefined) : current.cuisine,
     }),
   });
   res.json(toShop(row));

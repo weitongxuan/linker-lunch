@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { FiltersProvider } from './state/FiltersContext.js';
 import { App } from './App.js';
+import { ErrorBoundary } from './components/ErrorBoundary.js';
 import './index.css';
 
 const queryClient = new QueryClient({
@@ -14,10 +15,12 @@ if (!rootEl) throw new Error('#root not found');
 
 createRoot(rootEl).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <FiltersProvider>
-        <App />
-      </FiltersProvider>
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <FiltersProvider>
+          <App />
+        </FiltersProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   </StrictMode>,
 );
