@@ -64,6 +64,8 @@ def main():
             s['hoursSource'] = f'Google Places API({today} 查)'
         elif f in ('addr', 'phone', 'price'):
             s[f] = v
+        elif f == 'coords':
+            s['lat'], s['lng'] = v['lat'], v['lng']
         else:
             skipped.append(f"{p['id']} 不認得欄位 {f}")
             continue
