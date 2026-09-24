@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { currentMood, nowMin, randomPick } from '@lunch-map/shared';
+import { uniqueSorted } from './lib/uniqueSorted.js';
 import { useLunchData } from './hooks/useLunchData.js';
 import { useMyLocation } from './hooks/useMyLocation.js';
 import { useComputedRows, useVisibleRows } from './hooks/useComputedRows.js';
@@ -42,8 +43,8 @@ export function App() {
     nowMinute,
   });
   const visibleRows = useVisibleRows(allRows);
-  const categories = useMemo(() => [...new Set(data.shops.flatMap((s) => (s.category.length ? s.category : ['其他'])))], [data.shops]);
-  const cuisines = useMemo(() => [...new Set(data.shops.map((s) => s.cuisine).filter((c): c is string => !!c))].sort(), [data.shops]);
+  const categories = useMemo(() => uniqueSorted(data.shops.flatMap((s) => (s.category.length ? s.category : ['其他']))), [data.shops]);
+  const cuisines = useMemo(() => uniqueSorted(data.shops.map((s) => s.cuisine).filter((c): c is string => !!c)), [data.shops]);
 
   const afterRows = useMemo(() => {
     return data.drinks.map((d) => ({ d, lat: d.lat, lng: d.lng }));
@@ -96,7 +97,7 @@ export function App() {
     );
   };
 
-  if (data.isLoading || !config) {
+  if (data.isLoading || !config || !data.config) {
     return <div style={{ padding: 24 }}>載入中…</div>;
   }
 
@@ -158,11 +159,14 @@ export function App() {
           onSelectShop={handleSelectShop}
         />
       </main>
-      {addShopOpen && <AddShopModal config={config} shops={data.shops} drinks={data.drinks} onClose={() => setAddShopOpen(false)} />}
+      {addShopOpen && (
+        <AddShopModal config={config} officeCoords={data.config.office} shops={data.shops} drinks={data.drinks} onClose={() => setAddShopOpen(false)} />
+      )}
       {editingShop && (
         <AddShopModal
           key={editingShop.id}
           config={config}
+          officeCoords={data.config.office}
           shops={data.shops}
           drinks={data.drinks}
           shop={editingShop}
@@ -173,6 +177,7 @@ export function App() {
         <AddShopModal
           key={editingDrink.id}
           config={config}
+          officeCoords={data.config.office}
           shops={data.shops}
           drinks={data.drinks}
           drink={editingDrink}

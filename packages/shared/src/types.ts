@@ -16,6 +16,8 @@ export type PlaceType = 'shop' | 'drink';
 
 export type Service = 'dine_in' | 'takeout' | 'delivery';
 
+export const SERVICE_LABEL: Record<Service, string> = { dine_in: '內用', takeout: '外帶', delivery: '外送' };
+
 export interface Peak {
   from: string;
   to: string;

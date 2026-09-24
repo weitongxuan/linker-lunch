@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { SERVICE_LABEL } from '@lunch-map/shared';
 import type { Config, Service, Shop, Tier } from '@lunch-map/shared';
 import { useFilters, type SortKey } from '../state/filtersStore.js';
 import { useImportOsmParkingsMutation, useImportOsmShopsMutation, useRefreshMarketMutation } from '../hooks/useMutations.js';
@@ -18,12 +19,6 @@ const TIER_LABEL: Record<Exclude<Tier, 'far'>, string> = {
   w5: '走路 5 分內',
   w10: '走路 10 分內',
   d10: '開車 10 分內',
-};
-
-const SERVICE_LABEL: Record<Service, string> = {
-  dine_in: '內用',
-  takeout: '外帶',
-  delivery: '外送',
 };
 
 export function FilterDrawer({ config, shops, ratings, onCopyList }: Props) {

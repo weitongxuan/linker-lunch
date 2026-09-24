@@ -4,6 +4,7 @@ import path from 'node:path';
 import fs from 'node:fs';
 import { prisma } from '../lib/prisma.js';
 import { requirePlaceType } from '../lib/placeType.js';
+import { isIntInRange } from '../lib/validate.js';
 
 const PHOTOS_DIR = process.env.PHOTOS_DIR || './data/photos';
 fs.mkdirSync(PHOTOS_DIR, { recursive: true });
@@ -71,7 +72,7 @@ placesRouter.post<PlaceParams>('/ratings', async (req, res) => {
   const { placeType, placeId } = req.params;
   const person = clean(req.body.person);
   const score = Number(req.body.score) || 0;
-  if (score !== 0 && !(Number.isInteger(score) && score >= 1 && score <= 5)) {
+  if (score !== 0 && !isIntInRange(score, 1, 5)) {
     res.status(400).json({ error: 'score must be an integer 1–5, or 0 to clear' });
     return;
   }
@@ -149,7 +150,7 @@ placesRouter.post<PlaceParams>('/votes', async (req, res) => {
   const { placeType, placeId } = req.params;
   const person = clean(req.body.person);
   const value = Number(req.body.value) || 0;
-  if (!(Number.isInteger(value) && value >= 0 && value <= MAX_VOTE)) {
+  if (!isIntInRange(value, 0, MAX_VOTE)) {
     res.status(400).json({ error: `value must be an integer 0–${MAX_VOTE}` });
     return;
   }

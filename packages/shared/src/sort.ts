@@ -58,13 +58,13 @@ export interface ComputedRow {
   feasible: boolean;
 }
 
-/** 評分相關的篩選:沒人評過的店不會被當成「差」,只有明確開 hideUnrated 才會被排除 */
 /** 只看評分相關欄位,所以餐廳(ComputedRow)和飲料列都能用 */
 export interface Scorable {
   sh: { googleRating?: number | null };
   sc: { n: number; avg: number };
 }
 
+/** 評分相關的篩選:沒人評過的店不會被當成「差」,只有明確開 hideUnrated 才會被排除 */
 export function passScore(r: Scorable, filters: FilterState): boolean {
   // 要求 Google 幾分以上時,沒有 Google 評分的店也不算過,否則「Google 4 分以上」會抽到沒分數的店
   if (filters.minGoogle && (r.sh.googleRating == null || r.sh.googleRating < filters.minGoogle)) return false;
