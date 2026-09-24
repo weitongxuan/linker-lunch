@@ -1,6 +1,6 @@
 import json, math, pathlib, re, subprocess, sys, time, urllib.parse
 UA = 'linker-lunch-map/1.0 (momoyu@linkervision.com)'
-ROOT = pathlib.Path('/Users/momo/code/linker-lunch')
+ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 def street_query(addr):
     t = re.sub(r'^\d{3,5}', '', addr.strip())

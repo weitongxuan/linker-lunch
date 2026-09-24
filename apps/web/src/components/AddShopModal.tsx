@@ -1,9 +1,13 @@
 import { useMemo, useState } from 'react';
+import { SERVICE_LABEL } from '@lunch-map/shared';
 import type { AfterPlace, Config, HourRange, Service, Shop, WeeklyHours } from '@lunch-map/shared';
 import { useAddDrinkMutation, useAddShopMutation, useUpdateDrinkMutation, useUpdateShopMutation } from '../hooks/useMutations.js';
+import { uniqueSorted } from '../lib/uniqueSorted.js';
 
 interface Props {
   config: Config;
+  /** 公司座標,不受「用我的位置」影響——新店家的預設座標一定要是這個,不是 config.office */
+  officeCoords: { lat: number; lng: number };
   shops: Shop[];
   drinks: AfterPlace[];
   shop?: Shop | null;
@@ -15,15 +19,13 @@ type NewPlaceType = 'shop' | 'drink';
 
 const PLACE_TYPE_LABEL: Record<NewPlaceType, string> = { shop: '餐廳', drink: '飲料店' };
 
-const SERVICE_LABEL: Record<Service, string> = { dine_in: '內用', takeout: '外帶', delivery: '外送' };
-
 function buildHours(open: string, close: string, weekendClosed: boolean): WeeklyHours {
   const weekday: HourRange[] = [[open, close]];
   const weekend: HourRange[] = weekendClosed ? [] : weekday;
   return { mon: weekday, tue: weekday, wed: weekday, thu: weekday, fri: weekday, sat: weekend, sun: weekend };
 }
 
-export function AddShopModal({ config, shops, drinks, shop, drink, onClose }: Props) {
+export function AddShopModal({ config, officeCoords, shops, drinks, shop, drink, onClose }: Props) {
   const isEdit = !!shop || !!drink;
   const addShopMut = useAddShopMutation();
   const addDrinkMut = useAddDrinkMutation();
@@ -32,15 +34,8 @@ export function AddShopModal({ config, shops, drinks, shop, drink, onClose }: Pr
 
   const [placeType, setPlaceType] = useState<NewPlaceType>('shop');
 
-  const categories = useMemo(() => {
-    const set = new Set(shops.flatMap((s) => s.category).filter(Boolean));
-    return [...set].sort((a, b) => a.localeCompare(b, 'zh-Hant'));
-  }, [shops]);
-
-  const kinds = useMemo(() => {
-    const set = new Set(drinks.map((d) => d.kind).filter(Boolean));
-    return [...set].sort((a, b) => a.localeCompare(b, 'zh-Hant'));
-  }, [drinks]);
+  const categories = useMemo(() => uniqueSorted(shops.flatMap((s) => s.category).filter(Boolean)), [shops]);
+  const kinds = useMemo(() => uniqueSorted(drinks.map((d) => d.kind).filter(Boolean)), [drinks]);
 
   const editing = shop ?? drink ?? null;
 
@@ -50,8 +45,8 @@ export function AddShopModal({ config, shops, drinks, shop, drink, onClose }: Pr
   const [kind, setKind] = useState(drink?.kind ?? '');
   const [newKind, setNewKind] = useState('');
   const [addr, setAddr] = useState(editing?.addr ?? '');
-  const [lat, setLat] = useState(String(editing?.lat ?? config.office.lat));
-  const [lng, setLng] = useState(String(editing?.lng ?? config.office.lng));
+  const [lat, setLat] = useState(String(editing?.lat ?? officeCoords.lat));
+  const [lng, setLng] = useState(String(editing?.lng ?? officeCoords.lng));
   const [price, setPrice] = useState<1 | 2 | 3 | 4 | null>(editing?.price ?? null);
   const [service, setService] = useState<Set<Service>>(new Set(shop?.service ?? ['dine_in', 'takeout']));
   const [openTime, setOpenTime] = useState(editing?.hours.mon[0]?.[0] ?? '11:00');

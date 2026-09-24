@@ -46,7 +46,8 @@ shopsRouter.post('/', async (req, res) => {
       addr: body.addr ? String(body.addr).trim() : undefined,
       note: body.note ? String(body.note).trim() : '',
       cuisine: body.cuisine ? String(body.cuisine).trim() : undefined,
-      needsReview: false,
+      // 「待確認」就是「時段待確認」,跟 PUT handler 的邏輯一致
+      needsReview: hoursUnknown,
     }),
   });
   res.status(201).json(toShop(row));

@@ -236,7 +236,7 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
      padding:2px 7px;letter-spacing:.01em}
 .tag.pk{color:var(--ink2);background:var(--tagbg)}
 .tag.peak{color:var(--warnink);background:var(--warnbg)}
-.tag.dodo{color:var(--warnink);background:transparent;border:1px solid var(--goldline)}
+.tag.paid{color:var(--warnink);background:transparent;border:1px solid var(--goldline)}
 
 .acts{display:flex;gap:5px;flex-wrap:wrap;margin-top:12px;align-items:center;
       padding-top:10px;border-top:1px solid var(--line2)}

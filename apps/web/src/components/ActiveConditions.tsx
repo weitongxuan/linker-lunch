@@ -1,9 +1,5 @@
-import { MOOD_TABLE } from '@lunch-map/shared';
-import type { Service } from '@lunch-map/shared';
-import { useFilters } from '../state/filtersStore.js';
-
-type SetKey = 'cat' | 'excludeCat' | 'cuisine' | 'excludeCuisine' | 'service';
-const SERVICE_LABEL: Record<Service, string> = { dine_in: '內用', takeout: '外帶', delivery: '外送' };
+import { MOOD_TABLE, SERVICE_LABEL } from '@lunch-map/shared';
+import { useFilters, type SetFilterKey } from '../state/filtersStore.js';
 
 /**
  * 目前生效的條件,一眼看得到、一鍵清除。
@@ -13,7 +9,7 @@ export function ActiveConditions() {
   const { state, dispatch } = useFilters();
   const f = state.filters;
 
-  const removeFrom = (key: SetKey, value: string) => dispatch({ type: 'TOGGLE_SET_FILTER', key, value });
+  const removeFrom = (key: SetFilterKey, value: string) => dispatch({ type: 'TOGGLE_SET_FILTER', key, value });
 
   const chips: { key: string; text: string; onRemove: () => void }[] = [
     ...[...f.cuisine].map((v) => ({ key: `cu:${v}`, text: `想吃 ${v}`, onRemove: () => removeFrom('cuisine', v) })),
@@ -28,7 +24,7 @@ export function ActiveConditions() {
   if (!chips.length) return null;
 
   const clearAll = () => {
-    (['cat', 'excludeCat', 'cuisine', 'excludeCuisine', 'service'] as SetKey[]).forEach((k) => dispatch({ type: 'SET_SET_FILTER', key: k, values: [] }));
+    (['cat', 'excludeCat', 'cuisine', 'excludeCuisine', 'service'] as SetFilterKey[]).forEach((k) => dispatch({ type: 'SET_SET_FILTER', key: k, values: [] }));
     dispatch({ type: 'SET_MOOD', mood: 'auto' });
     dispatch({ type: 'SET_MIN_GOOGLE', value: 0 });
   };

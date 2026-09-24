@@ -8,7 +8,7 @@
 import json, math, pathlib, re, subprocess, sys, time, urllib.parse
 
 UA = 'linker-lunch-map/1.0 (momoyu@linkervision.com)'
-ROOT = pathlib.Path('/Users/momo/code/linker-lunch')
+ROOT = pathlib.Path(__file__).resolve().parent.parent
 SEED = ROOT / 'apps/api/prisma/seed-data.json'
 OK_DISTRICTS = ['鹽埕區', '鼓山區', '前金區', '苓雅區']
 # category 與 cuisine 都是受控詞彙:問問看的槽位是從資料裡的實際值長出來的,
