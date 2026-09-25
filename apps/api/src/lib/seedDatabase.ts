@@ -77,14 +77,16 @@ export async function seedDatabase(prisma: PrismaClient, opts: { ifEmpty?: boole
   }
   // 菜單表不跟店家一起清空:同事在 app 裡自己打的菜單,只要 seed 沒有同一家就保留
   const shopIds = new Set(data.shops.map((s) => s.id));
-  for (const [placeId, text] of Object.entries(data.menus ?? {})) {
-    if (!shopIds.has(placeId) || !text.trim()) continue;
-    await prisma.menu.upsert({
-      where: { placeId_placeType: { placeId, placeType: 'shop' } },
-      update: { text },
-      create: { placeId, placeType: 'shop', text },
-    });
-  }
+  const menuUpserts = Object.entries(data.menus ?? {})
+    .filter(([placeId, text]) => shopIds.has(placeId) && text.trim())
+    .map(([placeId, text]) =>
+      prisma.menu.upsert({
+        where: { placeId_placeType: { placeId, placeType: 'shop' } },
+        update: { text },
+        create: { placeId, placeType: 'shop', text },
+      }),
+    );
+  await prisma.$transaction(menuUpserts);
 
   await prisma.market.create({
     data: {

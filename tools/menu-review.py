@@ -15,13 +15,19 @@ PRICE_LINE = re.compile(r'\s(\d{1,4}(?:/\d{1,4})?|時價)\s*$')
 
 
 def clean_menu(text):
-    """統一格式:去頭尾空白、空行、重複行;價格行以外的行只允許【分類】標題"""
-    out, seen = [], set()
+    """統一格式:去頭尾空白、空行;只去掉「同一分類內」的重複行 ——
+    冷飲、熱飲都有「紅茶牛奶 30」是兩個不同品項,不能當重複刪掉"""
+    out, seen, section = [], set(), None
     for raw in (text or '').splitlines():
         line = re.sub(r'\s+', ' ', raw.strip())
-        if not line or line in seen:
+        if not line:
             continue
-        seen.add(line)
+        if line.startswith('【'):
+            section = line
+        key = (section, line)
+        if key in seen:
+            continue
+        seen.add(key)
         out.append(line)
     return '\n'.join(out)[:MAX_MENU_CHARS]
 
