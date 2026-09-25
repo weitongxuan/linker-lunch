@@ -1,8 +1,9 @@
-import { useMemo } from 'react';
-import { openNowState, passScore, tierOf, travelOf } from '@lunch-map/shared';
+import { useMemo, useState } from 'react';
+import { countMenuItems, openNowState, passScore, tierOf, travelOf } from '@lunch-map/shared';
 import type { AfterPlace, Config, DayKey, Parking } from '@lunch-map/shared';
 import { useMe } from '../hooks/useMe.js';
-import { useDeleteDrinkMutation, useRateMutation } from '../hooks/useMutations.js';
+import { useDeleteDrinkMutation, useRateMutation, useSetMenuMutation } from '../hooks/useMutations.js';
+import { MenuBlock } from './MenuBlock.js';
 import { googleMapsUrl } from '../lib/maps.js';
 import { useFilters } from '../state/filtersStore.js';
 
@@ -17,13 +18,16 @@ interface Props {
   day: DayKey;
   nowMinute: number;
   ratings: RatingMap;
+  menus: Record<string, string>;
 }
 
-export function AfterSection({ items, config, parkings, day, nowMinute, ratings }: Props) {
+export function AfterSection({ items, config, parkings, day, nowMinute, ratings, menus }: Props) {
   const { state, dispatch } = useFilters();
   const [me] = useMe();
   const rateMut = useRateMutation('drink');
   const deleteDrinkMut = useDeleteDrinkMutation();
+  const setMenuMut = useSetMenuMutation('drink');
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   // 距離與營業狀態跟篩選條件無關,分開算:改個類別篩選不必重跑每家的 haversine 與停車場掃描
   const computed = useMemo(() => {
@@ -96,6 +100,9 @@ export function AfterSection({ items, config, parkings, day, nowMinute, ratings 
             })}
           </span>
           <span className="dacts">
+            <button className="btn ghost" onClick={() => setOpenMenu(openMenu === r.d.id ? null : r.d.id)}>
+              📋 {countMenuItems(menus[r.d.id] ?? '') ? `菜單 ${countMenuItems(menus[r.d.id] ?? '')} 項` : '菜單'}
+            </button>
             <button className="btn ghost" onClick={() => dispatch({ type: 'SET_EDIT_DRINK', id: r.d.id })}>
               ✏️ 修改
             </button>
@@ -109,6 +116,15 @@ export function AfterSection({ items, config, parkings, day, nowMinute, ratings 
               🗑 刪除
             </button>
           </span>
+          {openMenu === r.d.id && (
+            <div className="dmenu">
+              <MenuBlock
+                menuText={menus[r.d.id] ?? ''}
+                onSave={(text) => setMenuMut.mutate({ placeId: r.d.id, text })}
+                saving={setMenuMut.isPending}
+              />
+            </div>
+          )}
         </div>
       ))}
     </div>

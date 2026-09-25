@@ -50,6 +50,7 @@ def main():
             results += json.loads(pathlib.Path(f).read_text(encoding='utf-8'))
     d = json.loads(SEED.read_text(encoding='utf-8'))
     shops = {s['id']: s for s in d['shops']}
+    shops.update({s['id']: s for s in d['drinks']})
     existing = d.get('menus', {})
     today = dt.date.today().isoformat()
     report = {'date': today, 'checked': [], 'proposals': [], 'unmatched': [], 'errors': [], 'nomenu': []}
@@ -74,7 +75,7 @@ def main():
         conf = 'check' if (r.get('found') == 'partial' or unc or priced < n * 0.6) else 'high'
         src = f"{r.get('source', '')} {r.get('sourceDate', '')} {r.get('sourceNote', '')}".strip()
         report['proposals'].append({
-            'id': sid, 'type': 'shop', 'name': s['name'], 'field': 'menu',
+            'id': sid, 'type': 'drink' if sid in {x['id'] for x in d['drinks']} else 'shop', 'name': s['name'], 'field': 'menu',
             'current': existing.get(sid), 'proposed': menu, 'confidence': conf,
             'evidence': src + (f" / 不確定:{';'.join(unc)}" if unc else '') + (f" / {r['notes']}" if r.get('notes') else ''),
             'items': n, 'priced': priced, 'approve': None,

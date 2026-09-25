@@ -50,9 +50,6 @@ def main():
         f, v = p['field'], p['proposed']
         if f == 'menu':
             # 菜單寫進 seed(seedDatabase 會灌進 Menu 表),同事重灌才拿得到;API 有開就順便即時更新
-            if p['type'] != 'shop':
-                skipped.append(f"{p['id']} menu:飲料沒有菜單欄位")
-                continue
             d.setdefault('menus', {})[p['id']] = v
             seed_changed = True
             try:

@@ -147,6 +147,7 @@ export function App() {
               day={state.day}
               nowMinute={nowMinute}
               ratings={data.drinkRatings}
+              menus={data.drinkMenus}
             />
           )}
         </div>
