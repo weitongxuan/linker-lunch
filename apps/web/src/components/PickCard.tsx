@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { findMenuItems } from '@lunch-map/shared';
 import type { Row } from '../hooks/useComputedRows.js';
 import type { DrinkPick } from '../lib/drinkPick.js';
@@ -7,7 +8,8 @@ import { useFilters, type TravelMode } from '../state/filtersStore.js';
 interface Props {
   rows: Row[];
   menus: Record<string, string>;
-  drinkPick: DrinkPick | null;
+  drinkPicks: DrinkPick[];
+  lunchName?: string;
   onPickAgain: () => void;
   onViewOnMap: (shopId: string) => void;
 }
@@ -17,14 +19,19 @@ export function PickCard(props: Props) {
   return (
     <>
       <LunchPick {...props} />
-      {state.pickDrinkId !== null && <DrinkPickCard pick={props.drinkPick} />}
+      {state.pickDrinkId !== null && (
+        // 換了午餐店或想喝的東西,「換一家」的計數從頭來
+        <DrinkPickCard key={`${props.lunchName ?? ''}|${[...state.filters.drink].join()}`} picks={props.drinkPicks} lunchName={props.lunchName} />
+      )}
     </>
   );
 }
 
 /** 問問看講了飲品(想喝珍奶):推一家有這杯、現在有開、走路最近的飲料店 */
-function DrinkPickCard({ pick }: { pick: DrinkPick | null }) {
+function DrinkPickCard({ picks, lunchName }: { picks: DrinkPick[]; lunchName?: string }) {
   const { state, dispatch } = useFilters();
+  const [n, setN] = useState(0);
+  const pick = picks.length ? picks[n % picks.length] : null;
   const wanted = [...state.filters.drink].join('、');
   if (!pick) {
     return (
@@ -45,14 +52,22 @@ function DrinkPickCard({ pick }: { pick: DrinkPick | null }) {
     <div id="drinkpick">
       <div className="pickcard">
         <div>
-          <div className="eyebrow">🧋 想喝{wanted} · 最近有賣的</div>
+          <div className="eyebrow">
+            🧋 想喝{wanted} · {lunchName ? `離${lunchName}最近有賣的` : '最近有賣的'}
+            {picks.length > 1 ? ` · 第 ${(n % picks.length) + 1}/${picks.length} 家` : ''}
+          </div>
           <div className="who">{pick.d.name}</div>
           <div className="sub">
-            走路 {pick.walk} 分 · {pick.open.label}
+            {lunchName ? '從午餐店' : ''}走路 {pick.walk} 分 · {pick.open.label}
             {pick.open.note ? `(${pick.open.note})` : ''}
           </div>
           <div className="menuhit">這家有:{pick.hits.join('、')}</div>
         </div>
+        {picks.length > 1 && (
+          <button className="btn" onClick={() => setN((v) => v + 1)}>
+            換一家
+          </button>
+        )}
         <button className="btn pri" onClick={() => dispatch({ type: 'SET_DRINK_PICK', id: null })}>
           就這家
         </button>
