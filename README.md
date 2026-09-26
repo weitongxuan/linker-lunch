@@ -40,6 +40,19 @@ docker compose up -d --build
 # web: http://localhost:8080   api: http://localhost:4000
 ```
 
+這是正式版(網頁先 build 好再用 nginx 送),速度快。要邊改程式邊看的開發者才用開發版:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+# web(vite 熱更新): http://localhost:5173
+```
+
+**拉了新版、店家/菜單有更新時**:資料庫已經有資料就不會自動重灌,手動跑一次(評分、照片、留言都會保留;在畫面上自己新增/修改的店家會被 seed 的版本蓋掉):
+
+```bash
+docker compose exec api node dist/scripts/seed.js
+```
+
 API 容器開機時會自動跑 `prisma migrate deploy`,然後在資料庫是空的情況下自動 seed(已經有資料就略過,不會重複清空重灌)——`docker compose up` 完就能直接用,不用手動再跑一次 seed。
 
 ## 部署到 k8s(Helm)
