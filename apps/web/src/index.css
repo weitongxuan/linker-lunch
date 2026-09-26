@@ -460,3 +460,4 @@ a.btn{text-decoration:none;display:inline-flex;align-items:center}
 .terminput{font:inherit;font-size:13px;padding:4px 8px;border:1px solid var(--line,#ccc);border-radius:999px;background:transparent;color:inherit;width:9em}
 .drow .menuhit{grid-column:1/-1}
 #drinkpick{padding:0 24px;margin-top:8px}
+.crow .fold{font-size:12px;padding:3px 10px}

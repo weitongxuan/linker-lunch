@@ -29,6 +29,7 @@ export function FilterDrawer({ config, shops, ratings, onCopyList }: Props) {
   const refreshMarketMut = useRefreshMarketMutation();
   const [dishText, setDishText] = useState('');
   const [drinkText, setDrinkText] = useState('');
+  const [openRow, setOpenRow] = useState<'cat' | 'excludeCat' | null>(null);
 
   const ratedInfo = useMemo(() => {
     const total = shops.length;
@@ -50,30 +51,39 @@ export function FilterDrawer({ config, shops, ratings, onCopyList }: Props) {
 
   if (!state.filterDrawerOpen) return null;
 
-  const wantRow = (label: string, catKey: 'cat' | 'excludeCat', cuiKey: 'cuisine' | 'excludeCuisine', onCls: string) => (
-    <div className="crow">
-      <span className="lbl">{label}</span>
-      {vocab.cats.map((c) => (
-        <button
-          key={c}
-          className={`chip${f[catKey].has(c) ? ` on ${onCls}` : ''}`}
-          onClick={() => dispatch({ type: 'TOGGLE_SET_FILTER', key: catKey, value: c })}
-        >
-          {c}
+  // 想吃/不吃各自有十幾個類別+菜系,全攤開會佔半個畫面:平常只顯示選了的,按「選 ▾」才展開全部
+  const wantRow = (label: string, catKey: 'cat' | 'excludeCat', cuiKey: 'cuisine' | 'excludeCuisine', onCls: string) => {
+    const expanded = openRow === catKey;
+    const chosen = [...[...f[catKey]].map((v) => [catKey, v] as const), ...[...f[cuiKey]].map((v) => [cuiKey, v] as const)];
+    const chip = (key: typeof catKey | typeof cuiKey, c: string) => (
+      <button
+        key={`${key}:${c}`}
+        className={`chip${f[key].has(c) ? ` on ${onCls}` : ''}`}
+        onClick={() => dispatch({ type: 'TOGGLE_SET_FILTER', key, value: c })}
+      >
+        {c}
+      </button>
+    );
+    return (
+      <div className="crow">
+        <span className="lbl">{label}</span>
+        {expanded ? (
+          <>
+            {vocab.cats.map((c) => chip(catKey, c))}
+            {vocab.cuisines.length > 0 && <span className="lbl auto">菜系</span>}
+            {vocab.cuisines.map((c) => chip(cuiKey, c))}
+          </>
+        ) : chosen.length ? (
+          chosen.map(([k, v]) => chip(k, v))
+        ) : (
+          <span className="hint">不限</span>
+        )}
+        <button className="btn ghost fold" aria-expanded={expanded} onClick={() => setOpenRow(expanded ? null : catKey)}>
+          {expanded ? '收起 ▴' : '選 ▾'}
         </button>
-      ))}
-      {vocab.cuisines.length > 0 && <span className="lbl auto">菜系</span>}
-      {vocab.cuisines.map((c) => (
-        <button
-          key={c}
-          className={`chip${f[cuiKey].has(c) ? ` on ${onCls}` : ''}`}
-          onClick={() => dispatch({ type: 'TOGGLE_SET_FILTER', key: cuiKey, value: c })}
-        >
-          {c}
-        </button>
-      ))}
-    </div>
-  );
+      </div>
+    );
+  };
 
   // 問問看說「想吃蝦仁飯 / 想喝珍奶」會亮在這裡;這裡手動加的也一樣會拿去比對菜單
   const termRow = (label: string, key: Extract<SetFilterKey, 'dish' | 'drink'>, text: string, setText: (v: string) => void, ph: string) => {
