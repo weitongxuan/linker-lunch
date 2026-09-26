@@ -1,6 +1,6 @@
 import { Fragment, useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { LABEL, ORDER, SERVICE_LABEL, countMenuItems } from '@lunch-map/shared';
+import { LABEL, ORDER, SERVICE_LABEL } from '@lunch-map/shared';
 import type { Row } from '../hooks/useComputedRows.js';
 import { useFilters } from '../state/filtersStore.js';
 import { useMe } from '../hooks/useMe.js';
@@ -57,7 +57,6 @@ export function ShopCard({ row, config, menuText, menuHits, onSelectOnMap, class
   const rateMut = useRateMutation('shop');
   const voteMut = useVoteMutation('shop');
 
-  const menuCount = useMemo(() => countMenuItems(menuText), [menuText]);
   const myScore = sc.who?.[me] ?? 0;
   const votesInfo = row.votes;
 
@@ -96,12 +95,6 @@ export function ShopCard({ row, config, menuText, menuHits, onSelectOnMap, class
           <>
             <span className="dot">·</span>
             <span title={config.priceBands.find((b) => b.v === sh.price)?.label}>{'$'.repeat(sh.price)}</span>
-          </>
-        )}
-        {menuCount > 0 && (
-          <>
-            <span className="dot">·</span>
-            <span className="mn">📋 {menuCount} 項</span>
           </>
         )}
         {sc.n > 0 && (

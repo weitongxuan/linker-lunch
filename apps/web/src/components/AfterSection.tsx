@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { countMenuItems, findMenuItems, openNowState, passScore, tierOf, travelOf } from '@lunch-map/shared';
+import { findMenuItems, openNowState, passScore, tierOf, travelOf } from '@lunch-map/shared';
 import type { AfterPlace, Config, DayKey, Parking } from '@lunch-map/shared';
 import { useMe } from '../hooks/useMe.js';
 import { useDeleteDrinkMutation, useRateMutation, useSetMenuMutation } from '../hooks/useMutations.js';
@@ -110,7 +110,7 @@ export function AfterSection({ items, config, parkings, day, nowMinute, ratings,
           </span>
           <span className="dacts">
             <button className="btn ghost" onClick={() => setOpenMenu(openMenu === r.d.id ? null : r.d.id)}>
-              📋 {countMenuItems(menus[r.d.id] ?? '') ? `菜單 ${countMenuItems(menus[r.d.id] ?? '')} 項` : '菜單'}
+              📋 菜單
             </button>
             <button className="btn ghost" onClick={() => dispatch({ type: 'SET_EDIT_DRINK', id: r.d.id })}>
               ✏️ 修改
