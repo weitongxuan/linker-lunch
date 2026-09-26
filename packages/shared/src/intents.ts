@@ -141,7 +141,7 @@ function splitClauses(raw: string): string[] {
  * 從一個子句裡找類別/菜系:詞彙本身與別名一起依長度排序,長的先比、比到就從文字裡「吃掉」,
  * 這樣「鍋貼」不會再讓「鍋」對到火鍋、「麵包」不會對到麵。別名對到空字串代表只吃掉、不算類別。
  */
-function findTerms(text: string, vocab: string[], alias: Record<string, string>): string[] {
+function findTerms(text: string, vocab: string[], alias: Record<string, string>, rawHits?: string[]): string[] {
   const terms: [string, string][] = [...vocab.map((v): [string, string] => [v, v]), ...Object.entries(alias)];
   terms.sort((a, b) => b[0].length - a[0].length);
   const found = new Set<string>();
@@ -151,9 +151,28 @@ function findTerms(text: string, vocab: string[], alias: Record<string, string>)
     const t = term.toLowerCase();
     if (!rest.includes(t)) continue;
     rest = rest.split(t).join('\u0000');
-    if (target && vocab.includes(target)) found.add(target);
+    if (target && vocab.includes(target)) {
+      found.add(target);
+      rawHits?.push(term);
+    }
   }
   return [...found];
+}
+
+/** 別名裡「類別的另一種說法」,不是一道具體的菜;其餘別名(牛肉麵、滷肉飯、小籠包…)都當菜名去比菜單 */
+const GENERIC_ALIAS = new Set(['麵食', '麵條', '麵店', '鍋物', '鍋', '海產', '熱炒', '魚', '蝦', '自助', '快餐', '飯盒', '便當店', '速食店', '小吃店', '火鍋店', '牛排館', '排餐', '白飯']);
+
+const CN_NUM: Record<string, number> = {
+  五十: 50, 六十: 60, 七十: 70, 八十: 80, 九十: 90, 一百: 100, 一百二: 120, 一百五: 150, 兩百: 200, 二百: 200, 兩百五: 250, 三百: 300, 五百: 500,
+};
+const BUDGET_RE = new RegExp(`(?:預算)?(\\d{2,4}|${Object.keys(CN_NUM).sort((a, b) => b.length - a.length).join('|')})(?:元|塊錢|塊)?(?:以內|以下|之內|有找|內|左右)`);
+
+/** 「100 元以內」「兩百塊有找」「預算 150 左右」→ 150;抓不到回 null */
+export function parseBudget(text: string): number | null {
+  const m = normalizeText(text).match(BUDGET_RE);
+  if (!m) return null;
+  const n = /^\d+$/.test(m[1]) ? Number(m[1]) : CN_NUM[m[1]];
+  return n >= 30 && n <= 3000 ? n : null;
 }
 
 /** 目錄條目在這句話裡有沒有命中:否定子句裡的關鍵字不算(「不要外帶」不是要外帶),除非關鍵字本身就帶否定(「不想開車」) */
@@ -180,24 +199,34 @@ export function parseIntent(input: string, categories: string[], cuisines: strin
   // 1. 子句 → 想吃/不想吃 × 類別/菜系;同一項同時出現時「不吃」優先
   const wantCat = new Set<string>(), noCat = new Set<string>(), wantCui = new Set<string>(), noCui = new Set<string>();
   const clauses = splitClauses(input).map((text) => ({ text, negated: hit(text, NEGATE) }));
+  const dishes = new Set<string>();
   for (const { text, negated } of clauses) {
-    for (const c of findTerms(text, categories, CAT_ALIAS)) (negated ? noCat : wantCat).add(c);
+    const raw: string[] = [];
+    for (const c of findTerms(text, categories, CAT_ALIAS, raw)) (negated ? noCat : wantCat).add(c);
+    if (!negated) for (const r of raw) if (CAT_ALIAS[r] && !GENERIC_ALIAS.has(r)) dishes.add(r);
     for (const c of findTerms(text, cuisines, CUISINE_ALIAS)) (negated ? noCui : wantCui).add(c);
   }
   for (const c of noCat) wantCat.delete(c);
   for (const c of noCui) wantCui.delete(c);
+  // 菜名的類別被「不吃」掉了,菜名也不算
+  for (const d of dishes) if (!wantCat.has(CAT_ALIAS[d])) dishes.delete(d);
+  const budget = parseBudget(input);
 
   const actions: IntentActions = {};
   if (wantCat.size) actions.cat = [...wantCat];
   if (wantCui.size) actions.cuisine = [...wantCui];
   if (noCat.size) actions.excludeCat = [...noCat];
   if (noCui.size) actions.excludeCuisine = [...noCui];
-  // 想吃/不吃的清單同時餵給標籤與回答句,只組一次
-  const want = [...wantCui, ...wantCat];
+  if (dishes.size) actions.dish = [...dishes];
+  if (budget) actions.budget = budget;
+  // 想吃/不吃的清單同時餵給標籤與回答句,只組一次;有講到菜名時用菜名取代它所屬的類別(「想吃牛肉麵」而不是「想吃麵」)
+  const dishCats = new Set([...dishes].map((d) => CAT_ALIAS[d]));
+  const want = [...wantCui, ...dishes, ...[...wantCat].filter((c) => !dishCats.has(c))];
   const avoid = [...noCui, ...noCat];
   const labels: string[] = [];
   if (want.length) labels.push(`想吃${want.join('、')}`);
   if (avoid.length) labels.push(`不吃${avoid.join('、')}`);
+  if (budget) labels.push(`預算 ${budget} 內`);
   const slotParts = labels.length;
 
   // 2. 目錄關鍵字(可疊加)。同一個動作欄位(mode/service…)被多個條目命中時,關鍵字最長的那個贏:
@@ -243,7 +272,9 @@ export function parseIntent(input: string, categories: string[], cuisines: strin
   // 4. 回答句:有槽位就組句,否則用目錄那句
   let reply: string;
   if (slotParts) {
-    const bits = [want.length ? `想吃${want.join('、')}` : '', avoid.length ? `避開${avoid.join('、')}` : ''].filter(Boolean).join(',');
+    const bits = [want.length ? `想吃${want.join('、')}` : '', avoid.length ? `避開${avoid.join('、')}` : '', budget ? `${budget} 元以內` : '']
+      .filter(Boolean)
+      .join(',');
     const cond = condLabels.length ? `,${condLabels.join('、')}` : '';
     reply = `好,${bits}${cond} —— 這家如何:{shop}?`;
   } else {

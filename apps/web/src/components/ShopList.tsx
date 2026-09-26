@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { haversine, openNowState, walkMinFor } from '@lunch-map/shared';
+import { findMenuItems, haversine, openNowState, walkMinFor } from '@lunch-map/shared';
 import type { AfterPlace, Config, DayKey } from '@lunch-map/shared';
 import type { Row } from '../hooks/useComputedRows.js';
 import { useFilters } from '../state/filtersStore.js';
@@ -34,6 +34,9 @@ export function ShopList({ visibleRows, config, menus, drinks, day, nowMinute, o
     ? [selectedRow, ...visibleRows.filter((r) => r.sh.id !== selectedRow.sh.id)]
     : visibleRows;
   const shownRows = orderedRows.slice(0, limit);
+  // 搜尋字或問問看的菜名在菜單裡命中的那幾行,卡片上直接顯示,不用點開詳情
+  const terms = [state.keyword.trim(), ...state.filters.dish].filter(Boolean);
+  const menuHitsFor = (text: string) => (terms.length ? [...new Set(terms.flatMap((t) => findMenuItems(text, t, 2)))].slice(0, 3) : []);
   const remaining = orderedRows.length - shownRows.length;
 
   const nearbyDrinks = useMemo(() => {
@@ -53,6 +56,7 @@ export function ShopList({ visibleRows, config, menus, drinks, day, nowMinute, o
             row={row}
             config={config}
             menuText={menus[row.sh.id] ?? ''}
+            menuHits={menuHitsFor(menus[row.sh.id] ?? '')}
             onSelectOnMap={onSelectOnMap}
             className={selectedRow && row.sh.id !== selectedRow.sh.id ? 'fadeout' : undefined}
           />

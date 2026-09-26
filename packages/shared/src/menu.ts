@@ -38,3 +38,39 @@ export function splitMenuItem(line: string): { name: string; price: string | nul
   const m = line.match(PRICE_TAIL);
   return m ? { name: m[1], price: m[2] } : { name: line, price: null };
 }
+
+const norm = (s: string) => s.toLowerCase().replace(/[\s()（）]/g, '');
+
+/** 菜單裡品名含有 term 的品項行(最多 limit 行);比對忽略空白與括號 */
+export function findMenuItems(text: string, term: string, limit = 3): string[] {
+  const t = norm(term);
+  if (!t) return [];
+  const hits: string[] = [];
+  for (const s of parseMenu(text)) {
+    for (const it of s.items) {
+      if (norm(splitMenuItem(it).name).includes(t)) {
+        hits.push(it);
+        if (hits.length >= limit) return hits;
+      }
+    }
+  }
+  return hits;
+}
+
+/** 品項的最低價(大小份取小份);加購(+10)不算一道菜,回 null */
+export function itemMinPrice(line: string): number | null {
+  const { price } = splitMenuItem(line);
+  if (!price || /^[+＋]/.test(price)) return null;
+  const nums = (price.match(/\d+/g) ?? []).map(Number).filter((n) => n > 0);
+  return nums.length ? Math.min(...nums) : null;
+}
+
+/** 預算內至少要有幾道菜,才算「這家吃得到」—— 只有一顆 15 元滷蛋在預算內不算 */
+export const BUDGET_MIN_CHOICES = 3;
+
+/** 菜單有價格時,預算內的品項夠不夠多;菜單沒價格就回 null(不知道,不要排除) */
+export function fitsBudget(text: string, budget: number): boolean | null {
+  const prices = parseMenu(text).flatMap((s) => s.items.map(itemMinPrice)).filter((p): p is number => p != null);
+  if (prices.length < BUDGET_MIN_CHOICES) return null;
+  return prices.filter((p) => p <= budget).length >= BUDGET_MIN_CHOICES;
+}

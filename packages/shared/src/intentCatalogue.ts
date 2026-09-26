@@ -10,6 +10,10 @@ export interface IntentActions {
   mode?: 'walk' | 'drive';
   minGoogle?: number;
   service?: Service[];
+  /** 具體菜名(牛肉麵、滷肉飯…):菜單裡有這道的店排前面、優先抽 */
+  dish?: string[];
+  /** 預算(元):菜單有價格的店,預算內要有幾道可選才留下 */
+  budget?: number;
 }
 
 export interface CatalogueEntry {

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { currentMood, nowMin, randomPick } from '@lunch-map/shared';
+import { currentMood, findMenuItems, nowMin, randomPick } from '@lunch-map/shared';
 import { uniqueSorted } from './lib/uniqueSorted.js';
 import { useLunchData } from './hooks/useLunchData.js';
 import { useMyLocation } from './hooks/useMyLocation.js';
@@ -42,7 +42,7 @@ export function App() {
     votes: data.votes,
     nowMinute,
   });
-  const visibleRows = useVisibleRows(allRows);
+  const visibleRows = useVisibleRows(allRows, data.menus);
   const categories = useMemo(() => uniqueSorted(data.shops.flatMap((s) => (s.category.length ? s.category : ['其他']))), [data.shops]);
   const cuisines = useMemo(() => uniqueSorted(data.shops.map((s) => s.cuisine).filter((c): c is string => !!c)), [data.shops]);
 
@@ -51,7 +51,11 @@ export function App() {
   }, [data.drinks]);
 
   const handleRandomPick = () => {
-    const pool = visibleRows.filter((r) => r.feasible);
+    const feasible = visibleRows.filter((r) => r.feasible);
+    // 講了菜名:菜單裡真的有那道菜的店優先抽;一家都沒有才退回整個候選池(用類別)
+    const dishes = [...state.filters.dish];
+    const withDish = dishes.length ? feasible.filter((r) => dishes.some((d) => findMenuItems(data.menus[r.sh.id] ?? '', d, 1).length)) : [];
+    const pool = withDish.length ? withDish : feasible;
     const mood = currentMood(state.mood, data.market);
     const result = randomPick(pool, mood);
     if (result.empty) {
@@ -115,7 +119,7 @@ export function App() {
       <FilterDrawer config={config} shops={data.shops} ratings={data.shopRatings} onCopyList={handleCopyList} />
       <ActiveConditions />
       <Banners shops={data.shops} />
-      <PickCard rows={allRows} onPickAgain={handleRandomPick} onViewOnMap={handleSelectOnMap} />
+      <PickCard rows={allRows} menus={data.menus} onPickAgain={handleRandomPick} onViewOnMap={handleSelectOnMap} />
       <main className={state.view === 'list' ? 'list-only' : state.view === 'map' ? 'map-only' : ''}>
         <div id="listwrap">
           <span className="seg listTabs">

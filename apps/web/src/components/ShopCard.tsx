@@ -42,11 +42,13 @@ interface Props {
   row: Row;
   config: Config;
   menuText: string;
+  /** 搜尋/菜名命中的菜單行 */
+  menuHits?: string[];
   onSelectOnMap: (shopId: string) => void;
   className?: string;
 }
 
-export function ShopCard({ row, config, menuText, onSelectOnMap, className }: Props) {
+export function ShopCard({ row, config, menuText, menuHits, onSelectOnMap, className }: Props) {
   const { sh, f, sc } = row;
   const { state, dispatch } = useFilters();
   const [me] = useMe();
@@ -126,6 +128,7 @@ export function ShopCard({ row, config, menuText, onSelectOnMap, className }: Pr
         </span>
       </div>
 
+      {menuHits && menuHits.length > 0 && <div className="menuhit">🍜 {menuHits.join('、')}</div>}
       {f.note && <div className="why">{f.note}</div>}
 
       <div className="acts" onClick={(e) => e.stopPropagation()}>

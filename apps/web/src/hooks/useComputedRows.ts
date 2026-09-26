@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { openNowState, passFilter, pickTravel, sortRows, tierOf, travelOf } from '@lunch-map/shared';
+import { findMenuItems, fitsBudget, openNowState, passFilter, pickTravel, sortRows, tierOf, travelOf } from '@lunch-map/shared';
 import type { Config, OpenNowState, Parking, Shop } from '@lunch-map/shared';
 import type { ComputedRow } from '@lunch-map/shared';
 import { useFilters } from '../state/filtersStore.js';
@@ -56,22 +56,37 @@ export function useComputedRows({ config, shops, parkings, ratings, votes, nowMi
   }, [config, shops, parkings, ratings, votes, state.day, state.mode, nowMinute]);
 }
 
-function matchesKeyword(r: Row, keyword: string): boolean {
+function matchesKeyword(r: Row, keyword: string, menuText: string): boolean {
   const kw = keyword.trim().toLowerCase();
   if (!kw) return true;
   const haystack = [r.sh.name, ...r.sh.category, r.sh.addr, r.sh.note].filter(Boolean).join(' ').toLowerCase();
-  return haystack.includes(kw);
+  return haystack.includes(kw) || findMenuItems(menuText, kw, 1).length > 0;
 }
 
-/** 篩選 + 排序過的可見清單 —— 給地圖跟清單共用同一份順序。 */
-export function useVisibleRows(rows: Row[]): Row[] {
+/**
+ * 篩選 + 排序過的可見清單 —— 給地圖跟清單共用同一份順序。
+ * 菜單相關條件:預算只排除「有價格、而且預算內不到 3 道」的店,沒菜單的店不知道就留著;
+ * 菜名(與預算)命中的店穩定地排到最前面,其餘照原本的排序。
+ */
+export function useVisibleRows(rows: Row[], menus: Record<string, string>): Row[] {
   const { state } = useFilters();
-  return useMemo(
-    () =>
-      sortRows(
-        rows.filter((r) => passFilter(r, state.filters) && matchesKeyword(r, state.keyword)),
-        state.sort,
-      ) as Row[],
-    [rows, state.filters, state.sort, state.keyword],
-  );
+  return useMemo(() => {
+    const { dish, budget } = state.filters;
+    const kept = rows.filter((r) => {
+      if (!passFilter(r, state.filters) || !matchesKeyword(r, state.keyword, menus[r.sh.id] ?? '')) return false;
+      return !budget || fitsBudget(menus[r.sh.id] ?? '', budget) !== false;
+    });
+    const sorted = sortRows(kept, state.sort) as Row[];
+    if (!dish.size && !budget) return sorted;
+    const score = (r: Row) => {
+      const text = menus[r.sh.id] ?? '';
+      let s = 0;
+      if (dish.size && [...dish].some((d) => findMenuItems(text, d, 1).length)) s += 2;
+      if (budget && fitsBudget(text, budget) === true) s += 1;
+      return s;
+    };
+    const scored = sorted.map((r, i) => ({ r, i, s: score(r) }));
+    scored.sort((a, b) => b.s - a.s || a.i - b.i);
+    return scored.map((x) => x.r);
+  }, [rows, menus, state.filters, state.sort, state.keyword]);
 }

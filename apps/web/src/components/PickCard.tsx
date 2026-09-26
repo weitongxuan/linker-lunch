@@ -1,14 +1,16 @@
+import { findMenuItems } from '@lunch-map/shared';
 import type { Row } from '../hooks/useComputedRows.js';
 import { googleDirectionsUrl } from '../lib/maps.js';
 import { useFilters, type TravelMode } from '../state/filtersStore.js';
 
 interface Props {
   rows: Row[];
+  menus: Record<string, string>;
   onPickAgain: () => void;
   onViewOnMap: (shopId: string) => void;
 }
 
-export function PickCard({ rows, onPickAgain, onViewOnMap }: Props) {
+export function PickCard({ rows, menus, onPickAgain, onViewOnMap }: Props) {
   const { state, dispatch } = useFilters();
 
   if (state.pickEmpty) {
@@ -43,6 +45,10 @@ export function PickCard({ rows, onPickAgain, onViewOnMap }: Props) {
           <div className="sub">
             {row.f.label} · {row.sh.category.join('、')}
           </div>
+          {(() => {
+            const hits = [...state.filters.dish].flatMap((d) => findMenuItems(menus[row.sh.id] ?? '', d, 2));
+            return hits.length > 0 && <div className="menuhit">這家有:{[...new Set(hits)].slice(0, 3).join('、')}</div>;
+          })()}
         </div>
         <span className="seg">
           {(['walk', 'drive'] as TravelMode[]).map((m) => (

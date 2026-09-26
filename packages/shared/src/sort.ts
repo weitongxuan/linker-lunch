@@ -26,6 +26,10 @@ export interface FilterState {
   minScore: number;
   hideUnrated: boolean;
   minGoogle: number;
+  /** 問問看說的具體菜名:菜單裡有的店排前面(不排除其他店) */
+  dish: Set<string>;
+  /** 問問看說的預算(元),0 = 不限:菜單有價格且預算內不到 3 道的店拿掉 */
+  budget: number;
 }
 
 export const DEFAULT_FILTERS: FilterState = {
@@ -44,6 +48,8 @@ export const DEFAULT_FILTERS: FilterState = {
   minScore: 0,
   hideUnrated: false,
   minGoogle: 0,
+  dish: new Set(),
+  budget: 0,
 };
 
 export interface ComputedRow {

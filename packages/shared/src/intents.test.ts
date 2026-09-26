@@ -97,3 +97,33 @@ test('吃素只算一次(槽位接住,不重複標籤)', () => {
   assert.deepEqual(r.actions.cuisine, ['素食']);
   assert.equal(r.label, '想吃素食');
 });
+
+// 菜名與預算
+test('菜名:想吃牛肉麵 → 類別麵 + 菜名牛肉麵,標籤用菜名', () => {
+  const r = m('想吃牛肉麵');
+  assert.deepEqual(r.actions.cat, ['麵']);
+  assert.deepEqual(r.actions.dish, ['牛肉麵']);
+  assert.match(r.label, /想吃牛肉麵/);
+});
+test('泛稱不算菜名:麵食、熱炒、鍋物', () => {
+  assert.equal(m('想吃麵食').actions.dish, undefined);
+  assert.equal(m('想吃熱炒').actions.dish, undefined);
+});
+test('不吃的菜名不算', () => {
+  const r = m('不想吃牛肉麵');
+  assert.equal(r.actions.dish, undefined);
+  assert.deepEqual(r.actions.excludeCat, ['麵']);
+});
+test('預算:數字與中文', () => {
+  assert.equal(m('100元以內').actions.budget, 100);
+  assert.equal(m('兩百塊有找').actions.budget, 200);
+  assert.equal(m('預算150左右的便當').actions.budget, 150);
+  assert.equal(m('想吃牛肉麵 一百五以內').actions.budget, 150);
+  assert.equal(m('想吃牛肉麵 一百五以內').actions.dish?.[0], '牛肉麵');
+});
+test('預算與其他條件疊加:便宜 + 走路 + 預算', () => {
+  const r = m('走路到得了 80元以內 便宜的');
+  assert.equal(r.actions.budget, 80);
+  assert.equal(r.actions.mode, 'walk');
+  assert.equal(r.actions.mood, 'down');
+});

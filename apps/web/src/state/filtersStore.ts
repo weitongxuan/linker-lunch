@@ -61,7 +61,7 @@ export function initialState(): UiState {
     listTab: 'shops',
     sort: 'travel',
     // Set 要各自複製一份,不然多個 store 實例會共用同一個 Set;price 沿用預設的 $$$ 以下
-    filters: { ...DEFAULT_FILTERS, tier: new Set(), cat: new Set(), excludeCat: new Set(), cuisine: new Set(), excludeCuisine: new Set(), price: new Set(DEFAULT_FILTERS.price), service: new Set() },
+    filters: { ...DEFAULT_FILTERS, tier: new Set(), cat: new Set(), excludeCat: new Set(), cuisine: new Set(), excludeCuisine: new Set(), price: new Set(DEFAULT_FILTERS.price), service: new Set(), dish: new Set() },
     mood: 'auto',
     voteMode: false,
     pickShopId: null,
@@ -82,7 +82,7 @@ export function initialState(): UiState {
 }
 
 /** filters 裡值為 Set 的欄位,加/減一項與整組覆寫共用 */
-export type SetFilterKey = 'tier' | 'cat' | 'excludeCat' | 'cuisine' | 'excludeCuisine' | 'price' | 'service';
+export type SetFilterKey = 'tier' | 'cat' | 'excludeCat' | 'cuisine' | 'excludeCuisine' | 'price' | 'service' | 'dish';
 
 export type Action =
   | { type: 'SET_DAY'; day: DayKey }
@@ -96,6 +96,7 @@ export type Action =
   | { type: 'SET_BOOL_FILTER'; key: 'onlyOpen' | 'showUnknown' | 'hideBad' | 'hideUnrated'; value: boolean }
   | { type: 'SET_MIN_SCORE'; value: number }
   | { type: 'SET_MIN_GOOGLE'; value: number }
+  | { type: 'SET_BUDGET'; value: number }
   | { type: 'SET_MOOD'; mood: Mood | 'auto' }
   | { type: 'TOGGLE_VOTE_MODE' }
   | { type: 'SET_PICK'; shopId: string | null; weights: PickWeight[]; total: number }
@@ -164,6 +165,8 @@ export function reducer(state: UiState, action: Action): UiState {
       return { ...state, ...NO_INTENT, filters: { ...state.filters, [action.key]: action.value } };
     case 'SET_MIN_SCORE':
       return { ...state, ...NO_INTENT, filters: { ...state.filters, minScore: action.value } };
+    case 'SET_BUDGET':
+      return { ...state, ...NO_INTENT, filters: { ...state.filters, budget: action.value }, pickShopId: null, pickWeights: null };
     case 'SET_MIN_GOOGLE':
       return { ...state, ...NO_INTENT, filters: { ...state.filters, minGoogle: action.value } };
     case 'SET_MOOD':
@@ -208,6 +211,8 @@ export function reducer(state: UiState, action: Action): UiState {
         excludeCuisine: merge(state.filters.excludeCuisine, a.excludeCuisine, a.cuisine),
         minGoogle: a.minGoogle ?? state.filters.minGoogle,
         service: a.service ? new Set(a.service) : state.filters.service,
+        dish: merge(state.filters.dish, a.dish),
+        budget: a.budget ?? state.filters.budget,
       };
       return {
         ...state,
