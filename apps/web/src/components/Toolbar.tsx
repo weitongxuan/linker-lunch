@@ -1,3 +1,4 @@
+import type { IntentVocab } from '@lunch-map/shared';
 import { useEffect, useState } from 'react';
 import { currentMood, DEFAULT_FILTERS, MOOD_TABLE } from '@lunch-map/shared';
 import type { Market } from '@lunch-map/shared';
@@ -13,6 +14,7 @@ interface Props {
   categories: string[];
   /** 資料裡實際存在的菜系,同樣是槽位 */
   cuisines: string[];
+  vocab: IntentVocab;
   myLocation: {
     coords: { lat: number; lng: number } | null;
     status: LocationStatus;
@@ -31,7 +33,7 @@ const LOCATION_LABEL: Record<LocationStatus, string> = {
 
 const SEARCH_DEBOUNCE_MS = 500;
 
-export function Toolbar({ market, onRandomPick, onOpenAddShop, categories, cuisines, myLocation }: Props) {
+export function Toolbar({ market, onRandomPick, onOpenAddShop, categories, cuisines, vocab, myLocation }: Props) {
   const { state, dispatch } = useFilters();
   const f = state.filters;
 
@@ -100,7 +102,7 @@ export function Toolbar({ market, onRandomPick, onOpenAddShop, categories, cuisi
       <button className="btn pri" onClick={onRandomPick}>
         🎲 隨機推薦
       </button>
-      <IntentBox categories={categories} cuisines={cuisines} />
+      <IntentBox categories={categories} cuisines={cuisines} vocab={vocab} />
       <button className={`btn${state.voteMode ? ' pri' : ''}`} onClick={() => dispatch({ type: 'TOGGLE_VOTE_MODE' })}>
         👥 多人投票
       </button>

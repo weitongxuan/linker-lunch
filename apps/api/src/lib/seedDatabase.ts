@@ -17,6 +17,8 @@ interface SeedData {
   drinks: AfterPlace[];
   parkings: Parking[];
   market: Market;
+  /** 餐廳或飲料店 id → 菜單文字(一行一項,【分類】行是標題);核對過才進來。兩種 id 不重疊(f… / d…) */
+  menus?: Record<string, string>;
 }
 
 /**
@@ -56,6 +58,7 @@ export async function seedDatabase(prisma: PrismaClient, opts: { ifEmpty?: boole
     streetSearch: data.config.streetSearch,
     driveWorthIt: data.config.driveWorthIt,
     maxDriveMin: data.config.maxDriveMin,
+    maxDrinkDriveMin: data.config.maxDrinkDriveMin,
   };
   await prisma.config.upsert({
     where: { id: 1 },
@@ -72,6 +75,23 @@ export async function seedDatabase(prisma: PrismaClient, opts: { ifEmpty?: boole
   for (const parking of data.parkings) {
     await prisma.parking.create({ data: parking });
   }
+  // 菜單表不跟店家一起清空:同事在 app 裡自己打的菜單,只要 seed 沒有同一家就保留
+  const typeOf = new Map<string, 'shop' | 'drink'>([
+    ...data.shops.map((s) => [s.id, 'shop'] as const),
+    ...data.drinks.map((d) => [d.id, 'drink'] as const),
+  ]);
+  const menuUpserts = Object.entries(data.menus ?? {})
+    .filter(([placeId, text]) => typeOf.has(placeId) && text.trim())
+    .map(([placeId, text]) => {
+      const placeType = typeOf.get(placeId)!;
+      return prisma.menu.upsert({
+        where: { placeId_placeType: { placeId, placeType } },
+        update: { text },
+        create: { placeId, placeType, text },
+      });
+    });
+  // 店家從 seed 拿掉(歇業刪除)後,它的菜單不能留著變孤兒;還在的店,同事自己打的菜單照樣保留
+  await prisma.$transaction([...menuUpserts, prisma.menu.deleteMany({ where: { placeId: { notIn: [...typeOf.keys()] } } })]);
 
   await prisma.market.create({
     data: {

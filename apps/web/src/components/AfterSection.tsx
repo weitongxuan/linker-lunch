@@ -1,8 +1,10 @@
-import { useMemo } from 'react';
-import { openNowState, passScore, tierOf, travelOf } from '@lunch-map/shared';
+import { useMemo, useState } from 'react';
+import { findMenuItems, openNowState, passScore, tierOf, travelOf } from '@lunch-map/shared';
 import type { AfterPlace, Config, DayKey, Parking } from '@lunch-map/shared';
 import { useMe } from '../hooks/useMe.js';
-import { useDeleteDrinkMutation, useRateMutation } from '../hooks/useMutations.js';
+import { useDeleteDrinkMutation, useRateMutation, useSetMenuMutation } from '../hooks/useMutations.js';
+import { MenuBlock } from './MenuBlock.js';
+import { googleMapsUrl } from '../lib/maps.js';
 import { useFilters } from '../state/filtersStore.js';
 
 interface RatingMap {
@@ -16,20 +18,23 @@ interface Props {
   day: DayKey;
   nowMinute: number;
   ratings: RatingMap;
+  menus: Record<string, string>;
 }
 
-export function AfterSection({ items, config, parkings, day, nowMinute, ratings }: Props) {
+export function AfterSection({ items, config, parkings, day, nowMinute, ratings, menus }: Props) {
   const { state, dispatch } = useFilters();
   const [me] = useMe();
   const rateMut = useRateMutation('drink');
   const deleteDrinkMut = useDeleteDrinkMutation();
+  const setMenuMut = useSetMenuMutation('drink');
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   // 距離與營業狀態跟篩選條件無關,分開算:改個類別篩選不必重跑每家的 haversine 與停車場掃描
   const computed = useMemo(() => {
     return items
       .map((d) => {
         const t = travelOf(d, parkings, config);
-        const tier = tierOf(t, config);
+        const tier = tierOf(t, config, config.maxDrinkDriveMin);
         const open = openNowState(d, day, nowMinute);
         const sc = ratings[d.id] ?? { avg: 0, n: 0 };
         return { d, t, tier, open, sc };
@@ -41,7 +46,15 @@ export function AfterSection({ items, config, parkings, day, nowMinute, ratings 
       });
   }, [items, parkings, config, day, nowMinute, ratings]);
 
-  const rows = useMemo(() => computed.filter((r) => passScore({ sh: r.d, sc: r.sc }, state.filters)), [computed, state.filters]);
+  // 問問看/抽屜說了想喝什麼:菜單有這杯的店排前面(穩定排序,原本的營業中→走路近順序不變),並列出命中的品項
+  const rows = useMemo(() => {
+    const kept = computed.filter((r) => passScore({ sh: r.d, sc: r.sc }, state.filters));
+    const wanted = [...state.filters.drink];
+    if (!wanted.length) return kept.map((r) => ({ ...r, hits: [] as string[] }));
+    return kept
+      .map((r) => ({ ...r, hits: [...new Set(wanted.flatMap((w) => findMenuItems(menus[r.d.id] ?? '', w, 2)))].slice(0, 3) }))
+      .sort((a, b) => Number(b.hits.length > 0) - Number(a.hits.length > 0));
+  }, [computed, state.filters, menus]);
 
   if (rows.length === 0) return null;
 
@@ -60,7 +73,19 @@ export function AfterSection({ items, config, parkings, day, nowMinute, ratings 
       </div>
       {(isOpen ? rows : []).map((r) => (
         <div key={r.d.id} className={`drow${r.open.code === 'closed' ? ' dim' : ''}`}>
-          <span className="dn">{r.d.name}</span>
+          <span className="dn">
+            {r.d.name}
+            <a
+              className="gmap"
+              href={googleMapsUrl(r.d)}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="在 Google Map 開啟"
+              onClick={(e) => e.stopPropagation()}
+            >
+              📍
+            </a>
+          </span>
           <span className={`dst ${r.open.code}`}>{r.open.note || r.open.label}</span>
           <span className="dmeta">
             走路 {r.t.walk} 分 · {r.d.kind}
@@ -68,6 +93,7 @@ export function AfterSection({ items, config, parkings, day, nowMinute, ratings 
             {r.sc.n > 0 ? ` · ★${r.sc.avg.toFixed(1)}` : ''}
             {r.d.googleRating != null ? ` · G ${r.d.googleRating.toFixed(1)}` : ''}
           </span>
+          {r.hits.length > 0 && <span className="menuhit">🧋 {r.hits.join('、')}</span>}
           <span className="dstars">
             {[1, 2, 3, 4, 5].map((s) => {
               const mine = ratings[r.d.id]?.who?.[me] ?? 0;
@@ -83,6 +109,9 @@ export function AfterSection({ items, config, parkings, day, nowMinute, ratings 
             })}
           </span>
           <span className="dacts">
+            <button className="btn ghost" onClick={() => setOpenMenu(openMenu === r.d.id ? null : r.d.id)}>
+              📋 菜單
+            </button>
             <button className="btn ghost" onClick={() => dispatch({ type: 'SET_EDIT_DRINK', id: r.d.id })}>
               ✏️ 修改
             </button>
@@ -96,6 +125,15 @@ export function AfterSection({ items, config, parkings, day, nowMinute, ratings 
               🗑 刪除
             </button>
           </span>
+          {openMenu === r.d.id && (
+            <div className="dmenu">
+              <MenuBlock
+                menuText={menus[r.d.id] ?? ''}
+                onSave={(text) => setMenuMut.mutate({ placeId: r.d.id, text })}
+                saving={setMenuMut.isPending}
+              />
+            </div>
+          )}
         </div>
       ))}
     </div>

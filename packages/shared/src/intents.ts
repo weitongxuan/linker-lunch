@@ -1,7 +1,7 @@
-import { CATALOGUE, SLOT_TEMPLATES, UNKNOWN_REPLY } from './intentCatalogue.js';
-import type { IntentActions } from './intentCatalogue.js';
+import { AMBIGUOUS_REPLY, CATALOGUE, SLOT_TEMPLATES, UNKNOWN_REPLY } from './intentCatalogue.js';
+import type { CatalogueEntry, IntentActions } from './intentCatalogue.js';
 
-export { CATALOGUE, SLOT_TEMPLATES, UNKNOWN_REPLY } from './intentCatalogue.js';
+export { AMBIGUOUS_REPLY, CATALOGUE, SLOT_TEMPLATES, UNKNOWN_REPLY } from './intentCatalogue.js';
 export type { IntentActions, CatalogueEntry } from './intentCatalogue.js';
 
 export interface IntentCandidate {
@@ -14,6 +14,8 @@ export interface IntentCandidate {
 
 export type Intent =
   | { kind: 'matched'; label: string; reply: string; actions: IntentActions }
+  /** 第三層兩個意圖一樣像,不猜,反問;candidates 前幾個就是分數接近的那些 */
+  | { kind: 'ambiguous'; reply: string; suggestions: string[]; candidates: IntentCandidate[] }
   | { kind: 'unknown'; reply: string; suggestions: string[]; candidates: IntentCandidate[] };
 
 export const EXAMPLE_QUESTIONS = ['我今天不想吃便當', '想吃日式但不要拉麵', ...CATALOGUE.map((e) => e.examples[0])];
@@ -26,36 +28,41 @@ export function catalogueSize(categories: string[], cuisines: string[] = []): nu
 }
 
 /** 一句話裡哪些字代表「不要」 */
-const NEGATE = ['不想吃', '不要吃', '不吃', '不要', '不想', '別吃', '別再', '拒絕', '吃到怕', '吃膩', '膩了', '吃怕', '除了', '以外'];
+const NEGATE = ['不想吃', '不要吃', '不吃', '不要', '不想', '別吃', '別再', '拒絕', '吃到怕', '吃膩', '膩了', '吃怕', '除了', '以外', '不愛', '討厭', '不太想', '避開', '不敢吃', '不能吃', '不用了', '就不用'];
 /** 其中放在名詞「前面」的那些,句子會在它們之前切開;「麵吃膩了」這種後置的不切,否則名詞會落到中性子句 */
-const NEGATE_PREFIX = ['不想吃', '不要吃', '不吃', '不要', '不想', '別吃', '別再', '拒絕', '除了'];
+const NEGATE_PREFIX = ['不想吃', '不要吃', '不吃', '不要', '不想', '別吃', '別再', '拒絕', '除了', '不愛', '討厭', '不太想', '避開', '不敢吃', '不能吃'];
 /** 子句分隔:標點與轉折連接詞 */
 const CONNECTIVES = ['但是', '不過', '然後', '還有', '以及', '另外', '順便', '而且', '但'];
-const SEPARATORS = /[,，、;；。.!！?？~～]/g;
+/** 半形句點只在後面不是數字時才算分隔:「4.5以上」要留成一句,關鍵字 '4.5' 才對得到 */
+const SEPARATORS = /[,，、;；。!！?？~～]|\.(?!\d)/g;
 /** 長的先切,否則「但是」會被「但」先切開 */
 const CONNECTIVES_BY_LEN = [...CONNECTIVES].sort((a, b) => b.length - a.length);
 const NEGATE_PREFIX_BY_LEN = [...NEGATE_PREFIX].sort((a, b) => b.length - a.length);
 
 const CAT_ALIAS: Record<string, string> = {
   拉麵: '麵', 麵食: '麵', 麵條: '麵', 義大利麵: '麵', 乾麵: '麵', 湯麵: '麵', 烏龍麵: '麵', 米粉: '麵',
+  牛肉麵: '麵', 意麵: '麵', 陽春麵: '麵', 粄條: '麵', 河粉: '麵', 鍋燒麵: '麵', 涼麵: '麵', 炒麵: '麵', 麵線: '麵', 麵店: '麵',
   炒飯: '飯', 燴飯: '飯', 丼: '飯', 咖哩: '飯', 白飯: '飯', 燒臘: '飯', 排骨飯: '飯',
-  餃子: '水餃', 湯包: '水餃', 鍋貼: '水餃',
-  鍋物: '火鍋', 涮涮鍋: '火鍋', 鍋: '火鍋', 麻辣鍋: '火鍋',
-  海產: '海鮮', 熱炒: '海鮮', 魚: '海鮮', 蝦: '海鮮',
-  漢堡: '速食', 披薩: '速食', pizza: '速食', 炸雞: '速食', 薯條: '速食',
-  飯盒: '便當', 快餐: '自助餐', 自助: '自助餐',
-  排餐: '牛排',
+  滷肉飯: '飯', 雞肉飯: '飯', 鴨肉飯: '飯', 燒肉飯: '飯', 雞腿飯: '飯', 焢肉飯: '飯', 定食: '飯',
+  餃子: '水餃', 湯包: '水餃', 鍋貼: '水餃', 小籠包: '水餃', 蒸餃: '水餃', 煎餃: '水餃',
+  鍋物: '火鍋', 涮涮鍋: '火鍋', 鍋: '火鍋', 麻辣鍋: '火鍋', 火鍋店: '火鍋', 壽喜燒: '火鍋', 石頭火鍋: '火鍋', 薑母鴨: '火鍋', 羊肉爐: '火鍋',
+  海產: '海鮮', 熱炒: '海鮮', 魚: '海鮮', 蝦: '海鮮', 生魚片: '海鮮', 蚵仔: '海鮮', 虱目魚: '海鮮',
+  鹹酥雞: '小吃', 滷味: '小吃', 肉圓: '小吃', 黑白切: '小吃', 米糕: '小吃', 肉粽: '小吃', 碗粿: '小吃', 蚵仔煎: '小吃', 小吃店: '小吃',
+  漢堡: '速食', 披薩: '速食', pizza: '速食', 炸雞: '速食', 薯條: '速食', 麥當勞: '速食', 肯德基: '速食', 摩斯: '速食', 漢堡王: '速食', 速食店: '速食',
+  飯盒: '便當', 便當店: '便當', 快餐: '自助餐', 自助: '自助餐',
+  排餐: '牛排', 牛排館: '牛排',
   麵包: '', // 不是麵,只把字吃掉
 };
 
 const CUISINE_ALIAS: Record<string, string> = {
-  日本: '日式', 日料: '日式', 日本料理: '日式', 和食: '日式',
-  韓國: '韓式', 韓國菜: '韓式',
-  泰國: '泰式', 泰國菜: '泰式',
-  香港: '港式', 港點: '港式',
+  日本: '日式', 日料: '日式', 日本料理: '日式', 和食: '日式', 日本菜: '日式',
+  韓國: '韓式', 韓國菜: '韓式', 韓食: '韓式',
+  泰國: '泰式', 泰國菜: '泰式', 泰菜: '泰式',
+  香港: '港式', 港點: '港式', 茶餐廳: '港式',
   義大利: '義式', 意大利: '義式',
   美國: '美式',
-  越南: '越式',
+  越南: '越式', 越南菜: '越式',
+  印度菜: '印度',
   中國: '中式', 中華: '中式', 中菜: '中式',
   西餐: '西式', 歐式: '西式', 歐陸: '西式',
   蔬食: '素食', 吃素: '素食',
@@ -98,14 +105,24 @@ const NORMALIZED_EXAMPLES: { entry: (typeof CATALOGUE)[number]; texts: string[] 
 }));
 
 const SIMILARITY_THRESHOLD = 0.5;
+/** 第三層第一名要領先第二名這麼多才敢直接採用,否則反問(校準見 HANDOFF 問問看章節) */
+export const SIMILARITY_MARGIN = 0.08;
 const DEFAULT_CANDIDATE_IDS = ['any', 'cheap', 'walk'];
 
+/** 每個意圖取「它所有例句中的最高分」,由高到低 */
+export function scoreByIntent(text: string): { entry: CatalogueEntry; score: number }[] {
+  return NORMALIZED_EXAMPLES.map(({ entry, texts }) => ({ entry, score: Math.max(...texts.map((t) => similarity(text, t))) }))
+    .sort((a, b) => b.score - a.score);
+}
+
+function toCandidate(e: CatalogueEntry): IntentCandidate {
+  return { id: e.id, question: e.question, label: e.label, reply: e.reply, actions: e.actions };
+}
+
 export function rankCandidates(text: string, limit = 3): IntentCandidate[] {
-  const scored = NORMALIZED_EXAMPLES.map(({ entry, texts }) => ({ e: entry, s: Math.max(...texts.map((t) => similarity(text, t))) }))
-    .sort((a, b) => b.s - a.s);
-  const meaningful = scored.filter((x) => x.s >= 0.2).slice(0, limit);
-  const picked = meaningful.length ? meaningful.map((x) => x.e) : DEFAULT_CANDIDATE_IDS.map((id) => CATALOGUE.find((e) => e.id === id)!);
-  return picked.map((e) => ({ id: e.id, question: e.question, label: e.label, reply: e.reply, actions: e.actions }));
+  const meaningful = scoreByIntent(text).filter((x) => x.score >= 0.2).slice(0, limit);
+  const picked = meaningful.length ? meaningful.map((x) => x.entry) : DEFAULT_CANDIDATE_IDS.map((id) => CATALOGUE.find((e) => e.id === id)!);
+  return picked.map(toCandidate);
 }
 
 /**
@@ -124,7 +141,7 @@ function splitClauses(raw: string): string[] {
  * 從一個子句裡找類別/菜系:詞彙本身與別名一起依長度排序,長的先比、比到就從文字裡「吃掉」,
  * 這樣「鍋貼」不會再讓「鍋」對到火鍋、「麵包」不會對到麵。別名對到空字串代表只吃掉、不算類別。
  */
-function findTerms(text: string, vocab: string[], alias: Record<string, string>): string[] {
+function findTerms(text: string, vocab: string[], alias: Record<string, string>, rawHits?: string[]): string[] {
   const terms: [string, string][] = [...vocab.map((v): [string, string] => [v, v]), ...Object.entries(alias)];
   terms.sort((a, b) => b[0].length - a[0].length);
   const found = new Set<string>();
@@ -134,9 +151,61 @@ function findTerms(text: string, vocab: string[], alias: Record<string, string>)
     const t = term.toLowerCase();
     if (!rest.includes(t)) continue;
     rest = rest.split(t).join('\u0000');
-    if (target && vocab.includes(target)) found.add(target);
+    if (target && vocab.includes(target)) {
+      found.add(target);
+      rawHits?.push(term);
+    }
   }
   return [...found];
+}
+
+/** 別名裡「類別的另一種說法」,不是一道具體的菜;其餘別名(牛肉麵、滷肉飯、小籠包…)都當菜名去比菜單 */
+const GENERIC_ALIAS = new Set(['麵食', '麵條', '麵店', '鍋物', '鍋', '海產', '熱炒', '魚', '蝦', '自助', '快餐', '飯盒', '便當店', '速食店', '小吃店', '火鍋店', '牛排館', '排餐', '白飯']);
+
+const CN_NUM: Record<string, number> = {
+  五十: 50, 六十: 60, 七十: 70, 八十: 80, 九十: 90, 一百: 100, 一百二: 120, 一百五: 150, 兩百: 200, 二百: 200, 兩百五: 250, 三百: 300, 五百: 500,
+};
+const BUDGET_RE = new RegExp(`(?:預算)?(\\d{2,4}|${Object.keys(CN_NUM).sort((a, b) => b.length - a.length).join('|')})(?:元|塊錢|塊)?(?:以內|以下|之內|有找|內|左右)`);
+
+/** 從句子裡拿掉「想吃、來一碗、有沒有…」這類不是菜名的字,剩下的才拿去比菜單 */
+const FILLER = [
+  '我想要吃', '我想吃', '我要吃', '想要吃', '想吃', '要吃', '我想喝', '想要喝', '想喝', '要喝', '來一碗', '來一杯', '來一份', '來點', '來個',
+  '有沒有', '有賣', '哪裡有', '哪家有', '推薦', '今天', '中午', '午餐', '一碗', '一杯', '一份', '給我', '好了', '一下', '附近', '的店', '店家',
+  '可以', '好想', '突然', '好吃的', '吃', '喝', '的', '呢', '嗎', '吧', '啊', '喔', '耶', '我', '要', '想', '有',
+];
+const FILLER_BY_LEN = [...FILLER].sort((a, b) => b.length - a.length);
+const DRINK_CUE = ['想喝', '要喝', '喝', '飲料', '手搖', '一杯'];
+/** 形容詞、口頭禪:菜單上可能剛好有「簡單套餐」「招牌飯」,但使用者說「簡單吃」不是在點菜 */
+const NOT_DISH = ['簡單', '招牌', '特製', '好吃', '隨便', '清淡', '健康', '豪華', '便宜', '好料', '一樣', '不一樣', '什麼', '東西', '熱的', '冰的', '清爽'];
+
+/**
+ * 菜單裡的菜名(比類別細):「想吃蝦仁飯」→ 菜單有「滑蛋蝦仁飯」就算。
+ * 先把句子切成片段、拿掉贅字,片段本身出現在某個菜名裡,或片段裡含某個完整菜名,就當成菜名。
+ */
+function findMenuDishes(clause: string, vocab: string[], stop: Set<string>): string[] {
+  if (!vocab.length) return [];
+  let t = clause.toLowerCase();
+  for (const f of FILLER_BY_LEN) t = t.split(f).join('|');
+  const found: string[] = [];
+  for (const seg of t.split(/[|或和跟與還有及、,，\s]+/)) {
+    const s = seg.replace(/[^㐀-鿿぀-ヿa-z]/g, '');
+    if (s.length < 2 || stop.has(s)) continue;
+    if (vocab.some((v) => v.includes(s))) {
+      found.push(s);
+      continue;
+    }
+    const whole = vocab.find((v) => v.length >= 2 && s.includes(v) && !stop.has(v));
+    if (whole) found.push(whole);
+  }
+  return found;
+}
+
+/** 「100 元以內」「兩百塊有找」「預算 150 左右」→ 150;抓不到回 null */
+export function parseBudget(text: string): number | null {
+  const m = normalizeText(text).match(BUDGET_RE);
+  if (!m) return null;
+  const n = /^\d+$/.test(m[1]) ? Number(m[1]) : CN_NUM[m[1]];
+  return n >= 30 && n <= 3000 ? n : null;
 }
 
 /** 目錄條目在這句話裡有沒有命中:否定子句裡的關鍵字不算(「不要外帶」不是要外帶),除非關鍵字本身就帶否定(「不想開車」) */
@@ -156,37 +225,95 @@ function unknown(text: string): Intent {
   return { kind: 'unknown', reply: UNKNOWN_REPLY, suggestions: EXAMPLE_QUESTIONS, candidates: rankCandidates(text) };
 }
 
-export function parseIntent(input: string, categories: string[], cuisines: string[] = []): Intent {
+export interface IntentVocab {
+  /** 餐廳菜單長出來的菜名(menuDishVocab) */
+  food?: string[];
+  /** 飲料店菜單長出來的飲品名 */
+  drink?: string[];
+}
+
+export function parseIntent(input: string, categories: string[], cuisines: string[] = [], vocab: IntentVocab = {}): Intent {
   const whole = normalizeText(input);
   if (!whole) return unknown(whole);
 
   // 1. 子句 → 想吃/不想吃 × 類別/菜系;同一項同時出現時「不吃」優先
   const wantCat = new Set<string>(), noCat = new Set<string>(), wantCui = new Set<string>(), noCui = new Set<string>();
   const clauses = splitClauses(input).map((text) => ({ text, negated: hit(text, NEGATE) }));
+  const dishes = new Set<string>();
   for (const { text, negated } of clauses) {
-    for (const c of findTerms(text, categories, CAT_ALIAS)) (negated ? noCat : wantCat).add(c);
+    const raw: string[] = [];
+    for (const c of findTerms(text, categories, CAT_ALIAS, raw)) (negated ? noCat : wantCat).add(c);
+    if (!negated) for (const r of raw) if (CAT_ALIAS[r] && !GENERIC_ALIAS.has(r)) dishes.add(r);
     for (const c of findTerms(text, cuisines, CUISINE_ALIAS)) (negated ? noCui : wantCui).add(c);
   }
   for (const c of noCat) wantCat.delete(c);
   for (const c of noCui) wantCui.delete(c);
+  // 菜名的類別被「不吃」掉了,菜名也不算
+  for (const d of dishes) if (!wantCat.has(CAT_ALIAS[d])) dishes.delete(d);
+  const budget = parseBudget(input);
+
+  // 菜單長出來的菜名 / 飲品名:別名表沒有的菜也認得。有「喝、飲料」或只在飲料菜單出現的,算飲料
+  const stop = new Set([...categories, ...cuisines, ...CATALOGUE.flatMap((e) => e.keywords), ...Object.keys(CUISINE_ALIAS), ...NOT_DISH]);
+  const drinks = new Set<string>();
+  const menuDishes = new Set<string>();
+  const food = vocab.food ?? [];
+  const drinkVocab = vocab.drink ?? [];
+  for (const { text, negated } of clauses) {
+    if (negated) continue;
+    const cue = hit(text, DRINK_CUE);
+    for (const t of findMenuDishes(text, cue ? drinkVocab : [...food, ...drinkVocab], stop)) {
+      const inFood = food.some((v) => v.includes(t));
+      const inDrink = drinkVocab.some((v) => v.includes(t));
+      if (cue || (inDrink && !inFood)) drinks.add(t);
+      else if ([...dishes].every((d) => !d.includes(t))) {
+        // 比別名表抓到的更具體(「咖哩飯」比「咖哩」、「虱目魚肚粥」比「虱目魚」):留長的
+        for (const d of [...dishes]) if (t.includes(d)) dishes.delete(d);
+        dishes.add(t);
+        menuDishes.add(t);
+      }
+    }
+  }
+  // 類別只是從菜名裡的字帶出來的(「蝦仁飯」→ 海鮮、飯)就拿掉:菜名本身已經會把有這道菜的店排前面,
+  // 再加類別只會把「分類在別處但有賣蝦仁飯」的店藏起來
+  const picked = [...menuDishes, ...drinks];
+  if (picked.length) {
+    const keepCat = new Set<string>(), keepCui = new Set<string>();
+    for (const { text, negated } of clauses) {
+      if (negated) continue;
+      const rest = picked.reduce((s, d) => s.split(d).join(' '), text);
+      for (const c of findTerms(rest, categories, CAT_ALIAS)) keepCat.add(c);
+      for (const c of findTerms(rest, cuisines, CUISINE_ALIAS)) keepCui.add(c);
+    }
+    for (const c of [...wantCat]) if (!keepCat.has(c)) wantCat.delete(c);
+    for (const c of [...wantCui]) if (!keepCui.has(c)) wantCui.delete(c);
+    for (const d of [...dishes]) if (!menuDishes.has(d) && !wantCat.has(CAT_ALIAS[d])) dishes.delete(d);
+  }
 
   const actions: IntentActions = {};
   if (wantCat.size) actions.cat = [...wantCat];
   if (wantCui.size) actions.cuisine = [...wantCui];
   if (noCat.size) actions.excludeCat = [...noCat];
   if (noCui.size) actions.excludeCuisine = [...noCui];
-  // 想吃/不吃的清單同時餵給標籤與回答句,只組一次
-  const want = [...wantCui, ...wantCat];
+  if (dishes.size) actions.dish = [...dishes];
+  if (drinks.size) actions.drink = [...drinks];
+  if (budget) actions.budget = budget;
+  // 想吃/不吃的清單同時餵給標籤與回答句,只組一次;有講到菜名時用菜名取代它所屬的類別(「想吃牛肉麵」而不是「想吃麵」)
+  const dishCats = new Set([...dishes].map((d) => CAT_ALIAS[d]));
+  const want = [...wantCui, ...dishes, ...[...wantCat].filter((c) => !dishCats.has(c))];
   const avoid = [...noCui, ...noCat];
   const labels: string[] = [];
   if (want.length) labels.push(`想吃${want.join('、')}`);
   if (avoid.length) labels.push(`不吃${avoid.join('、')}`);
+  if (budget) labels.push(`預算 ${budget} 內`);
+  if (drinks.size) labels.push(`想喝${[...drinks].join('、')}`);
   const slotParts = labels.length;
 
   // 2. 目錄關鍵字(可疊加)。同一個動作欄位(mode/service…)被多個條目命中時,關鍵字最長的那個贏:
   //    「不想開車」同時中 走路(不想開車) 與 開車(開車),走路的關鍵字較長所以是走路。
   const strength = new Map<string, number>();
   for (const e of CATALOGUE) {
+    // 已經講出想喝哪一杯,「飲料」這個籠統條目就不必再掛一次
+    if (e.id === 'drinks' && drinks.size) continue;
     const n = catalogueHit(clauses, e.keywords);
     if (n) strength.set(e.id, n);
   }
@@ -210,25 +337,25 @@ export function parseIntent(input: string, categories: string[], cuisines: strin
     }
   }
 
-  // 3. 都沒中才用相似度兜底
+  // 3. 都沒中才用相似度兜底:第一名要過門檻,而且要明顯領先第二名;兩個一樣像就是在猜,改反問
   if (!labels.length) {
-    let best: { e: (typeof CATALOGUE)[number]; s: number } | null = null;
-    for (const { entry, texts } of NORMALIZED_EXAMPLES) for (const t of texts) {
-      const s = similarity(whole, t);
-      if (!best || s > best.s) best = { e: entry, s };
+    const ranked = scoreByIntent(whole);
+    const [first, second] = ranked;
+    if (!first || first.score < SIMILARITY_THRESHOLD) return unknown(whole);
+    if (second && first.score - second.score < SIMILARITY_MARGIN) {
+      return { kind: 'ambiguous', reply: AMBIGUOUS_REPLY, suggestions: EXAMPLE_QUESTIONS, candidates: ranked.slice(0, 3).map((r) => toCandidate(r.entry)) };
     }
-    if (best && best.s >= SIMILARITY_THRESHOLD) {
-      Object.assign(actions, best.e.actions);
-      labels.push(best.e.label);
-      lastReply = best.e.reply;
-    }
+    Object.assign(actions, first.entry.actions);
+    labels.push(first.entry.label);
+    lastReply = first.entry.reply;
   }
-  if (!labels.length) return unknown(whole);
 
   // 4. 回答句:有槽位就組句,否則用目錄那句
   let reply: string;
   if (slotParts) {
-    const bits = [want.length ? `想吃${want.join('、')}` : '', avoid.length ? `避開${avoid.join('、')}` : ''].filter(Boolean).join(',');
+    const bits = [want.length ? `想吃${want.join('、')}` : '', avoid.length ? `避開${avoid.join('、')}` : '', budget ? `${budget} 元以內` : '']
+      .filter(Boolean)
+      .join(',');
     const cond = condLabels.length ? `,${condLabels.join('、')}` : '';
     reply = `好,${bits}${cond} —— 這家如何:{shop}?`;
   } else {

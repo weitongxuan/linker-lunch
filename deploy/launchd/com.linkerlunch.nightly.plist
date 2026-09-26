@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.linkerlunch.nightly</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/momo/code/linker-lunch/tools/nightly.sh</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>2</integer>
+    <key>Minute</key>
+    <integer>30</integer>
+  </dict>
+  <key>RunAtLoad</key>
+  <false/>
+  <!-- 放 ~/Library/Logs:launchd 不會自己建中間目錄,repo 內的 tools/nightly-review/ 在第一次跑之前不存在 -->
+  <key>StandardOutPath</key>
+  <string>/Users/momo/Library/Logs/linkerlunch-nightly.out</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/momo/Library/Logs/linkerlunch-nightly.err</string>
+</dict>
+</plist>
