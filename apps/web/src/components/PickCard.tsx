@@ -1,16 +1,70 @@
 import { findMenuItems } from '@lunch-map/shared';
 import type { Row } from '../hooks/useComputedRows.js';
+import type { DrinkPick } from '../lib/drinkPick.js';
 import { googleDirectionsUrl } from '../lib/maps.js';
 import { useFilters, type TravelMode } from '../state/filtersStore.js';
 
 interface Props {
   rows: Row[];
   menus: Record<string, string>;
+  drinkPick: DrinkPick | null;
   onPickAgain: () => void;
   onViewOnMap: (shopId: string) => void;
 }
 
-export function PickCard({ rows, menus, onPickAgain, onViewOnMap }: Props) {
+export function PickCard(props: Props) {
+  const { state } = useFilters();
+  return (
+    <>
+      <LunchPick {...props} />
+      {state.pickDrinkId !== null && <DrinkPickCard pick={props.drinkPick} />}
+    </>
+  );
+}
+
+/** 問問看講了飲品(想喝珍奶):推一家有這杯、現在有開、走路最近的飲料店 */
+function DrinkPickCard({ pick }: { pick: DrinkPick | null }) {
+  const { state, dispatch } = useFilters();
+  const wanted = [...state.filters.drink].join('、');
+  if (!pick) {
+    return (
+      <div id="drinkpick">
+        <div className="pickcard">
+          <div>
+            <div className="eyebrow">🧋 飲料推薦</div>
+            <div className="sub">附近飲料店的菜單裡找不到「{wanted}」—— 換個說法試試(例如「奶茶」「綠茶」)。</div>
+          </div>
+          <button className="btn" onClick={() => dispatch({ type: 'SET_DRINK_PICK', id: null })}>
+            關閉
+          </button>
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div id="drinkpick">
+      <div className="pickcard">
+        <div>
+          <div className="eyebrow">🧋 想喝{wanted} · 最近有賣的</div>
+          <div className="who">{pick.d.name}</div>
+          <div className="sub">
+            走路 {pick.walk} 分 · {pick.open.label}
+            {pick.open.note ? `(${pick.open.note})` : ''}
+          </div>
+          <div className="menuhit">這家有:{pick.hits.join('、')}</div>
+        </div>
+        <button className="btn pri" onClick={() => dispatch({ type: 'SET_DRINK_PICK', id: null })}>
+          就這家
+        </button>
+        <a className="btn nav" href={googleDirectionsUrl(pick.d, 'walk')} target="_blank" rel="noopener noreferrer">
+          🧭 Google 導航
+        </a>
+      </div>
+    </div>
+  );
+}
+
+function LunchPick({ rows, menus, onPickAgain, onViewOnMap }: Props) {
   const { state, dispatch } = useFilters();
 
   if (state.pickEmpty) {

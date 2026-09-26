@@ -65,6 +65,34 @@ export function itemMinPrice(line: string): number | null {
   return nums.length ? Math.min(...nums) : null;
 }
 
+/** 品名去掉括號附註、份量字,剩下「這道菜叫什麼」:「紅燒牛肉麵(招牌)」→「紅燒牛肉麵」 */
+export function dishName(line: string): string {
+  return splitMenuItem(line)
+    .name.replace(/[(（][^)）]*[)）]/g, '')
+    .replace(/[\s·・/]+$/g, '')
+    .trim();
+}
+
+/**
+ * 從所有菜單長出「認得的菜名」清單,給問問看比對用。
+ * 只收 2–8 個字、至少兩個中日文字的品名;stop 裡的字(類別名、問問看關鍵字)不收,免得一般問句被當成菜名。
+ */
+export function menuDishVocab(texts: string[], stop: Iterable<string> = []): string[] {
+  const stopSet = new Set(stop);
+  const seen = new Set<string>();
+  for (const text of texts) {
+    for (const s of parseMenu(text)) {
+      for (const it of s.items) {
+        const n = dishName(it);
+        if (n.length < 2 || n.length > 8 || stopSet.has(n)) continue;
+        if ((n.match(/[㐀-鿿぀-ヿ]/g) ?? []).length < 2) continue;
+        seen.add(n);
+      }
+    }
+  }
+  return [...seen].sort((a, b) => b.length - a.length);
+}
+
 /** 預算內至少要有幾道菜,才算「這家吃得到」—— 只有一顆 15 元滷蛋在預算內不算 */
 export const BUDGET_MIN_CHOICES = 3;
 

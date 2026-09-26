@@ -20,13 +20,14 @@ export function ActiveConditions() {
   ];
   if (state.mood !== 'auto') chips.push({ key: 'mood', text: MOOD_TABLE[state.mood].label, onRemove: () => dispatch({ type: 'SET_MOOD', mood: 'auto' }) });
   for (const d of f.dish) chips.push({ key: `dish:${d}`, text: `🍜 ${d}`, onRemove: () => removeFrom('dish', d) });
+  for (const d of f.drink) chips.push({ key: `drink:${d}`, text: `🧋 ${d}`, onRemove: () => removeFrom('drink', d) });
   if (f.budget) chips.push({ key: 'budget', text: `預算 ${f.budget} 內`, onRemove: () => dispatch({ type: 'SET_BUDGET', value: 0 }) });
   if (f.minGoogle) chips.push({ key: 'g', text: `Google ${f.minGoogle.toFixed(1)}+`, onRemove: () => dispatch({ type: 'SET_MIN_GOOGLE', value: 0 }) });
 
   if (!chips.length) return null;
 
   const clearAll = () => {
-    (['cat', 'excludeCat', 'cuisine', 'excludeCuisine', 'service', 'dish'] as SetFilterKey[]).forEach((k) => dispatch({ type: 'SET_SET_FILTER', key: k, values: [] }));
+    (['cat', 'excludeCat', 'cuisine', 'excludeCuisine', 'service', 'dish', 'drink'] as SetFilterKey[]).forEach((k) => dispatch({ type: 'SET_SET_FILTER', key: k, values: [] }));
     dispatch({ type: 'SET_MOOD', mood: 'auto' });
     dispatch({ type: 'SET_MIN_GOOGLE', value: 0 });
     dispatch({ type: 'SET_BUDGET', value: 0 });

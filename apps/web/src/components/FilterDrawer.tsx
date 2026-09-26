@@ -1,7 +1,7 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { SERVICE_LABEL } from '@lunch-map/shared';
 import type { Config, Service, Shop, Tier } from '@lunch-map/shared';
-import { useFilters, type SortKey } from '../state/filtersStore.js';
+import { useFilters, type SetFilterKey, type SortKey } from '../state/filtersStore.js';
 import { useImportOsmParkingsMutation, useImportOsmShopsMutation, useRefreshMarketMutation } from '../hooks/useMutations.js';
 
 interface RatingMap {
@@ -27,6 +27,8 @@ export function FilterDrawer({ config, shops, ratings, onCopyList }: Props) {
   const importShops = useImportOsmShopsMutation();
   const importParkings = useImportOsmParkingsMutation();
   const refreshMarketMut = useRefreshMarketMutation();
+  const [dishText, setDishText] = useState('');
+  const [drinkText, setDrinkText] = useState('');
 
   const ratedInfo = useMemo(() => {
     const total = shops.length;
@@ -72,6 +74,39 @@ export function FilterDrawer({ config, shops, ratings, onCopyList }: Props) {
       ))}
     </div>
   );
+
+  // 問問看說「想吃蝦仁飯 / 想喝珍奶」會亮在這裡;這裡手動加的也一樣會拿去比對菜單
+  const termRow = (label: string, key: Extract<SetFilterKey, 'dish' | 'drink'>, text: string, setText: (v: string) => void, ph: string) => {
+    const add = () => {
+      const v = text.trim();
+      if (v && !f[key].has(v)) dispatch({ type: 'TOGGLE_SET_FILTER', key, value: v });
+      setText('');
+    };
+    return (
+      <>
+        <span className={`lbl${key === 'drink' ? ' auto' : ''}`}>{label}</span>
+        {[...f[key]].map((v) => (
+          <span key={v} className="chip on">
+            {v}
+            <button className="conds-x" aria-label={`移除 ${v}`} onClick={() => dispatch({ type: 'TOGGLE_SET_FILTER', key, value: v })}>
+              ×
+            </button>
+          </span>
+        ))}
+        <input
+          className="terminput"
+          type="text"
+          value={text}
+          placeholder={ph}
+          onChange={(e) => setText(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') add();
+          }}
+          onBlur={add}
+        />
+      </>
+    );
+  };
 
   return (
     <div className="drawer">
@@ -154,6 +189,23 @@ export function FilterDrawer({ config, shops, ratings, onCopyList }: Props) {
             {SERVICE_LABEL[sv]}
           </button>
         ))}
+      </div>
+
+      <div className="crow">
+        <span className="lbl">預算</span>
+        <span className="seg">
+          {[0, 100, 150, 200, 300].map((b) => (
+            <button key={b} className={f.budget === b ? 'on' : ''} onClick={() => dispatch({ type: 'SET_BUDGET', value: b })}>
+              {b === 0 ? '不限' : `${b} 內`}
+            </button>
+          ))}
+        </span>
+        <span className="hint">看菜單,至少 3 樣在預算內才留下;菜單沒標價的店不會被刷掉</span>
+      </div>
+
+      <div className="crow">
+        {termRow('想吃的菜', 'dish', dishText, setDishText, '例如 蝦仁飯')}
+        {termRow('想喝', 'drink', drinkText, setDrinkText, '例如 珍珠奶茶')}
       </div>
 
       {wantRow('想吃', 'cat', 'cuisine', 'want')}

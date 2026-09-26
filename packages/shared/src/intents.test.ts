@@ -127,3 +127,52 @@ test('預算與其他條件疊加:便宜 + 走路 + 預算', () => {
   assert.equal(r.actions.mode, 'walk');
   assert.equal(r.actions.mood, 'down');
 });
+
+// 菜單長出來的菜名 / 飲品名
+const VOCAB = {
+  food: ['滑蛋蝦仁飯', '鍋貼', '紅燒牛肉麵', '古早味紅茶', '鹹蛋苦瓜'],
+  drink: ['珍珠奶茶', '珍珠鮮奶茶', '四季春青茶', '古早味紅茶', '冬瓜檸檬'],
+};
+const mv = (q: string) => {
+  const r = parseIntent(q, CATS, CUIS, VOCAB);
+  assert.equal(r.kind, 'matched', `應該要聽懂:${q}`);
+  return r.kind === 'matched' ? r : (assert.fail() as never);
+};
+test('菜單菜名:別名表沒有的也認得(想吃蝦仁飯 → 菜單有滑蛋蝦仁飯)', () => {
+  const r = mv('想吃蝦仁飯');
+  assert.ok(r.actions.dish?.includes('蝦仁飯'), JSON.stringify(r.actions));
+  assert.equal(r.actions.drink, undefined);
+});
+test('菜單菜名:想吃鹹蛋苦瓜(沒有類別也能認)', () => assert.deepEqual(mv('想吃鹹蛋苦瓜').actions.dish, ['鹹蛋苦瓜']));
+test('飲料:想喝珍珠奶茶 → drink', () => {
+  const r = mv('想喝珍珠奶茶');
+  assert.deepEqual(r.actions.drink, ['珍珠奶茶']);
+  assert.equal(r.actions.dish, undefined);
+  assert.match(r.label, /想喝珍珠奶茶/);
+});
+test('飲料:只在飲料菜單出現的名字,沒說喝也算飲料', () => assert.deepEqual(mv('四季春青茶').actions.drink, ['四季春青茶']));
+test('兩邊都有的(古早味紅茶):說「喝」才算飲料,否則算菜', () => {
+  assert.deepEqual(mv('想喝古早味紅茶').actions.drink, ['古早味紅茶']);
+  assert.equal(mv('想吃古早味紅茶').actions.drink, undefined);
+});
+test('問句不會被當成菜名', () => {
+  assert.equal(mv('隨便推薦一家').actions.dish, undefined);
+  assert.equal(mv('便宜一點的').actions.dish, undefined);
+  assert.equal(mv('走路就到的').actions.dish, undefined);
+});
+test('不吃的不算菜名', () => assert.equal(parseIntent('不想吃鍋貼', CATS, CUIS, VOCAB).kind === 'matched' ? (parseIntent('不想吃鍋貼', CATS, CUIS, VOCAB) as { actions: { dish?: string[] } }).actions.dish : undefined, undefined));
+
+test('菜單菜名不再順帶加類別(想吃蝦仁飯 不會限定 海鮮/飯)', () => {
+  const r = mv('想吃蝦仁飯');
+  assert.equal(r.actions.cat, undefined, JSON.stringify(r.actions));
+});
+
+test('另外講的類別還是保留(想吃蝦仁飯 或 麵)', () => {
+  const r = mv('想吃蝦仁飯,或是麵');
+  assert.ok(r.actions.cat?.includes('麵'), JSON.stringify(r.actions));
+});
+
+test('講了想喝哪一杯就不再掛籠統的「飲料」標籤', () => {
+  const r = mv('想喝珍珠奶茶');
+  assert.ok(!r.label.includes('看飲料分頁'), r.label);
+});

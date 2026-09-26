@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { currentMood, findMenuItems, nowMin, randomPick } from '@lunch-map/shared';
+import { CATALOGUE, currentMood, findMenuItems, menuDishVocab, nowMin, randomPick } from '@lunch-map/shared';
+import { pickDrink } from './lib/drinkPick.js';
 import { uniqueSorted } from './lib/uniqueSorted.js';
 import { useLunchData } from './hooks/useLunchData.js';
 import { useMyLocation } from './hooks/useMyLocation.js';
@@ -45,6 +46,25 @@ export function App() {
   const visibleRows = useVisibleRows(allRows, data.menus);
   const categories = useMemo(() => uniqueSorted(data.shops.flatMap((s) => (s.category.length ? s.category : ['其他']))), [data.shops]);
   const cuisines = useMemo(() => uniqueSorted(data.shops.map((s) => s.cuisine).filter((c): c is string => !!c)), [data.shops]);
+
+  // 問問看認得的菜名/飲品名從全部菜單長出來(不是手寫清單);菜單一更新就跟著更新
+  const vocab = useMemo(() => {
+    const stop = CATALOGUE.flatMap((e) => e.keywords);
+    return { food: menuDishVocab(Object.values(data.menus), stop), drink: menuDishVocab(Object.values(data.drinkMenus), stop) };
+  }, [data.menus, data.drinkMenus]);
+
+  const drinkPick = useMemo(() => {
+    if (!config || !state.pickDrinkId) return null;
+    return pickDrink(data.drinks, data.drinkMenus, [...state.filters.drink], data.parkings, config, state.day, nowMinute);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- nowMinute 每分鐘變,推薦的店不必跟著跳
+  }, [state.pickDrinkId, state.filters.drink, data.drinks, data.drinkMenus, data.parkings, config, state.day]);
+
+  useEffect(() => {
+    if (!state.pendingDrinkPick || !config) return;
+    const p = pickDrink(data.drinks, data.drinkMenus, [...state.filters.drink], data.parkings, config, state.day, nowMinute);
+    dispatch({ type: 'SET_DRINK_PICK', id: p ? p.d.id : '' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- 只在旗標立起時抽一次
+  }, [state.pendingDrinkPick]);
 
   const afterRows = useMemo(() => {
     return data.drinks.map((d) => ({ d, lat: d.lat, lng: d.lng }));
@@ -114,12 +134,13 @@ export function App() {
         onOpenAddShop={() => setAddShopOpen(true)}
         categories={categories}
         cuisines={cuisines}
+        vocab={vocab}
         myLocation={myLocation}
       />
       <FilterDrawer config={config} shops={data.shops} ratings={data.shopRatings} onCopyList={handleCopyList} />
       <ActiveConditions />
       <Banners shops={data.shops} />
-      <PickCard rows={allRows} menus={data.menus} onPickAgain={handleRandomPick} onViewOnMap={handleSelectOnMap} />
+      <PickCard rows={allRows} menus={data.menus} drinkPick={drinkPick} onPickAgain={handleRandomPick} onViewOnMap={handleSelectOnMap} />
       <main className={state.view === 'list' ? 'list-only' : state.view === 'map' ? 'map-only' : ''}>
         <div id="listwrap">
           <span className="seg listTabs">

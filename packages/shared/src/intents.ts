@@ -167,6 +167,39 @@ const CN_NUM: Record<string, number> = {
 };
 const BUDGET_RE = new RegExp(`(?:預算)?(\\d{2,4}|${Object.keys(CN_NUM).sort((a, b) => b.length - a.length).join('|')})(?:元|塊錢|塊)?(?:以內|以下|之內|有找|內|左右)`);
 
+/** 從句子裡拿掉「想吃、來一碗、有沒有…」這類不是菜名的字,剩下的才拿去比菜單 */
+const FILLER = [
+  '我想要吃', '我想吃', '我要吃', '想要吃', '想吃', '要吃', '我想喝', '想要喝', '想喝', '要喝', '來一碗', '來一杯', '來一份', '來點', '來個',
+  '有沒有', '有賣', '哪裡有', '哪家有', '推薦', '今天', '中午', '午餐', '一碗', '一杯', '一份', '給我', '好了', '一下', '附近', '的店', '店家',
+  '可以', '好想', '突然', '好吃的', '吃', '喝', '的', '呢', '嗎', '吧', '啊', '喔', '耶', '我', '要', '想', '有',
+];
+const FILLER_BY_LEN = [...FILLER].sort((a, b) => b.length - a.length);
+const DRINK_CUE = ['想喝', '要喝', '喝', '飲料', '手搖', '一杯'];
+/** 形容詞、口頭禪:菜單上可能剛好有「簡單套餐」「招牌飯」,但使用者說「簡單吃」不是在點菜 */
+const NOT_DISH = ['簡單', '招牌', '特製', '好吃', '隨便', '清淡', '健康', '豪華', '便宜', '好料', '一樣', '不一樣', '什麼', '東西', '熱的', '冰的', '清爽'];
+
+/**
+ * 菜單裡的菜名(比類別細):「想吃蝦仁飯」→ 菜單有「滑蛋蝦仁飯」就算。
+ * 先把句子切成片段、拿掉贅字,片段本身出現在某個菜名裡,或片段裡含某個完整菜名,就當成菜名。
+ */
+function findMenuDishes(clause: string, vocab: string[], stop: Set<string>): string[] {
+  if (!vocab.length) return [];
+  let t = clause.toLowerCase();
+  for (const f of FILLER_BY_LEN) t = t.split(f).join('|');
+  const found: string[] = [];
+  for (const seg of t.split(/[|或和跟與還有及、,，\s]+/)) {
+    const s = seg.replace(/[^㐀-鿿぀-ヿa-z]/g, '');
+    if (s.length < 2 || stop.has(s)) continue;
+    if (vocab.some((v) => v.includes(s))) {
+      found.push(s);
+      continue;
+    }
+    const whole = vocab.find((v) => v.length >= 2 && s.includes(v) && !stop.has(v));
+    if (whole) found.push(whole);
+  }
+  return found;
+}
+
 /** 「100 元以內」「兩百塊有找」「預算 150 左右」→ 150;抓不到回 null */
 export function parseBudget(text: string): number | null {
   const m = normalizeText(text).match(BUDGET_RE);
@@ -192,7 +225,14 @@ function unknown(text: string): Intent {
   return { kind: 'unknown', reply: UNKNOWN_REPLY, suggestions: EXAMPLE_QUESTIONS, candidates: rankCandidates(text) };
 }
 
-export function parseIntent(input: string, categories: string[], cuisines: string[] = []): Intent {
+export interface IntentVocab {
+  /** 餐廳菜單長出來的菜名(menuDishVocab) */
+  food?: string[];
+  /** 飲料店菜單長出來的飲品名 */
+  drink?: string[];
+}
+
+export function parseIntent(input: string, categories: string[], cuisines: string[] = [], vocab: IntentVocab = {}): Intent {
   const whole = normalizeText(input);
   if (!whole) return unknown(whole);
 
@@ -212,12 +252,50 @@ export function parseIntent(input: string, categories: string[], cuisines: strin
   for (const d of dishes) if (!wantCat.has(CAT_ALIAS[d])) dishes.delete(d);
   const budget = parseBudget(input);
 
+  // 菜單長出來的菜名 / 飲品名:別名表沒有的菜也認得。有「喝、飲料」或只在飲料菜單出現的,算飲料
+  const stop = new Set([...categories, ...cuisines, ...CATALOGUE.flatMap((e) => e.keywords), ...Object.keys(CUISINE_ALIAS), ...NOT_DISH]);
+  const drinks = new Set<string>();
+  const menuDishes = new Set<string>();
+  const food = vocab.food ?? [];
+  const drinkVocab = vocab.drink ?? [];
+  for (const { text, negated } of clauses) {
+    if (negated) continue;
+    const cue = hit(text, DRINK_CUE);
+    for (const t of findMenuDishes(text, cue ? drinkVocab : [...food, ...drinkVocab], stop)) {
+      const inFood = food.some((v) => v.includes(t));
+      const inDrink = drinkVocab.some((v) => v.includes(t));
+      if (cue || (inDrink && !inFood)) drinks.add(t);
+      else if ([...dishes].every((d) => !d.includes(t))) {
+        // 比別名表抓到的更具體(「咖哩飯」比「咖哩」、「虱目魚肚粥」比「虱目魚」):留長的
+        for (const d of [...dishes]) if (t.includes(d)) dishes.delete(d);
+        dishes.add(t);
+        menuDishes.add(t);
+      }
+    }
+  }
+  // 類別只是從菜名裡的字帶出來的(「蝦仁飯」→ 海鮮、飯)就拿掉:菜名本身已經會把有這道菜的店排前面,
+  // 再加類別只會把「分類在別處但有賣蝦仁飯」的店藏起來
+  const picked = [...menuDishes, ...drinks];
+  if (picked.length) {
+    const keepCat = new Set<string>(), keepCui = new Set<string>();
+    for (const { text, negated } of clauses) {
+      if (negated) continue;
+      const rest = picked.reduce((s, d) => s.split(d).join(' '), text);
+      for (const c of findTerms(rest, categories, CAT_ALIAS)) keepCat.add(c);
+      for (const c of findTerms(rest, cuisines, CUISINE_ALIAS)) keepCui.add(c);
+    }
+    for (const c of [...wantCat]) if (!keepCat.has(c)) wantCat.delete(c);
+    for (const c of [...wantCui]) if (!keepCui.has(c)) wantCui.delete(c);
+    for (const d of [...dishes]) if (!menuDishes.has(d) && !wantCat.has(CAT_ALIAS[d])) dishes.delete(d);
+  }
+
   const actions: IntentActions = {};
   if (wantCat.size) actions.cat = [...wantCat];
   if (wantCui.size) actions.cuisine = [...wantCui];
   if (noCat.size) actions.excludeCat = [...noCat];
   if (noCui.size) actions.excludeCuisine = [...noCui];
   if (dishes.size) actions.dish = [...dishes];
+  if (drinks.size) actions.drink = [...drinks];
   if (budget) actions.budget = budget;
   // 想吃/不吃的清單同時餵給標籤與回答句,只組一次;有講到菜名時用菜名取代它所屬的類別(「想吃牛肉麵」而不是「想吃麵」)
   const dishCats = new Set([...dishes].map((d) => CAT_ALIAS[d]));
@@ -227,12 +305,15 @@ export function parseIntent(input: string, categories: string[], cuisines: strin
   if (want.length) labels.push(`想吃${want.join('、')}`);
   if (avoid.length) labels.push(`不吃${avoid.join('、')}`);
   if (budget) labels.push(`預算 ${budget} 內`);
+  if (drinks.size) labels.push(`想喝${[...drinks].join('、')}`);
   const slotParts = labels.length;
 
   // 2. 目錄關鍵字(可疊加)。同一個動作欄位(mode/service…)被多個條目命中時,關鍵字最長的那個贏:
   //    「不想開車」同時中 走路(不想開車) 與 開車(開車),走路的關鍵字較長所以是走路。
   const strength = new Map<string, number>();
   for (const e of CATALOGUE) {
+    // 已經講出想喝哪一杯,「飲料」這個籠統條目就不必再掛一次
+    if (e.id === 'drinks' && drinks.size) continue;
     const n = catalogueHit(clauses, e.keywords);
     if (n) strength.set(e.id, n);
   }

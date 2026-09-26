@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { EXAMPLE_QUESTIONS, parseIntent } from '@lunch-map/shared';
-import type { IntentCandidate } from '@lunch-map/shared';
+import type { IntentCandidate, IntentVocab } from '@lunch-map/shared';
 import { useFilters } from '../state/filtersStore.js';
 
 interface Props {
   categories: string[];
   cuisines: string[];
+  vocab: IntentVocab;
 }
 
 type Step =
@@ -17,7 +18,7 @@ type Step =
  * 「隨機推薦」旁的小視窗。平常只有一個輸入框;聽不懂時反問並給幾個選項,
  * 「不想吃某一類…」再列類別,「其他」回到輸入框重新偵測。
  */
-export function IntentBox({ categories, cuisines }: Props) {
+export function IntentBox({ categories, cuisines, vocab }: Props) {
   const { dispatch } = useFilters();
   const [open, setOpen] = useState(false);
   const [text, setText] = useState('');
@@ -55,7 +56,7 @@ export function IntentBox({ categories, cuisines }: Props) {
   const run = () => {
     const raw = text.trim();
     if (!raw) return;
-    const r = parseIntent(raw, categories, cuisines);
+    const r = parseIntent(raw, categories, cuisines, vocab);
     if (r.kind === 'matched') apply(r.label, r.reply, r.actions);
     else setStep({ kind: 'clarify', asked: raw, candidates: r.candidates, unsure: r.kind === 'ambiguous' });
   };

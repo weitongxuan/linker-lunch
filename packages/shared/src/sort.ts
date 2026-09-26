@@ -30,6 +30,8 @@ export interface FilterState {
   dish: Set<string>;
   /** 問問看說的預算(元),0 = 不限:菜單有價格且預算內不到 3 道的店拿掉 */
   budget: number;
+  /** 問問看說的飲品名:飲料清單裡有這杯的店排前面 */
+  drink: Set<string>;
 }
 
 export const DEFAULT_FILTERS: FilterState = {
@@ -50,6 +52,7 @@ export const DEFAULT_FILTERS: FilterState = {
   minGoogle: 0,
   dish: new Set(),
   budget: 0,
+  drink: new Set(),
 };
 
 export interface ComputedRow {

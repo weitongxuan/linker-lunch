@@ -455,3 +455,8 @@ a.btn{text-decoration:none;display:inline-flex;align-items:center}
 .conds-x{border:none;background:transparent;color:inherit;opacity:.7;font-size:14px;line-height:1;padding:0 2px;cursor:pointer}
 .conds-x:hover{opacity:1}
 @media(max-width:600px){.conds{padding:8px 14px}}
+
+/* 抽屜「想吃的菜/想喝」的小輸入框 */
+.terminput{font:inherit;font-size:13px;padding:4px 8px;border:1px solid var(--line,#ccc);border-radius:999px;background:transparent;color:inherit;width:9em}
+.drow .menuhit{grid-column:1/-1}
+#drinkpick{padding:0 24px;margin-top:8px}

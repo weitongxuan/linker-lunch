@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { countMenuItems, openNowState, passScore, tierOf, travelOf } from '@lunch-map/shared';
+import { countMenuItems, findMenuItems, openNowState, passScore, tierOf, travelOf } from '@lunch-map/shared';
 import type { AfterPlace, Config, DayKey, Parking } from '@lunch-map/shared';
 import { useMe } from '../hooks/useMe.js';
 import { useDeleteDrinkMutation, useRateMutation, useSetMenuMutation } from '../hooks/useMutations.js';
@@ -46,7 +46,15 @@ export function AfterSection({ items, config, parkings, day, nowMinute, ratings,
       });
   }, [items, parkings, config, day, nowMinute, ratings]);
 
-  const rows = useMemo(() => computed.filter((r) => passScore({ sh: r.d, sc: r.sc }, state.filters)), [computed, state.filters]);
+  // 問問看/抽屜說了想喝什麼:菜單有這杯的店排前面(穩定排序,原本的營業中→走路近順序不變),並列出命中的品項
+  const rows = useMemo(() => {
+    const kept = computed.filter((r) => passScore({ sh: r.d, sc: r.sc }, state.filters));
+    const wanted = [...state.filters.drink];
+    if (!wanted.length) return kept.map((r) => ({ ...r, hits: [] as string[] }));
+    return kept
+      .map((r) => ({ ...r, hits: [...new Set(wanted.flatMap((w) => findMenuItems(menus[r.d.id] ?? '', w, 2)))].slice(0, 3) }))
+      .sort((a, b) => Number(b.hits.length > 0) - Number(a.hits.length > 0));
+  }, [computed, state.filters, menus]);
 
   if (rows.length === 0) return null;
 
@@ -85,6 +93,7 @@ export function AfterSection({ items, config, parkings, day, nowMinute, ratings,
             {r.sc.n > 0 ? ` · ★${r.sc.avg.toFixed(1)}` : ''}
             {r.d.googleRating != null ? ` · G ${r.d.googleRating.toFixed(1)}` : ''}
           </span>
+          {r.hits.length > 0 && <span className="menuhit">🧋 {r.hits.join('、')}</span>}
           <span className="dstars">
             {[1, 2, 3, 4, 5].map((s) => {
               const mine = ratings[r.d.id]?.who?.[me] ?? 0;

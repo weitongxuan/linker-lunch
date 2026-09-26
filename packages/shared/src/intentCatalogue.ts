@@ -14,6 +14,8 @@ export interface IntentActions {
   dish?: string[];
   /** 預算(元):菜單有價格的店,預算內要有幾道可選才留下 */
   budget?: number;
+  /** 飲品名(珍珠奶茶…):從飲料店菜單找有這杯、有開、最近的那家 */
+  drink?: string[];
 }
 
 export interface CatalogueEntry {
