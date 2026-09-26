@@ -90,7 +90,8 @@ export async function seedDatabase(prisma: PrismaClient, opts: { ifEmpty?: boole
         create: { placeId, placeType, text },
       });
     });
-  await prisma.$transaction(menuUpserts);
+  // 店家從 seed 拿掉(歇業刪除)後,它的菜單不能留著變孤兒;還在的店,同事自己打的菜單照樣保留
+  await prisma.$transaction([...menuUpserts, prisma.menu.deleteMany({ where: { placeId: { notIn: [...typeOf.keys()] } } })]);
 
   await prisma.market.create({
     data: {
