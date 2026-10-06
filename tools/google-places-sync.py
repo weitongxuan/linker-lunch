@@ -1,6 +1,6 @@
 """半夜跑的資料補完:用 Google Places API(官方)核對每家店,產出「提案檔」給人隔天核對。
 
-只讀 seed-data.json,不改任何資料;所有結果寫到 tools/nightly-review/<日期>.json 與 .md,
+只讀 data/places.json,不改任何資料;所有結果寫到 tools/nightly-review/<日期>.json 與 .md,
 確認後用 tools/apply-review.py 套用。
 
 抓的東西:Google 評分/評論數、營業時段(與現有時段逐日比對)、地址、電話、價位、營業狀態(歇業?),
@@ -17,7 +17,7 @@
 import argparse, datetime as dt, json, math, os, pathlib, re, subprocess, sys, time, urllib.error, urllib.parse, urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-SEED = ROOT / 'apps/api/prisma/seed-data.json'
+PLACES = ROOT / 'data/places.json'
 OUT = ROOT / 'tools/nightly-review'
 OCR_BIN = ROOT / 'tools/.bin/ocr'
 DAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']  # Google 的 day:0=週日
@@ -216,7 +216,7 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
     state_path = out_dir / 'state.json'
     state = json.loads(state_path.read_text(encoding='utf-8')) if state_path.exists() else {'placeIds': {}, 'lastChecked': {}}
-    d = json.loads(SEED.read_text(encoding='utf-8'))
+    d = json.loads(PLACES.read_text(encoding='utf-8'))
     api = Places(key)
     today = dt.date.today().isoformat()
     report = {'date': today, 'checked': [], 'proposals': [], 'unmatched': [], 'errors': []}

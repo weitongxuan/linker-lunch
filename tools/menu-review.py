@@ -9,7 +9,7 @@
 import argparse, datetime as dt, glob, json, pathlib, re, sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-SEED = ROOT / 'apps/api/prisma/seed-data.json'
+PLACES = ROOT / 'data/places.json'
 MAX_MENU_CHARS = 4000
 PRICE_LINE = re.compile(r'\s(\d{1,4}(?:/\d{1,4})?|時價)\s*$')
 
@@ -48,7 +48,7 @@ def main():
     for pat in args.inputs:
         for f in sorted(glob.glob(pat)):
             results += json.loads(pathlib.Path(f).read_text(encoding='utf-8'))
-    d = json.loads(SEED.read_text(encoding='utf-8'))
+    d = json.loads(PLACES.read_text(encoding='utf-8'))
     shops = {s['id']: s for s in d['shops']}
     shops.update({s['id']: s for s in d['drinks']})
     existing = d.get('menus', {})

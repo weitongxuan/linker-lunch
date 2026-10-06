@@ -12,6 +12,7 @@ import { marketRouter } from './routes/market.js';
 import { placesRouter } from './routes/places.js';
 import { photosRouter } from './routes/photos.js';
 import { menusRouter, ratingsRouter, votesRouter } from './routes/bulk.js';
+import { importRouter } from './routes/importPlaces.js';
 import { startMarketCron } from './lib/marketCron.js';
 
 const PORT = Number(process.env.PORT) || 4000;
@@ -20,6 +21,8 @@ fs.mkdirSync(PHOTOS_DIR, { recursive: true });
 
 const app = express();
 app.use(cors({ origin: process.env.CORS_ORIGIN || true }));
+// places.json 整份約 0.5–2 MB,比預設的 100kb 大;匯入這條路要排在全域 json 前面,不然先被擋掉
+app.use('/api/import', express.json({ limit: '20mb' }), importRouter);
 app.use(express.json());
 app.use('/photos', express.static(path.resolve(PHOTOS_DIR)));
 

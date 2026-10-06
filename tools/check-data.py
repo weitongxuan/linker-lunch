@@ -4,6 +4,7 @@ from collections import Counter
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 d = json.loads((ROOT / 'apps/api/prisma/seed-data.json').read_text(encoding='utf-8'))
+d.update(json.loads((ROOT / 'data/places.json').read_text(encoding='utf-8')))  # 店家/飲料/菜單另外放
 OK_CAT = {'便當', '小吃', '水餃', '海鮮', '火鍋', '牛排', '自助餐', '速食', '飯', '麵', '其他'}
 OK_CUI = {'台式', '日式', '港式', '泰式', '韓式', '義式', '美式', '越式', '川菜', '閩菜', '中式', '西式', '素食', '印度'}
 DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']

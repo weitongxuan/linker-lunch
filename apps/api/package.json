@@ -12,6 +12,8 @@
     "prisma:deploy": "prisma migrate deploy",
     "seed": "node dist/scripts/seed.js",
     "seed:dev": "tsx src/scripts/seed.ts",
+    "places": "node dist/scripts/import-places.js",
+    "places:dev": "tsx src/scripts/import-places.ts",
     "extract-legacy-data": "tsx scripts/extract-legacy-data.ts"
   },
   "dependencies": {

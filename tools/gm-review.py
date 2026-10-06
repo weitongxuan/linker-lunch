@@ -1,4 +1,4 @@
-"""把「Google 地圖網頁查證」的結果(子代理產出的 gm-results-*.json)跟 seed-data.json 比對,
+"""把「Google 地圖網頁查證」的結果(子代理產出的 gm-results-*.json)跟 data/places.json 比對,
 產出跟 google-places-sync.py 同格式的提案檔:<out>.json(給 apply-review.py 套用)+ <out>.md(給人核對)。
 
 用法:
@@ -10,7 +10,7 @@
 import argparse, datetime as dt, glob, json, math, pathlib, re, sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-SEED = ROOT / 'apps/api/prisma/seed-data.json'
+PLACES = ROOT / 'data/places.json'
 DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
 DAY_ZH = dict(zip(DAYS, ['一', '二', '三', '四', '五', '六', '日']))
 COORD_FLAG_M = 150   # 座標差超過這個就列出來
@@ -64,7 +64,7 @@ def main():
     for pat in args.inputs:
         for f in sorted(glob.glob(pat)):
             results += json.loads(pathlib.Path(f).read_text(encoding='utf-8'))
-    d = json.loads(SEED.read_text(encoding='utf-8'))
+    d = json.loads(PLACES.read_text(encoding='utf-8'))
     index = {('shop', s['id']): s for s in d['shops']}
     index.update({('drink', s['id']): s for s in d['drinks']})
     today = dt.date.today().isoformat()

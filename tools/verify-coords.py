@@ -24,7 +24,7 @@ def dist_m(a, b, c, d):
     R = 6371000; p = math.pi/180
     return R * math.hypot((d-b)*p*math.cos((a+c)/2*p), (c-a)*p)
 
-data = json.loads((ROOT/'apps/api/prisma/seed-data.json').read_text(encoding='utf-8'))
+data = json.loads((ROOT/'data/places.json').read_text(encoding='utf-8'))
 rows = [s for s in data['shops'] if s.get('addr')] + [s for s in data['drinks'] if s.get('addr')]
 print(f'比對 {len(rows)} 家有地址的店\n', flush=True)
 bad = []

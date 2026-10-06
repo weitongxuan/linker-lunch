@@ -31,6 +31,8 @@ COPY --from=build /app/packages/shared/package.json ./packages/shared/package.js
 COPY --from=build /app/apps/api/dist ./apps/api/dist
 COPY --from=build /app/apps/api/package.json ./apps/api/package.json
 COPY --from=build /app/apps/api/prisma ./apps/api/prisma
+# 核對過的店家/菜單:只在資料庫還沒有店家時灌一次(--if-empty),之後更新走 tools/push-places.py
+COPY data/places.json ./data/places.json
 
 # 保留 prisma devDependency(容器啟動時要跑 migrate deploy),不 prune —— 對內部工具來說,
 # 犧牲一點 image 大小換開發簡單划算。
@@ -39,6 +41,6 @@ RUN mkdir -p /app/apps/api/data/photos && chown -R node:node /app/apps/api/data
 USER node
 WORKDIR /app/apps/api
 EXPOSE 4000
-# migrate 之後自動 seed(只有資料庫是空的才會真的寫入,已經 seed 過就直接略過)——
-# 這樣 docker compose up / 第一次部署完不用再手動跑一次 seed,config/market 才不會 404。
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/scripts/seed.js --if-empty && node dist/server.js"]
+# migrate 之後自動 seed 設定/停車場/行情、匯入店家(都只在資料庫是空的時候寫,已經有資料就略過)——
+# docker compose up / 第一次部署完就能用;之後店家更新不會被開機蓋掉。
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/scripts/seed.js --if-empty && node dist/scripts/import-places.js --if-empty && node dist/server.js"]

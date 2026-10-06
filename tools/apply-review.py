@@ -1,4 +1,4 @@
-"""把夜間核對的提案套進 seed-data.json(菜單則打 API 寫進 DB)。
+"""把夜間核對的提案套進 data/places.json(菜單則打 API 寫進 DB)。
 
 用法:
   python3 tools/apply-review.py tools/nightly-review/2026-09-25.json --approve all
@@ -6,12 +6,12 @@
   python3 tools/apply-review.py <json> --field googleRating,hours  # 只套這些欄位
   python3 tools/apply-review.py <json>                             # 只套 JSON 裡 "approve": true 的
 
-套完會跑 tools/check-data.py;seed 有改就要 `npm run seed:dev -w apps/api`。
+套完會跑 tools/check-data.py;places.json 有改就 `npm run places`(本機)或 `python3 tools/push-places.py --api <線上網址>`(線上)。
 """
 import argparse, datetime as dt, json, pathlib, subprocess, sys, urllib.error, urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-SEED = ROOT / 'apps/api/prisma/seed-data.json'
+PLACES = ROOT / 'data/places.json'
 API = 'http://localhost:4000'
 SKIP_FIELDS = {'businessStatus'}  # 歇業只提醒,刪店由人決定
 
@@ -33,7 +33,7 @@ def main():
     review = json.loads(pathlib.Path(args.review).read_text(encoding='utf-8'))
     ids = None if args.approve in (None, 'all') else set(args.approve.split(','))
     fields = set(args.field.split(',')) if args.field else None
-    d = json.loads(SEED.read_text(encoding='utf-8'))
+    d = json.loads(PLACES.read_text(encoding='utf-8'))
     index = {('shop', s['id']): s for s in d['shops']}
     index.update({('drink', s['id']): s for s in d['drinks']})
     today = dt.date.today().isoformat()
@@ -45,18 +45,18 @@ def main():
             continue
         s = index.get((p['type'], p['id']))
         if not s:
-            skipped.append(f"{p['id']} 不在 seed 裡")
+            skipped.append(f"{p['id']} 不在 places.json 裡")
             continue
         f, v = p['field'], p['proposed']
         if f == 'menu':
-            # 菜單寫進 seed(seedDatabase 會灌進 Menu 表),同事重灌才拿得到;API 有開就順便即時更新
+            # 菜單寫進 places.json(importPlaces 會灌進 Menu 表);API 有開就順便即時更新
             d.setdefault('menus', {})[p['id']] = v
             seed_changed = True
             try:
                 put_menu(p['type'], p['id'], v)
-                applied.append(f"{p['id']} menu → seed + API")
+                applied.append(f"{p['id']} menu → places.json + API")
             except (urllib.error.URLError, OSError):
-                applied.append(f"{p['id']} menu → seed(API 沒開,reseed 後生效)")
+                applied.append(f"{p['id']} menu → places.json(API 沒開,匯入後生效)")
             continue
         if f == 'googleRating':
             s['googleRating'], s['googleReviews'] = v['googleRating'], v['googleReviews']
@@ -76,14 +76,14 @@ def main():
         applied.append(f"{p['id']} {f}")
 
     if seed_changed:
-        SEED.write_text(json.dumps(d, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        PLACES.write_text(json.dumps(d, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print('套用:', len(applied)); [print('  ', a) for a in applied]
     if skipped:
         print('略過:'); [print('  ', s) for s in skipped]
     if seed_changed:
         print('--- check-data ---')
         subprocess.run([sys.executable, str(ROOT / 'tools/check-data.py')])
-        print('seed 有改:記得 npm run seed:dev -w apps/api')
+        print('places.json 有改:本機 npm run places;線上 python3 tools/push-places.py --api <網址>')
     return 0
 
 

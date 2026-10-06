@@ -11,7 +11,7 @@
 import argparse, glob, json, pathlib, re, sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-SEED = ROOT / 'apps/api/prisma/seed-data.json'
+PLACES = ROOT / 'data/places.json'
 QTY = re.compile(r'(\d+)\s*(?:個|支|顆|粒|克|g|塊|片|條|入|串|份|碗|杯)')
 MULTI = re.compile(r'一隻|半隻|[大中小]\d{2,}')
 TAIL = re.compile(r'\s((?:\d{1,4}/)*\d{1,4})(?:\s*[(（][^)）]*[)）])?\s*$')
@@ -30,7 +30,7 @@ def main():
     ap.add_argument('inputs', nargs='+')
     ap.add_argument('--out', required=True)
     args = ap.parse_args()
-    d = json.loads(SEED.read_text(encoding='utf-8'))
+    d = json.loads(PLACES.read_text(encoding='utf-8'))
     names = {s['id']: s['name'] for s in d['shops'] + d['drinks']}
     flags, total = [], 0
     for pat in args.inputs:
