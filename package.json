@@ -11,6 +11,7 @@
     "dev:api": "npm run dev -w apps/api",
     "dev:web": "npm run dev -w apps/web",
     "seed": "npm run seed:dev -w apps/api",
+    "places": "npm run places:dev -w apps/api",
     "test": "npm run test -w packages/shared"
   },
   "devDependencies": {

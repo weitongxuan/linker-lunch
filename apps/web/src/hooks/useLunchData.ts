@@ -15,6 +15,7 @@ export function useLunchData() {
 
   const votes = useQuery({ queryKey: ['votes', 'shop'], queryFn: () => getVotesBulk('shop') });
   const menus = useQuery({ queryKey: ['menus', 'shop'], queryFn: () => getMenusBulk('shop') });
+  const drinkMenus = useQuery({ queryKey: ['menus', 'drink'], queryFn: () => getMenusBulk('drink') });
 
   const isLoading = config.isLoading || shops.isLoading || drinks.isLoading || parkings.isLoading;
 
@@ -29,6 +30,7 @@ export function useLunchData() {
     drinkRatings: drinkRatings.data ?? {},
     votes: votes.data ?? {},
     menus: menus.data ?? {},
+    drinkMenus: drinkMenus.data ?? {},
   };
 }
 

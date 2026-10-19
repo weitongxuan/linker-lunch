@@ -17,6 +17,7 @@ const CFG: Config = {
   streetSearch: 6,
   driveWorthIt: 5,
   maxDriveMin: 15,
+  maxDrinkDriveMin: 20,
 };
 
 test('haversine returns ~0 for identical points and a sane value for a known offset', () => {

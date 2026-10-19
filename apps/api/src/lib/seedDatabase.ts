@@ -2,8 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { PrismaClient } from '@prisma/client';
-import type { AfterPlace, Config, Market, Parking, Shop } from '@lunch-map/shared';
-import { fromAfterPlace, fromShop } from './serialize.js';
+import type { Config, Market, Parking } from '@lunch-map/shared';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // 不管是跑 src/lib/seedDatabase.ts(tsx)還是編譯後的 dist/lib/seedDatabase.js,
@@ -11,17 +10,15 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // 所以同一個相對路徑在兩種情況下都找得到同一份 JSON。
 const SEED_DATA_FILE = path.resolve(__dirname, '../../prisma/seed-data.json');
 
+/** 只有公司設定、停車場、行情。餐廳/飲料店/菜單在 data/places.json,由 importPlaces 依 id 更新,不在這裡清空重灌 */
 interface SeedData {
   config: Config;
-  shops: Shop[];
-  drinks: AfterPlace[];
   parkings: Parking[];
   market: Market;
 }
 
 /**
- * 從 prisma/seed-data.json(一次性從 legacy/index.html 挖出來、跟著 image 一起發布的快照)
- * 灌店家/停車場/設定/行情資料進資料庫。`ifEmpty: true` 時,如果 Config 已經有資料就整個略過——
+ * 從 prisma/seed-data.json 灌設定/停車場/行情進資料庫(店家另外走 importPlaces)。`ifEmpty: true` 時,如果 Config 已經有資料就整個略過——
  * 用來讓容器開機時安全地自動 seed,不會每次重啟都重複清空重灌。
  */
 export async function seedDatabase(prisma: PrismaClient, opts: { ifEmpty?: boolean } = {}): Promise<'seeded' | 'skipped'> {
@@ -32,12 +29,7 @@ export async function seedDatabase(prisma: PrismaClient, opts: { ifEmpty?: boole
 
   const data: SeedData = JSON.parse(fs.readFileSync(SEED_DATA_FILE, 'utf8'));
 
-  await prisma.$transaction([
-    prisma.shop.deleteMany(),
-    prisma.afterPlace.deleteMany(),
-    prisma.parking.deleteMany(),
-    prisma.market.deleteMany(),
-  ]);
+  await prisma.$transaction([prisma.parking.deleteMany(), prisma.market.deleteMany()]);
 
   const configFields = {
     officeLat: data.config.office.lat,
@@ -56,6 +48,7 @@ export async function seedDatabase(prisma: PrismaClient, opts: { ifEmpty?: boole
     streetSearch: data.config.streetSearch,
     driveWorthIt: data.config.driveWorthIt,
     maxDriveMin: data.config.maxDriveMin,
+    maxDrinkDriveMin: data.config.maxDrinkDriveMin,
   };
   await prisma.config.upsert({
     where: { id: 1 },
@@ -63,16 +56,9 @@ export async function seedDatabase(prisma: PrismaClient, opts: { ifEmpty?: boole
     create: { id: 1, ...configFields },
   });
 
-  for (const shop of data.shops) {
-    await prisma.shop.create({ data: fromShop({ ...shop, note: shop.note ?? '' }) });
-  }
-  for (const drink of data.drinks) {
-    await prisma.afterPlace.create({ data: fromAfterPlace({ ...drink, note: drink.note ?? '' }, 'drink') });
-  }
   for (const parking of data.parkings) {
     await prisma.parking.create({ data: parking });
   }
-
   await prisma.market.create({
     data: {
       date: data.market.date,

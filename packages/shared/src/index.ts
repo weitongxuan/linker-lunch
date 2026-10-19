@@ -7,3 +7,4 @@ export * from './sort.js';
 export * from './randomPick.js';
 export * from './osmHours.js';
 export * from './intents.js';
+export * from './menu.js';

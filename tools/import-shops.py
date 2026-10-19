@@ -1,4 +1,4 @@
-"""把子代理查到的新店匯入 seed-data.json:地址轉座標、去重、範圍與行政區檢查。
+"""把子代理查到的新店匯入 data/places.json:地址轉座標、去重、範圍與行政區檢查。
 
 用法:
   python3 tools/import-shops.py <json>...            # 餐廳
@@ -9,7 +9,7 @@ import json, math, pathlib, re, subprocess, sys, time, urllib.parse
 
 UA = 'linker-lunch-map/1.0 (momoyu@linkervision.com)'
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-SEED = ROOT / 'apps/api/prisma/seed-data.json'
+PLACES = ROOT / 'data/places.json'
 OK_DISTRICTS = ['鹽埕區', '鼓山區', '前金區', '苓雅區']
 # category 與 cuisine 都是受控詞彙:問問看的槽位是從資料裡的實際值長出來的,
 # 一旦混進「豬油乾麵」這種菜色描述,使用者永遠不會那樣問,那個值就是死的。
@@ -69,8 +69,8 @@ def main():
     if '--max-m' in args:
         i = args.index('--max-m'); max_m = int(args[i + 1]); del args[i:i + 2]
     args = [a for a in args if a != '--drinks']
-    data = json.loads(SEED.read_text(encoding='utf-8'))
-    office = data['config']['office']
+    data = json.loads(PLACES.read_text(encoding='utf-8'))
+    office = json.loads((ROOT / 'apps/api/prisma/seed-data.json').read_text(encoding='utf-8'))['config']['office']  # 公司座標在 seed
     have = {norm_name(s['name']) for s in data['shops']} | {norm_name(s['name']) for s in data['drinks']}
     target = data['drinks'] if drinks_mode else data['shops']
     prefix = 'd' if drinks_mode else 'f'
@@ -120,7 +120,7 @@ def main():
             added.append((shop['id'], name, round(d), '(時間未知)' if unknown else ''))
             next_id += 1
 
-    SEED.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    PLACES.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print(f'新增 {len(added)} 家:')
     for i, n, d, u in added:
         print(f'  {i:<7}{n:<30}{d:>5}m {u}')

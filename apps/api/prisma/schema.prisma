@@ -101,6 +101,7 @@ model Config {
   streetSearch Int
   driveWorthIt Int
   maxDriveMin  Int
+  maxDrinkDriveMin Int @default(20)
   updatedAt    DateTime @updatedAt
 }
 

@@ -22,17 +22,27 @@ interface OsmElement {
   tags?: Record<string, string>;
 }
 
+// Overpass 掛住時整支 API 會跟著掛,前端按鈕就永遠停在「匯入中…」;查詢本身給 30 秒,連線再多留一點
+const OVERPASS_TIMEOUT_MS = 45_000;
+
 async function overpass(query: string): Promise<{ elements: OsmElement[] }> {
-  const res = await fetch(OVERPASS_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'User-Agent': 'lunch-map/1.0 (internal office lunch-recommendation tool)',
-      // Overpass's Apache config 406s Node's default Accept header — be explicit.
-      Accept: '*/*',
-    },
-    body: 'data=' + encodeURIComponent(query),
-  });
+  let res: Response;
+  try {
+    res = await fetch(OVERPASS_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'User-Agent': 'lunch-map/1.0 (internal office lunch-recommendation tool)',
+        // Overpass's Apache config 406s Node's default Accept header — be explicit.
+        Accept: '*/*',
+      },
+      body: 'data=' + encodeURIComponent(query),
+      signal: AbortSignal.timeout(OVERPASS_TIMEOUT_MS),
+    });
+  } catch (err) {
+    if (err instanceof Error && err.name === 'TimeoutError') throw new Error(`Overpass ${OVERPASS_TIMEOUT_MS / 1000} 秒沒回應,稍後再試`);
+    throw err;
+  }
   if (!res.ok) throw new Error(`Overpass 回應 ${res.status}`);
   return res.json() as Promise<{ elements: OsmElement[] }>;
 }

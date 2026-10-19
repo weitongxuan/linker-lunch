@@ -11,7 +11,9 @@
    固定亮色主題,不跟隨系統深色模式 —— 顏色只在 token 層定義,元件一律走 var()。
    ========================================================================== */
 :root{
-  --bg:#ffffff; --card:#ffffff; --soft:#faf9f6; --line:#e8e6e0; --line2:#efeee8;
+  --bg:#faf8f1; --card:#ffffff; --soft:#faf9f6; --line:#e8e6e0; --line2:#efeee8;
+  /* 執照內頁:象牙白底 + 金色防偽紋;卡片框線帶一點金 */
+  --cardline:#ece3c8; --guilloche:#c9a227;
   --ink:#17171a; --ink2:#55555c; --dim:#9c9a92;
   --tagbg:#f3f2ec; --noteBg:#faf6ee;   --accent:#14663c; --accentbg:#e9f5ee; --accentline:#9fcfb4; --pickbg:#f3faf6;
   --gold:#c9a227; --goldline:#e3c77a;
@@ -110,6 +112,7 @@ h1{font-family:"Noto Serif TC",serif;font-size:22px;margin:0;font-weight:700;
 .btn.pri{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
 .btn.pri:hover{filter:brightness(1.06);color:#fff}
 .btn.ghost{border-color:transparent;background:transparent;color:var(--dim);padding:4px 7px}
+#list .btn.more{display:block;width:100%;margin:6px 0 14px;padding:10px;color:var(--ink2)}
 .searchInput{border:1px solid var(--line);background:var(--soft);border-radius:11px;
      padding:6px 13px;font-size:12.5px;color:var(--ink);width:160px}
 .searchInput::placeholder{color:var(--dim)}
@@ -143,6 +146,7 @@ h1{font-family:"Noto Serif TC",serif;font-size:22px;margin:0;font-weight:700;
       padding:5px 12px;font-size:12.5px;color:var(--ink2);font-weight:500;transition:border-color .12s,background .12s}
 .chip:hover{border-color:var(--dim)}
 .chip.on{background:var(--ink);border-color:var(--ink);color:var(--bg);font-weight:600}
+.chip.on.avoid{background:var(--warnbg);border-color:var(--warnline);color:var(--warnink);text-decoration:line-through}
 .listTabs{display:flex;margin:14px 0 4px;font-size:13px}
 .listTabs button{flex:1 1 0;padding:9px 14px;font-weight:600}
 .hint{font-size:11.5px;color:var(--dim)}
@@ -164,7 +168,24 @@ h1{font-family:"Noto Serif TC",serif;font-size:22px;margin:0;font-weight:700;
 
 /* ---------------- 版面 ---------------- */
 main{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:minmax(390px,1fr) 1fr}
-#listwrap{overflow-y:auto;padding:18px 24px 56px;min-height:0}
+/* 清單欄 = 執照內頁:左側深綠 + 金細線的裝訂邊條(inset 陰影不隨捲動),
+   底紋是原創的金色防偽圓紋(同心圓 + 旋轉橢圓的玫瑰紋)加極細波紋,固定在視窗、不干擾閱讀 */
+#listwrap{overflow-y:auto;padding:18px 24px 56px 30px;min-height:0;position:relative;
+  box-shadow:inset 6px 0 0 var(--licence),inset 7px 0 0 var(--gold)}
+body{
+  background-color:var(--bg);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-160 -160 320 320' fill='none' stroke='%23c9a227' stroke-width='.7'%3E%3Cg opacity='.5'%3E%3Ccircle r='30'/%3E%3Ccircle r='52'/%3E%3Ccircle r='74'/%3E%3Ccircle r='96'/%3E%3Ccircle r='118'/%3E%3Ccircle r='140'/%3E%3C/g%3E%3Cg opacity='.38'%3E%3Cellipse rx='140' ry='46'/%3E%3Cellipse rx='140' ry='46' transform='rotate(30)'/%3E%3Cellipse rx='140' ry='46' transform='rotate(60)'/%3E%3Cellipse rx='140' ry='46' transform='rotate(90)'/%3E%3Cellipse rx='140' ry='46' transform='rotate(120)'/%3E%3Cellipse rx='140' ry='46' transform='rotate(150)'/%3E%3C/g%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='24' fill='none' stroke='%23c9a227' stroke-width='.5' opacity='.22'%3E%3Cpath d='M0 12 Q15 2 30 12 T60 12 T90 12 T120 12'/%3E%3Cpath d='M0 12 Q15 22 30 12 T60 12 T90 12 T120 12'/%3E%3C/svg%3E");
+  background-repeat:no-repeat,repeat;
+  background-size:560px 560px,120px 24px;
+  /* 圓紋中心對齊清單欄(左半邊)正中、偏下;attachment:fixed 時座標是相對視窗 */
+  background-position:calc(25vw - 280px) calc(100vh - 460px),0 0;
+  background-attachment:fixed,fixed;
+}
+/* 內頁最底下的執照編號,跟著清單走到底才看得到 */
+#listwrap::after{content:'LUNCH HUNTER LICENCE  ·  No. LV-2026-KHH';display:block;margin-top:28px;
+  font:10.5px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.18em;color:#b3a47a;text-align:center}
 main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
 /* isolation 讓 Leaflet 的 400–1000 層留在地圖內,浮層才不用一路往上疊 */
 #mapwrap{position:relative;isolation:isolate;border-left:1px solid var(--line);min-height:0}
@@ -175,13 +196,19 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
   main:not(.map-only) #mapwrap{display:none}
   main.map-only #listwrap{display:none}
   .tab{padding:8px 4px;font-size:12.5px}
+  /* 單欄時清單佔滿寬,圓紋改對齊整頁正中;iOS 不支援 fixed 背景,改成跟著捲動 */
+  /* 手機清單不是捲動容器,邊條放 body 才會畫滿整頁(標頭與工具列有自己的底色會蓋住) */
+  body{background-size:380px 380px,120px 24px;background-position:calc(50vw - 190px) 360px,0 0;
+       background-attachment:scroll,scroll;height:auto;min-height:100vh;min-height:100dvh;
+       box-shadow:inset 6px 0 0 var(--licence),inset 7px 0 0 var(--gold)}
+  #listwrap{box-shadow:none}
 }
 
 /* ---------------- 摘要 ---------------- */
 .sum .dot{opacity:.35}
 
 /* ---------------- 店家卡 ---------------- */
-.shop{background:var(--card);border:1px solid var(--line2);border-radius:var(--radius-m);
+.shop{background:var(--card);border:1px solid var(--cardline);border-radius:var(--radius-m);
       padding:18px 20px 16px 22px;margin-bottom:12px;position:relative;max-height:600px;overflow:hidden;
       box-shadow:none;
       transition:border-color .14s,box-shadow .14s,transform .14s,
@@ -200,6 +227,10 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
 .nm .sp{font-family:"Noto Sans TC",sans-serif;font-size:9.5px;font-weight:700;color:var(--warnink);background:var(--warnbg);
         border:1px solid var(--warnline);border-radius:4px;padding:1px 5px;
         margin-left:7px;vertical-align:2px;letter-spacing:.04em;white-space:nowrap}
+.gmap{font-size:13px;margin-left:6px;text-decoration:none;opacity:.55;vertical-align:1px;transition:opacity .15s}
+.gmap:hover{opacity:1}
+a.btn{text-decoration:none;display:inline-flex;align-items:center}
+.btn.nav{border-color:var(--goldline);color:var(--ink)}
 .st{font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;white-space:nowrap;flex:0 0 auto}
 .st.ok{color:var(--ok);background:var(--okbg)}
 .st.tight{color:var(--tight);background:var(--tightbg)}
@@ -258,6 +289,19 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
 .detail .why{margin-top:10px}
 .detail textarea{width:100%;min-height:56px;border:1px solid var(--line);background:var(--soft);
                  border-radius:8px;padding:8px 10px;margin-top:10px;resize:vertical;font-size:12px}
+/* 菜單:唯讀排版(品名靠左、價格靠右),長菜單在框內捲動,不把詳情撐爆 */
+.menublock{margin-top:12px;border:1px solid var(--cardline);border-radius:10px;background:var(--card);padding:8px 12px 10px}
+.menuhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.menublock .menusec{margin-top:6px}
+.menublock>.menusec:first-of-type{margin-top:0}
+.menublock{max-height:360px;overflow-y:auto}
+.menutitle{font-size:11.5px;font-weight:700;color:var(--accent);letter-spacing:.04em;margin:8px 0 2px;
+           border-bottom:1px solid var(--line2);padding-bottom:2px}
+.menuitem{display:flex;justify-content:space-between;gap:12px;font-size:13px;line-height:1.75}
+.menuprice{font:12.5px "IBM Plex Mono",ui-monospace,monospace;color:var(--ink2);white-space:nowrap;text-align:right}
+.menuhit{font-size:12.5px;color:var(--accent);background:var(--accentbg);border-radius:8px;padding:4px 9px;margin-top:6px;display:inline-block}
+.menunote{font-size:11.5px;color:var(--dim);margin-top:2px}
+.detail textarea.menuedit{min-height:260px;font:12.5px/1.6 "IBM Plex Mono",ui-monospace,monospace;margin:4px 0 8px}
 .who-rated{font-size:11px;color:var(--dim);margin-top:9px}
 .who-rated s{text-decoration:none;color:var(--ink2);margin-right:9px;white-space:nowrap}
 
@@ -283,6 +327,9 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
       background:var(--card);border:1px solid var(--line);border-radius:12px;
       padding:9px 12px;margin-bottom:7px}
 .drow.dim{opacity:.58;background:var(--soft)}
+.drow .dmenu{grid-column:1/-1}
+.drow .dmenu textarea.menuedit{width:100%;min-height:220px;border:1px solid var(--line);background:var(--soft);
+  border-radius:8px;padding:8px 10px;font:12.5px/1.6 "IBM Plex Mono",ui-monospace,monospace;margin:4px 0 8px}
 .dn{font-size:13.5px;font-weight:700;min-width:0}
 .dst{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:99px;
      white-space:nowrap;justify-self:end}
@@ -330,6 +377,10 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
   html,body{height:auto}
   body{display:block}
   main{display:block}
+  /* main 不再是 grid,#map 又是 absolute:「地圖」分頁的容器要自己給高度,不然是 0 */
+  main.map-only #mapwrap{height:70vh;height:70dvh;min-height:420px}
+  /* 手指點得到:📍 撐到 36px 見方的點擊區,視覺大小不變太多 */
+  .gmap{display:inline-flex;align-items:center;justify-content:center;min-width:36px;min-height:36px;margin:-10px -6px -10px 0;font-size:16px;opacity:.8}
   #listwrap{overflow:visible;min-height:0;padding:12px 14px 64px;max-width:none}
 
   header{padding:12px 14px 0}
@@ -404,3 +455,9 @@ main.list-only #listwrap>*{max-width:780px;margin-left:auto;margin-right:auto}
 .conds-x{border:none;background:transparent;color:inherit;opacity:.7;font-size:14px;line-height:1;padding:0 2px;cursor:pointer}
 .conds-x:hover{opacity:1}
 @media(max-width:600px){.conds{padding:8px 14px}}
+
+/* 抽屜「想吃的菜/想喝」的小輸入框 */
+.terminput{font:inherit;font-size:13px;padding:4px 8px;border:1px solid var(--line,#ccc);border-radius:999px;background:transparent;color:inherit;width:9em}
+.drow .menuhit{grid-column:1/-1}
+#drinkpick{padding:0 24px;margin-top:8px}
+.crow .fold{font-size:12px;padding:3px 10px}

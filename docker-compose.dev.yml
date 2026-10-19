@@ -1,4 +1,6 @@
-# docker compose up 會自動套用這個檔案(不用加 -f)。
+# 開發用(改了原始碼即時生效,但網頁是 vite dev 模式,比正式版慢很多、篩選會卡):
+#   docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+# 平常只要用畫面的同事,直接 docker compose up -d --build 就好(正式版,快)。
 # 把整個 repo 掛到 /app,搭配 node_modules 的 anonymous volume:
 # - node_modules 是 image build 時裝好的(linux 版,Prisma engine 才對得起來,
 #   不能被 host 的 darwin node_modules 蓋掉)

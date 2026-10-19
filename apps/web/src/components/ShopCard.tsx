@@ -1,10 +1,12 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { LABEL, ORDER, SERVICE_LABEL } from '@lunch-map/shared';
 import type { Row } from '../hooks/useComputedRows.js';
 import { useFilters } from '../state/filtersStore.js';
 import { useMe } from '../hooks/useMe.js';
 import * as places from '../api/places.js';
+import { googleDirectionsUrl, googleMapsUrl } from '../lib/maps.js';
+import { MenuBlock } from './MenuBlock.js';
 import {
   useAddMessageMutation,
   useDeleteShopMutation,
@@ -40,11 +42,13 @@ interface Props {
   row: Row;
   config: Config;
   menuText: string;
+  /** 搜尋/菜名命中的菜單行 */
+  menuHits?: string[];
   onSelectOnMap: (shopId: string) => void;
   className?: string;
 }
 
-export function ShopCard({ row, config, menuText, onSelectOnMap, className }: Props) {
+export function ShopCard({ row, config, menuText, menuHits, onSelectOnMap, className }: Props) {
   const { sh, f, sc } = row;
   const { state, dispatch } = useFilters();
   const [me] = useMe();
@@ -53,18 +57,6 @@ export function ShopCard({ row, config, menuText, onSelectOnMap, className }: Pr
   const rateMut = useRateMutation('shop');
   const voteMut = useVoteMutation('shop');
 
-  const photosQ = useQuery({
-    queryKey: ['photos', 'shop', sh.id],
-    queryFn: () => places.getPhotos('shop', sh.id),
-    enabled: isOpenDetail,
-  });
-  const messagesQ = useQuery({
-    queryKey: ['messages', 'shop', sh.id],
-    queryFn: () => places.getMessages('shop', sh.id),
-    enabled: isOpenDetail,
-  });
-
-  const menuLines = menuText ? menuText.split('\n').map((l) => l.trim()).filter(Boolean) : [];
   const myScore = sc.who?.[me] ?? 0;
   const votesInfo = row.votes;
 
@@ -80,6 +72,16 @@ export function ShopCard({ row, config, menuText, onSelectOnMap, className }: Pr
       <div className="top">
         <div className="nm">
           {sh.name}
+          <a
+            className="gmap"
+            href={googleMapsUrl(sh)}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="在 Google Map 開啟"
+            onClick={(e) => e.stopPropagation()}
+          >
+            📍
+          </a>
           {sh.needsReview && <span className="sp">待確認</span>}
         </div>
         <span className={`st ${STCLS[f.code] ?? 'no'}`}>{f.label}</span>
@@ -93,12 +95,6 @@ export function ShopCard({ row, config, menuText, onSelectOnMap, className }: Pr
           <>
             <span className="dot">·</span>
             <span title={config.priceBands.find((b) => b.v === sh.price)?.label}>{'$'.repeat(sh.price)}</span>
-          </>
-        )}
-        {menuLines.length > 0 && (
-          <>
-            <span className="dot">·</span>
-            <span className="mn">📋 {menuLines.length} 項</span>
           </>
         )}
         {sc.n > 0 && (
@@ -125,6 +121,7 @@ export function ShopCard({ row, config, menuText, onSelectOnMap, className }: Pr
         </span>
       </div>
 
+      {menuHits && menuHits.length > 0 && <div className="menuhit">🍜 {menuHits.join('、')}</div>}
       {f.note && <div className="why">{f.note}</div>}
 
       <div className="acts" onClick={(e) => e.stopPropagation()}>
@@ -159,39 +156,25 @@ export function ShopCard({ row, config, menuText, onSelectOnMap, className }: Pr
 
       {isOpenDetail && (
         <div onClick={(e) => e.stopPropagation()}>
-          <DetailPanel
-            row={row}
-            menuText={menuText}
-            photos={photosQ.data ?? []}
-            messages={messagesQ.data ?? []}
-            me={me}
-          />
+          <DetailPanel row={row} menuText={menuText} me={me} />
         </div>
       )}
     </div>
   );
 }
 
-function DetailPanel({
-  row,
-  menuText,
-  photos,
-  messages,
-  me,
-}: {
-  row: Row;
-  menuText: string;
-  photos: Photo[];
-  messages: Message[];
-  me: string;
-}) {
+// 照片與留言只有展開詳情才需要:查詢放在這裡,幾百張收合的卡片就不會各自掛著訂閱
+function DetailPanel({ row, menuText, me }: { row: Row; menuText: string; me: string }) {
   const { sh, sc, t } = row;
   const { state, dispatch } = useFilters();
+  const photosQ = useQuery({ queryKey: ['photos', 'shop', sh.id], queryFn: () => places.getPhotos('shop', sh.id) });
+  const messagesQ = useQuery({ queryKey: ['messages', 'shop', sh.id], queryFn: () => places.getMessages('shop', sh.id) });
+  const photos: Photo[] = photosQ.data ?? [];
+  const messages: Message[] = messagesQ.data ?? [];
   const deleteMut = useDeleteShopMutation();
   const setMenuMut = useSetMenuMutation('shop');
   const uploadPhotoMut = useUploadPhotoMutation('shop', sh.id);
   const addMessageMut = useAddMessageMutation('shop');
-  const [draftMenu, setDraftMenu] = useState(menuText);
   const [draftMsg, setDraftMsg] = useState('');
 
   const sendMessage = () => {
@@ -234,14 +217,7 @@ function DetailPanel({
         </div>
       )}
 
-      <textarea
-        value={draftMenu}
-        onChange={(e) => setDraftMenu(e.target.value)}
-        onBlur={() => {
-          if (draftMenu !== menuText) setMenuMut.mutate({ placeId: sh.id, text: draftMenu });
-        }}
-        placeholder="這家店的菜單(一行一項,例如:排骨飯 90)"
-      />
+      <MenuBlock menuText={menuText} onSave={(text) => setMenuMut.mutate({ placeId: sh.id, text })} saving={setMenuMut.isPending} />
 
       <div className="crow" style={{ marginTop: 9 }}>
         <label className="btn">
@@ -297,6 +273,9 @@ function DetailPanel({
       </div>
 
       <div className="crow admin">
+        <a className="btn nav" href={googleDirectionsUrl(sh, row.by)} target="_blank" rel="noopener noreferrer">
+          🧭 Google 導航
+        </a>
         <button className="btn ghost" onClick={() => dispatch({ type: 'SET_EDIT_SHOP', id: sh.id })}>
           ✏️ 修改店家資料
         </button>
@@ -313,3 +292,4 @@ function DetailPanel({
     </div>
   );
 }
+

@@ -16,16 +16,19 @@ npm install
 cp apps/api/.env.example apps/api/.env
 npm run build -w packages/shared
 npm run prisma:migrate -w apps/api      # 建資料庫 + 套用 migration
-npm run seed                            # 從 apps/api/prisma/seed-data.json 匯入店家/停車場/行情資料
+npm run seed                            # 設定/停車場/行情(apps/api/prisma/seed-data.json)
+npm run places                          # 餐廳/飲料店/菜單(data/places.json)
 
 # 2. 兩個 dev server(各開一個終端機)
 npm run dev:api      # http://localhost:4000
 npm run dev:web       # http://localhost:5173(proxy /api、/photos 到 4000)
 ```
 
-`npm run seed` 只需要跑一次(之後店家資料就在 SQLite 裡了);重跑也安全,它會先清空 `Shop`/`AfterPlace`/`Parking`/`Market` 表再重新灌入,不會動到評分/照片等共用資料。
+兩個都只需要跑一次,重跑也安全:
+- `npm run seed` 清空 `Parking`/`Market` 重灌、更新 `Config`,不碰店家。
+- `npm run places` 把 `data/places.json` **依 id** 寫進 `Shop`/`AfterPlace`/`Menu`:有的更新、沒有的新增、檔案裡沒有的(歇業)刪掉。評分/照片/投票/留言,以及不是資料集 id 的店(app 裡手動加的 `manual-…`、OSM 匯入的 `osm…`)一律不動。不想刪就 `npm run places:dev -w apps/api -- --no-prune`。
 
-`apps/api/prisma/seed-data.json` 是從 `legacy/index.html` 一次性挖出來的快照,跟著 image 一起發布,容器執行期不再需要 `legacy/index.html`。要重新從舊檔案挖資料的話:`npm run extract-legacy-data -w apps/api`。
+店家資料刻意**不放在 seed** 裡:seed 是「資料庫空的時候灌一次」,店家則會一直更新,走依 id 更新才不會把線上別人加的店蓋掉。
 
 ## 測試
 
@@ -40,7 +43,20 @@ docker compose up -d --build
 # web: http://localhost:8080   api: http://localhost:4000
 ```
 
-API 容器開機時會自動跑 `prisma migrate deploy`,然後在資料庫是空的情況下自動 seed(已經有資料就略過,不會重複清空重灌)——`docker compose up` 完就能直接用,不用手動再跑一次 seed。
+這是正式版(網頁先 build 好再用 nginx 送),速度快。要邊改程式邊看的開發者才用開發版:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+# web(vite 熱更新): http://localhost:5173
+```
+
+**拉了新版、店家/菜單有更新時**:開機不會自動重灌,手動推一次(評分、照片、留言、自己加的店都會保留):
+
+```bash
+python3 tools/push-places.py --api http://localhost:4000
+```
+
+API 容器開機時會自動跑 `prisma migrate deploy`,然後在資料庫是空的情況下 seed 設定/停車場/行情、匯入店家(已經有資料就略過)——`docker compose up` 完就能直接用。
 
 ## 部署到 k8s(Helm)
 
@@ -61,7 +77,14 @@ helm install lunch-map deploy/helm/lunch-map \
 
 **已知取捨**:資料庫是 SQLite(檔案存在 PVC 上),所以 `api` deployment 固定 1 個 replica、用 `Recreate` 策略——這對一個公司內部午餐推薦工具來說很夠用,但代表 API 沒辦法水平擴充。真的需要高可用的話,要換成 Postgres(改 `apps/api/prisma/schema.prisma` 的 `datasource.provider` 跟接一個外部資料庫)。
 
-首次部署一樣會自動 migrate + seed(邏輯跟 docker-compose 那邊相同),不用額外手動操作。之後要更新店家資料,可以用 `POST /api/shops/import/osm`、`POST /api/parkings/import/osm` 兩個管理端點從 OpenStreetMap 現抓,或 `kubectl exec` 進 pod 跑 `npm run seed`(會清空重灌 `Shop`/`AfterPlace`/`Parking`/`Market`,不影響評分/照片)。
+首次部署一樣會自動 migrate + seed + 匯入店家(邏輯跟 docker-compose 那邊相同),不用額外手動操作。之後 `data/places.json` 有更新(核對過的店家/菜單),從本機推上去就好,不用進 pod:
+
+```bash
+python3 tools/push-places.py --api https://lunch-map.your-domain.com --preview   # 先比對線上現況,只印不寫
+python3 tools/push-places.py --api https://lunch-map.your-domain.com             # 確認後真的推
+```
+
+依 id 更新,評分/照片/留言、線上手動加的店、OSM 匯入的店都不動;`--no-prune` 則連歇業的店也不刪。另外還有 `POST /api/shops/import/osm`、`POST /api/parkings/import/osm` 可以從 OpenStreetMap 現抓。
 
 ## 環境變數(`apps/api`)
 

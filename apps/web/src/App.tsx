@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
-import { currentMood, nowMin, randomPick } from '@lunch-map/shared';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { CATALOGUE, currentMood, findMenuItems, menuDishVocab, nowMin, randomPick } from '@lunch-map/shared';
+import { rankDrinks } from './lib/drinkPick.js';
 import { uniqueSorted } from './lib/uniqueSorted.js';
 import { useLunchData } from './hooks/useLunchData.js';
 import { useMyLocation } from './hooks/useMyLocation.js';
@@ -42,16 +43,38 @@ export function App() {
     votes: data.votes,
     nowMinute,
   });
-  const visibleRows = useVisibleRows(allRows);
+  const visibleRows = useVisibleRows(allRows, data.menus);
   const categories = useMemo(() => uniqueSorted(data.shops.flatMap((s) => (s.category.length ? s.category : ['其他']))), [data.shops]);
   const cuisines = useMemo(() => uniqueSorted(data.shops.map((s) => s.cuisine).filter((c): c is string => !!c)), [data.shops]);
+
+  // 問問看認得的菜名/飲品名從全部菜單長出來(不是手寫清單);菜單一更新就跟著更新
+  const vocab = useMemo(() => {
+    const stop = CATALOGUE.flatMap((e) => e.keywords);
+    return { food: menuDishVocab(Object.values(data.menus), stop), drink: menuDishVocab(Object.values(data.drinkMenus), stop) };
+  }, [data.menus, data.drinkMenus]);
+
+  // 飲料推薦:同時有抽午餐就以那家為起點排「最近」(吃完順路買);沒有就從公司算
+  const lunchShop = state.pickShopId ? data.shops.find((s) => s.id === state.pickShopId) : undefined;
+  const drinkPicks = useMemo(() => {
+    if (!config || state.pickDrinkId === null) return [];
+    return rankDrinks(data.drinks, data.drinkMenus, [...state.filters.drink], data.parkings, config, state.day, nowMinute, lunchShop);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- nowMinute 每分鐘變,推薦的店不必跟著跳
+  }, [state.pickDrinkId, state.filters.drink, lunchShop, data.drinks, data.drinkMenus, data.parkings, config, state.day]);
+
+  useEffect(() => {
+    if (state.pendingDrinkPick) dispatch({ type: 'SET_DRINK_PICK', id: 'on' });
+  }, [state.pendingDrinkPick, dispatch]);
 
   const afterRows = useMemo(() => {
     return data.drinks.map((d) => ({ d, lat: d.lat, lng: d.lng }));
   }, [data.drinks]);
 
   const handleRandomPick = () => {
-    const pool = visibleRows.filter((r) => r.feasible);
+    const feasible = visibleRows.filter((r) => r.feasible);
+    // 講了菜名:菜單裡真的有那道菜的店優先抽;一家都沒有才退回整個候選池(用類別)
+    const dishes = [...state.filters.dish];
+    const withDish = dishes.length ? feasible.filter((r) => dishes.some((d) => findMenuItems(data.menus[r.sh.id] ?? '', d, 1).length)) : [];
+    const pool = withDish.length ? withDish : feasible;
     const mood = currentMood(state.mood, data.market);
     const result = randomPick(pool, mood);
     if (result.empty) {
@@ -73,6 +96,9 @@ export function App() {
     dispatch({ type: 'CLEAR_PENDING_PICK' });
     // eslint-disable-next-line react-hooks/exhaustive-deps -- 只在旗標立起且 rows 重算後跑一次
   }, [state.pendingPick, visibleRows]);
+
+  // 地圖的標記 effect 依賴這個函式;每次 render 都給新的會讓幾百個標記白白重綁
+  const handleSelectShop = useCallback((id: string | null) => dispatch({ type: 'SET_SEL', id }), [dispatch]);
 
   const handleSelectOnMap = (shopId: string) => {
     dispatch({ type: 'SET_SEL', id: shopId });
@@ -107,12 +133,13 @@ export function App() {
         onOpenAddShop={() => setAddShopOpen(true)}
         categories={categories}
         cuisines={cuisines}
+        vocab={vocab}
         myLocation={myLocation}
       />
       <FilterDrawer config={config} shops={data.shops} ratings={data.shopRatings} onCopyList={handleCopyList} />
       <ActiveConditions />
       <Banners shops={data.shops} />
-      <PickCard rows={allRows} onPickAgain={handleRandomPick} onViewOnMap={handleSelectOnMap} />
+      <PickCard rows={allRows} menus={data.menus} drinkPicks={drinkPicks} lunchName={lunchShop?.name} onPickAgain={handleRandomPick} onViewOnMap={handleSelectOnMap} />
       <main className={state.view === 'list' ? 'list-only' : state.view === 'map' ? 'map-only' : ''}>
         <div id="listwrap">
           <span className="seg listTabs">
@@ -144,6 +171,7 @@ export function App() {
               day={state.day}
               nowMinute={nowMinute}
               ratings={data.drinkRatings}
+              menus={data.drinkMenus}
             />
           )}
         </div>
@@ -153,7 +181,7 @@ export function App() {
           rows={visibleRows}
           afterRows={afterRows}
           selectedShopId={state.sel}
-          onSelectShop={(id) => dispatch({ type: 'SET_SEL', id })}
+          onSelectShop={handleSelectShop}
         />
       </main>
       {addShopOpen && (

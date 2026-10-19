@@ -13,3 +13,7 @@ apps/api/data/
 
 # local cluster credentials
 kubeconfig
+
+# nightly Google Places sync outputs
+tools/nightly-review/
+tools/.bin/

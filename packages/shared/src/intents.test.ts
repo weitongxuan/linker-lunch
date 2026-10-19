@@ -45,3 +45,134 @@ test('聽不懂 → unknown 帶 3 候選', () => {
   if (r.kind === 'unknown') assert.equal(r.candidates.length, 3);
 });
 test('有動詞但對不到 → 不亂猜', () => assert.equal(parseIntent('不想吃西班牙菜', CATS, CUIS).kind, 'unknown'));
+
+// 第三層(相似度)的領先差距:兩個意圖一樣像就不猜,改反問
+test('第三層分數接近 → ambiguous,候選含那兩個意圖', () => {
+  const r = parseIntent('來個一點的', CATS, CUIS); // 走路 0.57 vs 趕時間 0.57
+  assert.equal(r.kind, 'ambiguous');
+  if (r.kind === 'ambiguous') {
+    const ids = r.candidates.map((c) => c.id);
+    assert.ok(ids.includes('walk') && ids.includes('quick'), ids.join(','));
+    assert.ok(r.candidates.length <= 3);
+  }
+  const r2 = parseIntent('來個大一點的', CATS, CUIS); // fancy 0.50 vs walk 0.50
+  assert.equal(r2.kind, 'ambiguous');
+  if (r2.kind === 'ambiguous') assert.ok(r2.candidates.map((c) => c.id).includes('fancy'));
+});
+test('第三層明確領先 → 仍直接命中', () => {
+  assert.equal(m('這家不喜歡').label, '換一家'); // again 0.75,第二名 0
+  assert.equal(m('太貴的不要').actions.mood, 'down'); // cheap 0.57 vs good 0.29
+  assert.equal(m('不想走遠').actions.mode, 'walk'); // walk 0.57 vs takeout 0.25
+});
+test('第三層最高分不到門檻 → 仍是 unknown,不是 ambiguous', () => assert.equal(parseIntent('肚子餓了', CATS, CUIS).kind, 'unknown'));
+
+// 擴充後的意圖與別名
+test('新意圖:外送 / 吃辣 / 不吃辣 / 請客 / 高評價', () => {
+  assert.deepEqual(m('下雨不想出門').actions.service, ['delivery']);
+  assert.deepEqual(m('想吃辣的').actions.cuisine, ['川菜', '泰式', '韓式']);
+  assert.deepEqual(m('怕辣').actions.excludeCuisine, ['川菜']);
+  assert.equal(m('不要辣的').actions.cuisine, undefined);
+  const t = m('主管請客');
+  assert.equal(t.actions.mood, 'up');
+  assert.deepEqual(t.actions.service, ['dine_in']);
+  assert.equal(m('最好吃的').actions.minGoogle, 4.3);
+  assert.equal(m('最好吃的').label, 'Google 4.3 以上');
+  const g = m('4.5以上又便宜的'); // 小數點不能把句子切開
+  assert.equal(g.actions.minGoogle, 4.3);
+  assert.equal(g.actions.mood, 'down');
+});
+test('別名:牛肉麵→麵、鹹酥雞→小吃、麥當勞→速食、小籠包→水餃', () => {
+  assert.deepEqual(m('想吃牛肉麵').actions.cat, ['麵']);
+  assert.deepEqual(m('不想吃鹹酥雞').actions.excludeCat, ['小吃']);
+  assert.deepEqual(m('麥當勞').actions.cat, ['速食']);
+  assert.deepEqual(m('想吃小籠包').actions.cat, ['水餃']);
+});
+test('新否定詞:不愛吃 / 就不用了 / 討厭', () => {
+  assert.deepEqual(m('不愛吃便當').actions.excludeCat, ['便當']);
+  assert.deepEqual(m('便當就不用了').actions.excludeCat, ['便當']);
+  assert.deepEqual(m('討厭火鍋').actions.excludeCat, ['火鍋']);
+});
+test('吃素只算一次(槽位接住,不重複標籤)', () => {
+  const r = m('今天吃素');
+  assert.deepEqual(r.actions.cuisine, ['素食']);
+  assert.equal(r.label, '想吃素食');
+});
+
+// 菜名與預算
+test('菜名:想吃牛肉麵 → 類別麵 + 菜名牛肉麵,標籤用菜名', () => {
+  const r = m('想吃牛肉麵');
+  assert.deepEqual(r.actions.cat, ['麵']);
+  assert.deepEqual(r.actions.dish, ['牛肉麵']);
+  assert.match(r.label, /想吃牛肉麵/);
+});
+test('泛稱不算菜名:麵食、熱炒、鍋物', () => {
+  assert.equal(m('想吃麵食').actions.dish, undefined);
+  assert.equal(m('想吃熱炒').actions.dish, undefined);
+});
+test('不吃的菜名不算', () => {
+  const r = m('不想吃牛肉麵');
+  assert.equal(r.actions.dish, undefined);
+  assert.deepEqual(r.actions.excludeCat, ['麵']);
+});
+test('預算:數字與中文', () => {
+  assert.equal(m('100元以內').actions.budget, 100);
+  assert.equal(m('兩百塊有找').actions.budget, 200);
+  assert.equal(m('預算150左右的便當').actions.budget, 150);
+  assert.equal(m('想吃牛肉麵 一百五以內').actions.budget, 150);
+  assert.equal(m('想吃牛肉麵 一百五以內').actions.dish?.[0], '牛肉麵');
+});
+test('預算與其他條件疊加:便宜 + 走路 + 預算', () => {
+  const r = m('走路到得了 80元以內 便宜的');
+  assert.equal(r.actions.budget, 80);
+  assert.equal(r.actions.mode, 'walk');
+  assert.equal(r.actions.mood, 'down');
+});
+
+// 菜單長出來的菜名 / 飲品名
+const VOCAB = {
+  food: ['滑蛋蝦仁飯', '鍋貼', '紅燒牛肉麵', '古早味紅茶', '鹹蛋苦瓜'],
+  drink: ['珍珠奶茶', '珍珠鮮奶茶', '四季春青茶', '古早味紅茶', '冬瓜檸檬'],
+};
+const mv = (q: string) => {
+  const r = parseIntent(q, CATS, CUIS, VOCAB);
+  assert.equal(r.kind, 'matched', `應該要聽懂:${q}`);
+  return r.kind === 'matched' ? r : (assert.fail() as never);
+};
+test('菜單菜名:別名表沒有的也認得(想吃蝦仁飯 → 菜單有滑蛋蝦仁飯)', () => {
+  const r = mv('想吃蝦仁飯');
+  assert.ok(r.actions.dish?.includes('蝦仁飯'), JSON.stringify(r.actions));
+  assert.equal(r.actions.drink, undefined);
+});
+test('菜單菜名:想吃鹹蛋苦瓜(沒有類別也能認)', () => assert.deepEqual(mv('想吃鹹蛋苦瓜').actions.dish, ['鹹蛋苦瓜']));
+test('飲料:想喝珍珠奶茶 → drink', () => {
+  const r = mv('想喝珍珠奶茶');
+  assert.deepEqual(r.actions.drink, ['珍珠奶茶']);
+  assert.equal(r.actions.dish, undefined);
+  assert.match(r.label, /想喝珍珠奶茶/);
+});
+test('飲料:只在飲料菜單出現的名字,沒說喝也算飲料', () => assert.deepEqual(mv('四季春青茶').actions.drink, ['四季春青茶']));
+test('兩邊都有的(古早味紅茶):說「喝」才算飲料,否則算菜', () => {
+  assert.deepEqual(mv('想喝古早味紅茶').actions.drink, ['古早味紅茶']);
+  assert.equal(mv('想吃古早味紅茶').actions.drink, undefined);
+});
+test('問句不會被當成菜名', () => {
+  assert.equal(mv('隨便推薦一家').actions.dish, undefined);
+  assert.equal(mv('便宜一點的').actions.dish, undefined);
+  assert.equal(mv('走路就到的').actions.dish, undefined);
+});
+test('不吃的不算菜名', () => assert.equal(parseIntent('不想吃鍋貼', CATS, CUIS, VOCAB).kind === 'matched' ? (parseIntent('不想吃鍋貼', CATS, CUIS, VOCAB) as { actions: { dish?: string[] } }).actions.dish : undefined, undefined));
+
+test('菜單菜名不再順帶加類別(想吃蝦仁飯 不會限定 海鮮/飯)', () => {
+  const r = mv('想吃蝦仁飯');
+  assert.equal(r.actions.cat, undefined, JSON.stringify(r.actions));
+});
+
+test('另外講的類別還是保留(想吃蝦仁飯 或 麵)', () => {
+  const r = mv('想吃蝦仁飯,或是麵');
+  assert.ok(r.actions.cat?.includes('麵'), JSON.stringify(r.actions));
+});
+
+test('講了想喝哪一杯就不再掛籠統的「飲料」標籤', () => {
+  const r = mv('想喝珍珠奶茶');
+  assert.ok(!r.label.includes('看飲料分頁'), r.label);
+});

@@ -134,6 +134,7 @@ type ConfigRow = {
   officeLat: number; officeLng: number; officeName: string; departStart: string; departEnd: string;
   backBy: string; eatMinutes: number; priceBands: string; walkSpeed: number; detour: number;
   maxWalkMin: number; driveSpeed: number; parkSearch: number; streetSearch: number; driveWorthIt: number; maxDriveMin: number;
+  maxDrinkDriveMin: number;
 };
 
 export function toConfig(row: ConfigRow): Config {
@@ -151,6 +152,7 @@ export function toConfig(row: ConfigRow): Config {
     streetSearch: row.streetSearch,
     driveWorthIt: row.driveWorthIt,
     maxDriveMin: row.maxDriveMin,
+    maxDrinkDriveMin: row.maxDrinkDriveMin,
   };
 }
 

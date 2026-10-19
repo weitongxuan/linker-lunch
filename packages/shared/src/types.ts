@@ -100,6 +100,8 @@ export interface Config {
   streetSearch: number;
   driveWorthIt: number;
   maxDriveMin: number;
+  /** 飲料店的開車上限,獨立於餐廳:買杯飲料可以順路繞遠一點 */
+  maxDrinkDriveMin: number;
 }
 
 export interface Market {
