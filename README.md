@@ -80,7 +80,8 @@ helm install lunch-map deploy/helm/lunch-map \
 首次部署一樣會自動 migrate + seed + 匯入店家(邏輯跟 docker-compose 那邊相同),不用額外手動操作。之後 `data/places.json` 有更新(核對過的店家/菜單),從本機推上去就好,不用進 pod:
 
 ```bash
-python3 tools/push-places.py --api https://lunch-map.your-domain.com
+python3 tools/push-places.py --api https://lunch-map.your-domain.com --preview   # 先比對線上現況,只印不寫
+python3 tools/push-places.py --api https://lunch-map.your-domain.com             # 確認後真的推
 ```
 
 依 id 更新,評分/照片/留言、線上手動加的店都不動;`--no-prune` 則連歇業的店也不刪。另外還有 `POST /api/shops/import/osm`、`POST /api/parkings/import/osm` 可以從 OpenStreetMap 現抓。
