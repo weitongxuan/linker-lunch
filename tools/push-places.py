@@ -5,9 +5,9 @@
   python3 tools/push-places.py --api … --preview                 # 先讀線上現況比對,印出會新增/更新/刪哪些,不寫
   python3 tools/push-places.py --api … --dry-run                 # 只印會送什麼,不送
 
-評分、照片、投票、留言,以及同事在 app 裡手動加的店(manual-…)一律不碰;同一份檔案重跑幾次結果都一樣。
+評分、照片、投票、留言,以及不是資料集 id 的店(app 手動加的 manual-…、OSM 匯入的 osm…)一律不碰;同一份檔案重跑幾次結果都一樣。
 """
-import argparse, json, pathlib, sys, urllib.error, urllib.request
+import argparse, json, pathlib, re, sys, urllib.error, urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 PLACES = ROOT / 'data/places.json'
@@ -29,12 +29,13 @@ def preview(api, d, prune):
         ids = {s['id'] for s in local}
         new = [s['name'] for s in local if s['id'] not in online]
         upd = [s['name'] for s in local if s['id'] in online]
-        manual = [n for i, n in online.items() if i.startswith('manual-')]
-        gone = [n for i, n in online.items() if not i.startswith('manual-') and i not in ids]
-        print(f"\n{label}:線上 {len(online)} 家 → 新增 {len(new)}、更新 {len(upd)}、{'刪除' if prune else '不刪(--no-prune)'} {len(gone)};線上手動加的 {len(manual)} 家不動")
+        managed = lambda i: re.fullmatch(r'[fd]\d+', i) is not None
+        manual = [n for i, n in online.items() if not managed(i)]
+        gone = [n for i, n in online.items() if managed(i) and i not in ids]
+        print(f"\n{label}:線上 {len(online)} 家 → 新增 {len(new)}、更新 {len(upd)}、{'刪除' if prune else '不刪(--no-prune)'} {len(gone)};線上手動加/OSM 匯入的 {len(manual)} 家不動")
         if new: print('  新增:', '、'.join(new[:15]) + (' …' if len(new) > 15 else ''))
         if gone: print('  ' + ('刪除' if prune else '檔案裡沒有') + ':', '、'.join(gone[:15]) + (' …' if len(gone) > 15 else ''))
-        if manual: print('  線上手動加的:', '、'.join(manual[:10]) + (' …' if len(manual) > 10 else ''))
+        if manual: print('  線上手動加/OSM 的:', '、'.join(manual[:10]) + (' …' if len(manual) > 10 else ''))
     print('\n(以上只是比對,沒有寫入;確認沒問題再拿掉 --preview 真的推)')
     return 0
 

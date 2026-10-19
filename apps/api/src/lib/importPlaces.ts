@@ -27,21 +27,26 @@ export function readPlacesFile(file = PLACES_FILE): PlacesData {
   return JSON.parse(fs.readFileSync(file, 'utf8')) as PlacesData;
 }
 
-/** 在 app 裡手動新增的店 id 都是 manual-…,匯入永遠不碰這些 */
-const isManual = (id: string) => id.startsWith('manual-');
+/**
+ * 只有資料集自己的 id(餐廳 f…、飲料 d…)歸匯入管。其他來源的店 —— app 裡手動加的 manual-…、
+ * 從 OSM 匯入的 osm…—— 匯入時不更新也不刪。
+ */
+const MANAGED_ID = /^[fd]\d+$/;
+const isManaged = (id: string) => MANAGED_ID.test(id);
 
 /**
  * 把 places.json 依 id 寫進資料庫:有的更新、沒有的新增。
  * - 評分、照片、投票、留言完全不動(都是另外的表)
- * - manual-… 的店(同事在 app 裡加的)不動
- * - prune=true 時,檔案裡沒有、又不是 manual- 的店會被刪掉(= 核對後確認歇業的那些),連同它的菜單
+ * - 不是資料集 id 的店(manual-… 手動加的、osm… 匯入的)不動
+ * - prune=true 時,資料集 id 裡檔案沒有的店會被刪掉(= 核對後確認歇業的那些),連同它的菜單;
+ *   只對有送的那一種做:body 沒有 drinks 欄位就不碰飲料店
  * - 菜單:檔案裡有的就覆寫;還在的店如果檔案裡沒菜單,保留 DB 現有的(可能是同事在 app 裡打的)
  * 同一份檔案重跑幾次結果都一樣,所以線上更新可以放心重複執行。
  */
 export async function importPlaces(prisma: PrismaClient, data: PlacesData, opts: { prune?: boolean } = {}): Promise<ImportResult> {
   const prune = opts.prune ?? true;
-  const shops = (data.shops ?? []).filter((s) => !isManual(s.id));
-  const drinks = (data.drinks ?? []).filter((d) => !isManual(d.id));
+  const shops = (data.shops ?? []).filter((s) => isManaged(s.id));
+  const drinks = (data.drinks ?? []).filter((d) => isManaged(d.id));
   const result: ImportResult = {
     shops: { created: 0, updated: 0, removed: 0 },
     drinks: { created: 0, updated: 0, removed: 0 },
@@ -75,8 +80,8 @@ export async function importPlaces(prisma: PrismaClient, data: PlacesData, opts:
   }
 
   if (prune) {
-    const goneShops = [...existingShops].filter((id) => !isManual(id) && !typeOf.has(id));
-    const goneDrinks = [...existingDrinks].filter((id) => !isManual(id) && !typeOf.has(id));
+    const goneShops = data.shops ? [...existingShops].filter((id) => isManaged(id) && !typeOf.has(id)) : [];
+    const goneDrinks = data.drinks ? [...existingDrinks].filter((id) => isManaged(id) && !typeOf.has(id)) : [];
     const gone = [...goneShops, ...goneDrinks];
     if (gone.length) {
       ops.push(prisma.shop.deleteMany({ where: { id: { in: goneShops } } }));

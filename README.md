@@ -26,7 +26,7 @@ npm run dev:web       # http://localhost:5173(proxy /api、/photos 到 4000)
 
 兩個都只需要跑一次,重跑也安全:
 - `npm run seed` 清空 `Parking`/`Market` 重灌、更新 `Config`,不碰店家。
-- `npm run places` 把 `data/places.json` **依 id** 寫進 `Shop`/`AfterPlace`/`Menu`:有的更新、沒有的新增、檔案裡沒有的(歇業)刪掉。評分/照片/投票/留言,以及在 app 裡手動加的店(`manual-…`)一律不動。加 `-- --no-prune` 就不刪。
+- `npm run places` 把 `data/places.json` **依 id** 寫進 `Shop`/`AfterPlace`/`Menu`:有的更新、沒有的新增、檔案裡沒有的(歇業)刪掉。評分/照片/投票/留言,以及不是資料集 id 的店(app 裡手動加的 `manual-…`、OSM 匯入的 `osm…`)一律不動。不想刪就 `npm run places:dev -w apps/api -- --no-prune`。
 
 店家資料刻意**不放在 seed** 裡:seed 是「資料庫空的時候灌一次」,店家則會一直更新,走依 id 更新才不會把線上別人加的店蓋掉。
 
@@ -84,7 +84,7 @@ python3 tools/push-places.py --api https://lunch-map.your-domain.com --preview  
 python3 tools/push-places.py --api https://lunch-map.your-domain.com             # 確認後真的推
 ```
 
-依 id 更新,評分/照片/留言、線上手動加的店都不動;`--no-prune` 則連歇業的店也不刪。另外還有 `POST /api/shops/import/osm`、`POST /api/parkings/import/osm` 可以從 OpenStreetMap 現抓。
+依 id 更新,評分/照片/留言、線上手動加的店、OSM 匯入的店都不動;`--no-prune` 則連歇業的店也不刪。另外還有 `POST /api/shops/import/osm`、`POST /api/parkings/import/osm` 可以從 OpenStreetMap 現抓。
 
 ## 環境變數(`apps/api`)
 
